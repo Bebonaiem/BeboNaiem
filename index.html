@@ -378,8 +378,8 @@
             cursor: pointer;
             box-shadow: 0 0 20px rgba(139, 0, 0, 0.8); /* Stronger shadow */
             z-index: 100;
-            animation: pulse 2s infinite, rotate-subtle 5s infinite linear; /* Combined pulse and subtle rotate */
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            animation: pulse 2s infinite; /* Keep pulse */
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease; /* Added transform */
         }
 
         @keyframes pulse {
@@ -394,11 +394,12 @@
             }
         }
 
-         @keyframes rotate-subtle {
+         /* Removed rotate-subtle as per previous thoughts to simplify */
+         /* @keyframes rotate-subtle {
              0% { transform: rotate(0deg); }
              50% { transform: rotate(2deg); }
              100% { transform: rotate(0deg); }
-         }
+         } */
 
 
         .phone-icon {
@@ -596,7 +597,7 @@
                     <p><strong>الجارة (بصوت واطي وخايف):</strong> "أنا كنت بسمع صراخ جاي من البيت ده زمان... أصوات غريبة ... وبعدين فجأة كل حاجة سكتت... محدش كان بيقرب من هناك."</p>
                     <p>(ريم تشكر الجارة وتمشي في الشارع وهي بتفكر، والموبايل بيرن تاني - نفس الرقم)</p>
                     <p><strong>ريم (ترد وهي ماشية، بصوت حذر):</strong> "عايز إيه تاني؟"</p>
-                    <p><strong>المتصل المجهول (بصوت غامض):</strong> "كل ما تسألي أكتر ... الإجابة هتوجعك أكتر. في أسرار المفروض تفضل مدفونة."</p>
+                    <p><strong>الم متصل المجهول (بصوت غامض):</strong> "كل ما تسألي أكتر ... الإجابة هتوجعك أكتر. في أسرار المفروض تفضل مدفونة."</p>
                     <p>(الخط يقفل. ريم تقف لحظة، تشعر كأن حد بيراقبها)</p>
                 </div>
             </div>
@@ -647,7 +648,7 @@
                 <div class="dialogue">
                      <p>(ريم تقف مرة تانية قدام البيت، المرادي شكلها مصمم أكثر رغم الخوف الظاهر في عينيها المتسعة. الهواء حول البيت يبدو أثقل، كأن الصمت نفسه له وزن. تدخل البيت بحذر، الظلمة في الداخل تبدو أكثر كثافة، تبتلع الضوء القادم من المدخل بسرعة. الغبار يملأ الجو، ورائحة العفن والرطوبة تخترق أنفاسها. فجأة، موبايلها يرن للمرة الأخيرة بنفس الرقم المجهول)</p>
                      <p>(ريم تبص للموبايل، شاشة تتوهج بالرقم المجهول في الظلمة. تتجاهله هذه المرة، تضعه في جيبها وتكمل طريقها لجوه. خطواتها يتردد صداها بشكل غريب على الأرضية الخشبية المتآكلة. فجأة تسمع الصوت، ليس من الموبايل، بل يتردد في أرجاء المكان، كأنه يخرج من الجدران نفسها، بارد ومباشر وقريب بشكل مرعب)</p>
-                     <p><strong>المتصل (صوت يتردد كصدي مشوه في أرجاء المكان):</strong> "رجعتى تاني ؟ ... الشجاعة أحيانًا تكون مجرد قناع للخوف الأعمق. جاية تدوري على النهاية؟ خلي بالك، في روايات ملهاش نهاية سعيدة... وأحياناً ملهاش نهاية خالص. مجرد دوامة بتتكرر."</p>
+                     <p><strong>المتصل (صوت يتردد كصدي مشوه في أرجاء المكان):</strong> "رجعتى تاني ؟ ... الشجاعة أحيانًا تكون مجرد قناع للخوف الأعمق. جاية تدوري على النهاية؟ خلي بالك، في روايات ملهاش نهاية سعيدة... وأحيانًا ملهاش نهاية خالص. مجرد دوامة بتتكرر."</p>
                      <p>(ريم تتجمد في مكانها، قلبها يخفق بعنف. تتلفت حولها، لكنها لا ترى سوى الظلال والأثاث المغطى بأغطية بيضاء كالأشباح. تأخذ نفس عميق، تحاول السيطرة على رعشة يديها، وتمشي ببطء ناحية مصدر الصوت المتخيل، الذي يبدو قادمًا من عمق البيت، من قلب الظلمة.)</p>
                 </div>
             </div>
@@ -811,11 +812,13 @@
 
     <!-- Audio Element for the scary sound -->
     <!-- **IMPORTANT:** Replace 'path/to/your/scary_sound.mp3' with the actual path to your audio file -->
+    <!-- Make sure the audio file '1.mp3' is in the same directory as index.html, or provide the correct path -->
     <audio id="scenarioSound" src="1.mp3" preload="auto"></audio>
 
     <!-- Phone animation -->
     <div class="phone-animation" id="phoneAnimation">
         <div class="phone-icon">
+            <!-- Initial icon: phone -->
             <i class="fas fa-phone"></i>
         </div>
     </div>
@@ -870,48 +873,59 @@
             });
         }
 
-        // Phone animation click effect
+        // Phone animation click effect - MODIFIED FOR PLAY/PAUSE
         function setupPhoneAnimation() {
             const phone = document.getElementById('phoneAnimation');
-            const scenarioSound = document.getElementById('scenarioSound'); // Get the audio element
+            const scenarioSound = document.getElementById('scenarioSound');
+            const icon = phone.querySelector('.phone-icon i'); // Get icon reference
 
-            // Optional: Add a subtle bounce on hover (purely visual)
+            // Optional: Add a subtle bounce on hover (purely visual) - Keep this
             phone.addEventListener('mouseover', () => {
-                 phone.style.animationPlayState = 'paused'; // Pause existing animations
+                 // We'll let the pulse animation run always, hover just adds scale
                  phone.style.transform = 'scale(1.1)'; // Add a slight scale up
             });
             phone.addEventListener('mouseout', () => {
-                phone.style.animationPlayState = 'running'; // Resume animations
                 phone.style.transform = 'scale(1)'; // Reset scale
             });
 
-
             phone.addEventListener('click', () => {
-                // Play the sound
-                if (scenarioSound) {
-                    // Stop and rewind the sound if it's already playing
-                    if (!scenarioSound.paused) {
-                        scenarioSound.pause();
-                        scenarioSound.currentTime = 0;
-                    }
-                    // Play the sound
-                    scenarioSound.play().catch(e => console.error("Error playing sound:", e));
+                if (!scenarioSound) { // Safety check
+                    console.error("Audio element not found!");
+                    return;
                 }
 
-                // Existing visual animation
-                const icon = phone.querySelector('.phone-icon i');
-                icon.classList.remove('fa-phone');
-                icon.classList.add('fa-phone-slash');
-                phone.style.backgroundColor = '#333';
-                 phone.style.animationPlayState = 'paused';
-                 phone.style.boxShadow = 'none';
+                if (scenarioSound.paused) {
+                    // If currently paused, play the sound
+                    scenarioSound.play().then(() => {
+                        // Play successful: Update icon and style to reflect playing state
+                        icon.classList.remove('fa-phone'); // Remove phone icon
+                        // Choose a Font Awesome icon that signifies sound/playing
+                        // fa-volume-up or fa-volume might be good choices
+                        icon.classList.add('fa-volume-up'); // Add volume icon
+                        phone.style.backgroundColor = 'var(--accent)'; // Change color when playing
+                        // Keep pulse animation running
+                        // Keep box-shadow glowing
+                    }).catch(e => {
+                        console.error("Error playing sound:", e);
+                        // Optional: Revert icon/style if play fails (e.g., user gesture denied)
+                        icon.classList.remove('fa-volume-up');
+                        icon.classList.add('fa-phone'); // Revert to phone icon
+                        phone.style.backgroundColor = 'var(--primary)'; // Revert color
+                    });
+                } else {
+                    // If currently playing, pause the sound and reset time
+                    scenarioSound.pause();
+                    scenarioSound.currentTime = 0; // Reset to beginning
 
-                setTimeout(() => {
-                    icon.classList.remove('fa-phone-slash');
-                    icon.classList.add('fa-phone');
-                    phone.style.backgroundColor = 'var(--primary)';
-                     phone.style.animationPlayState = 'running';
-                }, 1500); // Shorter timeout
+                    // Update icon and style to reflect paused state
+                    icon.classList.remove('fa-volume-up'); // Remove volume icon
+                    icon.classList.add('fa-phone'); // Add phone icon
+                    phone.style.backgroundColor = 'var(--primary)'; // Revert color
+                    // Keep pulse animation running
+                    // Keep box-shadow glowing
+                }
+
+                // Removed the setTimeout as icon/color now reflect the state, not a temporary effect
             });
         }
 
@@ -921,6 +935,20 @@
             setupPhoneAnimation();
             window.addEventListener('scroll', checkScroll);
             checkScroll(); // Check on load to show elements already in view
+
+            // Optional: Add an event listener to the audio element itself
+            // This ensures the icon/color are correct even if the sound ends on its own
+            const scenarioSound = document.getElementById('scenarioSound');
+            if (scenarioSound) {
+                scenarioSound.addEventListener('ended', () => {
+                    const phone = document.getElementById('phoneAnimation');
+                    const icon = phone.querySelector('.phone-icon i');
+                    icon.classList.remove('fa-volume-up');
+                    icon.classList.add('fa-phone');
+                    phone.style.backgroundColor = 'var(--primary)';
+                     // currentTime is automatically 0 when 'ended' fires
+                });
+            }
         });
          // Also check on resize, just in case layout shifts
         window.addEventListener('resize', checkScroll);
