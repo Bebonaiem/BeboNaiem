@@ -2,7 +2,8 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="Bebo Naiem" content="width=device, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#8b0000">
     <title>المتصل المجهول</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap');
@@ -401,8 +402,8 @@
         /* Scroll animation */
         .fade-in {
             opacity: 0;
-            transform: translateY(30px); /* More pronounced initial movement */
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out; /* Slower, smoother transition */
+            transform: translateY(15px); /* Reduced from 30px */
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out; /* Faster transition */
         }
 
         .fade-in.visible {
@@ -561,6 +562,375 @@
             .scroll-top-icon {
                 font-size: 1.3rem;
             }
+
+            .container {
+                padding: 0.5rem;
+                margin: 1rem auto;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+                margin-bottom: 1rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+                padding-bottom: 0.5rem;
+                margin-bottom: 1rem;
+            }
+
+            h3 {
+                font-size: 1.2rem;
+                margin: 1rem 0 0.5rem;
+            }
+
+            .scenario-section, .team-section {
+                padding: 1rem;
+                margin-bottom: 1.5rem;
+                border-radius: 8px;
+            }
+
+            .dialogue {
+                padding: 1rem;
+                margin: 0.75rem 0;
+                font-size: 0.95rem;
+            }
+
+            .dialogue p {
+                margin-bottom: 0.75rem;
+                line-height: 1.6;
+            }
+
+            .team-members {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .team-member {
+                padding: 0.8rem;
+                font-size: 0.9rem;
+            }
+
+            .phone-animation, .scroll-top-button {
+                width: 45px;
+                height: 45px;
+                bottom: 10px;
+            }
+
+            .phone-animation {
+                right: 10px;
+            }
+
+            .scroll-top-button {
+                left: 10px;
+            }
+
+            .phone-icon, .scroll-top-icon {
+                font-size: 1.1rem;
+            }
+
+            .social-links {
+                gap: 1rem;
+                margin: 1.5rem 0;
+            }
+
+            .social-link {
+                font-size: 1.4rem;
+            }
+
+            .copyright {
+                font-size: 0.9rem;
+            }
+            
+            /* Better touch targets */
+            .back-button, .social-link, .phone-animation, .scroll-top-button {
+                min-height: 44px;
+                min-width: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            /* Improved text readability */
+            p, .dialogue p {
+                font-size: 0.95rem;
+                line-height: 1.6;
+                letter-spacing: 0.01em;
+            }
+
+            /* Better spacing for touch targets */
+            .character-list li {
+                padding: 0.8rem 0;
+                margin: 0.2rem 0;
+            }
+
+            /* Prevent horizontal scroll */
+            body {
+                overflow-x: hidden;
+                width: 100%;
+            }
+
+            /* Improved video container responsiveness */
+            .video-container {
+                margin: 0 -1rem;
+                border-radius: 0;
+            }
+
+            /* Better header spacing */
+            header {
+                padding: 1.5rem 1rem;
+            }
+
+            .header-content {
+                padding: 0 0.5rem;
+            }
+        }
+
+        /* Small phones */
+        @media (max-width: 360px) {
+            h1 {
+                font-size: 1.6rem;
+            }
+
+            .subtitle {
+                font-size: 0.9rem;
+            }
+
+            .dialogue {
+                padding: 0.8rem;
+            }
+
+            .phone-animation, .scroll-top-button {
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        /* Additional mobile optimizations */
+        @media (max-width: 768px) {
+            /* Base font size adjustments */
+            body {
+                font-size: 16px;
+                line-height: 1.5;
+            }
+
+            /* Container adjustments */
+            .container {
+                padding: 0.75rem;
+                margin: 1rem auto;
+                max-width: 100%;
+            }
+
+            /* Header adjustments */
+            header {
+                padding: 1rem 0.75rem;
+            }
+
+            .header-content {
+                padding: 0 0.5rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+                margin-bottom: 0.5rem;
+                line-height: 1.2;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+                margin-bottom: 0.75rem;
+            }
+
+            /* Scenario section adjustments */
+            .scenario-section {
+                padding: 1rem;
+                margin-bottom: 1.5rem;
+                border-left-width: 3px;
+            }
+
+            .section-title {
+                font-size: 1.4rem;
+                padding-bottom: 0.4rem;
+                margin-bottom: 0.75rem;
+            }
+
+            h3 {
+                font-size: 1.2rem;
+                margin: 0.75rem 0 0.5rem;
+            }
+
+            /* Dialogue adjustments */
+            .dialogue {
+                padding: 0.75rem;
+                margin: 0.75rem 0;
+                font-size: 0.95rem;
+                border-left-width: 3px;
+            }
+
+            .dialogue p {
+                margin-bottom: 0.6rem;
+                line-height: 1.5;
+            }
+
+            /* Character list adjustments */
+            .character-list li {
+                padding: 0.6rem 0;
+                font-size: 0.95rem;
+            }
+
+            /* Team section adjustments */
+            .team-section {
+                padding: 1rem;
+            }
+
+            .team-member {
+                padding: 0.75rem;
+                font-size: 0.9rem;
+                margin-bottom: 0.5rem;
+            }
+
+            /* Fixed elements adjustments */
+            .phone-animation, .scroll-top-button {
+                width: 48px;
+                height: 48px;
+                bottom: 16px;
+            }
+
+            .phone-animation {
+                right: 16px;
+            }
+
+            .scroll-top-button {
+                left: 16px;
+            }
+
+            .phone-icon i, .scroll-top-icon i {
+                font-size: 1.2rem;
+            }
+
+            /* Footer adjustments */
+            footer {
+                padding: 1.5rem 1rem;
+                margin-top: 2rem;
+            }
+
+            .social-links {
+                gap: 1rem;
+            }
+
+            .social-link {
+                font-size: 1.2rem;
+                width: 40px;
+                height: 40px;
+            }
+
+            /* Video container adjustments */
+            .video-section {
+                margin: 1rem -0.75rem;
+                border-radius: 0;
+            }
+
+            .video-container {
+                border-radius: 0;
+            }
+
+            /* Improved touch targets */
+            a, button, .social-link, .phone-animation, .scroll-top-button {
+                min-height: 44px;
+                min-width: 44px;
+            }
+
+            /* Better spacing for interactive elements */
+            .back-button {
+                padding: 0.7rem 1rem;
+                font-size: 0.95rem;
+                height: 44px;
+                display: flex;
+                align-items: center;
+            }
+        }
+
+        /* Extra small devices */
+        @media (max-width: 360px) {
+            body {
+                font-size: 15px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .subtitle {
+                font-size: 0.9rem;
+            }
+
+            .section-title {
+                font-size: 1.3rem;
+            }
+
+            .scenario-section {
+                padding: 0.75rem;
+            }
+
+            .dialogue {
+                padding: 0.7rem;
+                font-size: 0.9rem;
+            }
+
+            .phone-animation, .scroll-top-button {
+                width: 44px;
+                height: 44px;
+                bottom: 12px;
+            }
+
+            .phone-animation {
+                right: 12px;
+            }
+
+            .scroll-top-button {
+                left: 12px;
+            }
+
+            .team-member {
+                padding: 0.6rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Fix for medium-sized tablets */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+
+            .scenario-section {
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 1.6rem;
+            }
+        }
+
+        /* Enable smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Prevent text size adjustment on orientation change */
+        html {
+            -webkit-text-size-adjust: 100%;
+            -moz-text-size-adjust: 100%;
+            text-size-adjust: 100%;
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -964,23 +1334,16 @@
         // Scroll animation
         function checkScroll() {
             const fadeElements = document.querySelectorAll('.fade-in');
-
+            
             fadeElements.forEach(element => {
-                // Trigger when the element is at least halfway visible
                 const elementRect = element.getBoundingClientRect();
                 const elementTop = elementRect.top;
                 const elementHeight = elementRect.height;
                 const windowHeight = window.innerHeight;
-
-                // Check if the bottom of the element is above the top of the viewport
-                // AND the top of the element is below the bottom of the viewport
-                // AND at least 50% of the element height is within the viewport
-                if (elementTop < windowHeight - elementHeight / 2 && elementTop + elementHeight > 0) {
-                     element.classList.add('visible');
-                 } else if (elementTop > windowHeight || elementTop + elementHeight < 0) {
-                    // Optional: Remove 'visible' class if element scrolls completely out
-                    // element.classList.remove('visible');
-                 }
+                
+                if (elementTop < windowHeight - (elementHeight * 0.3)) { /* Trigger earlier at 30% visibility */
+                    element.classList.add('visible');
+                }
             });
         }
 
