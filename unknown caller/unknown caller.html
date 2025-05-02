@@ -94,6 +94,53 @@
             position: relative;
         }
 
+        /* Back button styling */
+        .back-button {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            background: var(--primary);
+            color: var(--text);
+            padding: 0.8rem 1.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            z-index: 10;
+            white-space: nowrap;
+            max-width: calc(100% - 40px);
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .back-button:hover {
+            background: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .back-button i {
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .back-button {
+                padding: 0.8rem 1.2rem;
+                top: 15px;
+                right: 15px;
+                font-size: 1rem;
+                display: flex;
+                align-items: center;
+            }
+            
+            .back-button i {
+                margin-left: 0;
+                font-size: 1.1rem;
+            }
+        }
+
         h1 {
             font-size: 3rem; /* Larger heading */
             color: var(--accent);
@@ -394,25 +441,54 @@
             }
         }
 
-         /* Removed rotate-subtle as per previous thoughts to simplify */
-         /* @keyframes rotate-subtle {
-             0% { transform: rotate(0deg); }
-             50% { transform: rotate(2deg); }
-             100% { transform: rotate(0deg); }
-         } */
+        /* Scroll to top button */
+        .scroll-top-button {
+            position: fixed;
+            bottom: 25px;
+            left: 25px; /* Positioned on the left since the phone is on the right */
+            width: 65px;
+            height: 65px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(139, 0, 0, 0.8);
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
+            animation: float-button 2s infinite;
+        }
 
+        .scroll-top-button.visible {
+            opacity: 1;
+            visibility: visible;
+        }
 
-        .phone-icon {
+        .scroll-top-button:hover {
+            background-color: var(--accent);
+            transform: translateY(-5px);
+        }
+
+        @keyframes float-button {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        .scroll-top-icon {
             color: white;
-            font-size: 1.7rem; /* Slightly larger icon */
+            font-size: 1.7rem;
         }
 
-        /* Hide audio element */
-        #scenarioSound {
-            display: none;
-        }
-
-        /* Responsive styles for back button */
         @media (max-width: 768px) {
             .back-button {
                 font-size: 0.9rem !important;
@@ -428,10 +504,7 @@
             .back-button i {
                 margin: 0;
             }
-        }
 
-        /* Responsive */
-        @media (max-width: 768px) {
             h1 {
                 font-size: 2.2rem;
             }
@@ -478,6 +551,16 @@
              .phone-icon {
                  font-size: 1.3rem;
              }
+
+            .scroll-top-button {
+                width: 55px;
+                height: 55px;
+                bottom: 15px;
+                left: 15px;
+            }
+            .scroll-top-icon {
+                font-size: 1.3rem;
+            }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -490,27 +573,7 @@
     <!-- Header -->
     <header>
         <div class="header-content">
-            <!-- Back button with updated styles -->
-            <a href="../index.html" class="back-button" style="
-                position: absolute;
-                right: 20px;
-                top: 20px;
-                background: var(--primary);
-                color: var(--text);
-                padding: 0.8rem 1.5rem;
-                border-radius: 6px;
-                text-decoration: none;
-                display: flex;
-                align-items: center;
-                gap: 0.5rem;
-                transition: all 0.3s ease;
-                font-size: 1rem;
-                z-index: 10;
-                white-space: nowrap;
-                max-width: calc(100% - 40px);
-                overflow: hidden;
-                text-overflow: ellipsis;
-            ">
+            <a href="../index.html" class="back-button">
                 <i class="fas fa-arrow-left"></i>
                 <span>الرجوع للصفحة الرئيسية</span>
             </a>
@@ -811,7 +874,7 @@
             <h2 class="section-title">اسماء المشاركين:</h2>
             <div class="team-members">
                 <div class="team-member">
-                    <p>1. بولا نعيم فريد ابراهيم</p>
+                    <p><i class="fas fa-crown" style="color: gold; margin-left: 8px;"></i>1. بولا نعيم فريد ابراهيم</p>
                 </div>
                 <div class="team-member">
                     <p>2. بسمه تامر حسن محمد حسن</p>
@@ -836,6 +899,13 @@
                 </div>
             </div>
         </section>
+    </div>
+
+    <!-- Scroll to top button -->
+    <div class="scroll-top-button" id="scrollTopButton">
+        <div class="scroll-top-icon">
+            <i class="fas fa-arrow-up"></i>
+        </div>
     </div>
 
     <!-- Footer -->
@@ -970,10 +1040,33 @@
             });
         }
 
+        // Scroll to top functionality
+        function setupScrollToTop() {
+            const scrollButton = document.getElementById('scrollTopButton');
+            
+            // Show/hide button based on scroll position
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) { // Show button after scrolling down 300px
+                    scrollButton.classList.add('visible');
+                } else {
+                    scrollButton.classList.remove('visible');
+                }
+            });
+
+            // Scroll to top when clicked
+            scrollButton.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+
         // Initialize everything
         document.addEventListener('DOMContentLoaded', () => {
             createParticles();
             setupPhoneAnimation();
+            setupScrollToTop(); // Add this line
             window.addEventListener('scroll', checkScroll);
             checkScroll(); // Check on load to show elements already in view
 
