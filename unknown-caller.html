@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#8b0000">
+    <title>المتصل المجهول</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap');
+
+        :root {
+            --primary: #8b0000; /* Dark Red */
+            --secondary: #500000; /* Darker Red */
+            --accent: #ff4d4d; /* Bright Red/Pink */
+            --text: #f0f0f0; /* Off White */
+            --bg: #121212; /* Very Dark Grey */
+            --card-bg: #1e1e1e; /* Dark Grey */
+            --dialogue-bg: rgba(139, 0, 0, 0.15); /* Primary with transparency */
+            --border-color: rgba(255, 255, 255, 0.1); /* Light grey for borders */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.8; /* Increased line height for better readability */
+            overflow-x: hidden;
+            text-rendering: optimizeLegibility;
+        }
+
+        /* Animated background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            /* Subtle radial gradient for depth */
+            background: radial-gradient(circle at center, var(--secondary) 0%, var(--bg) 70%);
+            opacity: 0.4; /* Slightly increased opacity */
+        }
+
+        .particle {
+            position: absolute;
+            background-color: var(--accent);
+            border-radius: 50%;
+            opacity: 0.4; /* Adjusted particle opacity */
+            animation: float 20s infinite ease-in-out; /* Slightly longer and smoother animation */
+            pointer-events: none; /* Ensure particles don't interfere with clicks */
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 0.4;
+            }
+            25% {
+                 transform: translateY(-50px) translateX(50px);
+                 opacity: 0.2;
+            }
+            50% {
+                transform: translateY(-100px) translateX(-50px);
+                opacity: 0.4;
+            }
+            75% {
+                transform: translateY(-50px) translateX(-50px);
+                opacity: 0.2;
+            }
+            100% {
+                transform: translateY(0) translateX(0);
+                opacity: 0.4;
+            }
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(to bottom, rgba(0,0,0,0.95), rgba(0,0,0,0.7));
+            padding: 2rem 1.5rem; /* Increased padding */
+            text-align: center;
+            position: relative;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.6); /* Stronger shadow */
+            border-bottom: 2px solid var(--primary); /* Thicker border */
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* Back button styling */
+        .back-button {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            background: var(--primary);
+            color: var(--text);
+            padding: 0.8rem 1.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            z-index: 10;
+            white-space: nowrap;
+            max-width: calc(100% - 40px);
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .back-button:hover {
+            background: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .back-button i {
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .back-button {
+                padding: 0.8rem 1.2rem;
+                top: 15px;
+                right: 15px;
+                font-size: 1rem;
+                display: flex;
+                align-items: center;
+            }
+            
+            .back-button i {
+                margin-left: 0;
+                font-size: 1.1rem;
+            }
+        }
+
+        h1 {
+            font-size: 3rem; /* Larger heading */
+            color: var(--accent);
+            margin-bottom: 0.75rem; /* Increased margin */
+            text-shadow: 0 0 15px rgba(255, 77, 77, 0.6); /* Stronger initial shadow */
+            animation: glow 2.5s ease-in-out infinite alternate; /* Slightly slower glow */
+            font-weight: 900; /* Make heading bolder */
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 8px rgba(255, 77, 77, 0.6);
+            }
+            to {
+                text-shadow: 0 0 20px rgba(255, 77, 77, 0.9), 0 0 30px rgba(255, 77, 77, 0.7);
+            }
+        }
+
+        .subtitle {
+            font-size: 1.3rem; /* Slightly larger subtitle */
+            color: var(--text);
+            opacity: 0.9; /* Increased opacity */
+            font-weight: 500;
+        }
+
+        /* Main content */
+        .container {
+            max-width: 1200px;
+            margin: 3rem auto; /* Increased margin */
+            padding: 0 1.5rem;
+        }
+
+        /* Section styling */
+        .section-title {
+            color: var(--accent);
+            margin-bottom: 1.5rem; /* Increased margin */
+            font-size: 2rem; /* Larger section title */
+            border-bottom: 2px solid var(--primary); /* Thicker border */
+            padding-bottom: 0.75rem; /* Increased padding */
+            text-align: center; /* Center section titles */
+            font-weight: 700;
+        }
+
+
+        /* Video section */
+        .video-section {
+            margin-bottom: 3rem;
+            position: relative;
+            border-radius: 10px; /* More rounded corners */
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4); /* Stronger shadow */
+            transition: transform 0.4s ease, box-shadow 0.4s ease; /* Smoother transition */
+            background-color: var(--card-bg); /* Add card background */
+            border: 1px solid var(--primary); /* Add a border */
+            padding: 1rem; /* Add some padding inside the card */
+        }
+
+        .video-section .section-title {
+            margin-bottom: 1rem; /* Adjust margin below title within card */
+             border-bottom: 1px solid var(--primary); /* Lighter border for inner title */
+        }
+
+        .video-section:hover {
+            transform: translateY(-8px); /* More pronounced hover effect */
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6); /* Stronger shadow on hover */
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            background-color: #000;
+            border-radius: 8px; /* Rounded corners for video iframe */
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Scenario sections */
+        .scenario-section {
+            background-color: var(--card-bg);
+            border-radius: 10px; /* More rounded corners */
+            padding: 2.5rem; /* Increased padding */
+            margin-bottom: 3rem; /* Increased margin */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4); /* Stronger shadow */
+            border-left: 5px solid var(--primary); /* Thicker border */
+            transition: transform 0.4s ease, box-shadow 0.4s ease; /* Smoother transition */
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scenario-section:hover {
+            transform: translateY(-8px); /* More pronounced hover effect */
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5); /* Stronger shadow on hover */
+            border-left-color: var(--accent); /* Change border color on hover */
+        }
+
+        .scenario-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(139, 0, 0, 0.1) 0%, transparent 100%);
+            z-index: 0;
+            pointer-events: none; /* Ensure pseudo-element doesn't interfere */
+        }
+
+        .scenario-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        h3 {
+            color: var(--accent); /* Scene titles use accent color */
+            margin: 1.5rem 0 1rem;
+            font-size: 1.6rem; /* Larger scene titles */
+            font-weight: 700;
+            border-bottom: 1px dashed var(--border-color); /* Subtle border */
+            padding-bottom: 0.5rem;
+        }
+
+        p {
+            margin-bottom: 1.2rem; /* Increased margin between paragraphs */
+            text-align: justify;
+            color: var(--text); /* Ensure paragraph text color is correct */
+        }
+
+        .character-list {
+            list-style-type: none;
+            margin: 1rem 0 2rem;
+            padding: 0;
+        }
+
+        .character-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed var(--border-color);
+            font-weight: 500;
+        }
+         .character-list li:last-child {
+            border-bottom: none;
+        }
+
+
+        .dialogue {
+            background-color: var(--dialogue-bg); /* Using variable */
+            border-left: 4px solid var(--primary); /* Thicker border */
+            padding: 1.5rem; /* Increased padding */
+            margin: 1.5rem 0; /* Increased margin */
+            border-radius: 0 6px 6px 0; /* More rounded corners on one side */
+            position: relative; /* Needed for potential ::before/::after */
+        }
+
+         .dialogue p {
+             margin-bottom: 1rem; /* Space between dialogue paragraphs */
+             text-align: right; /* Dialogue typically right-aligned in RTL */
+             line-height: 1.7;
+         }
+
+         .dialogue p:last-child {
+             margin-bottom: 0; /* No bottom margin on last paragraph */
+         }
+
+        .dialogue strong {
+            color: var(--accent);
+            font-weight: 700;
+            margin-left: 0.5em; /* Space after character name */
+        }
+
+        /* Team section */
+        .team-section {
+            background-color: var(--card-bg);
+            border-radius: 10px; /* More rounded corners */
+            padding: 2.5rem; /* Increased padding */
+            margin-bottom: 3rem; /* Increased margin */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4); /* Stronger shadow */
+            border-left: 5px solid var(--primary); /* Thicker border */
+             transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .team-section:hover {
+             transform: translateY(-8px);
+             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+             border-left-color: var(--accent);
+        }
+
+        .team-members {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Slightly wider min */
+            gap: 2rem; /* Increased gap */
+            margin-top: 2rem; /* Increased margin */
+        }
+
+        .team-member {
+            background-color: rgba(80, 0, 0, 0.3); /* Slightly darker background */
+            padding: 1.2rem; /* Increased padding */
+            border-radius: 8px; /* More rounded corners */
+            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+            font-weight: 500;
+            border: 1px solid transparent;
+        }
+
+        .team-member:hover {
+            transform: translateY(-5px);
+            background-color: rgba(139, 0, 0, 0.4); /* More pronounced hover background */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            border-color: var(--primary); /* Add border on hover */
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.7));
+            padding: 2.5rem 1.5rem; /* Increased padding */
+            text-align: center;
+            margin-top: 4rem; /* Increased margin */
+            border-top: 2px solid var(--primary); /* Thicker border */
+            color: rgba(240, 240, 240, 0.9); /* Ensure footer text color */
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem; /* Increased gap */
+            margin: 2rem 0; /* Increased margin */
+        }
+
+        .social-link {
+            color: var(--text);
+            font-size: 1.8rem; /* Larger icons */
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .social-link:hover {
+            color: var(--accent);
+            transform: scale(1.2); /* Scale effect on hover */
+        }
+
+        .copyright {
+            opacity: 0.8; /* Slightly less transparent */
+            font-size: 1rem; /* Slightly larger font */
+            font-weight: 400;
+        }
+
+        /* Scroll animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(15px); /* Reduced from 30px */
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out; /* Faster transition */
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Phone animation */
+        .phone-animation {
+            position: fixed;
+            bottom: 25px; /* Slightly higher */
+            right: 25px; /* Slightly further from edge */
+            width: 65px; /* Slightly larger */
+            height: 65px; /* Slightly larger */
+            background-color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(139, 0, 0, 0.8); /* Stronger shadow */
+            z-index: 100;
+            animation: pulse 2s infinite; /* Keep pulse */
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease; /* Added transform */
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 77, 77, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 20px rgba(255, 77, 77, 0); /* Larger pulse */
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 77, 77, 0);
+            }
+        }
+
+        /* Scroll to top button */
+        .scroll-top-button {
+            position: fixed;
+            bottom: 25px;
+            left: 25px; /* Positioned on the left since the phone is on the right */
+            width: 65px;
+            height: 65px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(139, 0, 0, 0.8);
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
+            animation: float-button 2s infinite;
+        }
+
+        .scroll-top-button.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top-button:hover {
+            background-color: var(--accent);
+            transform: translateY(-5px);
+        }
+
+        @keyframes float-button {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        .scroll-top-icon {
+            color: white;
+            font-size: 1.7rem;
+        }
+
+        @media (max-width: 768px) {
+            .back-button {
+                font-size: 0.9rem !important;
+                padding: 0.6rem 1rem !important;
+                top: 10px !important;
+                right: 10px !important;
+            }
+            
+            .back-button span {
+                display: none;
+            }
+            
+            .back-button i {
+                margin: 0;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .subtitle {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                 font-size: 1.7rem;
+                 padding-bottom: 0.5rem;
+                 margin-bottom: 1rem;
+            }
+
+            h3 {
+                font-size: 1.4rem;
+                 margin-top: 1rem;
+            }
+
+            .team-members {
+                grid-template-columns: 1fr;
+                 gap: 1.5rem;
+            }
+
+            .container {
+                padding: 0 1rem;
+                margin: 2rem auto;
+            }
+
+            .scenario-section, .team-section {
+                padding: 1.5rem;
+                 margin-bottom: 2rem;
+            }
+             .dialogue {
+                 padding: 1rem;
+                 margin: 1rem 0;
+             }
+             .phone-animation {
+                width: 55px;
+                height: 55px;
+                bottom: 15px;
+                right: 15px;
+             }
+             .phone-icon {
+                 font-size: 1.3rem;
+             }
+
+            .scroll-top-button {
+                width: 55px;
+                height: 55px;
+                bottom: 15px;
+                left: 15px;
+            }
+            .scroll-top-icon {
+                font-size: 1.3rem;
+            }
+
+            .container {
+                padding: 0.5rem;
+                margin: 1rem auto;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+                margin-bottom: 1rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+                padding-bottom: 0.5rem;
+                margin-bottom: 1rem;
+            }
+
+            h3 {
+                font-size: 1.2rem;
+                margin: 1rem 0 0.5rem;
+            }
+
+            .scenario-section, .team-section {
+                padding: 1rem;
+                margin-bottom: 1.5rem;
+                border-radius: 8px;
+            }
+
+            .dialogue {
+                padding: 1rem;
+                margin: 0.75rem 0;
+                font-size: 0.95rem;
+            }
+
+            .dialogue p {
+                margin-bottom: 0.75rem;
+                line-height: 1.6;
+            }
+
+            .team-members {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .team-member {
+                padding: 0.8rem;
+                font-size: 0.9rem;
+            }
+
+            .phone-animation, .scroll-top-button {
+                width: 45px;
+                height: 45px;
+                bottom: 10px;
+            }
+
+            .phone-animation {
+                right: 10px;
+            }
+
+            .scroll-top-button {
+                left: 10px;
+            }
+
+            .phone-icon, .scroll-top-icon {
+                font-size: 1.1rem;
+            }
+
+            .social-links {
+                gap: 1rem;
+                margin: 1.5rem 0;
+            }
+
+            .social-link {
+                font-size: 1.4rem;
+            }
+
+            .copyright {
+                font-size: 0.9rem;
+            }
+            
+            /* Better touch targets */
+            .back-button, .social-link, .phone-animation, .scroll-top-button {
+                min-height: 44px;
+                min-width: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            /* Improved text readability */
+            p, .dialogue p {
+                font-size: 0.95rem;
+                line-height: 1.6;
+                letter-spacing: 0.01em;
+            }
+
+            /* Better spacing for touch targets */
+            .character-list li {
+                padding: 0.8rem 0;
+                margin: 0.2rem 0;
+            }
+
+            /* Prevent horizontal scroll */
+            body {
+                overflow-x: hidden;
+                width: 100%;
+            }
+
+            /* Improved video container responsiveness */
+            .video-container {
+                margin: 0 -1rem;
+                border-radius: 0;
+            }
+
+            /* Better header spacing */
+            header {
+                padding: 1.5rem 1rem;
+            }
+
+            .header-content {
+                padding: 0 0.5rem;
+            }
+        }
+
+        /* Small phones */
+        @media (max-width: 360px) {
+            h1 {
+                font-size: 1.6rem;
+            }
+
+            .subtitle {
+                font-size: 0.9rem;
+            }
+
+            .dialogue {
+                padding: 0.8rem;
+            }
+
+            .phone-animation, .scroll-top-button {
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        /* Additional mobile optimizations */
+        @media (max-width: 768px) {
+            /* Base font size adjustments */
+            body {
+                font-size: 16px;
+                line-height: 1.5;
+            }
+
+            /* Container adjustments */
+            .container {
+                padding: 0.75rem;
+                margin: 1rem auto;
+                max-width: 100%;
+            }
+
+            /* Header adjustments */
+            header {
+                padding: 1rem 0.75rem;
+            }
+
+            .header-content {
+                padding: 0 0.5rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+                margin-bottom: 0.5rem;
+                line-height: 1.2;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+                margin-bottom: 0.75rem;
+            }
+
+            /* Scenario section adjustments */
+            .scenario-section {
+                padding: 1rem;
+                margin-bottom: 1.5rem;
+                border-left-width: 3px;
+            }
+
+            .section-title {
+                font-size: 1.4rem;
+                padding-bottom: 0.4rem;
+                margin-bottom: 0.75rem;
+            }
+
+            h3 {
+                font-size: 1.2rem;
+                margin: 0.75rem 0 0.5rem;
+            }
+
+            /* Dialogue adjustments */
+            .dialogue {
+                padding: 0.75rem;
+                margin: 0.75rem 0;
+                font-size: 0.95rem;
+                border-left-width: 3px;
+            }
+
+            .dialogue p {
+                margin-bottom: 0.6rem;
+                line-height: 1.5;
+            }
+
+            /* Character list adjustments */
+            .character-list li {
+                padding: 0.6rem 0;
+                font-size: 0.95rem;
+            }
+
+            /* Team section adjustments */
+            .team-section {
+                padding: 1rem;
+            }
+
+            .team-member {
+                padding: 0.75rem;
+                font-size: 0.9rem;
+                margin-bottom: 0.5rem;
+            }
+
+            /* Fixed elements adjustments */
+            .phone-animation, .scroll-top-button {
+                width: 48px;
+                height: 48px;
+                bottom: 16px;
+            }
+
+            .phone-animation {
+                right: 16px;
+            }
+
+            .scroll-top-button {
+                left: 16px;
+            }
+
+            .phone-icon i, .scroll-top-icon i {
+                font-size: 1.2rem;
+            }
+
+            /* Footer adjustments */
+            footer {
+                padding: 1.5rem 1rem;
+                margin-top: 2rem;
+            }
+
+            .social-links {
+                gap: 1rem;
+            }
+
+            .social-link {
+                font-size: 1.2rem;
+                width: 40px;
+                height: 40px;
+            }
+
+            /* Video container adjustments */
+            .video-section {
+                margin: 1rem -0.75rem;
+                border-radius: 0;
+            }
+
+            .video-container {
+                border-radius: 0;
+            }
+
+            /* Improved touch targets */
+            a, button, .social-link, .phone-animation, .scroll-top-button {
+                min-height: 44px;
+                min-width: 44px;
+            }
+
+            /* Better spacing for interactive elements */
+            .back-button {
+                padding: 0.7rem 1rem;
+                font-size: 0.95rem;
+                height: 44px;
+                display: flex;
+                align-items: center;
+            }
+        }
+
+        /* Extra small devices */
+        @media (max-width: 360px) {
+            body {
+                font-size: 15px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .subtitle {
+                font-size: 0.9rem;
+            }
+
+            .section-title {
+                font-size: 1.3rem;
+            }
+
+            .scenario-section {
+                padding: 0.75rem;
+            }
+
+            .dialogue {
+                padding: 0.7rem;
+                font-size: 0.9rem;
+            }
+
+            .phone-animation, .scroll-top-button {
+                width: 44px;
+                height: 44px;
+                bottom: 12px;
+            }
+
+            .phone-animation {
+                right: 12px;
+            }
+
+            .scroll-top-button {
+                left: 12px;
+            }
+
+            .team-member {
+                padding: 0.6rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Fix for medium-sized tablets */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+
+            .scenario-section {
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 1.6rem;
+            }
+        }
+
+        /* Enable smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Prevent text size adjustment on orientation change */
+        html {
+            -webkit-text-size-adjust: 100%;
+            -moz-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link type="logo" rel="icon" href="img/1.png"> <!-- Replace with your logo URL -->
+</head>
+<body>
+    <!-- Animated background particles -->
+    <div class="bg-animation" id="bgAnimation"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <a href="https://bebonaiem.dpdns.org/" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                <span>الرجوع للصفحة الرئيسية</span>
+            </a>
+            <h1>المتصل المجهول</h1>
+            <p class="subtitle">سيناريو قصير - كلية التربية النوعية</p>
+        </div>
+    </header>
+
+    <!-- Main content -->
+    <div class="container">
+         <!-- Overall Section Title (Optional - can be removed if separate titles are enough) -->
+         <!-- <h2 class="section-title fade-in">السيناريو</h2> -->
+
+        <!-- Video section -->
+        <section class="video-section fade-in">
+            <h2 class="section-title">الفيديو التعريفي</h2>
+            <div class="video-container">
+                <!-- Replace with your YouTube video embed code -->
+                <iframe src="https://www.youtube.com/embed/RJgCBEZNKlI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <!-- Scenario sections - Broken down by Scene -->
+        <section class="scenario-section fade-in">
+            <div class="scenario-content">
+                <h2 class="section-title">السيناريو</h2>
+                 <!-- Characters List can go here or stand alone -->
+                <h3>الشخصيات</h3>
+                <ul class="character-list">
+                    <li>ريم</li>
+                    <li>ندى</li>
+                    <li>سارة</li>
+                    <li>مايا</li>
+                    <li>المتصل المجهول</li>
+                    <li>الجدة رهف</li>
+                    <li>الجارة</li>
+                    <li>صوت طفولي</li>
+                </ul>
+
+                <h3>المشهد 1: (في شقة ريم)</h3>
+                <p><strong>المكان:</strong> أوضة ريم</p>
+                <p><strong>الزمان:</strong> الساعة 10 بالليل</p>
+                 <p><strong>الصوت و المؤثرات:</strong> رنة تليفون، صوت ورق</p>
+                <div class="dialogue">
+                    <p><strong>ريم (بتفكر بصوت جواها):</strong> "كل حاجة باينة مشوشة... مش عارفة أكتب حاجة. عندي شهرة، عندي ناس حواليا، بس الفكرة؟ مش لاقياها. مفيش جديد."</p>
+                    <p>(ريم تفتح المتصفح، عينها تقف على عنوان لافت)</p>
+                    <p><strong>ريم (بتقرأ بصوت واطي):</strong> "البيت المهجور في شارع شيرا: وفاة غامضة لطفلة وقعت من الشباك من خمس سنين."</p>
+                    <p><strong>ريم (عيونها بتوسع كأنها لقت حاجة):</strong> "دي علامه.. يمكن ألاقي هناك القصة اللي بدور عليها."</p>
+                    <p>(تقوم من على الكرسي وتكتب في النوتة)</p>
+                    <p>"شارع شبرا - بداية الحكاية"</p>
+                    <p>(فجأة، الموبايل بيرن برقم مجهول. ريم تتردد ثم ترد)</p>
+                    <p><strong>ريم (بتردد):</strong> "ألو؟"</p>
+                    <p><strong>المتصل المجهول (بصوت مشوش وغريب):</strong> "مش كل القصص بتحب اللي يكتبها... بالذات القصص اللي لسه مخلصتش."</p>
+                     <p>(الخط يتقفل فجأة. ريم متفاجئة ومستغربة)</p>
+                     <p><strong>ريم (لنفسها):</strong> "إيه ده؟ مين ده؟" ... (بإصرار) "لازم أروح أشوف البيت ده بنفسي."</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="scenario-section fade-in">
+            <div class="scenario-content">
+                <h3>المشهد 2: (تاني يوم الصبح)</h3>
+                 <p><strong>المكان:</strong> أوضة ريم</p>
+                <p><strong>الزمان:</strong> تاني يوم الصبح</p>
+                 <p><strong>الصوت و المؤثرات:</strong> قفل المكالمة، صوت صدمة، رنة تليفون</p>
+                <div class="dialogue">
+                     <p>(ريم تجهز نفسها بسرعة وقلق، تتصل بندى)</p>
+                     <p><strong>ريم:</strong> "صباح الفل يا ندى. أنا رايحة شارع شبرا للبيت المهجور ابقي قولي لسارة و مايا."</p>
+                     <p><strong>ندى (مستغرب):</strong> "البيت المهجور!؟ ده خطر يا ريم!"</p>
+                     <p><strong>ريم:</strong> "عارفة، بس لازم أروح ... هقولك و افهمك بعدين... سلام."</p>
+                     <p>(ريم تقفل الخط مع ندى ، وقبل ما تتحرك، الموبايل بيرن تاني بنفس الرقم المجهول. ترد بقلق)</p>
+                     <p><strong>ريم:</strong> "ألو؟ مين؟"</p>
+                     <p><strong>المتصل المجهول (بصوت غامض):</strong> "فاكرة إنك رايحة لوحدك ؟... في عيون بتشوف كل خطوة."</p>
+                     <p>(الخط يتقفل تاني. ريم تبص حواليها بخوف لكن تكمل تجهيز نفسها)</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="scenario-section fade-in">
+            <div class="scenario-content">
+                <h3>المشهد 3: (قدام البيت المهجور)</h3>
+                 <p><strong>المكان:</strong> قدام البيت المهجور</p>
+                <p><strong>الزمان:</strong> الصبح</p>
+                 <p><strong>الصوت و المؤثرات:</strong> رنة تليفون، قفل تليفون، صوت مرعب في الخلفية، صوت خطوات، صوت ست عجوزة، صوت دقات قلب</p>
+                <div class="dialogue">
+                    <p>(ريم واقفة قدام البيت، شكله مخيف ومتربة. تدخل مترددة - فجأة الموبايل بيرن بنفس الرقم المجهول)</p>
+                    <p><strong>ريم (ترد بصوت مهزوز):</strong> "ألو؟"</p>
+                    <p><strong>المتصل المجهول(بصوت غامض):</strong> "افتكري إنك دخلتي بارادتك... بس الخروج مش سهل."</p>
+                    <p>(ريم مرعوبة - المكالمة تتقفل)</p>
+                    <p><strong>ريم (تتلفت حواليها):</strong> "إيه ده؟ مين ده؟ هو شايفني؟"</p>
+                    <p>(تسمع صوت خطوات بطيئة خلفها. تلتفت ريم بسرعة، فتجد ست عجوزة تقف على مسافة قصيرة، تنظر إليها بعيون تحمل حكمة وحزن قديمين. إنها الجدة رهف.)</p>
+                    <p><strong>الجدة رهف (بصوت هادئ لكنه يحمل عمقًا):</strong> "بتدوري على إيه هنا يا بنتي؟ بقالنا سنين محدش داس عتبة البيت ده".</p>
+                    <p><strong>ريم (متفاجئة ومرتبكة قليلاً):</strong> "أنا... أنا بس كنت بسمع حكايات عن البيت ده... بيقولوا حصلت فيه حاجة زمان."</p>
+                    <p><strong>الجدة رهف (تومئ برأسها ببطء وهي تنظر للبيت بنظرة بعيدة):</strong> " في حكايات... البيت ده شافها كلها، الحلوة والمرة... وخصوصاً المرة."</p>
+                    <p>(ثم تبدأ تحكي لها عن ليلى والبيت)</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="scenario-section fade-in">
+            <div class="scenario-content">
+                <h3>المشهد 4: (ليلا في بيت ريم)</h3>
+                 <p><strong>المكان:</strong> بيت ريم</p>
+                <p><strong>الزمان:</strong> ليلا</p>
+                 <p><strong>الصوت و المؤثرات:</strong> رنة تليفون، قفل التليفون، صوت رمي موبايل</p>
+                <div class="dialogue">
+                    <p>(رجعت ريم البيت و قعدت على مكتبها، بتراجع النوتس والصور اللي خدتها من البيت المهجور – و شكلها تعبانة وقلقانة. الموبايل بيرن تاني بنفس الرقم)</p>
+                    <p><strong>ريم (تمسك الموبايل بتردد شديد ثم ترد):</strong> "أيوة؟"</p>
+                    <p><strong>المتصل المجهول (بصوت غامض):</strong> "انتي قربتي من الحقيقة ... بس الحقيقة ليها تمن غالي."</p>
+                    <p><strong>ريم (بتوتر وغضب):</strong> "إنت عايز إيه مني؟ إنت مين؟!"</p>
+                    <p><strong>المتصل (بصوت غامض):</strong> "مش كل باب لازم يتفتح... في أبواب وراها كوابيس."</p>
+                    <p>(يُغلق الخط فجأة. ريم ترمي الموبايل بعيد عنها)</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="scenario-section fade-in">
+            <div class="scenario-content">
+                <h3>المشهد 5: (اليوم التالي - في حي شبرا)</h3>
+                 <p><strong>المكان:</strong> حي شبرا عند جارة قديمة</p>
+                <p><strong>الزمان:</strong> الصبح</p>
+                 <p><strong>الصوت و المؤثرات:</strong> رنة تليفون، صوت فتح باب، صوت صراخ، صوت شارع، قفل التليفون</p>
+                <div class="dialogue">
+                    <p>(ريم بتروح تزور جارة قديمة كانت ساكنة جنب البيت المهجور، بتحاول تجمع معلومات أكثر)</p>
+                    <p><strong>الجارة (بصوت واطي وخايف):</strong> "أنا كنت بسمع صراخ جاي من البيت ده زمان... أصوات غريبة ... وبعدين فجأة كل حاجة سكتت... محدش كان بيقرب من هناك."</p>
+                    <p>(ريم تشكر الجارة وتمشي في الشارع وهي بتفكر، والموبايل بيرن تاني - نفس الرقم)</p>
+                    <p><strong>ريم (ترد وهي ماشية، بصوت حذر):</strong> "عايز إيه تاني؟"</p>
+                    <p><strong>الم متصل المجهول (بصوت غامض):</strong> "كل ما تسألي أكتر ... الإجابة هتوجعك أكتر. في أسرار المفروض تفضل مدفونة."</p>
+                    <p>(الخط يقفل. ريم تقف لحظة، تشعر كأن حد بيراقبها)</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="scenario-section fade-in">
+            <div class="scenario-content">
+                <h3>المشهد 6: (ريم) في دار المحفوظات أو مكتبة، بتراجع صور قديمة من أرشيف الجرائد</h3>
+                 <p><strong>المكان:</strong> دار المحفوظات</p>
+                <p><strong>الزمان:</strong> الصبح</p>
+                 <p><strong>الصوت و المؤثرات:</strong> رنة تليفون، صوت تقليب صور، صوت دقات قلب، قفل تليفون</p>
+                <div class="dialogue">
+                    <p>(تلاقي صورة قديمة للبيت، وفيها خيال رجل واقف في شباك الدور اللي فوق)</p>
+                    <p><strong>ريم (بصوت واطي ومصدوم):</strong> "معقول؟... ده أبو ليلى؟ كان فين يومها؟"</p>
+                    <p>(الموبايل بيرن - مكالمة من نفس الرقم. ريم ترد بسرعة)</p>
+                    <p><strong>ريم:</strong> "إنت اللي في الصورة دي؟ إنت مين؟!"</p>
+                    <p><strong>المتصل المجهول:</strong> "لو عرفتي اللي حصلله ... مش هتعرفي تنامي الليل. الماضي مش بيروح بسهولة."</p>
+                    <p><strong>ريم:</strong> "إنت كنت هناك وقتها؟ شفت اللي حصل؟"</p>
+                    <p><strong>المتصل (بصوت أقرب للهمس):</strong> "أنا لسه هنا... البيت بيحتفظ بكل حاجة."</p>
+                    <p>(الخط يقفل. ريم إيديها بترتعش وهي بتبص للصورة)</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="scenario-section fade-in">
+            <div class="scenario-content">
+                <h3>المشهد 7 : ( في الليل - أوضة نوم ريم)</h3>
+                 <p><strong>المكان:</strong> أوضة نوم ريم</p>
+                <p><strong>الزمان:</strong> ليلا</p>
+                 <p><strong>الصوت و المؤثرات:</strong> رنة تليفون، صوت كوابيس، صوت المتصل، صوت خوف، قفل التليفون</p>
+                <div class="dialogue">
+                    <p>(ريم نايمة نوم متقطع، بتحلم بكوابيس عن البيت وليلى وصوت المتصل. تصحى فجأة مفزوعة على صوت رنة موبايلها اللي جنب السرير)</p>
+                    <p><strong>ريم (تفتح عينيها بصعوبة، ترد بصوت مخنوق من الخوف):</strong> "..." (مش قادرة تتكلم)</p>
+                    <p><strong>المتصل المجهول:</strong> "البيت ندهك... وإنتي سمعتي النداء. خلاص بقيتي جزء من الحكاية."</p>
+                    <p><strong>ريم (بصراخ مكتوم):</strong> "سيبني في حالي! ابعد عني!"</p>
+                    <p><strong>المتصل (ببرود):</strong> "لسه بدري... الحكاية يا دوب بتبتدي."</p>
+                    <p>(الخط يقفل. ريم تضم نفسها وهي مرعوبة)</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="scenario-section fade-in">
+            <div class="scenario-content">
+                <h3>المشهد 8: (اليوم التالي - ريم تقرر ترجع البيت المهجور)</h3>
+                 <p><strong>المكان:</strong> قدام البيت المهجور</p>
+                <p><strong>الزمان:</strong> الصبح</p>
+                 <p><strong>الصوت و المؤثرات:</strong> رنة تليفون، صوت يخوف، صوت هواء، صوت خطوات، صوت ارضية خشب، صوت دقات قلب، صوت تزيقة باب</p>
+                <div class="dialogue">
+                     <p>(ريم تقف مرة تانية قدام البيت، المرادي شكلها مصمم أكثر رغم الخوف الظاهر في عينيها المتسعة. الهواء حول البيت يبدو أثقل، كأن الصمت نفسه له وزن. تدخل البيت بحذر، الظلمة في الداخل تبدو أكثر كثافة، تبتلع الضوء القادم من المدخل بسرعة. الغبار يملأ الجو، ورائحة العفن والرطوبة تخترق أنفاسها. فجأة، موبايلها يرن للمرة الأخيرة بنفس الرقم المجهول)</p>
+                     <p>(ريم تبص للموبايل، شاشة تتوهج بالرقم المجهول في الظلمة. تتجاهله هذه المرة، تضعه في جيبها وتكمل طريقها لجوه. خطواتها يتردد صداها بشكل غريب على الأرضية الخشبية المتآكلة. فجأة تسمع الصوت، ليس من الموبايل، بل يتردد في أرجاء المكان، كأنه يخرج من الجدران نفسها، بارد ومباشر وقريب بشكل مرعب)</p>
+                     <p><strong>المتصل (صوت يتردد كصدي مشوه في أرجاء المكان):</strong> "رجعتى تاني ؟ ... الشجاعة أحيانًا تكون مجرد قناع للخوف الأعمق. جاية تدوري على النهاية؟ خلي بالك، في روايات ملهاش نهاية سعيدة... وأحيانًا ملهاش نهاية خالص. مجرد دوامة بتتكرر."</p>
+                     <p>(ريم تتجمد في مكانها، قلبها يخفق بعنف. تتلفت حولها، لكنها لا ترى سوى الظلال والأثاث المغطى بأغطية بيضاء كالأشباح. تأخذ نفس عميق، تحاول السيطرة على رعشة يديها، وتمشي ببطء ناحية مصدر الصوت المتخيل، الذي يبدو قادمًا من عمق البيت، من قلب الظلمة.)</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="scenario-section fade-in">
+            <div class="scenario-content">
+                <h3>المشهد 9: (أعمق داخل البيت المهجور)</h3>
+                 <p><strong>المكان:</strong> داخل البيت المهجور</p>
+                <p><strong>الزمان:</strong> الصبح</p>
+                 <p><strong>الصوت و المؤثرات:</strong> صوت همسات، صوت دقات قلب، صوت رعب</p>
+                <div class="dialogue">
+                    <p>(ريم تمشي في ممر طويل ومظلم. ضوء موبايلها يرسم دائرة صغيرة ترتعش على الجدران المقشرة والأرضية المتربة. تسمع همسات خافتة، غير مفهومة، تتداخل مع صدى صوت المتصل الذي لا يزال يتردد بين الحين والآخر، كأنه يراقبها من كل زاوية.)</p>
+                    <p><strong>المتصل (صوت يظهر فجأة من خلفها):</strong> "الجدران لها آذان... وذاكرة. فاكرة كل نفس، كل صرخة، كل دمعة ... وخصوصًا، فاكرة آخر لحظات ليلى."</p>
+                    <p>(ريم تستدير بسرعة، تسلط ضوء الموبايل خلفها، لكن لا تجد شيئًا سوى نهاية الممر الفارغ. تشعر ببرودة مفاجئة تلفها.)</p>
+                    <p><strong>ريم (تهمس بصوت مختنق):</strong> "مين إنت؟ عايز إيه؟"</p>
+                    <p><strong>المتصل (صوت يأتي الآن من أمامها، من غرفة مفتوحة على الممر):</strong> "أنا الحقيقة اللي الكل هرب منها... أنا الصدى اللي محدش قدر يسكته. تعالي... قربي أكتر... القصة الحقيقية مستنياكي هنا."</p>
+                    <p>(ريم تتردد للحظة. عقلها يتأرجح بين الرغبة في الهرب والخيط الرفيع من الفضول والإصرار الذي أوصلها إلى هنا. تتقدم بحذر نحو الغرفة المفتوحة.)</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="scenario-section fade-in">
+            <div class="scenario-content">
+                <h3>المشهد 10: (غرفة ليلي)</h3>
+                 <p><strong>المكان:</strong> داخل البيت المهجور (غرفة ليلي)</p>
+                <p><strong>الزمان:</strong> الصبح</p>
+                 <p><strong>الصوت و المؤثرات:</strong> صوت همسات، صوت tziqah باب، صوت مخيف، صوت dqat قلب، صوت بكاء طفله</p>
+                <div class="dialogue">
+                    <p>(تدخل ريم الغرفة. تبدو كأنها غرفة طفلة، لكن الزمن والظلام أضافا عليها لمسة مرعبة. سرير صغير عليه بقايا ملاءة ممزقة، دولاب مفتوح جزئيًا يكشف عن فراغ مظلم، رسومات أطفال باهتة معلقة على الحائط، إحداها تبدو مشوهة بخطوط عنيفة. في وسط الغرفة، صندوق خشبي صغير مقفول.)</p>
+                    <p><strong>المتصل (صوت يبدو الآن أقرب، كأنه يتنفس بجانبها):</strong> "الصندوق ده... هو صندوق باندورا بتاعها. فتحتيه مرة، وكل الأسرار هتطلع ... ومش هتقدري تقفليها تاني."</p>
+                    <p>(ريم تقترب من الصندوق، تمد يدها المرتعشة للمسه. فجأة، تسمع صوت بكاء طفلة مكتوم، يبدو قادمًا من داخل الصندوق. تسحب يدها بسرعة ورعب.)</p>
+                    <p><strong>ريم (تتلفت بجنون):</strong> "ده مش حقيقي... ده في دماغي..."</p>
+                    <p><strong>المتصل (بضحكة باردة وخافتة):</strong> "إيه هو الحقيقي وإيه هو الخيال هنا يا ريم؟ الخطوط بقت مشوشة ... زي قصتك بالظبط."</p>
+                    <p>(باب الغرفة يُغلق ببطء من تلقاء نفسه، محدثًا صريرًا مؤلمًا. الظلام يزداد كثافة. ضوء موبايل ريم يبدأ يضعف ويومض.)</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="scenario-section fade-in">
+            <div class="scenario-content">
+                <h3>المشهد 11: (المواجهة في الظلام)</h3>
+                 <p><strong>المكان:</strong> داخل البيت المهجور (غرفة ليلي)</p>
+                <p><strong>الزمان:</strong> الصبح</p>
+                 <p><strong>الصوت و المؤثرات:</strong> صوت فتح قفل باب، صوت بكاء طفله، صوت رعب شديد اوي، صوت خطوات، صوت خدش علي الباب، صوت مقبض الباب، صوت انفاس، صوت رنة تليفون</p>
+                <div class="dialogue">
+                    <p>(ريم محاصرة في الغرفة. تحاول فتح الباب لكنه لا يتزحزح. صوت البكاء يتوقف فجأة، ويحل محله صمت مطبق أشد رعبًا. ضوء الموبايل يخفت أكثر.)</p>
+                    <p><strong>ريم (تصرخ في الظلام):</strong> "اظهر! وريني نفسك! كفاية ألعاب!"</p>
+                    <p><strong>المتصل (صوت يأتي من كل مكان ومن لا مكان في نفس الوقت، أعمق وأكثر تشوها):</strong> "مش أنا اللي بلعب ... البيت هو اللي بيلعب. وإنتي دلوقتي جزء من لعبته كنتي بتدوري على قصة؟ مبروك... بقيتي إنتي القصة."</p>
+                    <p>(في اللحظة التي ينطفئ فيها ضوء الموبايل تمامًا، تاركا ريم في ظلام دامس، تسمع صوت خطوات ثقيلة تقترب من خارج الباب، ثم يتوقف الصوت أمام الباب مباشرة. تسمع صوت خدش بطيء يبدأ على خشب الباب من الخارج.)</p>
+                    <p><strong>ريم (تتراجع للخلف حتى يصطدم ظهرها بالحائط البارد، تتنفس بصعوبة):</strong> "لا... لا..."</p>
+                    <p><strong>المتصل (صوت يهمس مباشرة في أذنها، كأنه يقف خلفها تماما في الظلام):</strong> " الحقيقة ليها تمن... وتمن الحقيقة هنا... هو إنك تفضلي جزء منها... للأبد."</p>
+                    <p>(يُسمع صوت مقبض الباب وهو يبدأ بالدوران ببطء شديد... ثم ينقطع المشهد فجأة على سواد تام وصمت مريب، لا يقطعه سوى صوت أنفاس ريم المتقطعة والمذعورة التي تتلاشى تدريجيًا.)</p>
+                    <p>(ربما نسمع بعد لحظات من الصمت صوت رنة موبايل ريم المهمل في مكان ما داخل البيت المظلم... ثم صوت مشوش يجيب): "ألو؟..." (نفس صوت المتصل المجهول، لكن هذه المرة يبدو وكأنه يجيب من هاتف ريم.)</p>
+                </div>
+            </div>
+        </section>
+
+         <section class="scenario-section fade-in">
+            <div class="scenario-content">
+                <h3>المشهد 12: (الوصول اليائس)</h3>
+                 <p><strong>المكان:</strong> داخل البيت المهجور</p>
+                <p><strong>الزمان:</strong> الصبح</p>
+                 <p><strong>الصوت و المؤثرات:</strong> صوت سيارة، صوت رن علي شخص، صوت مرعب، دقات قلب، صوت فتح باب، صوت خبط، رنة تليفون، صوت سقوك موبايل، صوت صراخ، صوت خطوات، ضحكة شريرة، صوت فتح باب، صوت خطوات، صوت طفل حزين و مرعب، صوت انين، صوت فتح دولاب، صوت علق باب، صوت فتح باب بمفتاح، صوت صراح بنت، صوت بكاء، صوت همسات اطفال، صوت ضرب على الباب</p>
+                <div class="dialogue">
+                     <p>(تتوقف سيارة صغيرة بحدة أمام البيت المهجور. تنزل منها سارة و مايا بسرعة، تبدوان مرتعبتين ومنهكتين. سارة تمسك موبايلها بقوة، تحاول الاتصال بريم للمرة الألف.)</p>
+                     <p><strong>سارة (تنظر للموبايل بيأس ثم لمايا):</strong> "مفيش فايدة... لسه مبتردش ندى كلمتني من ساعة، منهارة، بتقول ريم مبتردش عليها من نص الليل بعد ما قالتلها إنها هتروح البيت ده تاني."</p>
+                     <p><strong>مايا (تنظر للبيت بخوف، تشد على ذراع سارة):</strong> "أنا قلبي مقبوض يا سارة... شكل البيت ده لوحده كابوس. ليه رجعت تاني؟ إيه اللي ممكن يكون حصلها جوه؟"</p>
+                     <p><strong>سارة (بعيون تلمع بإصرار ممزوج بالخوف):</strong> "مش عارفة، بس مش هنسيبها لوحدها هنا. ندى قالت إنها سمعت أصوات غريبة آخر مرة كلمتها قبل ما الخط يقطع... لازم ندخل نشوفها حالاً."</p>
+                     <p><strong>مايا (تتردد للحظة ، تنظر للباب الأمامي الموارب قليلاً في الظلام):</strong> "ندخل؟ دلوقتي؟ المكان ده شكله...."</p>
+                     <p><strong>سارة (تقاطعها بحزم):</strong> "مفيش وقت للخوف يا مايا. ريم جوه يلا."</p>
+                     <p>(تتقدم سارة نحو الباب، تدفعه بحذر. يفتح الباب بصریر خافت يكشف عن ظلمة الردهة الداخلية. تتبادلان نظرة أخيرة مليئة بالرعب، ثم تدخلان بسرعة إلى البيت، تاركتين باب السيارة مفتوحًا قليلاً في الشارع الخالي.)</p>
+                     <p><strong>سارة (تهمس بصوت عالٍ ومبحوح داخل البيت):</strong> "ريم؟! ريم أنتي سامعاني؟ إحنا هنا!"</p>
+                     <p>(الصمت المطبق يرد عليهما، ثقيل ومعبأ برائحة الغبار والعفن. الظلام في الداخل أعمق مما بدا من الخارج. بالكاد تريان طريقهما بضوء شاشة موبايل سارة الخافت.)</p>
+                     <p><strong>مايا (تتشبث بسارة، صوتها يرتجف):</strong> "المكان ده... فيه حاجة غلط أوي... حاسة إن حد شايفنا."</p>
+                     <p>(فجأة، تسمعان صوت خبط مكتوم يأتي من الطابق العلوي. تتجمدان في مكانهما، قلوبهما تخفق بعنف.)</p>
+                     <p><strong>سارة (تهمس):</strong> "سمعتي ده؟ فوق..."</p>
+                     <p><strong>مايا (بعيون متسعة):</strong> "ممكن... ممكن تكون هي؟ بتحاول تدينا إشارة؟"</p>
+                     <p>(قبل أن تتحركا، يرن موبايل سارة فجأة بصوت عال يخترق الصمت. تنظر للشاشة بذعر – إنه رقم ريم يتصل بها.)</p>
+                     <p><strong>سارة (ترد بلهفة وخوف):</strong> "ريم! ريم أنتي فين؟ إحنا جوه البيت أنتي كويسة؟!"</p>
+                     <p><strong>المتصل (صوت ،مشوش ،بارد ليس صوت ريم أبداً، إنه نفس صوت المتصل المجهول، يأتي من الهاتف ومن مكان ما في البيت في نفس الوقت):</strong> "صاحبتكم كانت فضولية زيادة عن اللزوم... ودلوقتي بقت جزء من الحكاية اللي كانت بتدور عليها. مش هتقدر ترد عليكم... أبداً."</p>
+                     <p>(تسقط سارة الموبايل من يدها المرتعشة. مايا تطلق صرخة مكتومة. يسمعان الآن بوضوح صوت خطوات ثقيلة تتحرك في الطابق العلوي، فوق رؤوسهما مباشرة، تليها ضحكة خافتة وشريرة تتردد في أرجاء البيت المظلم.)</p>
+                </div>
+            </div>
+        </section>
+
+         <section class="scenario-section fade-in">
+            <div class="scenario-content">
+                 <h3>المشهد 13: (الصعود إلى الفخ)</h3>
+                  <p><strong>المكان:</strong> داخل البيت المهجور</p>
+                 <p><strong>الزمان:</strong> الصبح</p>
+                  <p><strong>الصوت و المؤثرات:</strong> صوت صعود سلم خشبي، صوت مرعب، صوت نافذة، صوت هواء</p>
+                <div class="dialogue">
+                    <p>(الخوف يتملكهما، لكن القلق على ريم يدفعهما للأمام. تبدأ سارة في صعود السلم الخشبي المتآكل بحذر، تتبعها مايا ملتصقة بظهرها، عيونهما تتفحصان الظلام في الأعلى.)</p>
+                    <p><strong>مايا (تتكلم بصوت لاهث من الرعب):</strong> "سمعتي الضحكة دي ؟ ده مش بني آدم طبيعي يا سارة... لازم نرجع ونطلب النجدة..."</p>
+                    <p><strong>سارة (تهمس بإصرار يائس):</strong> "ممكن يكون حابسها فوق لو مشينا دلوقتي ممكن نكون بنسيبها لحتفها لازم نتأكد إنها مش هنا."</p>
+                    <p>(تصلان إلى الطابق العلوي. الممر أمامهما أشد ظلمة، والنوافذ القليلة مغطاة بالغبار والأوساخ، تسمح بمرور خيوط ضوء رمادية باهتة بالكاد تكشف عن الأبواب المغلقة على جانبي الممر. الهواء هنا أثقل وأبرد، ورائحة العفن أقوى.)</p>
+                    <p>(في نهاية الممر، تلاحظ سارة بابًا مفتوحًا قليلاً. ضوء خافت وغير طبيعي يومض من الداخل بشكل متقطع، كأنه ضوء موبايل يحتضر. تتدلى من مقبض الباب خصلة شعر داكنة، تبدو تماما مثل شعر ريم.)</p>
+                    <p><strong>سارة (تشير بيد مرتعشة، صوتها يختنق):</strong> "شوفي... ده... ده شعرها... هي أكيد جوه الأوضة دي!"</p>
+                    <p>(تتسارع خطواتهما نحو الغرفة. قبل أن تصلا، يسمعان صوت همس طفولي حزين، يبدو قادمًا من داخل الغرفة، واضحًا بشكل مرعب في السكون.)</p>
+                    <p><strong>صوت طفولي (همس حزين ومخيف):</strong> "واحدة كمان... وبعدين واحدة كمان... البيت بيحب يلعب..."</p>
+                    <p>(تتبادلان نظرة مفزوعة، لكنهما تدفعان الباب وتدخلان الغرفة. إنها غرفة ليلى. الصندوق الخشبي مفتوح وفارغ في المنتصف. على الحائط المقابل، الرسمة المشوهة للفتيات الثلاث تبدو وكأنها رُسمت للتو، حبرها الداكن لا يزال لامعًا بشكل مقلق في الضوء المتقطع القادم من موبايل ريم المرمي على الأرض وشاشته توشك على الانطفاء.)</p>
+                    <p><strong>مايا (تشهق وتتراجع، تشير للرسمة):</strong> "دي... دي إحنا! إحنا التانيين جمبها!"</p>
+                    <p>(في تلك اللحظة، يسمعان صوت أنين مكتوم، إنه صوت ريم بوضوح هذه المرة، يأتي من داخل دولاب الملابس القديم في زاوية الغرفة.)</p>
+                    <p><strong>صوت ريم (ضعيف ومذعور):</strong> "سارة... مايا... اخرُجوا... ده فخ... هو هنا... هيأذيكم..."</p>
+                    <p>(تندفع سارة نحو الدولاب، تحاول فتحه بيأس، لكنه مقفول بإحكام. مايا تتلفت بجنون، تبحث عن أي شيء للدفاع عن النفس أو كسر القفل.)</p>
+                    <p><strong>مايا (تصرخ نحو الدولاب):</strong> "ريم! هنخرجك! متخافيش!"</p>
+                    <p>(في اللحظة التي تلامس فيها سارة مقبض الدولاب مرة أخرى، ينغلق باب الغرفة خلفهما بقوة مدوية، كأنه انفجار صغير. الظلام يصبح تامًا تقريبا، يبتلع الضوء الأخير من شاشة موبايل ريم التي تنطفئ تمامًا. يسمعان صوت مفتاح يُدار في القفل من الخارج ببطء وبشكل متعمد، يليه صوت المتصل المجهول، الآن خلف الباب مباشرة، هادئ ومنتصر بشكل مرعب.)</p>
+                    <p><strong>المتصل (من خارج الغرفة):</strong> "أهلاً بالضيوف الجدد... كنتوا بتدوروا على نهاية القصة؟ للأسف... بقيتوا جزء من نهايتها انتوا كمان. البيت مبيحبش النهايات السعيدة... ولا بيحب حد يخرج منه."</p>
+                    <p>(تبدأ سارة ومايا في الصراخ والضرب على الباب المحكم. من داخل الدولاب، يتحول أنين ريم إلى بكاء يائس ومكتوم. في الظلام، تبدأ همسات الأطفال تتردد من كل زاوية في الغرفة، تتداخل مع ضحكة المتصل الباردة القادمة من خلف الباب.)</p>
+                    <p>(تتلاشى الشاشة إلى السواد التام، بينما تستمر أصوات الصراخ والضرب على الباب والبكاء والهمسات والضحك الشرير في التصاعد ثم تنقطع فجأة إلى صمت مطبق ومفاجئ.)</p>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Team section -->
+        <section class="team-section fade-in">
+            <h2 class="section-title">اسماء المشاركين:</h2>
+            <div class="team-members">
+                <div class="team-member">
+                    <p><i class="fas fa-crown" style="color: gold; margin-left: 8px;"></i>1. بولا نعيم فريد ابراهيم</p>
+                </div>
+                <div class="team-member">
+                    <p>2. بسمه تامر حسن محمد حسن</p>
+                </div>
+                <div class="team-member">
+                    <p>3. بسمه وهبه فتحي حميد زهران</p>
+                </div>
+                <div class="team-member">
+                    <p>4. بسملة عبد النبي عبدالله عبدالغفار صالح</p>
+                </div>
+                <div class="team-member">
+                    <p>5. جانا السيد احمد السيد احمد</p>
+                </div>
+                <div class="team-member">
+                    <p>6. جنة اشرف محمد عبد الحميد محمد</p>
+                </div>
+                <div class="team-member">
+                    <p>7. بسملة سامي ابراهيم محمدين</p>
+                </div>
+                <div class="team-member">
+                    <p>8. بسنت محمد عبد الحميد عبد الرازق عبد المجيد</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Scroll to top button -->
+    <div class="scroll-top-button" id="scrollTopButton">
+        <div class="scroll-top-icon">
+            <i class="fas fa-arrow-up"></i>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="social-links">
+                <!-- Updated placeholder links -->
+                <a href="https://www.facebook.com/bebo.naiem13" target="_blank" class="social-link" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.instagram.com/bebonaiem/" target="_blank" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.youtube.com/@Bebo_Naiem" target="_blank" class="social-link" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            </div>
+            <p class="copyright">© 2025 المتصل المجهول - كلية التربية النوعية. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+
+    <!-- Audio Element for the scary sound -->
+    <!-- **IMPORTANT:** Replace 'path/to/your/scary_sound.mp3' with the actual path to your audio file -->
+    <!-- Make sure the audio file '1.mp3' is in the same directory as index.html, or provide the correct path -->
+    <audio id="scenarioSound" src="voice/1.mp3" preload="auto"></audio>
+
+    <!-- Phone animation -->
+    <div class="phone-animation" id="phoneAnimation">
+        <div class="phone-icon">
+            <!-- Initial icon: phone -->
+            <i class="fas fa-phone"></i>
+        </div>
+    </div>
+
+    <script>
+        // Create background particles
+        function createParticles() {
+            const bgAnimation = document.getElementById('bgAnimation');
+            const particleCount = 30; // Increased particle count
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+
+                const size = Math.random() * 6 + 2; // Slightly larger size range
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                const delay = Math.random() * 20; // Longer delay range
+                const duration = Math.random() * 15 + 15; // Varied animation duration
+
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}%`;
+                particle.style.top = `${posY}%`;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.animationDuration = `${duration}s`; // Apply duration
+
+                bgAnimation.appendChild(particle);
+            }
+        }
+
+        // Scroll animation
+        function checkScroll() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            fadeElements.forEach(element => {
+                const elementRect = element.getBoundingClientRect();
+                const elementTop = elementRect.top;
+                const elementHeight = elementRect.height;
+                const windowHeight = window.innerHeight;
+                
+                if (elementTop < windowHeight - (elementHeight * 0.3)) { /* Trigger earlier at 30% visibility */
+                    element.classList.add('visible');
+                }
+            });
+        }
+
+        // Phone animation click effect - MODIFIED FOR PLAY/PAUSE
+        function setupPhoneAnimation() {
+            const phone = document.getElementById('phoneAnimation');
+            const scenarioSound = document.getElementById('scenarioSound');
+            const icon = phone.querySelector('.phone-icon i'); // Get icon reference
+
+            // Optional: Add a subtle bounce on hover (purely visual) - Keep this
+            phone.addEventListener('mouseover', () => {
+                 // We'll let the pulse animation run always, hover just adds scale
+                 phone.style.transform = 'scale(1.1)'; // Add a slight scale up
+            });
+            phone.addEventListener('mouseout', () => {
+                phone.style.transform = 'scale(1)'; // Reset scale
+            });
+
+            phone.addEventListener('click', () => {
+                if (!scenarioSound) { // Safety check
+                    console.error("Audio element not found!");
+                    return;
+                }
+
+                if (scenarioSound.paused) {
+                    // If currently paused, play the sound
+                    scenarioSound.play().then(() => {
+                        // Play successful: Update icon and style to reflect playing state
+                        icon.classList.remove('fa-phone'); // Remove phone icon
+                        // Choose a Font Awesome icon that signifies sound/playing
+                        // fa-volume-up or fa-volume might be good choices
+                        icon.classList.add('fa-volume-up'); // Add volume icon
+                        phone.style.backgroundColor = 'var(--accent)'; // Change color when playing
+                        // Keep pulse animation running
+                        // Keep box-shadow glowing
+                    }).catch(e => {
+                        console.error("Error playing sound:", e);
+                        // Optional: Revert icon/style if play fails (e.g., user gesture denied)
+                        icon.classList.remove('fa-volume-up');
+                        icon.classList.add('fa-phone'); // Revert to phone icon
+                        phone.style.backgroundColor = 'var(--primary)'; // Revert color
+                    });
+                } else {
+                    // If currently playing, pause the sound and reset time
+                    scenarioSound.pause();
+                    scenarioSound.currentTime = 0; // Reset to beginning
+
+                    // Update icon and style to reflect paused state
+                    icon.classList.remove('fa-volume-up'); // Remove volume icon
+                    icon.classList.add('fa-phone'); // Add phone icon
+                    phone.style.backgroundColor = 'var(--primary)'; // Revert color
+                    // Keep pulse animation running
+                    // Keep box-shadow glowing
+                }
+
+                // Removed the setTimeout as icon/color now reflect the state, not a temporary effect
+            });
+        }
+
+        // Scroll to top functionality
+        function setupScrollToTop() {
+            const scrollButton = document.getElementById('scrollTopButton');
+            
+            // Show/hide button based on scroll position
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) { // Show button after scrolling down 300px
+                    scrollButton.classList.add('visible');
+                } else {
+                    scrollButton.classList.remove('visible');
+                }
+            });
+
+            // Scroll to top when clicked
+            scrollButton.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            setupPhoneAnimation();
+            setupScrollToTop(); // Add this line
+            window.addEventListener('scroll', checkScroll);
+            checkScroll(); // Check on load to show elements already in view
+
+            // Optional: Add an event listener to the audio element itself
+            // This ensures the icon/color are correct even if the sound ends on its own
+            const scenarioSound = document.getElementById('scenarioSound');
+            if (scenarioSound) {
+                scenarioSound.addEventListener('ended', () => {
+                    const phone = document.getElementById('phoneAnimation');
+                    const icon = phone.querySelector('.phone-icon i');
+                    icon.classList.remove('fa-volume-up');
+                    icon.classList.add('fa-phone');
+                    phone.style.backgroundColor = 'var(--primary)';
+                     // currentTime is automatically 0 when 'ended' fires
+                });
+            }
+        });
+         // Also check on resize, just in case layout shifts
+        window.addEventListener('resize', checkScroll);
+    </script>
+</body>
+</html>
