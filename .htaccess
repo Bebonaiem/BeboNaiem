@@ -1,0 +1,13 @@
+# Enable URL rewriting
+RewriteEngine On
+
+# If the requested filename is not a directory
+RewriteCond %{REQUEST_FILENAME} !-d
+# If the requested filename with .html exists
+RewriteCond %{REQUEST_FILENAME}.html -f
+# Rewrite the URL to add .html extension internally
+RewriteRule ^(.*)$ $1.html [L]
+
+# Optional: Redirect requests with .html to extensionless URL (for SEO)
+RewriteCond %{THE_REQUEST} \s/([^.]+)\.html [NC]
+RewriteRule ^ /%1 [R=301,L]
