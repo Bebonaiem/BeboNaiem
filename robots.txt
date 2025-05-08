@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://bebonaiem.dpdns.org/sitemap.xml
