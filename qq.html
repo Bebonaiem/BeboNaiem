@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>موقع الامتحان</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 10px;
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        .question {
+            background: #1e1e1e;
+            border: 1px solid #333;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+        .options {
+            margin-top: 10px;
+        }
+        label {
+            display: block;
+            margin-bottom: 6px;
+            cursor: pointer;
+        }
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            background-color: #0d6efd;
+            color: white;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0a58ca;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .correct {
+            background-color: #2e7d32;
+            border: 1px solid #1b5e20;
+            color: #a5d6a7;
+        }
+        .incorrect {
+            background-color: #b71c1c;
+            border: 1px solid #7f0000;
+            color: #ef9a9a;
+        }
+    </style>
+</head>
+<body>
+    <h1>امتحان</h1>
+    <form id="examForm">
+        <div id="questionsContainer"></div>
+        <button type="submit">إنهاء الامتحان</button>
+    </form>
+    <div id="resultsContainer"></div>
+
+    <script>
+        const questions = [
+            // True/False questions
+            {
+                type: "tf",
+                question: "التعليم الإلكتروني المعتمد على الحاسوب والشبكات هو أحد الأنماط المتطورة للتعلم عن بعد.",
+                options: ["صح", "خطأ"],
+                correctAnswer: "صح"
+            },
+            {
+                type: "tf",
+                question: "يعتبر العامل الأساسي الذي نرتكز عليه في تقسيم أنواع التعليم الإلكتروني هو طبيعة المحتوى التعليمي.",
+                options: ["صح", "خطأ"],
+                correctAnswer: "خطأ"
+            },
+            {
+                type: "tf",
+                question: "يتطلب التعليم الإلكتروني المتزامن وجود مقدم الخدمة ومتلقيها في الوقت ذاته أمام أجهزة الحاسوب أو الهواتف.",
+                options: ["صح", "خطأ"],
+                correctAnswer: "صح"
+            },
+            {
+                type: "tf",
+                question: "من أبرز مزايا التعليم غير المتزامن أنه يتيح التفاعل الفوري بين المدرس والطالب.",
+                options: ["صح", "خطأ"],
+                correctAnswer: "خطأ"
+            },
+            {
+                type: "tf",
+                question: "التعليم المدمج هو التعليم الذي يطرح المحتوى التعليمي بطريقة واحدة فقط، إما عبر الإنترنت أو تقليديًا.",
+                options: ["صح", "خطأ"],
+                correctAnswer: "خطأ"
+            },
+            {
+                type: "tf",
+                question: "يشير التعليم الإلكتروني الموحد إلى نمط تعليمي يتلقى فيه جميع المتعلمين مجموعة متماثلة من المعلومات التي تراعي الفروق الفردية.",
+                options: ["صح", "خطأ"],
+                correctAnswer: "خطأ"
+            },
+            {
+                type: "tf",
+                question: "تهدف متطلبات استخدام التعليم الإلكتروني الخاصة بالتخطيط إلى التقليل من المخاطر وضمان نجاح البرنامج الإلكتروني.",
+                options: ["صح", "خطأ"],
+                correctAnswer: "صح"
+            },
+            {
+                type: "tf",
+                question: "تُعد المدونات الإلكترونية أداة اتصال متزامنة، حيث يجب تواجد المستخدمين في نفس الوقت للتفاعل.",
+                options: ["صح", "خطأ"],
+                correctAnswer: "خطأ"
+            },
+            {
+                type: "tf",
+                question: "من أبرز مميزات الكتاب الإلكتروني مقارنة بالكتاب المطبوع أنه دائمًا لا يتطلب أجهزة خاصة للقراءة.",
+                options: ["صح", "خطأ"],
+                correctAnswer: "خطأ"
+            },
+            {
+                type: "tf",
+                question: "ترجع أهمية الألعاب الإلكترونية في التعليم إلى أنها تعتمد على وسائل التشويق التي تشجع على التنافس وتثير خيال المتعلم.",
+                options: ["صح", "خطأ"],
+                correctAnswer: "صح"
+            },
+            {
+                type: "tf",
+                question: "تُعد الرحلات المعرفية (WebQuests) نمطًا تربويًا يقوم على نموذج المعلم حيث يكون هو الباحث الأساسي عن المعرفة.",
+                options: ["صح", "خطأ"],
+                correctAnswer: "خطأ"
+            },
+            {
+                type: "tf",
+                question: "تتفق معظم تعريفات الواقع المعزز على أنه لا يدمج الواقع الحقيقي بالواقع الافتراضي.",
+                options: ["صح", "خطأ"],
+                correctAnswer: "خطأ"
+            },
+            {
+                type: "tf",
+                question: "المحاكاة عبر الويب هي تقنية قياسية تهدف إلى قياس نتائج دقيقة وملموسة في الواقع الحقيقي.",
+                options: ["صح", "خطأ"],
+                correctAnswer: "خطأ"
+            },
+            {
+                type: "tf",
+                question: "من مميزات المحاكاة عبر الويب أنها تسمح للمتعلم بارتكاب أخطاء يترتب عليها نتائج سيئة في الواقع الحقيقي.",
+                options: ["صح", "خطأ"],
+                correctAnswer: "خطأ"
+            },
+            {
+                type: "tf",
+                question: "النظرية البنائية في التعليم تفترض أن المعرفة يمكن أن توجد خارج عقل المتعلم وأن المتعلم يتلقاها جاهزة.",
+                options: ["صح", "خطأ"],
+                correctAnswer: "خطأ"
+            },
+            {
+                type: "tf",
+                question: "تركز بيئات التعلم الشخصية (PLEs) حول المحتوى التعليمي الذي يتم تقديمه للمتعلم، بغض النظر عن احتياجاته الفردية.",
+                options: ["صح", "خطأ"],
+                correctAnswer: "خطأ"
+            },
+            {
+                type: "tf",
+                question: "من فوائد بيئات التعلم الشخصية أنها توفر للمتعلمين مرونة في الاختيار من بين الأدوات والطرق المختلفة لاستكمال تعلمهم.",
+                options: ["صح", "خطأ"],
+                correctAnswer: "صح"
+            },
+            {
+                type: "tf",
+                question: "تُعد مشاركة الفيديو عبر الإنترنت من الجوانب قليلة الأهمية في ثقافة الإنترنت وسهولة التعلم.",
+                options: ["صح", "خطأ"],
+                correctAnswer: "خطأ"
+            },
+            // Multiple Choice questions
+            {
+                type: "mcq",
+                question: "أي من التالي يُعد تعريفًا للتعليم الإلكتروني كما ورد في المصادر؟",
+                options: [
+                    "أ) طريقة للتعليم باستخدام آليات الاتصال الحديثة كالحاسب والشبكات والوسائط المتعددة للوصول للمعلومات بأسرع وقت.",
+                    "ب) شكل من أشكال التعليم التقليدي المعتمد على الفصل الدراسي فقط.",
+                    "ج) نظام لتقديم برامج تعليمية أو تدريبية يتم فيه التفاعل وجهًا لوجه فقط.",
+                    "د) عملية تعتمد على نقل المعارف والمهارات باستخدام الكتب الورقية فقط."
+                ],
+                correctAnswer: "أ) طريقة للتعليم باستخدام آليات الاتصال الحديثة كالحاسب والشبكات والوسائط المتعددة للوصول للمعلومات بأسرع وقت."
+            },
+            {
+                type: "mcq",
+                question: "ما هو النوع الذي يجمع بين التعليم التقليدي والتعليم الإلكتروني في نفس الوقت؟",
+                options: [
+                    "أ) التعليم الإلكتروني المتزامن.",
+                    "ب) التعليم الإلكتروني غير المتزامن.",
+                    "ج) التعليم الإلكتروني المدمج.",
+                    "د) التعليم الإلكتروني الموحد."
+                ],
+                correctAnswer: "ج) التعليم الإلكتروني المدمج."
+            },
+            {
+                type: "mcq",
+                question: "وفقًا للمصادر، أي من الأدوات التالية يُعد مثالًا لأدوات التعليم الإلكتروني غير المتزامن؟",
+                options: [
+                    "أ) مؤتمرات الفيديو.",
+                    "ب) الدردشات النصية الفورية.",
+                    "ج) البريد الإلكتروني.",
+                    "د) التواصل الصوتي المباشر."
+                ],
+                correctAnswer: "ج) البريد الإلكتروني."
+            },
+            {
+                type: "mcq",
+                question: "من أبرز مزايا التعليم الإلكتروني المتزامن:",
+                options: [
+                    "أ) التعلم بالسرعة التي تناسب المتعلم.",
+                    "ب) إمكانية مراجعة المحتوى حسب الحاجة.",
+                    "ج) التفاعل الفوري بين المدرس والطالب.",
+                    "د) التحرر من قيود الوقت والمكان بشكل كامل."
+                ],
+                correctAnswer: "ج) التفاعل الفوري بين المدرس والطالب."
+            },
+            {
+                type: "mcq",
+                question: "ما هو النمط التعليمي الذي يتميز بالمرونة ويتمحور حول احتياجات الطالب الفردية من حيث المهارات والقدرات؟",
+                options: [
+                    "أ) التعليم الإلكتروني الموحد.",
+                    "ب) التعليم الإلكتروني التكيفي.",
+                    "ج) التعليم الإلكتروني التفاعلي.",
+                    "د) التعليم الإلكتروني الفردي."
+                ],
+                correctAnswer: "ب) التعليم الإلكتروني التكيفي."
+            },
+            {
+                type: "mcq",
+                question: "من المكونات الأساسية للمقررات الإلكترونية والتي تختص بعرض آخر الأنباء والتوجيهات التي يرغب المعلم في عرضها على الطالب:",
+                options: [
+                    "أ) الإطار العام للمقرر.",
+                    "ب) أرشيف الملفات.",
+                    "ج) لوحة الملاحظة أو التنبيهات.",
+                    "د) التقويم."
+                ],
+                correctAnswer: "ج) لوحة الملاحظة أو التنبيهات."
+            },
+            {
+                type: "mcq",
+                question: "أي من التالي ليس من مميزات الكتاب الإلكتروني كما ذكرت المصادر؟",
+                options: [
+                    "أ) مراعاة الفروق الفردية بين المتعلمين.",
+                    "ب) سهولة وسرعة دخول المتعلم وخروجه منه.",
+                    "ج) انخفاض التكلفة المادية للإنتاج مقارنة بالورقي.",
+                    "د) إرهاق العين بسبب القراءة من الشاشات الرقمية لفترات طويلة."
+                ],
+                correctAnswer: "د) إرهاق العين بسبب القراءة من الشاشات الرقمية لفترات طويلة."
+            },
+            {
+                type: "mcq",
+                question: "أي نوع من الألعاب الإلكترونية يهدف إلى تحسين الحالة الصحية للاعبين عن طريق ممارسة التمارين الرياضية؟",
+                options: [
+                    "أ) الألعاب العادية.",
+                    "ب) ألعاب التمارين.",
+                    "ج) الألعاب الإعلانية.",
+                    "د) ألعاب المحاكاة."
+                ],
+                correctAnswer: "ب) ألعاب التمارين."
+            },
+            {
+                type: "mcq",
+                question: "ما هو المفهوم الذي يُعرف بأنه نشاط تعليمي قائم على الويب يدور حول مشكلة حقيقية من واقع اهتمامات المتعلم بفحص وجهات النظر المختلفة؟",
+                options: [
+                    "أ) المحاكاة عبر الويب.",
+                    "ب) الواقع المعزز.",
+                    "ج) بيئات التعلم الشخصية.",
+                    "د) الرحلات المعرفية (WebQuests)."
+                ],
+                correctAnswer: "د) الرحلات المعرفية (WebQuests)."
+            },
+            {
+                type: "mcq",
+                question: "من أبرز مميزات استخدام الواقع المعزز في التعليم:",
+                options: [
+                    "أ) تقليل تفاعل الطالب مع المحتوى التعليمي.",
+                    "ب) صعوبة الاحتفاظ بالمعلومات في الذاكرة.",
+                    "ج) زيادة فهم المحتوى التعليمي والاحتفاظ بالمعلومات لفترة طويلة.",
+                    "د) انخفاض حماس الطالب ورغبته في إعادة التجربة."
+                ],
+                correctAnswer: "ج) زيادة فهم المحتوى التعليمي والاحتفاظ بالمعلومات لفترة طويلة."
+            },
+            {
+                type: "mcq",
+                question: "وفقًا للمصادر، ظهرت البداية الحقيقية لاستخدام المحاكاة في التعليم والتدريب في:",
+                options: [
+                    "أ) بداية القرن العشرين.",
+                    "ب) بداية الستينات من القرن الماضي.",
+                    "ج) فترة الحرب العالمية الأولى.",
+                    "د) العقد الأول من القرن الحادي والعشرين."
+                ],
+                correctAnswer: "ب) بداية الستينات من القرن الماضي."
+            },
+            {
+                type: "mcq",
+                question: "أي من النظريات التعليمية التالية ترتبط بالمحاكاة عبر الويب وتفترض أن المعرفة بناء يقوم به المتعلم؟",
+                options: [
+                    "أ) النظرية السلوكية.",
+                    "ب) نظرية التعلم بالاكتشاف.",
+                    "ج) النظرية المعرفية.",
+                    "د) النظرية البنائية."
+                ],
+                correctAnswer: "د) النظرية البنائية."
+            },
+            {
+                type: "mcq",
+                question: "تُعرف بيئة التعلم الشخصية بأنها:",
+                options: [
+                    "أ) نظام مركزي ثابت لإدارة المحتوى التعليمي.",
+                    "ب) مجموعة من تطبيقات البرامج الاجتماعية التي تتمحور حول المتعلم.",
+                    "ج) صفحة ويب تقليدية تسمح للمستخدمين بمشاهدة المحتوى فقط.",
+                    "د) بيئة تعليمية لا تسمح للمتعلم بتولي مسؤولية تعلمه."
+                ],
+                correctAnswer: "ب) مجموعة من تطبيقات البرامج الاجتماعية التي تتمحور حول المتعلم."
+            },
+            {
+                type: "mcq",
+                question: "من العناصر الرئيسية التي تحدد هوية بيئة التعلم الشخصية وفقًا للمصادر:",
+                options: [
+                    "أ) المباني والمعامل التقليدية.",
+                    "ب) الخدمات، أدوات التعلم الشخصي، والعلاقات.",
+                    "ج) المناهج الدراسية الموحدة لجميع الطلاب.",
+                    "د) الاختبارات النهائية فقط."
+                ],
+                correctAnswer: "ب) الخدمات، أدوات التعلم الشخصي، والعلاقات."
+            }
+        ];
+
+        const questionsContainer = document.getElementById('questionsContainer');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const examForm = document.getElementById('examForm');
+
+        function createQuestionElement(questionObj, index) {
+            const div = document.createElement('div');
+            div.className = 'question';
+
+            const qTitle = document.createElement('h3');
+            qTitle.textContent = (index + 1) + '. ' + questionObj.question;
+            div.appendChild(qTitle);
+
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'options';
+
+            questionObj.options.forEach((option, i) => {
+                const label = document.createElement('label');
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.name = 'question' + index;
+                input.value = option;
+                input.required = true;
+                label.appendChild(input);
+                label.appendChild(document.createTextNode(' ' + option));
+                optionsDiv.appendChild(label);
+            });
+
+            div.appendChild(optionsDiv);
+            return div;
+        }
+
+        function showResults(event) {
+            event.preventDefault();
+            let correctCount = 0;
+            let incorrectCount = 0;
+            resultsContainer.innerHTML = '';
+
+            questions.forEach((q, i) => {
+                const selected = examForm['question' + i].value;
+                const isCorrect = selected === q.correctAnswer;
+
+                const resultDiv = document.createElement('div');
+                resultDiv.className = 'result ' + (isCorrect ? 'correct' : 'incorrect');
+                resultDiv.textContent = (i + 1) + '. ' + q.question + ' - ' + (isCorrect ? 'صحيح' : 'خطأ') + ' (إجابتك: ' + selected + ')';
+                resultsContainer.appendChild(resultDiv);
+
+                if (isCorrect) {
+                    correctCount++;
+                } else {
+                    incorrectCount++;
+                }
+            });
+
+            const summary = document.createElement('div');
+            summary.className = 'result';
+            summary.style.fontWeight = 'bold';
+            summary.style.textAlign = 'center';
+            summary.textContent = `لقد أجبت بشكل صحيح على ${correctCount} سؤالاً، وأجبت بشكل خاطئ على ${incorrectCount} سؤالاً.`;
+            resultsContainer.appendChild(summary);
+
+            // Scroll to results
+            resultsContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function init() {
+            questions.forEach((q, i) => {
+                const qElem = createQuestionElement(q, i);
+                questionsContainer.appendChild(qElem);
+            });
+
+            examForm.addEventListener('submit', showResults);
+        }
+
+        init();
+    </script>
+</body>
+</html>
