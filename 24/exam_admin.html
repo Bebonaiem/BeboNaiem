@@ -18,10 +18,6 @@
             --text-color: #e0e0e0;
             --border-radius: 12px;
             --box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-            --option-bg: #2d2d2d;
-            --option-hover: #3d3d3d;
-            --option-border: #404040;
-            --transition: all 0.3s ease;
         }
 
         * {
@@ -35,7 +31,6 @@
             background-color: var(--background-color);
             color: var(--text-color);
             line-height: 1.6;
-            min-height: 100vh;
             padding: 20px;
         }
 
@@ -45,20 +40,18 @@
             padding: 20px;
         }
 
-        .admin-header {
+        .header {
             text-align: center;
             margin-bottom: 40px;
             padding: 20px;
             background: var(--card-background);
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
-            border: 1px solid var(--option-border);
         }
 
-        .admin-header h1 {
+        .header h1 {
             color: var(--primary-color);
             font-size: 2.5em;
-            font-weight: 700;
             margin-bottom: 10px;
         }
 
@@ -74,7 +67,6 @@
             padding: 20px;
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
-            border: 1px solid var(--option-border);
             text-align: center;
         }
 
@@ -83,118 +75,87 @@
             margin-bottom: 10px;
         }
 
-        .stat-value {
+        .stat-card .number {
             font-size: 2em;
             font-weight: bold;
             color: var(--text-color);
         }
 
-        .controls {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-
-        .search-box {
-            flex: 1;
-            min-width: 200px;
-            padding: 10px 15px;
-            border: 2px solid var(--option-border);
-            border-radius: var(--border-radius);
-            background: var(--option-bg);
-            color: var(--text-color);
-            font-size: 1em;
-        }
-
-        .search-box:focus {
-            border-color: var(--primary-color);
-            outline: none;
-        }
-
-        .export-btn {
-            background: linear-gradient(45deg, var(--success-color), #45a049);
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            transition: var(--transition);
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .export-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-        }
-
         .scores-table {
             width: 100%;
-            border-collapse: collapse;
             background: var(--card-background);
             border-radius: var(--border-radius);
-            overflow: hidden;
             box-shadow: var(--box-shadow);
+            overflow: hidden;
+        }
+
+        .scores-table table {
+            width: 100%;
+            border-collapse: collapse;
         }
 
         .scores-table th,
         .scores-table td {
             padding: 15px;
             text-align: right;
-            border-bottom: 1px solid var(--option-border);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
         .scores-table th {
-            background: var(--option-bg);
-            color: var(--primary-color);
+            background: var(--primary-dark);
+            color: white;
             font-weight: 500;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .scores-table th:hover {
-            background: var(--option-hover);
         }
 
         .scores-table tr:hover {
-            background: var(--option-hover);
+            background: rgba(255,255,255,0.05);
         }
 
-        .scores-table td:last-child {
-            text-align: center;
+        .percentage {
+            font-weight: bold;
         }
 
-        .score-badge {
-            padding: 5px 10px;
-            border-radius: 15px;
-            font-size: 0.9em;
-            font-weight: 500;
-        }
-
-        .score-high {
-            background: rgba(76, 175, 80, 0.2);
+        .percentage.high {
             color: var(--success-color);
         }
 
-        .score-medium {
-            background: rgba(255, 152, 0, 0.2);
+        .percentage.medium {
             color: var(--warning-color);
         }
 
-        .score-low {
-            background: rgba(244, 67, 54, 0.2);
+        .percentage.low {
             color: var(--error-color);
         }
 
-        .no-results {
-            text-align: center;
-            padding: 40px;
-            background: var(--card-background);
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
             border-radius: var(--border-radius);
-            border: 1px solid var(--option-border);
+            cursor: pointer;
+            font-family: 'Tajawal', Arial, sans-serif;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-danger {
+            background: var(--error-color);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
         }
 
         @media (max-width: 768px) {
@@ -202,29 +163,11 @@
                 padding: 10px;
             }
 
-            .admin-header {
-                margin-bottom: 20px;
-                padding: 15px;
-            }
-
-            .admin-header h1 {
-                font-size: 1.8em;
-            }
-
-            .stats-container {
-                grid-template-columns: 1fr;
-            }
-
-            .controls {
-                flex-direction: column;
-            }
-
-            .search-box {
-                width: 100%;
+            .header h1 {
+                font-size: 2em;
             }
 
             .scores-table {
-                display: block;
                 overflow-x: auto;
             }
 
@@ -238,46 +181,49 @@
 </head>
 <body>
     <div class="container">
-        <div class="admin-header">
+        <div class="header">
             <h1>لوحة تحكم الامتحان</h1>
-            <p>عرض وإدارة نتائج الطلاب</p>
+            <p>عرض نتائج الطلاب</p>
         </div>
 
         <div class="stats-container">
             <div class="stat-card">
                 <h3>إجمالي الطلاب</h3>
-                <div class="stat-value" id="totalStudents">0</div>
+                <div class="number" id="totalStudents">0</div>
             </div>
             <div class="stat-card">
                 <h3>متوسط الدرجات</h3>
-                <div class="stat-value" id="averageScore">0%</div>
+                <div class="number" id="averageScore">0%</div>
             </div>
             <div class="stat-card">
                 <h3>أعلى درجة</h3>
-                <div class="stat-value" id="highestScore">0%</div>
+                <div class="number" id="highestScore">0%</div>
             </div>
             <div class="stat-card">
                 <h3>أدنى درجة</h3>
-                <div class="stat-value" id="lowestScore">0%</div>
+                <div class="number" id="lowestScore">0%</div>
             </div>
         </div>
 
-        <div class="controls">
-            <input type="text" class="search-box" id="searchBox" placeholder="بحث عن طالب...">
-            <button class="export-btn" id="exportBtn">
+        <div class="actions">
+            <button class="btn btn-primary" onclick="exportToCSV()">
                 <i class="fas fa-download"></i>
-                تصدير النتائج
+                تصدير إلى CSV
+            </button>
+            <button class="btn btn-danger" onclick="clearAllScores()">
+                <i class="fas fa-trash"></i>
+                مسح جميع النتائج
             </button>
         </div>
 
-        <div id="scoresTableContainer">
-            <table class="scores-table">
+        <div class="scores-table">
+            <table>
                 <thead>
                     <tr>
-                        <th data-sort="name">اسم الطالب</th>
-                        <th data-sort="date">التاريخ</th>
-                        <th data-sort="score">الدرجة</th>
-                        <th data-sort="percentage">النسبة المئوية</th>
+                        <th>اسم الطالب</th>
+                        <th>التاريخ</th>
+                        <th>الدرجة</th>
+                        <th>النسبة المئوية</th>
                     </tr>
                 </thead>
                 <tbody id="scoresTableBody">
@@ -287,115 +233,69 @@
     </div>
 
     <script>
-        let scores = [];
-        let currentSort = { column: 'date', direction: 'desc' };
+        // Add auto-refresh functionality
+        function setupAutoRefresh() {
+            // Refresh every 5 seconds
+            setInterval(loadScores, 5000);
+        }
 
         function loadScores() {
-            scores = JSON.parse(localStorage.getItem('examScores') || '[]');
-            updateStats();
-            renderScores();
+            const scores = JSON.parse(localStorage.getItem('examScores') || '[]');
+            const tableBody = document.getElementById('scoresTableBody');
+            tableBody.innerHTML = '';
+
+            // Update statistics
+            document.getElementById('totalStudents').textContent = scores.length;
+            
+            if (scores.length > 0) {
+                const percentages = scores.map(score => score.percentage);
+                const average = Math.round(percentages.reduce((a, b) => a + b, 0) / percentages.length);
+                const highest = Math.max(...percentages);
+                const lowest = Math.min(...percentages);
+
+                document.getElementById('averageScore').textContent = average + '%';
+                document.getElementById('highestScore').textContent = highest + '%';
+                document.getElementById('lowestScore').textContent = lowest + '%';
+
+                // Sort scores by date (newest first)
+                scores.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+                scores.forEach(score => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${score.name}</td>
+                        <td>${score.timestamp}</td>
+                        <td>${score.score}/${score.totalQuestions}</td>
+                        <td class="percentage ${getPercentageClass(score.percentage)}">${score.percentage}%</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            }
         }
 
-        function updateStats() {
+        function getPercentageClass(percentage) {
+            if (percentage >= 80) return 'high';
+            if (percentage >= 60) return 'medium';
+            return 'low';
+        }
+
+        function exportToCSV() {
+            const scores = JSON.parse(localStorage.getItem('examScores') || '[]');
             if (scores.length === 0) {
-                document.getElementById('totalStudents').textContent = '0';
-                document.getElementById('averageScore').textContent = '0%';
-                document.getElementById('highestScore').textContent = '0%';
-                document.getElementById('lowestScore').textContent = '0%';
+                alert('لا توجد نتائج للتصدير');
                 return;
             }
 
-            const totalStudents = scores.length;
-            const percentages = scores.map(score => score.percentage);
-            const average = Math.round(percentages.reduce((a, b) => a + b, 0) / totalStudents);
-            const highest = Math.max(...percentages);
-            const lowest = Math.min(...percentages);
-
-            document.getElementById('totalStudents').textContent = totalStudents;
-            document.getElementById('averageScore').textContent = `${average}%`;
-            document.getElementById('highestScore').textContent = `${highest}%`;
-            document.getElementById('lowestScore').textContent = `${lowest}%`;
-        }
-
-        function getScoreClass(percentage) {
-            if (percentage >= 80) return 'score-high';
-            if (percentage >= 60) return 'score-medium';
-            return 'score-low';
-        }
-
-        function renderScores(filteredScores = null) {
-            const scoresToRender = filteredScores || scores;
-            const tbody = document.getElementById('scoresTableBody');
-            tbody.innerHTML = '';
-
-            if (scoresToRender.length === 0) {
-                const noResults = document.createElement('div');
-                noResults.className = 'no-results';
-                noResults.textContent = 'لا توجد نتائج';
-                document.getElementById('scoresTableContainer').appendChild(noResults);
-                return;
-            }
-
-            scoresToRender.forEach(score => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${score.name}</td>
-                    <td>${score.timestamp}</td>
-                    <td>${score.score}/${score.totalQuestions}</td>
-                    <td><span class="score-badge ${getScoreClass(score.percentage)}">${score.percentage}%</span></td>
-                `;
-                tbody.appendChild(row);
-            });
-        }
-
-        function sortScores(column) {
-            if (currentSort.column === column) {
-                currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
-            } else {
-                currentSort.column = column;
-                currentSort.direction = 'asc';
-            }
-
-            scores.sort((a, b) => {
-                let valueA = a[column];
-                let valueB = b[column];
-
-                if (column === 'date') {
-                    valueA = new Date(a.timestamp);
-                    valueB = new Date(b.timestamp);
-                }
-
-                if (valueA < valueB) return currentSort.direction === 'asc' ? -1 : 1;
-                if (valueA > valueB) return currentSort.direction === 'asc' ? 1 : -1;
-                return 0;
-            });
-
-            renderScores();
-        }
-
-        function filterScores(searchTerm) {
-            if (!searchTerm) {
-                renderScores();
-                return;
-            }
-
-            const filtered = scores.filter(score => 
-                score.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                score.timestamp.includes(searchTerm)
-            );
-            renderScores(filtered);
-        }
-
-        function exportScores() {
+            const headers = ['اسم الطالب', 'التاريخ', 'الدرجة', 'النسبة المئوية'];
             const csvContent = [
-                ['اسم الطالب', 'التاريخ', 'الدرجة', 'النسبة المئوية'],
+                headers.join(','),
                 ...scores.map(score => [
                     score.name,
                     score.timestamp,
                     `${score.score}/${score.totalQuestions}`,
                     `${score.percentage}%`
-                ])
-            ].map(row => row.join(',')).join('\n');
+                ].join(','))
+            ].join('\n');
 
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a');
@@ -404,19 +304,16 @@
             link.click();
         }
 
-        // Event Listeners
-        document.querySelectorAll('th[data-sort]').forEach(th => {
-            th.addEventListener('click', () => sortScores(th.dataset.sort));
-        });
+        function clearAllScores() {
+            if (confirm('هل أنت متأكد من رغبتك في مسح جميع النتائج؟')) {
+                localStorage.removeItem('examScores');
+                loadScores();
+            }
+        }
 
-        document.getElementById('searchBox').addEventListener('input', (e) => {
-            filterScores(e.target.value);
-        });
-
-        document.getElementById('exportBtn').addEventListener('click', exportScores);
-
-        // Initial load
+        // Initialize the page
         loadScores();
+        setupAutoRefresh();
     </script>
 </body>
 </html> 
