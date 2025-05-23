@@ -1300,7 +1300,43 @@
             // Save the score
             saveScore(studentName, correctCount, questions.length);
 
+            // Send results to admin panel
+            sendResultsToAdmin(studentName, correctCount, questions.length, percentage);
+
             resultsContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function sendResultsToAdmin(name, score, totalQuestions, percentage) {
+            const now = new Date();
+            const timestamp = now.toLocaleString('en-US', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: true
+            });
+
+            const resultData = {
+                timestamp,
+                name,
+                score,
+                totalQuestions,
+                percentage
+            };
+
+            // Get existing scores from admin panel
+            let adminScores = JSON.parse(localStorage.getItem('examScores') || '[]');
+            
+            // Add new score
+            adminScores.push(resultData);
+            
+            // Save back to localStorage
+            localStorage.setItem('examScores', JSON.stringify(adminScores));
+
+            // Show success message
+            alert('تم إرسال النتائج بنجاح إلى لوحة التحكم');
         }
 
         function saveExamState() {
