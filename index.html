@@ -64,20 +64,24 @@
 
     <style>
         :root {
-            --primary: #1e1e2f;
-            --secondary: #12121f;
-            --accent: #ff6f61;
-            --text: #e0e0e0;
-            --hover: #ff8a75;
-            --card-bg: #29293d;
-            --border: #3a3a55;
-            --gradient: linear-gradient(120deg, #ff6f61 0%, #ff3b30 100%);
+            --primary: #0f172a; /* Deep blue-black */
+            --secondary: #1e293b; /* Slate dark */
+            --accent: #3b82f6; /* Bright blue */
+            --accent-hover: #60a5fa; /* Lighter blue for hover */
+            --text: #f8fafc; /* Off-white */
+            --text-secondary: #94a3b8; /* Muted text */
+            --card-bg: #1e293b; /* Slate dark */
+            --border: #334155; /* Slate border */
+            --gradient: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --hover-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         @keyframes fadeInUp {
@@ -119,14 +123,14 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            opacity: 0.5;
+            opacity: 0.4;
             background: 
-                radial-gradient(circle at 20% 20%, rgba(255, 111, 97, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(255, 111, 97, 0.1) 0%, transparent 50%);
+                radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
         }
 
         header {
-            background: linear-gradient(to bottom, rgba(30, 30, 47, 0.95), rgba(18, 18, 31, 0.95));
+            background: linear-gradient(to bottom, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95));
             padding: 3rem 1rem;
             text-align: center;
             position: relative;
@@ -198,12 +202,12 @@
             align-items: center;
             justify-content: center;
             border-radius: 50%;
-            background: rgba(255, 111, 97, 0.1);
+            background: rgba(59, 130, 246, 0.1);
             transition: all 0.3s ease;
         }
 
         .social-links a:hover {
-            color: #fff;
+            color: var(--text);
             background: var(--accent);
             transform: translateY(-3px);
         }
@@ -259,6 +263,7 @@
             padding: 2rem;
             border-radius: 10px;
             border: 1px solid var(--border);
+            box-shadow: var(--card-shadow);
             transition: all 0.3s ease;
             animation: fadeInUp 0.6s ease-out forwards; /* Added animation */
             opacity: 0; /* For animation */
@@ -268,14 +273,14 @@
 
 
         .skill-category:hover {
-            transform: translateY(-5px) scale(1.02); /* Added scale */
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2); /* Enhanced shadow */
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
             border-color: var(--accent);
         }
 
         .skill-category h3 {
             font-size: 1.5rem;
-            color: #fff;
+            color: var(--accent);
             margin-bottom: 1.5rem;
             border-bottom: 2px solid var(--accent);
             padding-bottom: 0.5rem;
@@ -293,12 +298,12 @@
             display: flex;
             align-items: center;
             gap: 0.8rem;
-            color: var(--text);
+            color: var(--text-secondary);
             opacity: 0.9;
             transition: color 0.3s ease;
         }
         .skill-category li:hover {
-            color: var(--hover);
+            color: var(--accent);
         }
 
         .skill-category li i {
@@ -331,6 +336,7 @@
             overflow: hidden;
             transition: all 0.4s ease;
             border: 1px solid var(--border);
+            box-shadow: var(--card-shadow);
             position: relative;
             animation: fadeInUp 0.6s ease-out forwards;
             opacity: 0;
@@ -342,7 +348,7 @@
 
         .project-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            box-shadow: var(--hover-shadow);
             border-color: var(--accent);
         }
 
@@ -363,14 +369,14 @@
         }
 
         .project-title {
-            color: #fff;
+            color: var(--text);
             font-size: 1.4rem;
             margin-bottom: 1rem;
             font-weight: 600;
         }
 
         .project-description {
-            color: var(--text);
+            color: var(--text-secondary);
             margin-bottom: 1.5rem;
             line-height: 1.7;
             opacity: 0.9;
@@ -381,7 +387,7 @@
             align-items: center;
             padding: 0.8rem 1.5rem;
             background: var(--gradient);
-            color: #fff;
+            color: var(--text);
             text-decoration: none;
             border-radius: 6px;
             font-weight: 500;
@@ -390,8 +396,8 @@
         }
 
         .project-link:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 111, 97, 0.4);
+            background: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent) 100%);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
         }
 
         .project-link i {
@@ -411,7 +417,7 @@
 
         .project-tag {
             padding: 0.3rem 0.8rem;
-            background: rgba(255, 111, 97, 0.1);
+            background: rgba(59, 130, 246, 0.1);
             color: var(--accent);
             border-radius: 20px;
             font-size: 0.85rem;
@@ -419,7 +425,7 @@
         }
 
         footer {
-            background: linear-gradient(to top, rgba(30, 30, 47, 0.95), rgba(18, 18, 31, 0.95));
+            background: linear-gradient(to top, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95));
             padding: 3rem 1rem;
             text-align: center;
             margin-top: 6rem;
@@ -515,7 +521,7 @@
             right: 20px;
             z-index: 1000;
             background: var(--gradient);
-            color: #fff;
+            color: var(--text);
             border: none;
             padding: 0.8rem 1.5rem;
             border-radius: 6px;
@@ -528,8 +534,8 @@
         }
 
         .lang-switch:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 111, 97, 0.4);
+            background: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent) 100%);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
         }
 
         /* RTL specific styles */
@@ -605,7 +611,7 @@
         }
 
         .nav-menu a {
-            color: var(--text);
+            color: var(--text-secondary);
             text-decoration: none;
             font-size: 1.1rem;
             display: flex;
@@ -624,7 +630,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(15, 23, 42, 0.9);
             z-index: 999;
             display: none;
             opacity: 0;
