@@ -9,14 +9,17 @@
     <link rel="icon" href="img/about-logo.jpg" type="image/x-icon">
     <style>
         :root {
-            --primary: #1e1e2f;
-            --secondary: #12121f;
-            --accent: #ff6f61;
-            --text: #e0e0e0;
-            --hover: #ff8a75;
-            --card-bg: #29293d;
-            --border: #3a3a55;
-            --gradient: linear-gradient(120deg, #ff6f61 0%, #ff3b30 100%);
+            --primary: #0f172a; /* Deep blue-black */
+            --secondary: #1e293b; /* Slate dark */
+            --accent: #3b82f6; /* Bright blue */
+            --accent-hover: #60a5fa; /* Lighter blue for hover */
+            --text: #f8fafc; /* Off-white */
+            --text-secondary: #94a3b8; /* Muted text */
+            --card-bg: #1e293b; /* Slate dark */
+            --border: #334155; /* Slate border */
+            --gradient: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --hover-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
 
         * {
@@ -94,10 +97,10 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            opacity: 0.5;
+            opacity: 0.4;
             background: 
-                radial-gradient(circle at 20% 20%, rgba(83, 155, 245, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(83, 155, 245, 0.1) 0%, transparent 50%);
+                radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
             animation: pulse 15s infinite ease-in-out;
         }
 
@@ -105,7 +108,7 @@
             background-color: var(--card-bg);
             padding: 3rem;
             border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            box-shadow: var(--card-shadow);
             text-align: right;
             width: 90%;
             max-width: 800px;
@@ -119,6 +122,7 @@
 
         .container:hover {
             transform: perspective(1000px) rotateX(2deg);
+            box-shadow: var(--hover-shadow);
         }
 
         .container::before {
@@ -158,7 +162,7 @@
         }
 
         p {
-            color: var(--text);
+            color: var(--text-secondary);
             font-size: 1.2em;
             line-height: 1.8;
             margin-bottom: 1.5rem;
@@ -181,9 +185,9 @@
         }
 
         .highlight:hover {
-            color: #fff;
+            color: var(--accent-hover);
             transform: translateY(-2px);
-            text-shadow: 0 2px 8px rgba(83, 155, 245, 0.5);
+            text-shadow: 0 2px 8px rgba(59, 130, 246, 0.5);
         }
 
         .link {
@@ -198,16 +202,16 @@
             overflow: hidden;
             padding: 0.5rem 1rem;
             border-radius: 4px;
-            background: linear-gradient(45deg, transparent 50%, rgba(83, 155, 245, 0.1) 50%);
+            background: linear-gradient(45deg, transparent 50%, rgba(59, 130, 246, 0.1) 50%);
             background-size: 250% 100%;
             background-position: 0% 50%;
         }
 
         .link:hover {
-            color: #fff;
+            color: var(--text);
             transform: translateX(-5px);
             background-position: 100% 50%;
-            box-shadow: 0 4px 12px rgba(83, 155, 245, 0.2);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
         }
 
         .link i {
@@ -223,7 +227,7 @@
             padding-top: 1rem;
             border-top: 1px solid var(--border);
             font-size: 0.9em;
-            color: var(--text);
+            color: var(--text-secondary);
             opacity: 0.8;
             position: relative;
             transform: translateY(20px);
