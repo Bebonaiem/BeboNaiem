@@ -9,18 +9,22 @@
     <link type="icon/png" rel="icon" href="img/Logo.png" />
     <style>
         :root {
-            --primary: #1e1e2f;
-            --secondary: #12121f;
-            --accent: #ff6f61;
-            --text: #e0e0e0;
-            --hover: #ff8a75;
-            --card-bg: #29293d;
-            --border: #3a3a55;
-            --gradient: linear-gradient(120deg, #ff6f61 0%, #ff3b30 100%);
+            --primary: #0f172a; /* Deep blue-black */
+            --secondary: #1e293b; /* Slate dark */
+            --accent: #3b82f6; /* Bright blue */
+            --accent-hover: #60a5fa; /* Lighter blue for hover */
+            --text: #f8fafc; /* Off-white */
+            --text-secondary: #94a3b8; /* Muted text */
+            --card-bg: #1e293b; /* Slate dark */
+            --border: #334155; /* Slate border */
+            --gradient: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --hover-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background-color: var(--secondary);
+            background-color: var(--primary);
             color: var(--text);
             margin: 0;
             display: flex;
@@ -30,37 +34,77 @@
             height: 100vh;
             text-align: center;
             padding: 1rem;
+            position: relative;
+            overflow: hidden;
         }
+
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.4;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
+        }
+
         h1 {
-            font-size: 4rem;
+            font-size: 6rem;
             margin-bottom: 1rem;
             background: var(--gradient);
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            animation: fadeInUp 1s ease-out;
         }
+
         p {
             font-size: 1.5rem;
             margin-bottom: 2rem;
-            opacity: 0.8;
+            color: var(--text-secondary);
+            animation: fadeInUp 1s ease-out 0.2s forwards;
+            opacity: 0;
         }
+
         a {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
             padding: 0.8rem 1.5rem;
             background: var(--gradient);
-            color: #fff;
+            color: var(--text);
             text-decoration: none;
             border-radius: 6px;
             font-weight: 600;
-            transition: background 0.3s ease;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease-out 0.4s forwards;
+            opacity: 0;
         }
+
         a:hover {
-            background: #4a87db;
+            background: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
 <body>
+    <div class="background"></div>
     <h1>404</h1>
     <p>Oops! The page you are looking for was not found.</p>
     <a href="https://bebonaiem.dpdns.org/"><i class="fas fa-home"></i> Go Back Home</a>
