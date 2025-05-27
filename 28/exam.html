@@ -25,10 +25,9 @@
             --border-color: #303030;       
             --border-strong-color: #4a4a4a; 
 
-            /* Standard Green/Red for Correct/Incorrect */
-            --success-color: #28a745; /* Classic Green */
+            --success-color: #28a745; 
             --success-background-tint: rgba(40, 167, 69, 0.07);
-            --error-color: #dc3545;   /* Classic Red */
+            --error-color: #dc3545;   
             --error-background-tint: rgba(220, 53, 69, 0.07);
             
             --warning-primary: #fbbf24;   
@@ -182,6 +181,25 @@
             margin-right: auto;
         }
         .welcome-screen p strong { color: var(--accent-primary); font-weight: 700; }
+        .welcome-actions { 
+            margin-top: 25px;
+            display: flex;
+            flex-direction: column; 
+            align-items: center;
+            gap: 15px;
+        }
+        #view-old-results-btn {
+            background: transparent;
+            border-color: var(--text-muted);
+            color: var(--text-muted);
+            font-weight: 500; 
+            padding: 10px 20px;
+        }
+        #view-old-results-btn:hover:not(:disabled) {
+            background: var(--bg-dark-tertiary);
+            border-color: var(--text-secondary);
+            color: var(--text-secondary);
+        }
 
 
         /* --- Question Container --- */
@@ -308,13 +326,13 @@
             overflow: hidden; 
         }
         
-        button:not(.outline):not(.warning), 
-        .modal-button:not(.cancel) { /* Primary buttons */
+        button:not(.outline):not(.warning):not(#view-old-results-btn), 
+        .modal-button:not(.cancel) { /* Primary buttons, excluding specific ones */
             background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
             color: var(--bg-deep-dark); 
             box-shadow: 0 3.5px 10px rgba(0, 198, 255, 0.18), var(--shadow-sm);
         }
-        button:not(.outline):not(.warning):hover:not(:disabled),
+        button:not(.outline):not(.warning):not(#view-old-results-btn):hover:not(:disabled),
         .modal-button:not(.cancel):hover:not(:disabled) {
             background: linear-gradient(135deg, var(--accent-secondary), var(--accent-tertiary));
             transform: translateY(-2.5px) scale(1.025);
@@ -330,8 +348,8 @@
             border-color: var(--bg-dark-tertiary) !important;
         }
 
-        #submit-btn { /* Submit button uses standard success colors */
-            background: linear-gradient(135deg, var(--success-color), #1e7e34); /* Standard Green */
+        #submit-btn { 
+            background: linear-gradient(135deg, var(--success-color), #1e7e34); 
             color: #fff; 
         }
         #submit-btn:hover:not(:disabled) {
@@ -406,11 +424,21 @@
             font-size: 1.3em;
         }
          .results-container p#percentage {
-            color: var(--success-color); /* Standard Green */
+            color: var(--success-color); 
             font-size: 1.9em; 
             margin-top: 15px;
             display: block; 
          }
+         .results-container .back-to-welcome-btn { 
+            margin-top: 20px;
+            background: var(--bg-dark-tertiary);
+            color: var(--text-secondary);
+         }
+         .results-container .back-to-welcome-btn:hover {
+            background: var(--border-strong-color);
+            color: var(--text-primary);
+         }
+
 
         /* --- Review Container --- */
         .review-container { padding: 20px 0; }
@@ -470,18 +498,14 @@
             font-weight: 500;
             border: 1px dashed transparent; 
         }
-        .review-item-incorrect .your-answer-review {
+        .review-item-incorrect .your-answer-review { 
             color: var(--error-color);
-            border-color: rgba(220, 53, 69, 0.4); /* Make border visible for wrong answer */
+            border-color: rgba(220, 53, 69, 0.4); 
         }
-        .review-item .correct-answer-review { /* Displayed when user was wrong OR correct */
-             /* Base style, color will be overridden */
-        }
-        .review-item-correct .correct-answer-review { /* When user was correct */
+        .review-item-correct .correct-answer-review { 
             color: var(--success-color);
-            border-color: rgba(40, 167, 69, 0.4);
         }
-         .review-item-incorrect .correct-answer-review { /* When user was incorrect, show actual correct answer */
+         .review-item-incorrect .correct-answer-review { 
             color: var(--success-color);
             border-color: rgba(40, 167, 69, 0.4);
         }
@@ -599,6 +623,7 @@
             .results-container .result-actions button { width: 100%; min-width: unset; margin: 8px 0;}
             .welcome-screen .start-icon-container { width: 70px; height: 70px; margin-bottom: 20px; }
             .welcome-screen .start-icon-container i { font-size: 2.5em; }
+            .welcome-actions button { width: 90%; max-width: 300px;} 
             .review-list { padding-right: 8px; margin-right: -8px;}
             .modal-content { padding: 25px 20px;}
             .modal-actions { flex-direction: column; }
@@ -623,8 +648,11 @@
                 <p>انطلق في رحلة معرفية مع 60 سؤالاً مصممة لاختبار حدود فهمك.
                     التركيز هو مفتاحك للنجاح.
                 </p>
-                <p>لديك <strong>30 دقيقة</strong> لإكمال التحدي. حظاً موفقاً!</p>
-                <button id="start-exam-btn"><i class="fa-solid fa-shuttle-space"></i> ابدأ الرحلة المعرفية</button>
+                <p>لديك <strong id="welcome-time-duration">30 دقيقة</strong> لإكمال التحدي. حظاً موفقاً!</p>
+                <div class="welcome-actions">
+                    <button id="start-exam-btn"><i class="fa-solid fa-shuttle-space"></i> ابدأ الرحلة المعرفية</button>
+                    <button id="view-old-results-btn" class="outline"><i class="fa-solid fa-history"></i> عرض النتائج السابقة</button>
+                </div>
             </div>
 
             <div class="question-container screen hidden" id="question-container">
@@ -646,15 +674,17 @@
             </div>
 
             <div class="results-container screen hidden" id="results-container">
-                <h2><i class="fa-solid fa-medal"></i> تقرير الأداء النهائي</h2>
+                <h2 id="results-title"><i class="fa-solid fa-medal"></i> تقرير الأداء النهائي</h2>
                 <div class="score-display">
-                    <p>عدد الأسئلة التي تمت الإجابة عليها: <span id="answered-count">0</span> من 60</p>
-                    <p>مجموع النقاط (الإجابات الصحيحة): <span id="score">0</span> / 60</p>
+                    <p>عدد الأسئلة التي تمت الإجابة عليها: <span id="answered-count">0</span> من <span id="results-total-q-count1">60</span></p>
+                    <p>مجموع النقاط (الإجابات الصحيحة): <span id="score">0</span> / <span id="results-total-q-count2">60</span></p>
                     <p id="percentage">النسبة المئوية للإتقان: 0%</p>
+                    <p id="old-result-timestamp" class="hidden" style="font-size: 0.9em; color: var(--text-muted); margin-top: 10px;"></p>
                 </div>
                 <div class="result-actions">
-                    <button id="review-btn"><i class="fa-solid fa-magnifying-glass-chart"></i> تحليل الإجابات</button>
+                    <button id="review-btn" class="hidden"><i class="fa-solid fa-magnifying-glass-chart"></i> تحليل الإجابات</button>
                     <button id="retake-btn"><i class="fa-solid fa-repeat"></i> خوض التحدي مجدداً</button>
+                    <button id="back-to-welcome-btn" class="hidden outline"><i class="fa-solid fa-home"></i> العودة للرئيسية</button>
                 </div>
             </div>
 
@@ -667,7 +697,7 @@
             </div>
         </main>
         <footer>
-            <p>2025 © <span class="made-by">Made by BeboNaiem</span></p>
+            <p>© 2024 منصة الاختبارات الذكية. <span class="made-by">Made by BeboNaiem</span>.</p>
         </footer>
     </div>
 
@@ -684,7 +714,7 @@
     </div>
 
     <script>
-        // Raw content from qq.txt (ensure this is the latest version)
+        // Raw content from qq.txt 
         const rawQuestionsText = `
 تمام، إليك 60 سؤالاً متنوعاً بين الصح والخطأ والاختيار من متعدد، مع الإجابات، مستمدة من المصادر التي قدمتها:
 
@@ -1018,6 +1048,7 @@
         const mainContent = document.getElementById('exam-content');
         const welcomeScreen = document.getElementById('welcome-screen'); 
         const startExamBtn = document.getElementById('start-exam-btn'); 
+        const viewOldResultsBtn = document.getElementById('view-old-results-btn'); 
         
         const questionContainer = document.getElementById('question-container'); 
         const questionNumberSpan = document.getElementById('question-number');
@@ -1030,11 +1061,17 @@
         const progressBar = document.getElementById('progress-bar');
 
         const resultsContainer = document.getElementById('results-container'); 
+        const resultsTitle = document.getElementById('results-title'); 
+        const oldResultTimestampEl = document.getElementById('old-result-timestamp');
         const scoreSpan = document.getElementById('score');
         const answeredCountSpan = document.getElementById('answered-count');
+        const resultsTotalQCount1 = document.getElementById('results-total-q-count1');
+        const resultsTotalQCount2 = document.getElementById('results-total-q-count2');
         const percentageSpan = document.getElementById('percentage');
         const reviewBtnSingleCol = document.getElementById('review-btn'); 
         const retakeBtnSingleCol = document.getElementById('retake-btn'); 
+        const backToWelcomeBtn = document.getElementById('back-to-welcome-btn');
+
 
         const reviewContainer = document.getElementById('review-container'); 
         const reviewList = document.getElementById('review-list');
@@ -1053,6 +1090,7 @@
         let timeLeft = 30 * 60; 
         let timerInterval;
         let examActive = false;
+        const OLD_RESULTS_KEY = 'examApp_oldResults';
 
         // --- Screen Management ---
         function showActiveScreen(screenId) {
@@ -1095,6 +1133,10 @@
             showActiveScreen('question-container'); 
             startTimer();
             displayQuestion();
+            reviewBtnSingleCol.classList.remove('hidden'); 
+            retakeBtnSingleCol.classList.remove('hidden');
+            backToWelcomeBtn.classList.add('hidden');
+            oldResultTimestampEl.classList.add('hidden');
         }
 
         function displayQuestion() {
@@ -1233,12 +1275,47 @@
                     }
                 }
             });
-            showActiveScreen('results-container');
-            answeredCountSpan.textContent = answeredCount;
-            scoreSpan.textContent = score;
-            const percentage = questionsData.length > 0 ? (score / questionsData.length) * 100 : 0;
-            percentageSpan.textContent = `النسبة المئوية للإتقان: ${percentage.toFixed(1)}%`;
+
+            const currentResults = {
+                score: score,
+                answeredCount: answeredCount,
+                totalQuestions: questionsData.length,
+                percentage: questionsData.length > 0 ? (score / questionsData.length) * 100 : 0,
+                timestamp: new Date().toLocaleString('ar-EG') 
+            };
+            localStorage.setItem(OLD_RESULTS_KEY, JSON.stringify(currentResults));
+
+            displayResults(currentResults, true); 
         }
+
+        function displayResults(resultsData, isCurrentExam) {
+            showActiveScreen('results-container');
+            answeredCountSpan.textContent = resultsData.answeredCount;
+            scoreSpan.textContent = resultsData.score;
+            resultsTotalQCount1.textContent = resultsData.totalQuestions;
+            resultsTotalQCount2.textContent = resultsData.totalQuestions;
+            percentageSpan.textContent = `النسبة المئوية للإتقان: ${resultsData.percentage.toFixed(1)}%`;
+
+            if (isCurrentExam) {
+                resultsTitle.innerHTML = `<i class="fa-solid fa-medal"></i> تقرير الأداء النهائي`;
+                reviewBtnSingleCol.classList.remove('hidden');
+                retakeBtnSingleCol.classList.remove('hidden');
+                backToWelcomeBtn.classList.add('hidden');
+                oldResultTimestampEl.classList.add('hidden');
+            } else { 
+                resultsTitle.innerHTML = `<i class="fa-solid fa-history"></i> نتيجة سابقة`;
+                reviewBtnSingleCol.classList.add('hidden'); 
+                retakeBtnSingleCol.classList.add('hidden'); 
+                backToWelcomeBtn.classList.remove('hidden');
+                if (resultsData.timestamp) {
+                    oldResultTimestampEl.textContent = `تم إكمال هذا الاختبار في: ${resultsData.timestamp}`;
+                    oldResultTimestampEl.classList.remove('hidden');
+                } else {
+                     oldResultTimestampEl.classList.add('hidden');
+                }
+            }
+        }
+
 
         function showReviewScreen() {
             showActiveScreen('review-container');
@@ -1246,7 +1323,7 @@
             questionsData.forEach((question, index) => {
                 const reviewItemDiv = document.createElement('div');
                 reviewItemDiv.className = 'review-item'; 
-                const userAnswer = userAnswers[index];
+                const userAnswer = userAnswers[index]; 
                 const isCorrect = (userAnswer !== null && userAnswer === question.correctAnswer);
 
                 if (userAnswer === null) {
@@ -1270,14 +1347,13 @@
                 }
                 
                 let resultFeedbackHtml = '';
-                if (userAnswer !== null) { // Only show feedback if answered
+                if (userAnswer !== null) { 
                     if (isCorrect) {
-                        resultFeedbackHtml = `<p class="correct-answer-review" style="color: var(--success-color);">إجابة صحيحة!</p>`;
+                        resultFeedbackHtml = `<p class="correct-answer-review">إجابة صحيحة!</p>`;
                     } else {
                         resultFeedbackHtml = `<p class="correct-answer-review">${correctAnswerDisplay}</p>`;
                     }
                 }
-
 
                 reviewItemDiv.innerHTML = `
                     <p class="question-text-review"><strong>سؤال ${index + 1}:</strong> ${question.question}</p>
@@ -1296,19 +1372,39 @@
             showActiveScreen('welcome-screen');
             timeLeft = 30 * 60;
             timerDisplaySingleCol.innerHTML = `<i class="fa-solid fa-clock-rotate-left"></i> الزمن المتبقي: ${formatTime(timeLeft)}`;
-            document.querySelector('#welcome-screen p strong').textContent = `${Math.floor(timeLeft/60)} دقيقة`; 
+            document.querySelector('#welcome-time-duration').textContent = `${Math.floor(timeLeft/60)} دقيقة`; 
             progressBar.style.width = '0%';
             clearInterval(timerInterval); 
             examActive = false; 
         }
+        
+        function showOldResults() {
+            const savedResults = localStorage.getItem(OLD_RESULTS_KEY);
+            if (savedResults) {
+                const oldData = JSON.parse(savedResults);
+                displayResults(oldData, false); // false indicates it's an old result
+            } else {
+                 showConfirmationModal(
+                    'لا توجد نتائج سابقة',
+                    'لم يتم العثور على أي نتائج اختبارات سابقة محفوظة في هذا المتصفح.',
+                    () => {} // Empty function for onConfirm as it's just an info modal
+                );
+                // Change confirm button text for info modal
+                const confirmBtnForInfo = document.getElementById('modal-confirm-btn');
+                if(confirmBtnForInfo) confirmBtnForInfo.textContent = 'موافق';
+            }
+        }
+
 
         startExamBtn.addEventListener('click', startExam);
+        viewOldResultsBtn.addEventListener('click', showOldResults); // New listener
         prevBtnSingleCol.addEventListener('click', showPreviousQuestion);
         nextBtnSingleCol.addEventListener('click', showNextQuestion);
         submitBtnSingleCol.addEventListener('click', confirmAndSubmitExam); 
         reviewBtnSingleCol.addEventListener('click', showReviewScreen);
         retakeBtnSingleCol.addEventListener('click', resetExam);
         backToResultsBtnSingleCol.addEventListener('click', showResultsScreen);
+        backToWelcomeBtn.addEventListener('click', () => showActiveScreen('welcome-screen')); // Listener for new button
         
         modalCancelBtn.addEventListener('click', hideConfirmationModal);
         modalOverlay.addEventListener('click', (event) => {
@@ -1325,7 +1421,7 @@
                 return;
             }
             timerDisplaySingleCol.innerHTML = `<i class="fa-solid fa-clock-rotate-left"></i> الزمن المتبقي: ${formatTime(timeLeft)}`;
-            document.querySelector('#welcome-screen p strong').textContent = `${Math.floor(timeLeft / 60)} دقيقة`;
+            document.querySelector('#welcome-time-duration').textContent = `${Math.floor(timeLeft / 60)} دقيقة`;
 
             showActiveScreen('welcome-screen');
         });
