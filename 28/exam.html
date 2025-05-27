@@ -643,7 +643,7 @@
     <div class="container">
         <header>
             <h1>الاختبار الشامل المتقدم</h1>
-            <div class="timer" id="timer"><i class="fa-solid fa-clock-rotate-left"></i> الزمن المتبقي: 30:00</div>
+            <div class="timer" id="timer"><i class="fa-solid fa-clock-rotate-left"></i> الزمن المتبقي: 60:00</div>
         </header>
 
         <main id="exam-content">
@@ -655,9 +655,8 @@
                 <p>انطلق في رحلة معرفية مع 60 سؤالاً مصممة لاختبار حدود فهمك.
                     التركيز هو مفتاحك للنجاح.
                 </p>
-                <p>لديك <strong id="welcome-time-duration">30 دقيقة</strong> لإكمال التحدي. حظاً موفقاً!</p>
+                <p>لديك <strong id="welcome-time-duration">60 دقيقة</strong> لإكمال التحدي. حظاً موفقاً!</p>
                 <p class="custom-credit">تم عمله بواسطة : بولا نعيم ادمن و ليس ليدر</p>
-                <p class="custom-credit">تحت اشراف : ابانوب جورج الليدر</p>
                 <div class="welcome-actions">
                     <button id="start-exam-btn"><i class="fa-solid fa-shuttle-space"></i> ابدأ الرحلة المعرفية</button>
                     <button id="view-old-results-btn" class="outline"><i class="fa-solid fa-history"></i> عرض النتائج السابقة</button>
@@ -1088,7 +1087,7 @@
 الإجابة: صح
 سؤال 92: مصور الأصول (التجميعي) يبدأ من الأصل وينتهي بالفروع.
 الإجابة: خطأ (يبدأ بالفروع وينتهي بالأصل، مثل خطوات تصنيع السيارة)
-سؤال 93: أي من أنواع الخرائط التالية يوضح الحدود السياسية للدول؟
+sؤال 93: أي من أنواع الخرائط التالية يوضح الحدود السياسية للدول؟
 أ. الخرائط الطبيعية
 ب. الخرائط الاقتصادية
 ج. الخرائط السياسية
@@ -1146,7 +1145,7 @@
 الإجابة: صح
 سؤال 117: من مبادئ تصميم شاشات العرض في البرمجيات التعليمية استخدام أكبر عدد ممكن من الألوان لجذب الانتباه.
 الإجابة: خطأ (تحديد عدد الألوان المستخدمة في التصميم، ومراعاة الاتساق، والبساطة)
-سؤال 118: شاشة التعريف في الحقيبة التعليمية هي الشاشة التي تعرض تمارين مشابهة للمحتوى السابق.
+sؤال 118: شاشة التعريف في الحقيبة التعليمية هي الشاشة التي تعرض تمارين مشابهة للمحتوى السابق.
 الإجابة: خطأ (شاشة التعريف تعرض عنوان البرنامج والجهة المنتجة. شاشة المراجعة هي التي تعرض تمارين مشابهة للمحتوى السابق)
 سؤال 119: مرحلة الإنتاج في برمجيات الكمبيوتر تشمل اختيار نظام التأليف (برامج تصميم الرسوم المتحركة).
 الإجابة: صح
@@ -1332,10 +1331,14 @@
         let currentQuestionIndex = 0;
         let userAnswers = new Array(questionsData.length).fill(null);
         let score = 0;
-        let timeLeft = 30 * 60; 
+        const ONE_HOUR_IN_SECONDS = 60 * 60; // 1 hour
+        let timeLeft = ONE_HOUR_IN_SECONDS; 
         let timerInterval;
         let examActive = false;
         const OLD_RESULTS_KEY = 'examApp_oldResults';
+        const EXAM_IN_PROGRESS_STATE_KEY = 'examApp_inProgressState';
+        const LAST_ACTIVE_SCREEN_KEY = 'examApp_lastActiveScreen';
+
 
         // --- Screen Management ---
         function showActiveScreen(screenId) {
@@ -1367,29 +1370,83 @@
         }
         function hideConfirmationModal() { modalOverlay.classList.remove('active'); }
 
+        // --- In-Progress State Management ---
+        function saveInProgressState() {
+            if (!examActive || questionsData.length === 0) return;
+            const state = {
+                answers: userAnswers,
+                currentIndex: currentQuestionIndex,
+                timeLeft: timeLeft,
+                totalQuestions: questionsData.length // Save total questions for validation
+            };
+            localStorage.setItem(EXAM_IN_PROGRESS_STATE_KEY, JSON.stringify(state));
+        }
+
+        function loadInProgressState() {
+            const savedStateJSON = localStorage.getItem(EXAM_IN_PROGRESS_STATE_KEY);
+            if (savedStateJSON) {
+                try {
+                    const savedState = JSON.parse(savedStateJSON);
+                    // Validate if the saved state is for the current number of questions
+                    if (savedState.answers && savedState.answers.length === questionsData.length && savedState.totalQuestions === questionsData.length) {
+                        userAnswers = savedState.answers;
+                        currentQuestionIndex = savedState.currentIndex;
+                        timeLeft = savedState.timeLeft;
+                        if (timeLeft <=0 ) { // If loaded time is already zero or less, treat as expired.
+                           timeLeft = 0; //normalize
+                           return 'expired'; // Special return value
+                        }
+                        return true; // Successfully loaded
+                    } else {
+                        console.warn("Saved progress is for a different number of questions. Discarding.");
+                        localStorage.removeItem(EXAM_IN_PROGRESS_STATE_KEY); // Clear invalid state
+                    }
+                } catch (e) {
+                    console.error("Error parsing saved state:", e);
+                    localStorage.removeItem(EXAM_IN_PROGRESS_STATE_KEY); // Clear corrupted state
+                }
+            }
+            return false; // No valid state loaded
+        }
 
         // --- Functions ---
         function startExam() {
-            examActive = true;
-            // Adjust time based on actual number of parsed questions, e.g., 30 seconds per question
-            timeLeft = questionsData.length > 0 ? questionsData.length * 30 : 30 * 60; 
-            document.querySelector('#welcome-time-duration').textContent = `${Math.floor(timeLeft / 60)} دقيقة`; // Update welcome time
+            let loadedState = loadInProgressState();
+            let calculatedTimePerQuestion = questionsData.length > 0 ? questionsData.length * 30 : ONE_HOUR_IN_SECONDS;
+            let examDuration = Math.max(ONE_HOUR_IN_SECONDS, calculatedTimePerQuestion);
 
-            currentQuestionIndex = 0;
-            userAnswers = new Array(questionsData.length).fill(null);
-            score = 0;
-            showActiveScreen('question-container'); 
-            startTimer();
-            displayQuestion();
-            reviewBtnSingleCol.classList.remove('hidden'); 
-            retakeBtnSingleCol.classList.remove('hidden');
-            backToWelcomeBtn.classList.add('hidden');
-            oldResultTimestampEl.classList.add('hidden');
+
+            if (loadedState === true) { // Resuming a valid, non-expired session
+                examActive = true;
+                // timeLeft, currentQuestionIndex, userAnswers are already set by loadInProgressState()
+                console.log("Resuming exam session.");
+            } else if (loadedState === 'expired') { // Resuming an expired session
+                 examActive = true; // Still set active to allow immediate submission display
+                 console.log("Resuming an expired exam session. Submitting immediately.");
+                 // userAnswers and currentQuestionIndex are set. timeLeft is 0.
+            } else { // Fresh start
+                examActive = true;
+                timeLeft = examDuration; // Use the determined exam duration
+                currentQuestionIndex = 0;
+                userAnswers = new Array(questionsData.length).fill(null);
+                score = 0;
+                console.log("Starting a new exam session.");
+            }
+            
+            document.querySelector('#welcome-time-duration').textContent = `${Math.floor(timeLeft / 60)} دقيقة`;
+            showActiveScreen('question-container');
+            localStorage.setItem(LAST_ACTIVE_SCREEN_KEY, 'question');
+            startTimer(); // Will use the (potentially restored) timeLeft
+            displayQuestion(); // Will display the (potentially restored) currentQuestionIndex
         }
+
 
         function displayQuestion() {
             if (!examActive || currentQuestionIndex >= questionsData.length) {
-                if (examActive && currentQuestionIndex >= questionsData.length && questionsData.length > 0) submitExam();
+                 if (examActive && currentQuestionIndex >= questionsData.length && questionsData.length > 0) {
+                     if (timeLeft > 0) submitExam(); // Auto-submit if navigated past last question with time left
+                     else if (!timerInterval) submitExam(true); // Auto-submit if time ran out before navigating past
+                 }
                 return;
             }
             const question = questionsData[currentQuestionIndex];
@@ -1454,6 +1511,7 @@
         
         function selectOption(value) {
             userAnswers[currentQuestionIndex] = value;
+            saveInProgressState(); // Save state after every selection
         }
 
         function updateNavigationButtonsSingleCol() {
@@ -1466,6 +1524,7 @@
             if (currentQuestionIndex > 0) {
                 currentQuestionIndex--;
                 displayQuestion();
+                saveInProgressState(); // Save state after navigation
             }
         }
 
@@ -1473,6 +1532,7 @@
             if (currentQuestionIndex < questionsData.length - 1) {
                 currentQuestionIndex++;
                 displayQuestion();
+                saveInProgressState(); // Save state after navigation
             }
         }
 
@@ -1482,13 +1542,21 @@
         }
 
         function startTimer() {
-            clearInterval(timerInterval);
+            clearInterval(timerInterval); // Clear any existing timer
             timerDisplaySingleCol.innerHTML = `<i class="fa-solid fa-clock-rotate-left"></i> الزمن المتبقي: ${formatTime(timeLeft)}`;
+            
+            if(timeLeft <= 0 && examActive) { // If time is already up when timer starts
+                timerDisplaySingleCol.innerHTML = '<i class="fa-solid fa-hourglass-end"></i> انتهى الوقت!';
+                submitExam(true); // Force submit if time is already up
+                return;
+            }
+
             timerInterval = setInterval(() => {
                 timeLeft--;
                 timerDisplaySingleCol.innerHTML = `<i class="fa-solid fa-clock-rotate-left"></i> الزمن المتبقي: ${formatTime(timeLeft)}`;
                 if (timeLeft <= 0) {
                     clearInterval(timerInterval);
+                    timerInterval = null; // Ensure timerInterval is null after clearing
                     timerDisplaySingleCol.innerHTML = '<i class="fa-solid fa-hourglass-end"></i> انتهى الوقت!';
                     if (examActive) submitExam(true); 
                 }
@@ -1510,7 +1578,10 @@
         }
 
         function submitExam(timeUp = false) {
+            if (!examActive && !timeUp) return; 
+
             clearInterval(timerInterval);
+            timerInterval = null; 
             examActive = false; 
             score = 0;
             let answeredCount = 0;
@@ -1529,14 +1600,17 @@
                 answeredCount: answeredCount,
                 totalQuestions: questionsData.length,
                 percentage: questionsData.length > 0 ? (score / questionsData.length) * 100 : 0,
-                timestamp: new Date().toLocaleString('ar-EG') 
+                timestamp: new Date().toLocaleString('ar-EG'),
+                userAnswersForReview: userAnswers // Save answers for review
             };
             localStorage.setItem(OLD_RESULTS_KEY, JSON.stringify(currentResults));
+            localStorage.removeItem(EXAM_IN_PROGRESS_STATE_KEY); 
+            localStorage.setItem(LAST_ACTIVE_SCREEN_KEY, 'results');
 
-            displayResults(currentResults, true); 
+            displayResults(currentResults, { isPostSubmit: true, showReview: true }); 
         }
 
-        function displayResults(resultsData, isCurrentExam) {
+        function displayResults(resultsData, options = { isPostSubmit: false, showReview: false }) {
             showActiveScreen('results-container');
             answeredCountSpan.textContent = resultsData.answeredCount;
             scoreSpan.textContent = resultsData.score;
@@ -1544,15 +1618,13 @@
             resultsTotalQCount2.textContent = resultsData.totalQuestions;
             percentageSpan.textContent = `النسبة المئوية للإتقان: ${resultsData.percentage.toFixed(1)}%`;
 
-            if (isCurrentExam) {
+            if (options.isPostSubmit) { // True if called from submitExam or restoring to last results page
                 resultsTitle.innerHTML = `<i class="fa-solid fa-medal"></i> تقرير الأداء النهائي`;
-                reviewBtnSingleCol.classList.remove('hidden');
                 retakeBtnSingleCol.classList.remove('hidden');
                 backToWelcomeBtn.classList.add('hidden');
                 oldResultTimestampEl.classList.add('hidden');
-            } else { 
+            } else {  // Called from "View Old Results"
                 resultsTitle.innerHTML = `<i class="fa-solid fa-history"></i> نتيجة سابقة`;
-                reviewBtnSingleCol.classList.add('hidden'); 
                 retakeBtnSingleCol.classList.add('hidden'); 
                 backToWelcomeBtn.classList.remove('hidden');
                 if (resultsData.timestamp) {
@@ -1562,19 +1634,47 @@
                      oldResultTimestampEl.classList.add('hidden');
                 }
             }
+
+            if(options.showReview && resultsData.userAnswersForReview) {
+                reviewBtnSingleCol.classList.remove('hidden');
+            } else {
+                reviewBtnSingleCol.classList.add('hidden');
+            }
         }
 
 
         function showReviewScreen() {
+            // userAnswers should be populated by submitExam or by DOMContentLoaded restore
+            if (!userAnswers || userAnswers.every(ans => ans === null) && questionsData.length > 0) {
+                // Attempt to load from last completed exam if global userAnswers is empty
+                const lastExamDataJSON = localStorage.getItem(OLD_RESULTS_KEY);
+                if (lastExamDataJSON) {
+                    const lastExamData = JSON.parse(lastExamDataJSON);
+                    if (lastExamData.userAnswersForReview) {
+                        userAnswers = lastExamData.userAnswersForReview;
+                    } else {
+                         console.warn("Review attempted but no answers found in memory or storage for last exam.");
+                         showResultsScreen(); // Go back to results as review is not possible
+                         return;
+                    }
+                } else {
+                    console.warn("Review attempted but no answers found in memory and no last exam data.");
+                    showResultsScreen();
+                    return;
+                }
+            }
+
+
             showActiveScreen('review-container');
+            localStorage.setItem(LAST_ACTIVE_SCREEN_KEY, 'review');
             reviewList.innerHTML = '';
             questionsData.forEach((question, index) => {
                 const reviewItemDiv = document.createElement('div');
                 reviewItemDiv.className = 'review-item'; 
-                const userAnswer = userAnswers[index]; 
-                const isCorrect = (userAnswer !== null && userAnswer === question.correctAnswer);
+                const userAnswerFromStore = userAnswers[index]; // Use the (potentially restored) userAnswers
+                const isCorrect = (userAnswerFromStore !== null && userAnswerFromStore === question.correctAnswer);
 
-                if (userAnswer === null) {
+                if (userAnswerFromStore === null) {
                     reviewItemDiv.classList.add('review-item-unanswered');
                 } else if (isCorrect) {
                     reviewItemDiv.classList.add('review-item-correct');
@@ -1583,10 +1683,10 @@
                 }
                 
                 let userAnswerText = 'لم تتم الإجابة';
-                if (userAnswer !== null) {
-                    userAnswerText = `إجابتك: ${userAnswer}`;
-                    if (question.type === 'mcq' && question.options[userAnswer]) {
-                        userAnswerText += `. ${question.options[userAnswer]}`;
+                if (userAnswerFromStore !== null) {
+                    userAnswerText = `إجابتك: ${userAnswerFromStore}`;
+                    if (question.type === 'mcq' && question.options[userAnswerFromStore]) {
+                        userAnswerText += `. ${question.options[userAnswerFromStore]}`;
                     }
                 }
                 let correctAnswerDisplay = `الإجابة الصحيحة: ${question.correctAnswer}`;
@@ -1595,7 +1695,7 @@
                 }
                 
                 let resultFeedbackHtml = '';
-                if (userAnswer !== null) { 
+                if (userAnswerFromStore !== null) { 
                     if (isCorrect) {
                         resultFeedbackHtml = `<p class="correct-answer-review">إجابة صحيحة!</p>`;
                     } else {
@@ -1612,38 +1712,52 @@
             });
         }
 
-        function showResultsScreen() {
+        function showResultsScreen() { // Called when going back from review
             showActiveScreen('results-container');
+            localStorage.setItem(LAST_ACTIVE_SCREEN_KEY, 'results');
         }
 
         function resetExam() {
+            localStorage.removeItem(EXAM_IN_PROGRESS_STATE_KEY); 
+            localStorage.setItem(LAST_ACTIVE_SCREEN_KEY, 'welcome');
             showActiveScreen('welcome-screen');
-             // Reset time based on actual number of parsed questions for next attempt
-            timeLeft = questionsData.length > 0 ? questionsData.length * 30 : 30 * 60;
+            
+            let calculatedTimePerQuestion = questionsData.length > 0 ? questionsData.length * 30 : ONE_HOUR_IN_SECONDS;
+            let examDuration = Math.max(ONE_HOUR_IN_SECONDS, calculatedTimePerQuestion);
+            timeLeft = examDuration;
+
             timerDisplaySingleCol.innerHTML = `<i class="fa-solid fa-clock-rotate-left"></i> الزمن المتبقي: ${formatTime(timeLeft)}`;
             document.querySelector('#welcome-time-duration').textContent = `${Math.floor(timeLeft/60)} دقيقة`; 
             progressBar.style.width = '0%';
             clearInterval(timerInterval); 
+            timerInterval = null;
             examActive = false; 
         }
         
         function showOldResults() {
-            const savedResults = localStorage.getItem(OLD_RESULTS_KEY);
-            if (savedResults) {
-                const oldData = JSON.parse(savedResults);
-                displayResults(oldData, false); // false indicates it's an old result
+            const savedResultsJSON = localStorage.getItem(OLD_RESULTS_KEY);
+            if (savedResultsJSON) {
+                const oldData = JSON.parse(savedResultsJSON);
+                const canReviewThis = !!(oldData && oldData.userAnswersForReview);
+                
+                if (canReviewThis) { // If these old results have answers, load them for potential review
+                    userAnswers = oldData.userAnswersForReview;
+                } else { // Otherwise, clear global userAnswers or set to empty
+                    userAnswers = new Array(questionsData.length).fill(null);
+                }
+                displayResults(oldData, { isPostSubmit: false, showReview: canReviewThis }); 
             } else {
                  showConfirmationModal(
                     'لا توجد نتائج سابقة',
                     'لم يتم العثور على أي نتائج اختبارات سابقة محفوظة في هذا المتصفح.',
-                    () => {} // Empty function for onConfirm as it's just an info modal
+                    () => {} 
                 );
                 const confirmBtnForInfo = document.getElementById('modal-confirm-btn');
                 if(confirmBtnForInfo) confirmBtnForInfo.textContent = 'موافق';
             }
         }
 
-
+        // --- Event Listeners ---
         startExamBtn.addEventListener('click', startExam);
         viewOldResultsBtn.addEventListener('click', showOldResults); 
         prevBtnSingleCol.addEventListener('click', showPreviousQuestion);
@@ -1652,12 +1766,21 @@
         reviewBtnSingleCol.addEventListener('click', showReviewScreen);
         retakeBtnSingleCol.addEventListener('click', resetExam);
         backToResultsBtnSingleCol.addEventListener('click', showResultsScreen);
-        backToWelcomeBtn.addEventListener('click', () => showActiveScreen('welcome-screen')); 
+        backToWelcomeBtn.addEventListener('click', () => {
+            showActiveScreen('welcome-screen');
+            localStorage.setItem(LAST_ACTIVE_SCREEN_KEY, 'welcome');
+        }); 
         
         modalCancelBtn.addEventListener('click', hideConfirmationModal);
         modalOverlay.addEventListener('click', (event) => {
             if (event.target === modalOverlay) {
                 hideConfirmationModal();
+            }
+        });
+
+        window.addEventListener('beforeunload', () => {
+            if (examActive && questionsData.length > 0) {
+                saveInProgressState();
             }
         });
 
@@ -1674,11 +1797,37 @@
                 welcomeP1.textContent = `انطلق في رحلة معرفية مع ${questionsData.length} سؤالاً مصممة لاختبار حدود فهمك. التركيز هو مفتاحك للنجاح.`;
             }
             
-            timeLeft = questionsData.length > 0 ? questionsData.length * 30 : 30 * 60; // Set initial time based on parsed questions
-            timerDisplaySingleCol.innerHTML = `<i class="fa-solid fa-clock-rotate-left"></i> الزمن المتبقي: ${formatTime(timeLeft)}`;
-            document.querySelector('#welcome-time-duration').textContent = `${Math.floor(timeLeft / 60)} دقيقة`;
+            let calculatedTimePerQuestion = questionsData.length > 0 ? questionsData.length * 30 : ONE_HOUR_IN_SECONDS;
+            let initialTime = Math.max(ONE_HOUR_IN_SECONDS, calculatedTimePerQuestion);
+            timerDisplaySingleCol.innerHTML = `<i class="fa-solid fa-clock-rotate-left"></i> الزمن المتبقي: ${formatTime(initialTime)}`;
+            document.querySelector('#welcome-time-duration').textContent = `${Math.floor(initialTime / 60)} دقيقة`;
 
-            showActiveScreen('welcome-screen');
+            // --- Restore state on page load ---
+            const inProgressStateLoaded = loadInProgressState(); // This also sets global vars if successful
+            const lastScreen = localStorage.getItem(LAST_ACTIVE_SCREEN_KEY);
+            const lastCompletedExamJSON = localStorage.getItem(OLD_RESULTS_KEY);
+            let lastCompletedExamData = null;
+            if(lastCompletedExamJSON) lastCompletedExamData = JSON.parse(lastCompletedExamJSON);
+
+
+            if (inProgressStateLoaded === true || inProgressStateLoaded === 'expired') {
+                startExam(); // This will handle resuming or submitting expired exam
+            } else if (lastScreen === 'results' && lastCompletedExamData) {
+                if (lastCompletedExamData.userAnswersForReview) {
+                    userAnswers = lastCompletedExamData.userAnswersForReview;
+                } else {
+                    userAnswers = new Array(questionsData.length).fill(null);
+                }
+                displayResults(lastCompletedExamData, { isPostSubmit: true, showReview: !!lastCompletedExamData.userAnswersForReview });
+                showActiveScreen('results-container');
+            } else if (lastScreen === 'review' && lastCompletedExamData && lastCompletedExamData.userAnswersForReview) {
+                userAnswers = lastCompletedExamData.userAnswersForReview;
+                showReviewScreen(); // This also sets the active screen
+            }
+            else {
+                showActiveScreen('welcome-screen');
+                localStorage.setItem(LAST_ACTIVE_SCREEN_KEY, 'welcome');
+            }
         });
     </script>
 </body>
