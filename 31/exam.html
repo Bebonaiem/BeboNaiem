@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>واجهة اختبار متقدمة - ميزات محسنة</title>
+    <title>موقع الامتحان</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="icon" href="logo.png" type="image/x-icon">
     <style>
         :root {
             --primary-color-dark: #00aaff;
@@ -214,6 +213,13 @@
         .secondary-btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
+        }
+        
+        .custom-credit {
+            font-size: 0.85em;
+            color: var(--text-secondary);
+            margin-top: 8px;
+            line-height: 1.4;
         }
 
         .loft-exam-container, .old-results-container {
@@ -733,6 +739,11 @@
         <button class="secondary-btn" id="viewLastResultsBtn" onclick="viewLastResults()" style="margin-top: 10px;" disabled>
             <i class="fas fa-history icon-before-text"></i> عرض نتائج آخر اختبار
         </button>
+        
+        <div style="margin-top: 25px;">
+            <p class="custom-credit">تم عمله بواسطة : بولا نعيم ادمن و ليس ليدر</p>
+            <p class="custom-credit">تحت اشراف : ابانوب جورج الليدر</p>
+        </div>
     </div>
 
     <div class="loft-exam-container" id="examPage">
@@ -912,12 +923,12 @@
         ];
         // --- Questions End ---
 
-        let sessionQuestions = []; // Holds the questions for the current exam session (possibly shuffled)
+        let sessionQuestions = []; 
         let currentQuestionIndex = 0;
-        let userAnswers = []; // Stores { questionId: string, userAnswerValue: string, isCorrect: boolean, correctAnswer: string, questionIndexInSession: number }
-        let flaggedQuestions = []; // Stores question IDs that are flagged
+        let userAnswers = []; 
+        let flaggedQuestions = []; 
         let timerInterval;
-        let timeLeftInSeconds = 45 * 60; // 45 minutes
+        let timeLeftInSeconds = 45 * 60; 
         const EXAM_DURATION_SECONDS = 45 * 60;
 
 
@@ -948,7 +959,7 @@
         const qNavGridContainer = document.getElementById('qNavGridContainer');
 
 
-        const LAST_RESULTS_KEY = 'loftExamLastResults_v2'; // Added v2 for new structure
+        const LAST_RESULTS_KEY = 'loftExamLastResults_v2';
         const CURRENT_EXAM_STATE_KEY = 'loftCurrentExamState_v2';
         const THEME_KEY = 'loftExamTheme';
 
@@ -962,24 +973,27 @@
         }
 
         function applyTheme(theme) {
-            document.body.className = theme; // Removes other classes, sets only theme
+            document.body.className = theme; 
             const iconClass = theme === 'dark-theme' ? 'fa-sun' : 'fa-moon';
             if (themeToggleBtn) themeToggleBtn.innerHTML = `<i class="fas ${iconClass}"></i>`;
             if (themeToggleBtnOldResults) themeToggleBtnOldResults.innerHTML = `<i class="fas ${iconClass}"></i>`;
             localStorage.setItem(THEME_KEY, theme);
-             // Update RGB color variables based on theme for dynamic alpha in box-shadows
             if (theme === 'dark-theme') {
                 document.documentElement.style.setProperty('--primary-color-rgb', '0,170,255');
                 document.documentElement.style.setProperty('--secondary-color-rgb', '142,142,147');
                 document.documentElement.style.setProperty('--success-color-rgb', '48,209,88');
                 document.documentElement.style.setProperty('--danger-color-rgb', '255,69,58');
                 document.documentElement.style.setProperty('--warning-color-rgb', '255,159,10');
-            } else { // light-theme
+            } else { 
                 document.documentElement.style.setProperty('--primary-color-rgb', '0,122,255');
                 document.documentElement.style.setProperty('--secondary-color-rgb', '160,160,176');
                 document.documentElement.style.setProperty('--success-color-rgb', '40,167,69');
                 document.documentElement.style.setProperty('--danger-color-rgb', '220,53,69');
                 document.documentElement.style.setProperty('--warning-color-rgb', '255,193,7');
+            }
+             // Update timer display colors if exam is active
+            if (examPage.style.display === 'block' && !(resultsArea.style.display === 'block' && resultsArea.classList.contains('visible'))) {
+                updateTimerDisplay();
             }
         }
 
@@ -1069,14 +1083,13 @@
 
                 const savedState = JSON.parse(savedStateJSON);
                 
-                // Reconstruct sessionQuestions based on saved order
                 if (!savedState.sessionQuestionIdsInOrder || savedState.sessionQuestionIdsInOrder.length === 0) {
-                    clearCurrentExamState(); return false; // Invalid state
+                    clearCurrentExamState(); return false; 
                 }
-                sessionQuestions = savedState.sessionQuestionIdsInOrder.map(id => allQuestions.find(q => q.id === id)).filter(q => q); // Filter out undefined if any mismatch
+                sessionQuestions = savedState.sessionQuestionIdsInOrder.map(id => allQuestions.find(q => q.id === id)).filter(q => q); 
                 
                 if(sessionQuestions.length !== savedState.sessionQuestionIdsInOrder.length || sessionQuestions.length === 0){
-                     clearCurrentExamState(); return false; // Mismatch or empty
+                     clearCurrentExamState(); return false; 
                 }
 
                 currentQuestionIndex = savedState.currentQuestionIndex;
@@ -1160,9 +1173,6 @@
         }
         
         function handleAnswerSelection() {
-            // This function is called when an option is selected.
-            // It saves the current answer temporarily before the user clicks "Next".
-            // This is useful if the user navigates away using the nav panel.
             const selectedOption = document.querySelector('input[name="q_option"]:checked');
             if (!selectedOption || currentQuestionIndex >= sessionQuestions.length) {
                 if(nextBtn) nextBtn.disabled = true;
@@ -1192,7 +1202,7 @@
                 userAnswerValue: userAnswerValue,
                 isCorrect: isCorrect,
                 correctAnswer: correctAnswerText,
-                questionIndexInSession: currentQuestionIndex // Store index in the current session's question order
+                questionIndexInSession: currentQuestionIndex 
             };
 
             if (existingAnswerIndex !== -1) {
@@ -1200,8 +1210,8 @@
             } else {
                 userAnswers.push(answerData);
             }
-            renderQuestionNavPanel(); // Update nav panel to show as answered
-            saveCurrentExamState(); // Save state immediately on answer selection
+            renderQuestionNavPanel(); 
+            saveCurrentExamState(); 
         }
 
 
@@ -1214,23 +1224,21 @@
                 return;
             }
             
-            handleAnswerSelection(); // Ensure answer is processed/saved
+            handleAnswerSelection(); 
 
             currentQuestionIndex++;
-            // saveCurrentExamState(); // Already saved in handleAnswerSelection or if not, save here too
-
+            
             if (currentQuestionIndex >= sessionQuestions.length) {
                 stopTimer();
                 showResults();
             } else {
                 displayCurrentQuestion();
-                renderQuestionNavPanel(); // Update for current question highlight
+                renderQuestionNavPanel(); 
             }
         }
 
         function handlePreviousQuestion() {
             if (currentQuestionIndex > 0) {
-                // Answer for current question should have been saved by onchange via handleAnswerSelection
                 currentQuestionIndex--;
                 saveCurrentExamState(); 
                 displayCurrentQuestion();
@@ -1243,7 +1251,7 @@
                 return;
             }
             stopTimer(); 
-            handleAnswerSelection(); // Process any selected answer for the current question
+            handleAnswerSelection(); 
             showResults(); 
             if(nextBtn) nextBtn.disabled = true;
             if(prevBtn) prevBtn.disabled = true;
@@ -1272,10 +1280,9 @@
             let score = 0;
             detailedFeedbackContainer.innerHTML = '';
 
-            // Iterate through sessionQuestions to ensure all questions are accounted for, even if not answered
             sessionQuestions.forEach((q_session, index) => {
                 const userAnswerData = userAnswers.find(ans => ans.questionId === q_session.id);
-                const originalQuestionData = allQuestions.find(oq => oq.id === q_session.id); // For explanation
+                const originalQuestionData = allQuestions.find(oq => oq.id === q_session.id); 
 
                 let isCorrect = false;
                 let userAnswerDisplay = "لم تتم الإجابة";
@@ -1333,8 +1340,8 @@
 
             const resultsToSave = {
                 score: score, totalQuestions: sessionQuestions.length, 
-                answers: userAnswers, // Save user answers as is
-                sessionQuestionIdsInOrder: sessionQuestions.map(q => q.id), // Save the order of questions for this result
+                answers: userAnswers, 
+                sessionQuestionIdsInOrder: sessionQuestions.map(q => q.id), 
                 timestamp: new Date().toLocaleString('ar-EG')
             };
             try {
@@ -1385,7 +1392,7 @@
             const q = sessionQuestions[currentQuestionIndex];
             let optionsHTML = '';
 
-            const flagBtn = `
+            const flagBtnHTML = `
                 <button class="flag-question-btn ${flaggedQuestions.includes(q.id) ? 'flagged' : ''}" onclick="toggleFlagQuestion('${q.id}')" aria-pressed="${flaggedQuestions.includes(q.id)}">
                     <i class="fas fa-flag"></i> ${flaggedQuestions.includes(q.id) ? 'إلغاء التعليم' : 'تعليم للمراجعة'}
                 </button>`;
@@ -1419,35 +1426,30 @@
             const questionCardHTML = `
                 <div class="question-card-loft">
                     <div class="question-actions">
-                        <span class="progress-text">السؤال ${currentQuestionIndex + 1} من ${sessionQuestions.length}</span>
-                        ${flagBtn}
+                        <span class="progress-text" style="visibility: hidden;"></span> <!-- Placeholder for balance, actual text in progress bar -->
+                        ${flagBtnHTML}
                     </div>
-                    <p class="question-statement">${q.text}</p>
+                    <p class="question-statement" id="questionStatement${q.id}">${q.text}</p>
                     <div class="options-list" role="radiogroup" aria-labelledby="questionStatement${q.id}">
                         ${optionsHTML}
                     </div>
                 </div>
             `;
-             // Add id to question statement for ARIA
-            const tempDiv = document.createElement('div');
-            tempDiv.innerHTML = questionCardHTML;
-            tempDiv.querySelector('.question-statement').id = `questionStatement${q.id}`;
-
-
+            
             const oldCard = questionDisplayArea.querySelector('.question-card-loft');
             if (oldCard) {
                 oldCard.classList.remove('entering');
                 oldCard.classList.add('exiting');
                 oldCard.addEventListener('animationend', () => {
                     if (oldCard.classList.contains('exiting')) { 
-                        questionDisplayArea.innerHTML = tempDiv.innerHTML; // Use modified HTML
+                        questionDisplayArea.innerHTML = questionCardHTML; 
                         const newCard = questionDisplayArea.querySelector('.question-card-loft');
                         if (newCard) newCard.classList.add('entering');
                         postRenderQuestionSetup();
                     }
                 }, { once: true });
             } else {
-                questionDisplayArea.innerHTML = tempDiv.innerHTML; // Use modified HTML
+                questionDisplayArea.innerHTML = questionCardHTML; 
                 const newCard = questionDisplayArea.querySelector('.question-card-loft');
                 if (newCard) newCard.classList.add('entering');
                 postRenderQuestionSetup();
@@ -1485,7 +1487,6 @@
                     if(nextBtn) nextBtn.disabled = false; 
                 }
             }
-             // Update flag button text/state if it exists
             const flagButton = questionDisplayArea.querySelector('.flag-question-btn');
             if (flagButton) {
                 const isFlagged = flaggedQuestions.includes(currentQId);
@@ -1502,8 +1503,8 @@
             } else {
                 flaggedQuestions.push(questionId);
             }
-            postRenderQuestionSetup(); // To update button appearance on current question
-            renderQuestionNavPanel(); // To update nav panel
+            postRenderQuestionSetup(); 
+            renderQuestionNavPanel(); 
             saveCurrentExamState();
         }
 
@@ -1530,7 +1531,7 @@
                 }
                 item.onclick = () => {
                     navigateToQuestion(index);
-                    toggleQuestionNavModal(); // Close modal after navigation
+                    toggleQuestionNavModal(); 
                 };
                 qNavGridContainer.appendChild(item);
             });
@@ -1538,11 +1539,11 @@
 
         function navigateToQuestion(index) {
             if (index >= 0 && index < sessionQuestions.length) {
-                handleAnswerSelection(); // Save any answer before navigating away
+                handleAnswerSelection(); 
                 currentQuestionIndex = index;
                 saveCurrentExamState();
                 displayCurrentQuestion();
-                renderQuestionNavPanel(); // Re-render to update current highlight
+                renderQuestionNavPanel(); 
             }
         }
 
@@ -1550,7 +1551,7 @@
             if (questionNavModal.style.display === "block") {
                 questionNavModal.style.display = "none";
             } else {
-                renderQuestionNavPanel(); // Ensure it's up-to-date before showing
+                renderQuestionNavPanel(); 
                 questionNavModal.style.display = "block";
             }
         }
@@ -1611,7 +1612,7 @@
                 if (lastResults.answers && Array.isArray(lastResults.answers) && lastResults.sessionQuestionIdsInOrder) {
                      lastResults.sessionQuestionIdsInOrder.forEach((qId, index) => {
                         const originalQuestionData = allQuestions.find(oq => oq.id === qId);
-                        if (!originalQuestionData) return; // Skip if question not found in current allQuestions
+                        if (!originalQuestionData) return; 
 
                         const userAnswerData = lastResults.answers.find(ans => ans.questionId === qId);
                         
@@ -1702,7 +1703,6 @@
             }
             checkForOldResults();
 
-            // Close modal if clicked outside content
             window.onclick = function(event) {
                 if (event.target == questionNavModal) {
                     toggleQuestionNavModal();
@@ -1714,7 +1714,7 @@
             if (examPage.style.display === 'block' && 
                 !(resultsArea.style.display === 'block' && resultsArea.classList.contains('visible')) &&
                 timeLeftInSeconds > 0) {
-                handleAnswerSelection(); // Ensure current selection is processed
+                handleAnswerSelection(); 
                 saveCurrentExamState();
             }
         });
