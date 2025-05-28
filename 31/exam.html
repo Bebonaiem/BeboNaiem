@@ -248,6 +248,14 @@
         .btn-success:hover {
             background: linear-gradient(145deg, var(--success-color), var(--success-gradient-end));
         }
+        .btn-danger {
+            background: linear-gradient(145deg, var(--danger-color), color-mix(in srgb, var(--danger-color) 80%, black));
+            color: var(--text-on-primary-button);
+        }
+        .btn-danger:hover {
+            background: linear-gradient(145deg, color-mix(in srgb, var(--danger-color) 80%, black), var(--danger-color));
+        }
+
 
         .custom-credit {
             font-family: var(--font-family-secondary);
@@ -487,6 +495,7 @@
             border-top: 1px solid var(--border-color);
             display: flex; 
             justify-content: space-between; /* Space out buttons */
+            align-items: center; /* Align items vertically if they wrap or have different heights */
             gap: 15px; 
         }
         /* Using .btn, .btn-primary, .btn-secondary from above */
@@ -811,6 +820,9 @@
         <footer class="navigation-controls" id="navigationControls" role="navigation">
             <button class="btn btn-secondary" id="prevBtn" onclick="handlePreviousQuestion()" disabled aria-label="السؤال السابق">
                 <i class="fas fa-arrow-right icon-before-text"></i> السابق
+            </button>
+            <button class="btn btn-danger" id="endExamBtn" onclick="confirmEndExam()" aria-label="إنهاء الاختبار الآن">
+                <i class="fas fa-stop-circle icon-before-text"></i> إنهاء الاختبار
             </button>
             <button class="btn btn-primary" id="nextBtn" onclick="handleNextQuestion()" disabled aria-label="السؤال التالي">
                 التالي <i class="fas fa-arrow-left icon-after-text"></i>
@@ -1269,6 +1281,16 @@
             }
         }
         
+        function confirmEndExam() {
+            // Save current answer if any is selected before showing confirm dialog
+            handleAnswerSelection(); 
+
+            if (confirm("هل أنت متأكد أنك تريد إنهاء الاختبار الآن؟ سيتم تصحيح إجاباتك الحالية.")) {
+                stopTimer(); 
+                showResults(); 
+            }
+        }
+
         function autoSubmitExam() {
             if ((resultsArea.style.display === 'block' && resultsArea.classList.contains('visible')) || examPage.style.display !== 'block') {
                 return;
