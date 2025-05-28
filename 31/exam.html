@@ -3,81 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>موقع الامتحان</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <title>واجهة اختبار متقدمة - تصميم محسن</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
-            --primary-color-dark: #00aaff;
-            --primary-hover-dark: #0088cc;
-            --secondary-color-dark: #8e8e93;
-            --success-color-dark: #30d158;
-            --success-gradient-end-dark: #60eda8;
-            --danger-color-dark: #ff453a;
-            --warning-color-dark: #ff9f0a;
-            --app-bg-dark: #000000;
-            --card-bg-dark: #1c1c1e;
-            --element-bg-dark: #2c2c2e;
-            --element-hover-bg-dark: #3a3a3c;
-            --border-color-dark: #38383a;
-            --text-primary-dark: #ffffff;
-            --text-secondary-dark: #a0a0b0;
+            /* --- Dark Theme --- */
+            --primary-color-dark: #00aeff; /* Brighter Blue */
+            --primary-hover-dark: #0095e0;
+            --secondary-color-dark: #7a8c99; /* Cooler Gray */
+            --success-color-dark: #28a745; /* Vibrant Green */
+            --success-gradient-end-dark: #208538;
+            --danger-color-dark: #e74c3c;  /* Softer Red */
+            --warning-color-dark: #f39c12; /* Amber */
+            
+            --app-bg-dark: #121212; /* Very Dark Gray (Material Design Dark) */
+            --card-bg-dark: #1e1e1e; /* Slightly Lighter Dark Gray */
+            --element-bg-dark: #2a2a2a; 
+            --element-hover-bg-dark: #383838;
+            --border-color-dark: #3c3c3c; /* Softer Border */
+
+            --text-primary-dark: #e0e0e0; /* Off-white */
+            --text-secondary-dark: #b0b0b0; /* Lighter Gray for secondary text */
             --text-on-primary-button-dark: #ffffff;
-            --text-on-dark-element-dark: #ffffff;
+            --text-on-dark-element-dark: #e0e0e0;
 
-            --primary-color-light: #007aff;
-            --primary-hover-light: #005bb5;
-            --secondary-color-light: #a0a0b0;
-            --success-color-light: #28a745;
-            --success-gradient-end-light: #50c16f;
-            --danger-color-light: #dc3545;
-            --warning-color-light: #ffc107;
-            --app-bg-light: #f4f4f8;
+            /* --- Light Theme --- */
+            --primary-color-light: #007bff; /* Standard Bootstrap Blue */
+            --primary-hover-light: #0056b3;
+            --secondary-color-light: #6c757d; /* Bootstrap Secondary */
+            --success-color-light: #198754; /* Bootstrap Success */
+            --success-gradient-end-light: #146c43;
+            --danger-color-light: #dc3545;  /* Bootstrap Danger */
+            --warning-color-light: #ffc107; /* Bootstrap Warning */
+
+            --app-bg-light: #f8f9fa;   /* Very Light Gray */
             --card-bg-light: #ffffff;
-            --element-bg-light: #e9ecef;
-            --element-hover-bg-light: #d6dbe0;
-            --border-color-light: #ced4da;
-            --text-primary-light: #212529;
-            --text-secondary-light: #6c757d;
+            --element-bg-light: #eef2f7; /* Soft Blueish Gray */
+            --element-hover-bg-light: #dfe6ef;
+            --border-color-light: #dee2e6; /* Bootstrap Border Color */
+            
+            --text-primary-light: #212529; /* Bootstrap Default Text */
+            --text-secondary-light: #5a6268; /* Darker Gray for secondary */
             --text-on-primary-button-light: #ffffff;
-            --text-on-dark-element-light: #212529; /* Text on light elements */
+            --text-on-dark-element-light: #343a40;
 
 
-            /* Default to dark theme variables */
+            /* Default to dark theme variables - these will be overridden by body class */
             --primary-color: var(--primary-color-dark);
             --primary-hover: var(--primary-hover-dark);
+            --primary-rgb: 0, 174, 255; /* For rgba gradients/shadows */
             --secondary-color: var(--secondary-color-dark);
+            --secondary-rgb: 122, 140, 153;
             --success-color: var(--success-color-dark);
             --success-gradient-end: var(--success-gradient-end-dark);
+            --success-rgb: 40, 167, 69;
             --danger-color: var(--danger-color-dark);
+            --danger-rgb: 231, 76, 60;
             --warning-color: var(--warning-color-dark);
+            --warning-rgb: 243, 156, 18;
+            
             --app-bg: var(--app-bg-dark);
             --card-bg: var(--card-bg-dark);
             --element-bg: var(--element-bg-dark);
             --element-hover-bg: var(--element-hover-bg-dark);
             --border-color: var(--border-color-dark);
+
             --text-primary: var(--text-primary-dark);
             --text-secondary: var(--text-secondary-dark);
             --text-on-primary-button: var(--text-on-primary-button-dark);
             --text-on-dark-element: var(--text-on-dark-element-dark);
 
-
-            --font-family: 'Tajawal', sans-serif;
-            --border-radius-sm: 6px;
-            --border-radius-md: 10px;
-            --box-shadow-soft: 0 4px 15px rgba(0, 0, 0, 0.1); /* Softer shadow for light theme */
-            --box-shadow-strong: 0 6px 20px rgba(0, 0, 0, 0.15); /* Softer shadow for light theme */
+            --font-family-primary: 'IBM Plex Sans Arabic', 'Tajawal', sans-serif;
+            --font-family-secondary: 'Tajawal', sans-serif; /* For less prominent text if needed */
+            --border-radius-sm: 8px;  /* Slightly more rounded */
+            --border-radius-md: 12px;
+            --box-shadow-sm: 0 2px 8px rgba(0,0,0, 0.08);
+            --box-shadow-md: 0 5px 15px rgba(0,0,0, 0.1);
+            --box-shadow-lg: 0 8px 25px rgba(0,0,0, 0.12);
+            --transition-fast: all 0.2s ease-in-out;
             --transition-smooth: all 0.3s ease-in-out;
         }
         
         body.dark-theme {
             --primary-color: var(--primary-color-dark);
             --primary-hover: var(--primary-hover-dark);
+            --primary-rgb: 0, 174, 255;
             --secondary-color: var(--secondary-color-dark);
+            --secondary-rgb: 122, 140, 153;
             --success-color: var(--success-color-dark);
             --success-gradient-end: var(--success-gradient-end-dark);
+            --success-rgb: 40, 167, 69;
             --danger-color: var(--danger-color-dark);
+            --danger-rgb: 231, 76, 60;
             --warning-color: var(--warning-color-dark);
+            --warning-rgb: 243, 156, 18;
             --app-bg: var(--app-bg-dark);
             --card-bg: var(--card-bg-dark);
             --element-bg: var(--element-bg-dark);
@@ -87,18 +107,24 @@
             --text-secondary: var(--text-secondary-dark);
             --text-on-primary-button: var(--text-on-primary-button-dark);
             --text-on-dark-element: var(--text-on-dark-element-dark);
-            --box-shadow-soft: 0 4px 15px rgba(0, 0, 0, 0.3);
-            --box-shadow-strong: 0 6px 20px rgba(0, 0, 0, 0.4);
+            --box-shadow-sm: 0 3px 6px rgba(0,0,0, 0.25);
+            --box-shadow-md: 0 6px 12px rgba(0,0,0, 0.3);
+            --box-shadow-lg: 0 10px 20px rgba(0,0,0, 0.35);
         }
 
         body.light-theme {
             --primary-color: var(--primary-color-light);
             --primary-hover: var(--primary-hover-light);
+            --primary-rgb: 0, 123, 255;
             --secondary-color: var(--secondary-color-light);
+            --secondary-rgb: 108, 117, 125;
             --success-color: var(--success-color-light);
             --success-gradient-end: var(--success-gradient-end-light);
+            --success-rgb: 25, 135, 84;
             --danger-color: var(--danger-color-light);
+            --danger-rgb: 220, 53, 69;
             --warning-color: var(--warning-color-light);
+            --warning-rgb: 255, 193, 7;
             --app-bg: var(--app-bg-light);
             --card-bg: var(--card-bg-light);
             --element-bg: var(--element-bg-light);
@@ -108,16 +134,16 @@
             --text-secondary: var(--text-secondary-light);
             --text-on-primary-button: var(--text-on-primary-button-light);
             --text-on-dark-element: var(--text-on-dark-element-light);
-            --box-shadow-soft: 0 4px 15px rgba(0, 0, 0, 0.1);
-            --box-shadow-strong: 0 6px 20px rgba(0, 0, 0, 0.15);
+            --box-shadow-sm: 0 2px 8px rgba(0,0,0, 0.08);
+            --box-shadow-md: 0 5px 15px rgba(0,0,0, 0.1);
+            --box-shadow-lg: 0 8px 25px rgba(0,0,0, 0.12);
         }
-
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            font-family: var(--font-family);
-            line-height: 1.7;
+            font-family: var(--font-family-primary);
+            line-height: 1.75; /* Increased line height */
             background-color: var(--app-bg);
             color: var(--text-primary);
             display: flex;
@@ -126,233 +152,256 @@
             align-items: center;
             min-height: 100vh;
             padding: 20px;
-            transition: var(--transition-smooth);
+            transition: background-color var(--transition-smooth), color var(--transition-smooth);
         }
+
+        /* General Utilities */
+        .icon-before-text { margin-left: 10px; font-size: 0.95em; } 
+        .icon-after-text { margin-right: 10px; font-size: 0.95em; }
 
         .landing-container {
             background-color: var(--card-bg);
-            padding: 40px 50px;
+            padding: 45px 55px; /* Increased padding */
             border-radius: var(--border-radius-md);
-            box-shadow: var(--box-shadow-strong);
+            box-shadow: var(--box-shadow-lg);
             text-align: center;
-            max-width: 650px;
+            max-width: 700px; /* Slightly wider */
             width: 100%;
             opacity: 0;
             transform: translateY(20px);
+            border: 1px solid var(--border-color);
         }
 
         .landing-container .icon-wrapper {
-            font-size: 3.5em;
+            font-size: 4em; /* Larger icon */
             color: var(--primary-color);
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             line-height: 1;
-        }
-        .landing-container .icon-wrapper i {
-            animation: pulseIcon 2.5s infinite ease-in-out;
+            animation: gentleFloat 3s ease-in-out infinite;
         }
 
         .landing-container h1 {
             color: var(--primary-color);
-            font-size: 2.4em;
-            font-weight: 800;
-            margin-bottom: 15px;
+            font-size: 2.6em; /* Larger heading */
+            font-weight: 700; /* Bolder */
+            margin-bottom: 20px;
         }
         .landing-container p {
-            font-size: 1.15em;
+            font-size: 1.2em; /* Slightly larger paragraph */
             color: var(--text-secondary);
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             line-height: 1.8;
         }
-        .start-exam-btn, .secondary-btn {
-            color: var(--text-on-primary-button);
+        .btn { /* Base button style */
             border: none;
-            padding: 14px 30px; /* Adjusted padding */
-            font-size: 1.15em; /* Adjusted font size */
-            font-weight: 700;
-            border-radius: var(--border-radius-md);
+            padding: 12px 28px;
+            font-size: 1.1em;
+            font-weight: 600; /* Semi-bold */
+            border-radius: var(--border-radius-sm);
             cursor: pointer;
-            transition: var(--transition-smooth), transform 0.1s ease;
-            letter-spacing: 0.5px;
+            transition: var(--transition-fast), transform 0.15s ease;
+            letter-spacing: 0.3px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            margin: 5px; /* Added margin */
+            text-decoration: none;
+            margin: 6px;
+            box-shadow: var(--box-shadow-sm);
         }
-        .start-exam-btn {
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
-            box-shadow: 0 3px 8px rgba(var(--primary-color-rgb, 0,170,255), 0.3); /* Use RGB for dynamic alpha */
+        .btn:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: var(--box-shadow-md);
         }
-        body.light-theme .start-exam-btn {
-             box-shadow: 0 3px 8px rgba(0,122,255, 0.3);
+        .btn:active {
+            transform: translateY(-1px) scale(0.99);
+            box-shadow: var(--box-shadow-sm);
         }
-       
-        .start-exam-btn:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 6px 18px rgba(var(--primary-color-rgb, 0,170,255), 0.45);
-        }
-         body.light-theme .start-exam-btn:hover {
-             box-shadow: 0 6px 18px rgba(0,122,255, 0.45);
-        }
-        .start-exam-btn:active {
-            transform: translateY(-1px) scale(1);
+        .btn:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
         }
 
-        .secondary-btn {
+        .btn-primary {
+            background: linear-gradient(145deg, var(--primary-hover), var(--primary-color));
+            color: var(--text-on-primary-button);
+        }
+         .btn-primary:hover {
+            background: linear-gradient(145deg, var(--primary-color), var(--primary-hover));
+        }
+
+        .btn-secondary {
             background-color: var(--element-bg);
-            color: var(--text-primary); /* Adjusted for better visibility on element-bg */
-            border: 1px solid var(--border-color);
-            padding: 12px 25px; /* Adjusted padding */
-            font-size: 1.05em; /* Adjusted font size */
-        }
-        .secondary-btn:hover:not(:disabled) {
-            background-color: var(--element-hover-bg);
             color: var(--text-primary);
-            border-color: var(--secondary-color);
-            transform: translateY(-2px);
+            border: 1px solid var(--border-color);
         }
-        .secondary-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
+        .btn-secondary:hover:not(:disabled) {
+            background-color: var(--element-hover-bg);
+            border-color: var(--secondary-color);
         }
         
+        .btn-success { /* For Random Start button */
+            background: linear-gradient(145deg, var(--success-gradient-end), var(--success-color));
+            color: #fff;
+        }
+        .btn-success:hover {
+            background: linear-gradient(145deg, var(--success-color), var(--success-gradient-end));
+        }
+
         .custom-credit {
-            font-size: 0.85em;
+            font-family: var(--font-family-secondary);
+            font-size: 0.9em;
             color: var(--text-secondary);
-            margin-top: 8px;
-            line-height: 1.4;
+            margin-top: 10px;
+            line-height: 1.5;
+            opacity: 0.8;
         }
 
         .loft-exam-container, .old-results-container {
             width: 100%;
-            max-width: 800px; /* Increased max-width */
+            max-width: 850px; /* Wider for exam content */
             background-color: var(--card-bg);
             border-radius: var(--border-radius-md);
-            box-shadow: var(--box-shadow-strong);
+            box-shadow: var(--box-shadow-lg);
             overflow: hidden;
             display: none;
             opacity: 0;
+            border: 1px solid var(--border-color);
         }
-         .old-results-container {
-            margin-top: 30px;
-        }
+         .old-results-container { margin-top: 35px; }
 
         .exam-header {
-            background-color: var(--primary-color);
+            background-image: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
             color: var(--text-on-primary-button);
-            padding: 15px 25px; /* Adjusted padding */
+            padding: 18px 30px; 
             text-align: center;
-            border-bottom: 3px solid var(--primary-hover);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative; /* For potential absolute elements if needed */
         }
         .exam-header h1 {
-            font-size: 1.6em; /* Adjusted font size */
-            font-weight: 700;
+            font-size: 1.8em; 
+            font-weight: 600;
             margin: 0;
             letter-spacing: 0.5px;
             flex-grow: 1;
-            text-align: center; /* Center title */
+            text-align: center; 
         }
         .theme-toggle-btn {
-            background: none;
+            background: rgba(255,255,255,0.1);
             border: none;
             color: var(--text-on-primary-button);
-            font-size: 1.4em;
+            font-size: 1.5em;
             cursor: pointer;
-            padding: 5px;
-            transition: transform 0.2s ease;
+            padding: 8px;
+            border-radius: 50%;
+            transition: background-color var(--transition-fast), transform var(--transition-fast);
+            line-height: 1; /* Ensure icon is centered */
         }
         .theme-toggle-btn:hover {
-            transform: scale(1.1);
+            background: rgba(255,255,255,0.2);
+            transform: rotate(15deg);
         }
 
 
         .progress-indicator {
-            padding: 10px 20px; /* Adjusted padding */
+            padding: 12px 25px; 
             background-color: var(--element-bg);
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid var(--border-color);
-            gap: 10px; /* Adjusted gap */
+            gap: 15px; 
         }
         .progress-text {
             font-weight: 500;
             color: var(--text-secondary);
-            font-size: 0.9em; /* Adjusted font size */
+            font-size: 0.95em; 
             flex-shrink: 0;
         }
         .timer-display {
             font-weight: 700;
-            font-size: 1em; /* Adjusted font size */
+            font-size: 1.05em; 
             color: var(--warning-color);
-            background-color: rgba(var(--warning-color-rgb, 255,159,10), 0.1);
-            padding: 4px 8px; /* Adjusted padding */
+            background-color: rgba(var(--warning-rgb), 0.12);
+            padding: 6px 12px; 
             border-radius: var(--border-radius-sm);
-            min-width: 60px; /* Adjusted width */
+            min-width: 70px; 
             text-align: center;
-        }
-         body.light-theme .timer-display {
-             background-color: rgba(255,193,7, 0.15);
+            border: 1px solid rgba(var(--warning-rgb), 0.2);
         }
         .progress-bar-shell {
-            width: 40%; /* Adjusted width */
-            height: 8px; /* Adjusted height */
-            background-color: var(--border-color);
+            width: 45%; 
+            height: 10px; 
+            background-color: rgba(var(--text-secondary-rgb, 176,176,176), 0.2); /* Use text-secondary with alpha */
             border-radius: var(--border-radius-sm);
             overflow: hidden;
+        }
+        body.light-theme .progress-bar-shell {
+             background-color: rgba(var(--text-secondary-rgb, 90,98,104), 0.2);
         }
         .progress-bar-fill {
             width: 0%;
             height: 100%;
-            background: linear-gradient(90deg, var(--success-color), var(--success-gradient-end)); 
+            background: linear-gradient(90deg, var(--success-color) 0%, var(--success-gradient-end) 100%); 
             border-radius: var(--border-radius-sm);
-            transition: width 0.4s ease-out;
+            transition: width 0.5s cubic-bezier(0.25, 0.1, 0.25, 1); /* Smoother transition */
         }
         .question-nav-toggle-btn {
-            background-color: var(--element-hover-bg);
+            background-color: transparent;
             color: var(--text-primary);
             border: 1px solid var(--border-color);
-            padding: 5px 10px;
-            font-size: 0.9em;
+            padding: 6px 12px;
+            font-size: 0.95em;
             border-radius: var(--border-radius-sm);
             cursor: pointer;
+            transition: var(--transition-fast);
         }
         .question-nav-toggle-btn:hover {
-            background-color: var(--secondary-color);
+            background-color: var(--element-hover-bg);
+            border-color: var(--primary-color);
+            color: var(--primary-color);
         }
+        .question-nav-toggle-btn i { margin-right: 6px; } /* RTL: icon before text */
+
 
         .question-actions {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start; /* Align to start for RTL */
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px; /* More space */
+            padding-bottom: 15px;
+            border-bottom: 1px dashed var(--border-color);
         }
         .flag-question-btn {
-            background: none;
+            background: transparent;
             border: 1px solid var(--secondary-color);
             color: var(--secondary-color);
-            padding: 8px 15px;
-            font-size: 0.9em;
+            padding: 8px 18px;
+            font-size: 0.95em;
             border-radius: var(--border-radius-sm);
             cursor: pointer;
             transition: var(--transition-smooth);
+            font-weight: 500;
         }
         .flag-question-btn.flagged {
-            background-color: var(--warning-color);
+            background-color: rgba(var(--warning-rgb), 0.15);
             border-color: var(--warning-color);
-            color: var(--app-bg); /* Text color on warning background */
+            color: var(--warning-color);
+            font-weight: 600;
         }
-        body.light-theme .flag-question-btn.flagged {
-            color: var(--text-primary-light);
+        .flag-question-btn:hover:not(.flagged) {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
         }
-        .flag-question-btn i { margin-left: 5px; }
+        .flag-question-btn i { margin-left: 8px; }
 
 
         .question-display-area {
-            padding: 25px; /* Adjusted padding */
-            min-height: 250px; /* Adjusted height */
+            padding: 30px; 
+            min-height: 280px; 
         }
 
         .question-card-loft {
@@ -362,41 +411,39 @@
             transform: translateX(30px); 
         }
         .question-statement {
-            font-weight: 700;
-            font-size: 1.25em; /* Adjusted font size */
-            margin-bottom: 20px; /* Adjusted margin */
+            font-weight: 600; /* Slightly bolder */
+            font-size: 1.35em; 
+            margin-bottom: 30px; 
             color: var(--text-primary);
-            line-height: 1.6;
+            line-height: 1.7;
         }
-        .options-list { display: flex; flex-direction: column; gap: 12px; } /* Adjusted gap */
+        .options-list { display: flex; flex-direction: column; gap: 15px; } 
         .option-item label {
             display: flex;
             align-items: center;
-            padding: 12px 18px; /* Adjusted padding */
+            padding: 15px 22px; 
             background-color: var(--element-bg);
             border: 1px solid var(--border-color);
             border-radius: var(--border-radius-sm);
             cursor: pointer;
-            transition: var(--transition-smooth), box-shadow 0.2s ease;
+            transition: var(--transition-smooth), box-shadow var(--transition-fast), border-color var(--transition-fast);
             color: var(--text-on-dark-element);
-            font-size: 1em; /* Adjusted font size */
+            font-size: 1.05em; 
+            box-shadow: var(--box-shadow-sm);
         }
         .option-item label:hover {
             background-color: var(--element-hover-bg);
             border-color: var(--primary-color);
-            transform: translateX(5px); 
-            box-shadow: 0 0 10px rgba(var(--primary-color-rgb,0,170,255), 0.3); 
-        }
-         body.light-theme .option-item label:hover {
-             box-shadow: 0 0 10px rgba(0,122,255, 0.3);
+            transform: translateX(6px); /* RTL: slight move */
+            box-shadow: 0 0 12px rgba(var(--primary-rgb), 0.25); 
         }
 
         .option-item input[type="radio"] {
             appearance: none;
             -webkit-appearance: none;
             -moz-appearance: none;
-            width: 18px; /* Adjusted size */
-            height: 18px; /* Adjusted size */
+            width: 20px; 
+            height: 20px; 
             border: 2px solid var(--text-secondary);
             border-radius: 50%;
             outline: none;
@@ -404,100 +451,48 @@
             transition: var(--transition-smooth);
             position: relative;
             vertical-align: middle;
-            margin-left: 12px; /* Adjusted margin */
+            margin-left: 15px; 
+            flex-shrink: 0; /* Prevent shrinking */
         }
         .option-item input[type="radio"]:checked {
             border-color: var(--primary-color);
             background-color: var(--primary-color);
+            box-shadow: 0 0 8px rgba(var(--primary-rgb), 0.5);
         }
         .option-item input[type="radio"]:checked::before {
             content: '';
             display: block;
-            width: 8px; /* Adjusted size */
-            height: 8px; /* Adjusted size */
-            background-color: var(--card-bg); 
+            width: 9px; 
+            height: 9px; 
+            background-color: var(--text-on-primary-button); /* Ensure contrast */
             border-radius: 50%;
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%) scale(1);
+            transition: transform 0.2s ease-out;
         }
-        .option-item input[type="radio"]:focus-visible {
-            box-shadow: 0 0 0 3px var(--primary-hover);
+         .option-item input[type="radio"]:focus-visible { /* More visible focus */
+            outline: 2px solid var(--primary-hover);
+            outline-offset: 2px;
         }
         .option-item input[type="radio"]:checked + span {
             color: var(--primary-color);
-            font-weight: 700;
-            text-shadow: 0 0 5px rgba(var(--primary-color-rgb,0,170,255), 0.4); 
+            font-weight: 600;
         }
-         body.light-theme .option-item input[type="radio"]:checked + span {
-             text-shadow: 0 0 5px rgba(0,122,255, 0.4);
-        }
-
 
         .navigation-controls {
-            padding: 20px; /* Adjusted padding */
+            padding: 25px; 
             background-color: var(--element-bg);
             border-top: 1px solid var(--border-color);
             display: flex; 
-            justify-content: center; 
-            gap: 12px; /* Adjusted gap */
+            justify-content: space-between; /* Space out buttons */
+            gap: 15px; 
         }
-        .nav-btn {
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
-            color: var(--text-on-primary-button);
-            border: none;
-            padding: 10px 25px; /* Adjusted padding */
-            font-size: 1em; /* Adjusted font size */
-            font-weight: 700;
-            border-radius: var(--border-radius-sm);
-            cursor: pointer;
-            transition: var(--transition-smooth), transform 0.1s ease;
-            box-shadow: 0 2px 6px rgba(var(--primary-color-rgb,0,170,255), 0.25);
-            min-width: 160px; /* Adjusted width */
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-        body.light-theme .nav-btn {
-             box-shadow: 0 2px 6px rgba(0,122,255, 0.25);
-        }
-        .icon-before-text { margin-left: 8px; font-size: 0.9em; } 
-        .icon-after-text { margin-right: 8px; font-size: 0.9em; } 
-
-        .nav-btn:hover {
-            transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 5px 15px rgba(var(--primary-color-rgb,0,170,255), 0.4); 
-        }
-         body.light-theme .nav-btn:hover {
-             box-shadow: 0 5px 15px rgba(0,122,255, 0.4);
-        }
-        .nav-btn:active { transform: translateY(0px) scale(1); }
-        .nav-btn:disabled {
-            background: var(--secondary-color);
-            box-shadow: none;
-            cursor: not-allowed;
-            opacity: 0.6; /* Slightly more visible */
-            color: var(--text-primary); 
-        }
-        .nav-btn.btn-secondary-style {
-            background: var(--secondary-color);
-            color: var(--text-primary); /* Ensure text is primary on secondary button */
-        }
-        .nav-btn.btn-secondary-style:hover:not(:disabled) {
-             background: var(--element-hover-bg); 
-             box-shadow: 0 4px 12px rgba(var(--secondary-color-rgb,142,142,147), 0.3);
-        }
-         body.light-theme .nav-btn.btn-secondary-style:hover:not(:disabled) {
-             box-shadow: 0 4px 12px rgba(160,160,176, 0.3);
-         }
-         .nav-btn.btn-secondary-style:disabled {
-            background: var(--border-color); 
-            color: var(--text-secondary);
-         }
-
+        /* Using .btn, .btn-primary, .btn-secondary from above */
+        
         .results-area {
-            padding: 25px; /* Adjusted padding */
+            padding: 30px; 
             text-align: center;
         }
         .results-area.visible, .old-results-container .results-area.visible { 
@@ -507,240 +502,273 @@
         }
         .results-area h2 {
             color: var(--primary-color);
-            font-size: 1.8em; /* Adjusted font size */
-            font-weight: 800;
-            margin-bottom: 18px; /* Adjusted margin */
+            font-size: 2.2em; 
+            font-weight: 700;
+            margin-bottom: 25px; 
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        .results-area h2 i { margin-left: 10px; } 
+        .results-area h2 i { margin-left: 15px; } 
 
         .score-display {
-            font-size: 1.6em; /* Adjusted font size */
-            font-weight: 800;
-            padding: 18px; /* Adjusted padding */
+            font-size: 1.8em; 
+            font-weight: 700;
+            padding: 25px; 
             border-radius: var(--border-radius-md);
-            margin-bottom: 20px; /* Adjusted margin */
+            margin-bottom: 30px; 
             transition: var(--transition-smooth);
             display: flex; 
             align-items: center;
             justify-content: center;
+            border: 1px solid transparent; /* Base border */
+            box-shadow: var(--box-shadow-md);
         }
-        .score-display i { margin-left: 8px; font-size: 1em; } 
+        /* Specific styles for score display based on performance are in JS */
+        .score-display i { margin-left: 12px; font-size: 1.1em; } 
 
         .detailed-feedback-header {
-            font-size: 1.2em; /* Adjusted font size */
+            font-size: 1.4em; 
             color: var(--text-secondary);
-            margin-bottom: 12px; /* Adjusted margin */
-            font-weight: 700;
+            margin-bottom: 18px; 
+            font-weight: 600;
         }
         .detailed-feedback {
             text-align: right;
-            max-height: 300px; /* Adjusted height */
+            max-height: 350px; 
             overflow-y: auto;
             border: 1px solid var(--border-color);
-            padding: 15px; /* Adjusted padding */
+            padding: 20px; 
             border-radius: var(--border-radius-sm);
-            background-color: var(--element-bg);
+            background-color: var(--element-bg); /* Slightly different from card-bg */
         }
         .feedback-item {
-            padding: 10px 12px; /* Adjusted padding */
-            margin-bottom: 8px; /* Adjusted margin */
+            padding: 15px 18px; 
+            margin-bottom: 12px; 
             border-radius: var(--border-radius-sm);
-            border-left-width: 4px; /* Adjusted border */
+            border-left-width: 5px; 
             border-left-style: solid;
             transition: var(--transition-smooth);
+            background-color: var(--card-bg); /* Item bg slightly different from container */
+            box-shadow: var(--box-shadow-sm);
         }
         .feedback-item:hover {
-            transform: scale(1.015); /* Adjusted scale */
-            box-shadow: var(--box-shadow-soft);
+            transform: translateY(-2px) scale(1.01); 
+            box-shadow: var(--box-shadow-md);
         }
-        .feedback-item.correct { background-color: rgba(var(--success-color-rgb,48,209,88), 0.15); border-left-color: var(--success-color); }
-        .feedback-item.incorrect { background-color: rgba(var(--danger-color-rgb,255,69,58), 0.15); border-left-color: var(--danger-color); }
-        body.light-theme .feedback-item.correct { background-color: rgba(40,167,69, 0.1); }
-        body.light-theme .feedback-item.incorrect { background-color: rgba(220,53,69, 0.1); }
+        .feedback-item.correct { 
+            border-left-color: var(--success-color); 
+            background-color: rgba(var(--success-rgb), 0.08);
+        }
+        .feedback-item.incorrect { 
+            border-left-color: var(--danger-color); 
+            background-color: rgba(var(--danger-rgb), 0.08);
+        }
 
-        .feedback-item p { margin-bottom: 5px; font-size: 0.95em; color: var(--text-primary); } 
-        .feedback-item .user-answer { font-style: italic; color: var(--text-secondary); }
-        .feedback-item .correct-answer-text { color: var(--success-color); font-weight: 700; }
-        .feedback-item.incorrect .user-answer { color: var(--danger-color); }
+        .feedback-item p { margin-bottom: 6px; font-size: 1em; color: var(--text-primary); } 
+        .feedback-item .user-answer { font-style: italic; color: var(--text-secondary); opacity: 0.9; }
+        .feedback-item .correct-answer-text { color: var(--success-color); font-weight: 600; }
+        .feedback-item.incorrect .user-answer { color: var(--danger-color); font-weight: 500; }
         .feedback-item .explanation {
-            margin-top: 8px;
-            padding-top: 8px;
+            margin-top: 10px;
+            padding-top: 10px;
             border-top: 1px dashed var(--border-color);
-            font-size: 0.9em;
+            font-size: 0.95em;
             color: var(--text-secondary);
-            line-height: 1.5;
+            line-height: 1.6;
         }
-        .feedback-item .explanation strong { color: var(--primary-color); }
+        .feedback-item .explanation strong { color: var(--primary-color); font-weight: 600; }
 
 
         /* Question Navigation Modal */
         .q-nav-modal {
             display: none;
             position: fixed;
-            z-index: 1000;
+            z-index: 1050; /* Higher z-index */
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(0,0,0,0.6);
+            background-color: rgba(var(--app-bg-rgb, 18,18,18), 0.75); /* Use app-bg with alpha */
+            backdrop-filter: blur(5px); /* Frosted glass effect */
             animation: fadeInModal 0.3s ease-out;
+        }
+        body.light-theme .q-nav-modal {
+            background-color: rgba(var(--app-bg-rgb, 248,249,250), 0.75);
         }
         .q-nav-modal-content {
             background-color: var(--card-bg);
-            margin: 10% auto;
-            padding: 25px;
+            margin: 8% auto; /* Adjusted margin */
+            padding: 30px;
             border: 1px solid var(--border-color);
             border-radius: var(--border-radius-md);
             width: 90%;
-            max-width: 600px;
-            box-shadow: var(--box-shadow-strong);
+            max-width: 650px;
+            box-shadow: var(--box-shadow-lg);
             position: relative;
+        }
+         .q-nav-modal-content h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.6em;
+            text-align: center;
         }
         .q-nav-modal-close {
             color: var(--text-secondary);
             position: absolute;
-            top: 10px;
-            left: 20px; /* RTL support */
-            font-size: 2em;
+            top: 15px;
+            left: 25px; 
+            font-size: 2.2em;
             font-weight: bold;
             cursor: pointer;
+            transition: color var(--transition-fast), transform var(--transition-fast);
         }
         .q-nav-modal-close:hover,
         .q-nav-modal-close:focus {
             color: var(--primary-color);
-            text-decoration: none;
+            transform: scale(1.1);
         }
         .q-nav-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
-            gap: 10px;
+            grid-template-columns: repeat(auto-fill, minmax(55px, 1fr)); /* Larger items */
+            gap: 12px;
             margin-top: 20px;
-            max-height: 400px;
+            max-height: 450px;
             overflow-y: auto;
+            padding: 5px; /* Padding for scrollbar */
         }
         .q-nav-item {
-            padding: 10px;
+            padding: 12px;
             text-align: center;
             border: 1px solid var(--border-color);
             border-radius: var(--border-radius-sm);
             cursor: pointer;
             transition: var(--transition-smooth);
-            font-weight: 500;
+            font-weight: 600; /* Bolder numbers */
             background-color: var(--element-bg);
             color: var(--text-on-dark-element);
+            box-shadow: var(--box-shadow-sm);
         }
         .q-nav-item:hover {
             background-color: var(--element-hover-bg);
             border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: var(--box-shadow-md);
         }
         .q-nav-item.answered {
             background-color: var(--success-color);
             color: var(--text-on-primary-button);
-            border-color: var(--success-color);
-        }
-        body.light-theme .q-nav-item.answered {
-             background-color: var(--success-color-light);
-             color: #fff;
+            border-color: var(--success-gradient-end);
         }
         .q-nav-item.current {
             background-color: var(--primary-color);
             color: var(--text-on-primary-button);
-            border-color: var(--primary-color);
-            font-weight: bold;
-            transform: scale(1.05);
+            border-color: var(--primary-hover);
+            font-weight: 700;
+            transform: scale(1.08);
+            box-shadow: var(--box-shadow-md);
         }
-         body.light-theme .q-nav-item.current {
-             background-color: var(--primary-color-light);
-             color: #fff;
+        .q-nav-item.flagged { /* More prominent flagging */
+            position: relative;
+            overflow: hidden; /* To contain pseudo-element */
         }
-        .q-nav-item.flagged {
-            border-right-width: 5px; /* RTL */
-            border-right-color: var(--warning-color);
-            padding-right: 7px;
+        .q-nav-item.flagged::before {
+            content: "\f024"; /* Font Awesome flag icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            top: 2px;
+            right: 4px; /* RTL */
+            font-size: 0.7em;
+            color: var(--warning-color);
+            opacity: 0.9;
         }
-         body.light-theme .q-nav-item.flagged {
-             border-right-color: var(--warning-color-light);
+        .q-nav-item.answered.flagged { /* Ensure answered flagged is distinct */
+             background-image: linear-gradient(45deg, var(--success-color) 70%, var(--warning-color) 120%);
         }
 
 
-        @media (max-width: 700px) {
+        @media (max-width: 768px) { /* Tablet and below */
+            .landing-container { padding: 30px 25px; max-width: 95%;}
+            .loft-exam-container, .old-results-container { max-width: 98%; }
+            .exam-header h1 { font-size: 1.5em; }
+            .progress-indicator { flex-wrap: wrap; } /* Allow wrapping */
+            .progress-bar-shell { width: 100%; order: 3; margin-top: 8px; } /* Full width on mobile */
+            .question-statement { font-size: 1.2em; }
+             .navigation-controls { flex-direction: column; gap: 10px; }
+            .navigation-controls .btn { width: 100%; } /* Full width buttons */
+        }
+
+        @media (max-width: 480px) { /* Mobile */
             body { padding: 10px; }
-            .landing-container { padding: 25px 20px; }
-            .landing-container h1 { font-size: 1.8em; }
-            .landing-container p { font-size: 1em; }
-            .start-exam-btn, .secondary-btn { font-size: 1em; padding: 10px 20px; }
+            .landing-container h1 { font-size: 2em; }
+            .landing-container p { font-size: 1.05em; }
+            .btn { font-size: 1em; padding: 10px 20px; }
 
             .exam-header h1 { font-size: 1.3em; }
-            .progress-indicator { flex-direction: column; gap: 8px; padding: 10px 15px; }
-            .progress-bar-shell { width: 100%; }
-            .question-statement { font-size: 1.1em; }
-            .loft-exam-container, .old-results-container { margin: 0; border-radius: 0; width: 100%; max-width: 100%;}
-            .question-display-area, .navigation-controls, .results-area { padding: 15px; }
-            .option-item label { padding: 10px 12px; font-size: 0.95em; }
-            .navigation-controls { flex-direction: column; } 
-            .q-nav-modal-content { width: 95%; margin: 5% auto; }
-            .q-nav-grid { grid-template-columns: repeat(auto-fill, minmax(45px, 1fr)); }
+            .progress-indicator { padding: 10px 15px; }
+            .question-display-area, .results-area { padding: 20px; }
+            .option-item label { padding: 12px 18px; font-size: 1em; }
+            .q-nav-modal-content { width: 95%; margin: 5% auto; padding: 20px;}
+            .q-nav-grid { grid-template-columns: repeat(auto-fill, minmax(48px, 1fr)); gap: 8px;}
         }
 
         @keyframes fadeInSlideUp {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(25px); }
             to { opacity: 1; transform: translateY(0); }
         }
         @keyframes fadeOutSlideUp {
             from { opacity: 1; transform: translateY(0); }
-            to { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 0; transform: translateY(-25px); }
         }
         @keyframes fadeInScaleUp {
-            from { opacity: 0; transform: scale(0.95); }
+            from { opacity: 0; transform: scale(0.97); }
             to { opacity: 1; transform: scale(1); }
         }
         @keyframes questionEntry {
-            from { opacity: 0; transform: translateX(30px); } 
+            from { opacity: 0; transform: translateX(35px); } 
             to { opacity: 1; transform: translateX(0); }
         }
         @keyframes questionExit {
             from { opacity: 1; transform: translateX(0); }
-            to { opacity: 0; transform: translateX(-30px); } 
+            to { opacity: 0; transform: translateX(-35px); } 
         }
-        .question-card-loft.entering { animation: questionEntry 0.4s ease-out forwards; }
-        .question-card-loft.exiting { animation: questionExit 0.3s ease-in forwards; }
+        .question-card-loft.entering { animation: questionEntry 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
+        .question-card-loft.exiting { animation: questionExit 0.35s cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards; }
 
-        @keyframes pulseIcon { 
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
+        @keyframes gentleFloat { 
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
         }
         @keyframes fadeInModal {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from { opacity: 0; transform: scale(0.95) translateY(-20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
         }
 
     </style>
 </head>
-<body class="dark-theme"> <!-- Default to dark theme -->
+<body class="dark-theme"> 
 
     <div class="landing-container" id="landingPage">
-        <div class="icon-wrapper"><i class="fas fa-user-graduate"></i></div>
+        <div class="icon-wrapper"><i class="fas fa-tasks"></i></div>
         <h1>اختبار في طرق التدريس</h1>
         <p>
             مرحباً بك! هذا الاختبار التفاعلي مصمم لاختبار معرفتك. يتكون من <span id="totalQuestionsLanding"></span> سؤال متنوع. لديك <span id="examDurationLanding">45</span> دقيقة لإكمال الاختبار.
-            سيتم عرض الأسئلة سؤالاً تلو الآخر. نتمنى لك كل التوفيق!
+            نتمنى لك كل التوفيق!
         </p>
-        <button class="start-exam-btn" onclick="startExam(false)" aria-label="ابدأ الاختبار بالترتيب الافتراضي">
-            <i class="fas fa-rocket icon-before-text"></i> ابدأ الاختبار الآن
+        <button class="btn btn-primary" onclick="startExam(false)" aria-label="ابدأ الاختبار بالترتيب الافتراضي">
+            <i class="fas fa-play icon-before-text"></i> ابدأ الاختبار الآن
         </button>
-        <button class="start-exam-btn" onclick="startExam(true)" aria-label="ابدأ الاختبار بترتيب عشوائي للأسئلة" style="background: linear-gradient(135deg, var(--success-color), var(--success-gradient-end));">
+        <button class="btn btn-success" onclick="startExam(true)" aria-label="ابدأ الاختبار بترتيب عشوائي للأسئلة">
             <i class="fas fa-random icon-before-text"></i> ابدأ بترتيب عشوائي
         </button>
-        <button class="secondary-btn" id="viewLastResultsBtn" onclick="viewLastResults()" style="margin-top: 10px;" disabled>
+        <button class="btn btn-secondary" id="viewLastResultsBtn" onclick="viewLastResults()" style="margin-top: 10px;" disabled>
             <i class="fas fa-history icon-before-text"></i> عرض نتائج آخر اختبار
         </button>
         
-        <div style="margin-top: 25px;">
+        <div style="margin-top: 30px;">
             <p class="custom-credit">تم عمله بواسطة : بولا نعيم ادمن و ليس ليدر</p>
             <p class="custom-credit">تحت اشراف : ابانوب جورج الليدر</p>
         </div>
@@ -749,15 +777,15 @@
     <div class="loft-exam-container" id="examPage">
         <header class="exam-header">
              <button id="themeToggleBtn" class="theme-toggle-btn" onclick="toggleTheme()" aria-label="تبديل الوضع المظلم/المضيء">
-                <i class="fas fa-moon"></i> <!-- Icon changes in JS -->
+                <i class="fas fa-moon"></i> 
             </button>
-            <h1>اختبار خطي فوري</h1>
-            <div></div> <!-- Placeholder for balance if needed -->
+            <h1>اختبار طرق التدريس</h1>
+            <div style="width: 40px;"></div> <!-- Spacer for balance -->
         </header>
 
         <div class="progress-indicator" role="toolbar">
-            <button id="qNavToggleBtn" class="question-nav-toggle-btn" onclick="toggleQuestionNavModal()" aria-label="عرض قائمة الأسئلة">
-                <i class="fas fa-list-ul"></i> عرض الأسئلة
+            <button id="qNavToggleBtn" class="question-nav-toggle-btn btn" onclick="toggleQuestionNavModal()" aria-label="عرض قائمة الأسئلة">
+                <i class="fas fa-th-list"></i> الأسئلة
             </button>
             <span class="progress-text" id="progressInfoText" aria-live="polite">السؤال 0 من 0</span>
             <div class="timer-display" id="timerDisplay" aria-live="off">45:00</div>
@@ -771,21 +799,21 @@
         </main>
 
         <div class="results-area" id="resultsArea" style="display: none;">
-            <h2><i class="fas fa-award"></i> نتائج الاختبار</h2>
+            <h2><i class="fas fa-poll-h"></i> نتائج الاختبار</h2>
             <div class="score-display" id="scoreContainer"></div>
             <h3 class="detailed-feedback-header">مراجعة الإجابات:</h3>
             <div class="detailed-feedback" id="detailedFeedbackContainer"></div>
-             <button class="nav-btn btn-secondary-style" onclick="restartExam()" style="margin-top: 20px;">
+             <button class="btn btn-secondary" onclick="restartExam()" style="margin-top: 25px;">
                 <i class="fas fa-redo-alt icon-before-text" ></i> إعادة الاختبار
             </button>
         </div>
 
         <footer class="navigation-controls" id="navigationControls" role="navigation">
-            <button class="nav-btn" id="prevBtn" onclick="handlePreviousQuestion()" disabled aria-label="السؤال السابق">
-                <i class="fas fa-chevron-right icon-before-text"></i> السؤال السابق
+            <button class="btn btn-secondary" id="prevBtn" onclick="handlePreviousQuestion()" disabled aria-label="السؤال السابق">
+                <i class="fas fa-arrow-right icon-before-text"></i> السابق
             </button>
-            <button class="nav-btn" id="nextBtn" onclick="handleNextQuestion()" disabled aria-label="السؤال التالي">
-                السؤال التالي <i class="fas fa-chevron-left icon-after-text"></i>
+            <button class="btn btn-primary" id="nextBtn" onclick="handleNextQuestion()" disabled aria-label="السؤال التالي">
+                التالي <i class="fas fa-arrow-left icon-after-text"></i>
             </button>
         </footer>
     </div>
@@ -796,14 +824,14 @@
                 <i class="fas fa-moon"></i>
             </button>
             <h1>نتائج الاختبار السابق</h1>
-             <div></div>
+             <div style="width: 40px;"></div> <!-- Spacer -->
         </header>
         <div class="results-area visible" id="oldResultsDisplayArea">
             <div class="score-display" id="oldScoreContainer"></div>
             <h3 class="detailed-feedback-header">مراجعة الإجابات:</h3>
             <div class="detailed-feedback" id="oldDetailedFeedbackContainer"></div>
-            <button class="nav-btn btn-secondary-style" onclick="closeOldResults()" style="margin-top: 20px;">
-                <i class="fas fa-times-circle icon-before-text"></i> إغلاق
+            <button class="btn btn-secondary" onclick="closeOldResults()" style="margin-top: 25px;">
+                <i class="fas fa-times icon-before-text"></i> إغلاق
             </button>
         </div>
     </div>
@@ -959,9 +987,9 @@
         const qNavGridContainer = document.getElementById('qNavGridContainer');
 
 
-        const LAST_RESULTS_KEY = 'loftExamLastResults_v2';
-        const CURRENT_EXAM_STATE_KEY = 'loftCurrentExamState_v2';
-        const THEME_KEY = 'loftExamTheme';
+        const LAST_RESULTS_KEY = 'loftExamLastResults_v3'; // Incremented version for new structure
+        const CURRENT_EXAM_STATE_KEY = 'loftCurrentExamState_v3';
+        const THEME_KEY = 'loftExamTheme_v3';
 
         function shuffleArray(array) {
             const newArray = [...array];
@@ -978,22 +1006,10 @@
             if (themeToggleBtn) themeToggleBtn.innerHTML = `<i class="fas ${iconClass}"></i>`;
             if (themeToggleBtnOldResults) themeToggleBtnOldResults.innerHTML = `<i class="fas ${iconClass}"></i>`;
             localStorage.setItem(THEME_KEY, theme);
-            if (theme === 'dark-theme') {
-                document.documentElement.style.setProperty('--primary-color-rgb', '0,170,255');
-                document.documentElement.style.setProperty('--secondary-color-rgb', '142,142,147');
-                document.documentElement.style.setProperty('--success-color-rgb', '48,209,88');
-                document.documentElement.style.setProperty('--danger-color-rgb', '255,69,58');
-                document.documentElement.style.setProperty('--warning-color-rgb', '255,159,10');
-            } else { 
-                document.documentElement.style.setProperty('--primary-color-rgb', '0,122,255');
-                document.documentElement.style.setProperty('--secondary-color-rgb', '160,160,176');
-                document.documentElement.style.setProperty('--success-color-rgb', '40,167,69');
-                document.documentElement.style.setProperty('--danger-color-rgb', '220,53,69');
-                document.documentElement.style.setProperty('--warning-color-rgb', '255,193,7');
-            }
-             // Update timer display colors if exam is active
-            if (examPage.style.display === 'block' && !(resultsArea.style.display === 'block' && resultsArea.classList.contains('visible'))) {
-                updateTimerDisplay();
+            
+            // Call updateTimerDisplay to refresh colors if timer is active
+            if (timerInterval && timeLeftInSeconds > 0 && examPage.style.display === 'block') {
+                 updateTimerDisplay();
             }
         }
 
@@ -1013,8 +1029,15 @@
         function updateTimerDisplay() {
             if (!timerDisplay) return;
             timerDisplay.textContent = formatTime(timeLeftInSeconds);
-            const warningColorRGB = document.body.classList.contains('dark-theme') ? '255,159,10' : '255,193,7';
-            const dangerColorRGB = document.body.classList.contains('dark-theme') ? '255,69,58' : '220,53,69';
+            
+            const currentThemeIsDark = document.body.classList.contains('dark-theme');
+            const warningColorRGB = currentThemeIsDark ? 
+                getComputedStyle(document.documentElement).getPropertyValue('--warning-rgb').trim() : 
+                getComputedStyle(document.documentElement).getPropertyValue('--warning-rgb').trim(); // Already set by theme
+            const dangerColorRGB = currentThemeIsDark ? 
+                getComputedStyle(document.documentElement).getPropertyValue('--danger-rgb').trim() : 
+                getComputedStyle(document.documentElement).getPropertyValue('--danger-rgb').trim();
+
 
             if (timeLeftInSeconds <= 0) { 
                 timerDisplay.textContent = '00:00';
@@ -1025,7 +1048,7 @@
                 timerDisplay.style.backgroundColor = `rgba(${dangerColorRGB}, 0.15)`;
             } else { 
                 timerDisplay.style.color = 'var(--warning-color)';
-                timerDisplay.style.backgroundColor = `rgba(${warningColorRGB}, 0.1)`;
+                timerDisplay.style.backgroundColor = `rgba(${warningColorRGB}, 0.12)`;
             }
         }
 
@@ -1147,7 +1170,7 @@
 
                 examPage.style.display = 'block';
                 examPage.style.opacity = '0';
-                examPage.style.transform = 'scale(0.95)';
+                examPage.style.transform = 'scale(0.97)';
                 examPage.style.animation = 'fadeInScaleUp 0.5s ease-out forwards';
 
                 currentQuestionIndex = 0;
@@ -1163,7 +1186,7 @@
                 if(prevBtn) prevBtn.disabled = true; 
                 if(nextBtn) {
                     nextBtn.disabled = true;
-                    nextBtn.innerHTML = `السؤال التالي <i class="fas fa-chevron-left icon-after-text"></i>`;
+                    nextBtn.innerHTML = `التالي <i class="fas fa-arrow-left icon-after-text"></i>`;
                 }
                 
                 startTimer();
@@ -1321,18 +1344,22 @@
             if (score === sessionQuestions.length) {
                 scoreContainer.style.backgroundColor = 'var(--success-color)';
                 scoreContainer.style.color = 'var(--text-on-primary-button)';
+                scoreContainer.style.borderColor = 'var(--success-gradient-end)';
                 scoreIcon = '<i class="fas fa-trophy"></i>';
             } else if (score >= sessionQuestions.length * 0.7) {
                 scoreContainer.style.backgroundColor = 'var(--success-color)'; 
                 scoreContainer.style.color = 'var(--text-on-primary-button)';
+                scoreContainer.style.borderColor = 'var(--success-gradient-end)';
                 scoreIcon = '<i class="fas fa-check-circle"></i>';
             } else if (score >= sessionQuestions.length * 0.4) {
                 scoreContainer.style.backgroundColor = 'var(--warning-color)';
-                scoreContainer.style.color = document.body.classList.contains('dark-theme') ? 'var(--app-bg-dark)' : 'var(--text-primary-light)';
+                scoreContainer.style.color = document.body.classList.contains('dark-theme') ? '#000' : 'var(--text-primary-light)';
+                scoreContainer.style.borderColor = 'rgba(var(--warning-rgb), 0.5)';
                 scoreIcon = '<i class="fas fa-exclamation-circle"></i>';
             } else {
                 scoreContainer.style.backgroundColor = 'var(--danger-color)';
                 scoreContainer.style.color = 'var(--text-on-primary-button)';
+                scoreContainer.style.borderColor = 'rgba(var(--danger-rgb), 0.8)';
                 scoreIcon = '<i class="fas fa-times-circle"></i>';
             }
             scoreContainer.innerHTML = `نتيجتك: ${score} من ${sessionQuestions.length} ${scoreIcon}`;
@@ -1393,7 +1420,7 @@
             let optionsHTML = '';
 
             const flagBtnHTML = `
-                <button class="flag-question-btn ${flaggedQuestions.includes(q.id) ? 'flagged' : ''}" onclick="toggleFlagQuestion('${q.id}')" aria-pressed="${flaggedQuestions.includes(q.id)}">
+                <button class="flag-question-btn btn" onclick="toggleFlagQuestion('${q.id}')" aria-pressed="${flaggedQuestions.includes(q.id)}">
                     <i class="fas fa-flag"></i> ${flaggedQuestions.includes(q.id) ? 'إلغاء التعليم' : 'تعليم للمراجعة'}
                 </button>`;
 
@@ -1426,7 +1453,6 @@
             const questionCardHTML = `
                 <div class="question-card-loft">
                     <div class="question-actions">
-                        <span class="progress-text" style="visibility: hidden;"></span> <!-- Placeholder for balance, actual text in progress bar -->
                         ${flagBtnHTML}
                     </div>
                     <p class="question-statement" id="questionStatement${q.id}">${q.text}</p>
@@ -1468,7 +1494,7 @@
                     nextBtn.innerHTML = `إنهاء الاختبار <i class="fas fa-flag-checkered icon-after-text"></i>`;
                      nextBtn.setAttribute('aria-label', 'إنهاء الاختبار');
                 } else {
-                    nextBtn.innerHTML = `السؤال التالي <i class="fas fa-chevron-left icon-after-text"></i>`;
+                    nextBtn.innerHTML = `التالي <i class="fas fa-arrow-left icon-after-text"></i>`;
                     nextBtn.setAttribute('aria-label', 'السؤال التالي');
                 }
             }
@@ -1591,18 +1617,22 @@
                 if (lastResults.score === lastResults.totalQuestions) {
                     oldScoreContainer.style.backgroundColor = 'var(--success-color)';
                     oldScoreContainer.style.color = 'var(--text-on-primary-button)';
+                    oldScoreContainer.style.borderColor = 'var(--success-gradient-end)';
                     oldScoreIcon = '<i class="fas fa-trophy"></i>';
                 } else if (lastResults.score >= lastResults.totalQuestions * 0.7) {
                     oldScoreContainer.style.backgroundColor = 'var(--success-color)';
                     oldScoreContainer.style.color = 'var(--text-on-primary-button)';
+                     oldScoreContainer.style.borderColor = 'var(--success-gradient-end)';
                     oldScoreIcon = '<i class="fas fa-check-circle"></i>';
                 } else if (lastResults.score >= lastResults.totalQuestions * 0.4) {
                     oldScoreContainer.style.backgroundColor = 'var(--warning-color)';
-                    oldScoreContainer.style.color = document.body.classList.contains('dark-theme') ? 'var(--app-bg-dark)' : 'var(--text-primary-light)';
+                    oldScoreContainer.style.color = document.body.classList.contains('dark-theme') ? '#000' : 'var(--text-primary-light)';
+                    oldScoreContainer.style.borderColor = 'rgba(var(--warning-rgb), 0.5)';
                     oldScoreIcon = '<i class="fas fa-exclamation-circle"></i>';
                 } else {
                     oldScoreContainer.style.backgroundColor = 'var(--danger-color)';
                     oldScoreContainer.style.color = 'var(--text-on-primary-button)';
+                    oldScoreContainer.style.borderColor = 'rgba(var(--danger-rgb), 0.8)';
                     oldScoreIcon = '<i class="fas fa-times-circle"></i>';
                 }
                 oldScoreContainer.innerHTML = `النتيجة السابقة (${lastResults.timestamp || ''}): ${lastResults.score} من ${lastResults.totalQuestions} ${oldScoreIcon}`;
@@ -1677,7 +1707,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            const preferredTheme = localStorage.getItem(THEME_KEY) || 'dark-theme';
+            const preferredTheme = localStorage.getItem(THEME_KEY) || 'dark-theme'; // Default to dark
             applyTheme(preferredTheme);
 
             if(totalQuestionsLandingSpan) {
