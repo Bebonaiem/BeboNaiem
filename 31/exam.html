@@ -756,6 +756,50 @@
             to { opacity: 1; transform: scale(1) translateY(0); }
         }
 
+        /* Confirm End Exam Modal Styles */
+        .confirm-end-modal {
+            display: none;
+            position: fixed;
+            z-index: 1060; /* Higher than q-nav-modal */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(var(--app-bg-rgb, 18,18,18), 0.75);
+            backdrop-filter: blur(5px);
+            animation: fadeInModal 0.3s ease-out;
+        }
+        body.light-theme .confirm-end-modal {
+            background-color: rgba(var(--app-bg-rgb, 248,249,250), 0.75);
+        }
+        .confirm-end-modal-content {
+            background-color: var(--card-bg);
+            margin: 15% auto;
+            padding: 30px 35px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            width: 90%;
+            max-width: 500px;
+            box-shadow: var(--box-shadow-lg);
+            text-align: center;
+        }
+        .confirm-end-modal-content h2 {
+            color: var(--danger-color);
+            margin-bottom: 18px;
+            font-size: 1.7em;
+        }
+        .confirm-end-modal-content p {
+            font-size: 1.15em;
+            color: var(--text-secondary);
+            margin-bottom: 28px;
+            line-height: 1.7;
+        }
+        .confirm-end-modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
     </style>
 </head>
 <body class="dark-theme"> 
@@ -858,6 +902,19 @@
             </div>
         </div>
     </div>
+
+    <!-- Confirm End Exam Modal -->
+    <div id="confirmEndExamModal" class="confirm-end-modal">
+        <div class="confirm-end-modal-content">
+            <h2>تأكيد إنهاء الاختبار</h2>
+            <p>هل أنت متأكد أنك تريد إنهاء الاختبار الآن؟ سيتم تصحيح إجاباتك الحالية.</p>
+            <div class="confirm-end-modal-buttons">
+                <button id="confirmEndBtnYes" class="btn btn-danger"><i class="fas fa-check icon-before-text"></i> نعم، قم بالإنهاء</button>
+                <button id="confirmEndBtnNo" class="btn btn-secondary"><i class="fas fa-times icon-before-text"></i> لا، استمر</button>
+            </div>
+        </div>
+    </div>
+
 
 
     <script>
@@ -997,6 +1054,11 @@
         const themeToggleBtnOldResults = document.getElementById('themeToggleBtnOldResults');
         const questionNavModal = document.getElementById('questionNavModal');
         const qNavGridContainer = document.getElementById('qNavGridContainer');
+
+
+        const confirmEndExamModal = document.getElementById('confirmEndExamModal');
+        const confirmEndBtnYes = document.getElementById('confirmEndBtnYes');
+        const confirmEndBtnNo = document.getElementById('confirmEndBtnNo');
 
 
         const LAST_RESULTS_KEY = 'loftExamLastResults_v3'; // Incremented version for new structure
@@ -1281,14 +1343,18 @@
             }
         }
         
+        function showConfirmEndModal() {
+            if(confirmEndExamModal) confirmEndExamModal.style.display = "block";
+        }
+        function hideConfirmEndModal() {
+            if(confirmEndExamModal) confirmEndExamModal.style.display = "none";
+        }
+
         function confirmEndExam() {
             // Save current answer if any is selected before showing confirm dialog
             handleAnswerSelection(); 
-
-            if (confirm("هل أنت متأكد أنك تريد إنهاء الاختبار الآن؟ سيتم تصحيح إجاباتك الحالية.")) {
-                stopTimer(); 
-                showResults(); 
-            }
+            showConfirmEndModal();
+            // The actual ending of the exam is now handled by the modal's "Yes" button
         }
 
         function autoSubmitExam() {
@@ -1756,9 +1822,21 @@
             checkForOldResults();
 
             window.onclick = function(event) {
-                if (event.target == questionNavModal) {
+                if (event.target == questionNavModal && questionNavModal.style.display === "block") {
                     toggleQuestionNavModal();
                 }
+                if (event.target == confirmEndExamModal && confirmEndExamModal.style.display === "block") {
+                    hideConfirmEndModal();
+                }
+            }
+
+            if(confirmEndBtnYes) confirmEndBtnYes.onclick = () => {
+                stopTimer();
+                showResults();
+                hideConfirmEndModal();
+            };
+            if(confirmEndBtnNo) confirmEndBtnNo.onclick = () => {
+                hideConfirmEndModal();
             }
         });
 
