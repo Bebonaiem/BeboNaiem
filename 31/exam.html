@@ -162,18 +162,98 @@
         .icon-after-text { margin-right: 10px; font-size: 0.95em; }
 
         .landing-container {
-            background-color: var(--card-bg);
-            padding: 60px 70px; /* Increased padding for better spacing */
+            background: linear-gradient(135deg, rgba(0, 191, 255, 0.15), rgba(0, 123, 255, 0.15));
+            padding: 60px 70px;
             border-radius: var(--border-radius-md);
-            box-shadow: var(--box-shadow-lg);
+            box-shadow: 0 0 25px rgba(0, 191, 255, 0.6);
             text-align: center;
-            max-width: 750px; /* Slightly wider */
+            max-width: 750px;
             width: 100%;
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(20px) scale(0.95);
+            border: 1px solid rgba(0, 191, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInScaleUp 0.8s ease forwards;
+        }
+        .landing-container::before,
+        .landing-container::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.15;
+            pointer-events: none;
+        }
+        .landing-container::before {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(0, 191, 255, 0.4), transparent 70%);
+            top: -50px;
+            left: -50px;
+        }
+        .landing-container::after {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(0, 123, 255, 0.4), transparent 70%);
+            bottom: -100px;
+            right: -100px;
+        }
+        .landing-container h1 {
+            font-weight: 900;
+            font-style: italic;
+            letter-spacing: 2px;
+            text-shadow: 0 0 8px rgba(0, 191, 255, 0.7);
+        }
+        .landing-container p {
+            font-weight: 500;
+            font-style: normal;
+            letter-spacing: 0.5px;
+            max-width: 85%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .btn {
+            border-radius: 30px;
+            padding: 16px 40px;
+            font-size: 1.2em;
+            font-weight: 700;
+            box-shadow: 0 6px 20px rgba(0, 191, 255, 0.5);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+        }
+        .btn:hover {
+            transform: translateY(-4px) scale(1.07);
+            box-shadow: 0 10px 30px rgba(0, 191, 255, 0.8);
+        }
+        .btn:active {
+            transform: translateY(-1px) scale(0.98);
+            box-shadow: 0 6px 20px rgba(0, 191, 255, 0.5);
+        }
+        .btn-primary {
+            background: linear-gradient(145deg, var(--primary-color), var(--primary-hover));
+            color: var(--text-on-primary-button);
+        }
+        .btn-primary:hover {
+            background: linear-gradient(145deg, var(--primary-hover), var(--primary-color));
+        }
+        .btn-secondary {
+            background-color: var(--element-bg);
+            color: var(--text-primary);
             border: 1px solid var(--border-color);
-            background-image: radial-gradient(circle at top left, rgba(0, 191, 255, 0.1), transparent 70%), radial-gradient(circle at bottom right, rgba(0, 191, 255, 0.1), transparent 70%);
-            animation: fadeInSlideUp 0.8s ease forwards;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        .btn-secondary:hover:not(:disabled) {
+            background-color: var(--element-hover-bg);
+            border-color: var(--secondary-color);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+        .btn-success {
+            background: linear-gradient(145deg, var(--success-color), var(--success-gradient-end));
+            color: #fff;
+            box-shadow: 0 6px 15px rgba(var(--success-rgb), 0.6);
+        }
+        .btn-success:hover {
+            background: linear-gradient(145deg, var(--success-gradient-end), var(--success-color));
+            box-shadow: 0 8px 20px rgba(var(--success-rgb), 0.8);
         }
 
         .landing-container .icon-wrapper {
