@@ -163,59 +163,66 @@
 
         .landing-container {
             background-color: var(--card-bg);
-            padding: 45px 55px; /* Increased padding */
+            padding: 60px 70px; /* Increased padding for better spacing */
             border-radius: var(--border-radius-md);
             box-shadow: var(--box-shadow-lg);
             text-align: center;
-            max-width: 700px; /* Slightly wider */
+            max-width: 750px; /* Slightly wider */
             width: 100%;
             opacity: 0;
             transform: translateY(20px);
             border: 1px solid var(--border-color);
+            background-image: radial-gradient(circle at top left, rgba(0, 191, 255, 0.1), transparent 70%), radial-gradient(circle at bottom right, rgba(0, 191, 255, 0.1), transparent 70%);
+            animation: fadeInSlideUp 0.8s ease forwards;
         }
 
         .landing-container .icon-wrapper {
-            font-size: 4em; /* Larger icon */
+            font-size: 5em; /* Larger icon */
             color: var(--primary-color);
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             line-height: 1;
-            animation: gentleFloat 3s ease-in-out infinite;
+            animation: gentleFloat 4s ease-in-out infinite;
         }
 
         .landing-container h1 {
             color: var(--primary-color);
-            font-size: 2.6em; /* Larger heading */
-            font-weight: 700; /* Bolder */
-            margin-bottom: 20px;
+            font-size: 3em; /* Larger heading */
+            font-weight: 800; /* Bolder */
+            margin-bottom: 25px;
+            letter-spacing: 1px;
         }
         .landing-container p {
-            font-size: 1.2em; /* Slightly larger paragraph */
+            font-size: 1.3em; /* Slightly larger paragraph */
             color: var(--text-secondary);
-            margin-bottom: 30px;
-            line-height: 1.8;
+            margin-bottom: 35px;
+            line-height: 1.9;
+            max-width: 90%;
+            margin-left: auto;
+            margin-right: auto;
         }
         .btn { /* Base button style */
             border: none;
-            padding: 12px 28px;
-            font-size: 1.1em;
-            font-weight: 600; /* Semi-bold */
+            padding: 14px 32px;
+            font-size: 1.15em;
+            font-weight: 700; /* Semi-bold */
             border-radius: var(--border-radius-sm);
             cursor: pointer;
-            transition: var(--transition-fast), transform 0.15s ease;
-            letter-spacing: 0.3px;
+            transition: var(--transition-fast), transform 0.2s ease;
+            letter-spacing: 0.4px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             text-decoration: none;
-            margin: 6px;
+            margin: 10px 12px; /* More consistent margin */
             box-shadow: var(--box-shadow-sm);
+            user-select: none;
         }
         .btn:hover {
-            transform: translateY(-2px) scale(1.02);
+            transform: translateY(-3px) scale(1.05);
             box-shadow: var(--box-shadow-md);
         }
         .btn:active {
-            transform: translateY(-1px) scale(0.99);
+            transform: translateY(-1px) scale(0.98);
             box-shadow: var(--box-shadow-sm);
         }
         .btn:disabled {
@@ -226,29 +233,35 @@
         }
 
         .btn-primary {
-            background: linear-gradient(145deg, var(--primary-hover), var(--primary-color));
+            background: linear-gradient(145deg, var(--primary-color), var(--primary-hover));
             color: var(--text-on-primary-button);
+            box-shadow: 0 6px 15px rgba(var(--primary-rgb), 0.5);
         }
          .btn-primary:hover {
-            background: linear-gradient(145deg, var(--primary-color), var(--primary-hover));
+            background: linear-gradient(145deg, var(--primary-hover), var(--primary-color));
+            box-shadow: 0 8px 20px rgba(var(--primary-rgb), 0.7);
         }
 
         .btn-secondary {
             background-color: var(--element-bg);
             color: var(--text-primary);
             border: 1px solid var(--border-color);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
         }
         .btn-secondary:hover:not(:disabled) {
             background-color: var(--element-hover-bg);
             border-color: var(--secondary-color);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
         }
         
         .btn-success { /* For Random Start button */
-            background: linear-gradient(145deg, var(--success-gradient-end), var(--success-color));
+            background: linear-gradient(145deg, var(--success-color), var(--success-gradient-end));
             color: #fff;
+            box-shadow: 0 6px 15px rgba(var(--success-rgb), 0.6);
         }
         .btn-success:hover {
-            background: linear-gradient(145deg, var(--success-color), var(--success-gradient-end));
+            background: linear-gradient(145deg, var(--success-gradient-end), var(--success-color));
+            box-shadow: 0 8px 20px rgba(var(--success-rgb), 0.8);
         }
         .btn-danger {
             background: linear-gradient(145deg, var(--danger-color), color-mix(in srgb, var(--danger-color) 80%, black));
