@@ -8,61 +8,60 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
-            /* --- Dark Theme --- */
-            --primary-color-dark: #00aeff; /* Brighter Blue */
-            --primary-hover-dark: #0095e0;
-            --secondary-color-dark: #7a8c99; /* Cooler Gray */
-            --success-color-dark: #28a745; /* Vibrant Green */
-            --success-gradient-end-dark: #208538;
-            --danger-color-dark: #e74c3c;  /* Softer Red */
-            --warning-color-dark: #f39c12; /* Amber */
-            
-            --app-bg-dark: #121212; /* Very Dark Gray (Material Design Dark) */
-            --card-bg-dark: #1e1e1e; /* Slightly Lighter Dark Gray */
-            --element-bg-dark: #2a2a2a; 
-            --element-hover-bg-dark: #383838;
-            --border-color-dark: #3c3c3c; /* Softer Border */
+            /* --- Improved Black Theme --- */
+            --primary-color-dark: #00bfff; /* Bright Cyan */
+            --primary-hover-dark: #0099cc;
+            --secondary-color-dark: #8a9ba8; /* Cool Gray */
+            --success-color-dark: #28c76f; /* Vibrant Green */
+            --success-gradient-end-dark: #1e9e4a;
+            --danger-color-dark: #ff4c4c; /* Bright Red */
+            --warning-color-dark: #ffb400; /* Bright Amber */
 
-            --text-primary-dark: #e0e0e0; /* Off-white */
-            --text-secondary-dark: #b0b0b0; /* Lighter Gray for secondary text */
-            --text-on-primary-button-dark: #ffffff;
-            --text-on-dark-element-dark: #e0e0e0;
+            --app-bg-dark: #000000; /* True Black */
+            --card-bg-dark: #121212; /* Dark Gray Card */
+            --element-bg-dark: #1a1a1a; /* Darker element background */
+            --element-hover-bg-dark: #333333; /* Hover darker */
+            --border-color-dark: #444444; /* Softer border */
 
-            /* --- Light Theme --- */
-            --primary-color-light: #007bff; /* Standard Bootstrap Blue */
+            --text-primary-dark: #e6e6e6; /* Light Gray */
+            --text-secondary-dark: #a0a0a0; /* Medium Gray */
+            --text-on-primary-button-dark: #000000; /* Black text on bright buttons */
+            --text-on-dark-element-dark: #e6e6e6;
+
+            /* --- Light Theme (unchanged) --- */
+            --primary-color-light: #007bff;
             --primary-hover-light: #0056b3;
-            --secondary-color-light: #6c757d; /* Bootstrap Secondary */
-            --success-color-light: #198754; /* Bootstrap Success */
+            --secondary-color-light: #6c757d;
+            --success-color-light: #198754;
             --success-gradient-end-light: #146c43;
-            --danger-color-light: #dc3545;  /* Bootstrap Danger */
-            --warning-color-light: #ffc107; /* Bootstrap Warning */
+            --danger-color-light: #dc3545;
+            --warning-color-light: #ffc107;
 
-            --app-bg-light: #f8f9fa;   /* Very Light Gray */
+            --app-bg-light: #f8f9fa;
             --card-bg-light: #ffffff;
-            --element-bg-light: #eef2f7; /* Soft Blueish Gray */
+            --element-bg-light: #eef2f7;
             --element-hover-bg-light: #dfe6ef;
-            --border-color-light: #dee2e6; /* Bootstrap Border Color */
-            
-            --text-primary-light: #212529; /* Bootstrap Default Text */
-            --text-secondary-light: #5a6268; /* Darker Gray for secondary */
+            --border-color-light: #dee2e6;
+
+            --text-primary-light: #212529;
+            --text-secondary-light: #5a6268;
             --text-on-primary-button-light: #ffffff;
             --text-on-dark-element-light: #343a40;
 
-
-            /* Default to dark theme variables - these will be overridden by body class */
+            /* Default to dark theme variables */
             --primary-color: var(--primary-color-dark);
             --primary-hover: var(--primary-hover-dark);
-            --primary-rgb: 0, 174, 255; /* For rgba gradients/shadows */
+            --primary-rgb: 0, 191, 255;
             --secondary-color: var(--secondary-color-dark);
-            --secondary-rgb: 122, 140, 153;
+            --secondary-rgb: 138, 155, 168;
             --success-color: var(--success-color-dark);
             --success-gradient-end: var(--success-gradient-end-dark);
-            --success-rgb: 40, 167, 69;
+            --success-rgb: 40, 199, 111;
             --danger-color: var(--danger-color-dark);
-            --danger-rgb: 231, 76, 60;
+            --danger-rgb: 255, 76, 76;
             --warning-color: var(--warning-color-dark);
-            --warning-rgb: 243, 156, 18;
-            
+            --warning-rgb: 255, 180, 0;
+
             --app-bg: var(--app-bg-dark);
             --card-bg: var(--card-bg-dark);
             --element-bg: var(--element-bg-dark);
@@ -75,41 +74,44 @@
             --text-on-dark-element: var(--text-on-dark-element-dark);
 
             --font-family-primary: 'IBM Plex Sans Arabic', 'Tajawal', sans-serif;
-            --font-family-secondary: 'Tajawal', sans-serif; /* For less prominent text if needed */
-            --border-radius-sm: 8px;  /* Slightly more rounded */
-            --border-radius-md: 12px;
-            --box-shadow-sm: 0 2px 8px rgba(0,0,0, 0.08);
-            --box-shadow-md: 0 5px 15px rgba(0,0,0, 0.1);
-            --box-shadow-lg: 0 8px 25px rgba(0,0,0, 0.12);
-            --transition-fast: all 0.2s ease-in-out;
-            --transition-smooth: all 0.3s ease-in-out;
+            --font-family-secondary: 'Tajawal', sans-serif;
+            --border-radius-sm: 10px;
+            --border-radius-md: 14px;
+            --box-shadow-sm: 0 3px 10px rgba(0, 191, 255, 0.3);
+            --box-shadow-md: 0 8px 20px rgba(0, 191, 255, 0.4);
+            --box-shadow-lg: 0 12px 30px rgba(0, 191, 255, 0.5);
+            --transition-fast: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         body.dark-theme {
             --primary-color: var(--primary-color-dark);
             --primary-hover: var(--primary-hover-dark);
-            --primary-rgb: 0, 174, 255;
+            --primary-rgb: 0, 191, 255;
             --secondary-color: var(--secondary-color-dark);
-            --secondary-rgb: 122, 140, 153;
+            --secondary-rgb: 138, 155, 168;
             --success-color: var(--success-color-dark);
             --success-gradient-end: var(--success-gradient-end-dark);
-            --success-rgb: 40, 167, 69;
+            --success-rgb: 40, 199, 111;
             --danger-color: var(--danger-color-dark);
-            --danger-rgb: 231, 76, 60;
+            --danger-rgb: 255, 76, 76;
             --warning-color: var(--warning-color-dark);
-            --warning-rgb: 243, 156, 18;
+            --warning-rgb: 255, 180, 0;
+
             --app-bg: var(--app-bg-dark);
             --card-bg: var(--card-bg-dark);
             --element-bg: var(--element-bg-dark);
             --element-hover-bg: var(--element-hover-bg-dark);
             --border-color: var(--border-color-dark);
+
             --text-primary: var(--text-primary-dark);
             --text-secondary: var(--text-secondary-dark);
             --text-on-primary-button: var(--text-on-primary-button-dark);
             --text-on-dark-element: var(--text-on-dark-element-dark);
-            --box-shadow-sm: 0 3px 6px rgba(0,0,0, 0.25);
-            --box-shadow-md: 0 6px 12px rgba(0,0,0, 0.3);
-            --box-shadow-lg: 0 10px 20px rgba(0,0,0, 0.35);
+
+            --box-shadow-sm: 0 4px 12px rgba(0, 191, 255, 0.4);
+            --box-shadow-md: 0 10px 25px rgba(0, 191, 255, 0.5);
+            --box-shadow-lg: 0 15px 40px rgba(0, 191, 255, 0.6);
         }
 
         body.light-theme {
