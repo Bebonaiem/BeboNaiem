@@ -200,6 +200,22 @@
             margin-left: auto;
             margin-right: auto;
         }
+        .landing-container p #totalQuestionsLanding,
+        .landing-container p #examDurationLanding {
+            color: var(--primary-color);
+            font-weight: 700;
+            background-color: rgba(var(--primary-rgb), 0.15);
+            padding: 2px 8px;
+            border-radius: 8px;
+            box-shadow: 0 0 8px rgba(var(--primary-rgb), 0.3);
+            transition: background-color 0.3s ease;
+        }
+        .landing-container p #totalQuestionsLanding:hover,
+        .landing-container p #examDurationLanding:hover {
+            background-color: rgba(var(--primary-rgb), 0.3);
+            box-shadow: 0 0 12px rgba(var(--primary-rgb), 0.5);
+            cursor: default;
+        }
         .btn { /* Base button style */
             border: none;
             padding: 14px 32px;
