@@ -198,63 +198,6 @@
             bottom: -100px;
             right: -100px;
         }
-        .landing-container h1 {
-            font-weight: 900;
-            font-style: italic;
-            letter-spacing: 2px;
-            text-shadow: 0 0 8px rgba(0, 191, 255, 0.7);
-        }
-        .landing-container p {
-            font-weight: 500;
-            font-style: normal;
-            letter-spacing: 0.5px;
-            max-width: 85%;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .btn {
-            border-radius: 30px;
-            padding: 16px 40px;
-            font-size: 1.2em;
-            font-weight: 700;
-            box-shadow: 0 6px 20px rgba(0, 191, 255, 0.5);
-            transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
-        }
-        .btn:hover {
-            transform: translateY(-4px) scale(1.07);
-            box-shadow: 0 10px 30px rgba(0, 191, 255, 0.8);
-        }
-        .btn:active {
-            transform: translateY(-1px) scale(0.98);
-            box-shadow: 0 6px 20px rgba(0, 191, 255, 0.5);
-        }
-        .btn-primary {
-            background: linear-gradient(145deg, var(--primary-color), var(--primary-hover));
-            color: var(--text-on-primary-button);
-        }
-        .btn-primary:hover {
-            background: linear-gradient(145deg, var(--primary-hover), var(--primary-color));
-        }
-        .btn-secondary {
-            background-color: var(--element-bg);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-        }
-        .btn-secondary:hover:not(:disabled) {
-            background-color: var(--element-hover-bg);
-            border-color: var(--secondary-color);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
-        }
-        .btn-success {
-            background: linear-gradient(145deg, var(--success-color), var(--success-gradient-end));
-            color: #fff;
-            box-shadow: 0 6px 15px rgba(var(--success-rgb), 0.6);
-        }
-        .btn-success:hover {
-            background: linear-gradient(145deg, var(--success-gradient-end), var(--success-color));
-            box-shadow: 0 8px 20px rgba(var(--success-rgb), 0.8);
-        }
 
         .landing-container .icon-wrapper {
             font-size: 5em; /* Larger icon */
@@ -350,7 +293,7 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.15);
         }
         
-        .btn-success { /* For Random Start button */
+        .btn-success { 
             background: linear-gradient(145deg, var(--success-color), var(--success-gradient-end));
             color: #fff;
             box-shadow: 0 6px 15px rgba(var(--success-rgb), 0.6);
@@ -365,6 +308,18 @@
         }
         .btn-danger:hover {
             background: linear-gradient(145deg, color-mix(in srgb, var(--danger-color) 80%, black), var(--danger-color));
+        }
+        .btn-warning { /* For No Timer button */
+            background: linear-gradient(145deg, var(--warning-color), color-mix(in srgb, var(--warning-color) 85%, black));
+            color: var(--text-on-primary-button-dark); /* Ensure good contrast on warning yellow */
+            box-shadow: 0 6px 15px rgba(var(--warning-rgb), 0.6);
+        }
+        body.light-theme .btn-warning { /* Ensure good contrast for light theme as well */
+             color: var(--text-primary-light);
+        }
+        .btn-warning:hover {
+            background: linear-gradient(145deg, color-mix(in srgb, var(--warning-color) 85%, black), var(--warning-color));
+            box-shadow: 0 8px 20px rgba(var(--warning-rgb), 0.8);
         }
 
 
@@ -922,11 +877,14 @@
             مرحباً بك! هذا الاختبار التفاعلي مصمم لاختبار معرفتك. يتكون من <span id="totalQuestionsLanding"></span> سؤال متنوع. لديك <span id="examDurationLanding">45</span> دقيقة لإكمال الاختبار.
             نتمنى لك كل التوفيق!
         </p>
-        <button class="btn btn-primary" onclick="startExam(false)" aria-label="ابدأ الاختبار بالترتيب الافتراضي">
+        <button class="btn btn-primary" onclick="startExam(false, false)" aria-label="ابدأ الاختبار بالترتيب الافتراضي">
             <i class="fas fa-play icon-before-text"></i> ابدأ الاختبار الآن
         </button>
-        <button class="btn btn-success" onclick="startExam(true)" aria-label="ابدأ الاختبار بترتيب عشوائي للأسئلة">
+        <button class="btn btn-success" onclick="startExam(true, false)" aria-label="ابدأ الاختبار بترتيب عشوائي للأسئلة">
             <i class="fas fa-random icon-before-text"></i> ابدأ بترتيب عشوائي
+        </button>
+        <button class="btn btn-warning" onclick="startExam(false, true)" aria-label="ابدأ الاختبار بدون مؤقت">
+            <i class="fas fa-hourglass-end icon-before-text"></i> ابدأ بدون مؤقت
         </button>
         <button class="btn btn-secondary" id="viewLastResultsBtn" onclick="viewLastResults()" style="margin-top: 10px;" disabled>
             <i class="fas fa-history icon-before-text"></i> عرض نتائج آخر اختبار
@@ -941,7 +899,7 @@
     <div class="loft-exam-container" id="examPage">
         <header class="exam-header">
              <button id="themeToggleBtn" class="theme-toggle-btn" onclick="toggleTheme()" aria-label="تبديل الوضع المظلم/المضيء">
-                <i class="fas fa-sun"></i> <!-- MODIFIED: Was fa-moon, changed to fa-sun for default dark theme -->
+                <i class="fas fa-sun"></i>
             </button>
             <h1>اختبار طرق التدريس</h1>
             <div style="width: 40px;"></div> <!-- Spacer for balance -->
@@ -988,7 +946,7 @@
     <div class="old-results-container" id="oldResultsPage" style="display: none;">
         <header class="exam-header">
              <button id="themeToggleBtnOldResults" class="theme-toggle-btn" onclick="toggleTheme()" aria-label="تبديل الوضع المظلم/المضيء">
-                <i class="fas fa-sun"></i> <!-- MODIFIED: Was fa-moon, changed to fa-sun for default dark theme -->
+                <i class="fas fa-sun"></i>
             </button>
             <h1>نتائج الاختبار السابق</h1>
              <div style="width: 40px;"></div> <!-- Spacer -->
@@ -1138,6 +1096,7 @@
         let timerInterval;
         let timeLeftInSeconds = 45 * 60; 
         const EXAM_DURATION_SECONDS = 45 * 60;
+        let isNoTimerMode = false; // ADDED: Global flag for no-timer mode
 
 
         const landingPage = document.getElementById('landingPage');
@@ -1172,7 +1131,7 @@
         const confirmEndBtnNo = document.getElementById('confirmEndBtnNo');
 
 
-        const LAST_RESULTS_KEY = 'loftExamLastResults_v3'; // Incremented version for new structure
+        const LAST_RESULTS_KEY = 'loftExamLastResults_v3'; 
         const CURRENT_EXAM_STATE_KEY = 'loftCurrentExamState_v3';
         const THEME_KEY = 'loftExamTheme_v3';
 
@@ -1192,8 +1151,7 @@
             if (themeToggleBtnOldResults) themeToggleBtnOldResults.innerHTML = `<i class="fas ${iconClass}"></i>`;
             localStorage.setItem(THEME_KEY, theme);
             
-            // Call updateTimerDisplay to refresh colors if timer is active
-            if (timerInterval && timeLeftInSeconds > 0 && examPage.style.display === 'block') {
+            if (examPage.style.display === 'block') { // Only update timer display if exam is active
                  updateTimerDisplay();
             }
         }
@@ -1213,32 +1171,44 @@
 
         function updateTimerDisplay() {
             if (!timerDisplay) return;
+
+            if (isNoTimerMode) { // ADDED: Handle no-timer mode display
+                timerDisplay.textContent = "وقت مفتوح";
+                timerDisplay.style.color = 'var(--text-secondary)';
+                timerDisplay.style.backgroundColor = 'rgba(var(--secondary-rgb), 0.1)';
+                timerDisplay.style.borderColor = 'rgba(var(--secondary-rgb), 0.2)'; // Neutral border
+                return;
+            }
+            
             timerDisplay.textContent = formatTime(timeLeftInSeconds);
             
             const currentThemeIsDark = document.body.classList.contains('dark-theme');
-            const warningColorRGB = currentThemeIsDark ? 
-                getComputedStyle(document.documentElement).getPropertyValue('--warning-rgb').trim() : 
-                getComputedStyle(document.documentElement).getPropertyValue('--warning-rgb').trim(); // Already set by theme
-            const dangerColorRGB = currentThemeIsDark ? 
-                getComputedStyle(document.documentElement).getPropertyValue('--danger-rgb').trim() : 
-                getComputedStyle(document.documentElement).getPropertyValue('--danger-rgb').trim();
+            const warningColorRGB = getComputedStyle(document.documentElement).getPropertyValue('--warning-rgb').trim();
+            const dangerColorRGB = getComputedStyle(document.documentElement).getPropertyValue('--danger-rgb').trim();
 
 
             if (timeLeftInSeconds <= 0) { 
                 timerDisplay.textContent = '00:00';
                 timerDisplay.style.color = 'var(--danger-color)';
                 timerDisplay.style.backgroundColor = `rgba(${dangerColorRGB}, 0.15)`;
+                timerDisplay.style.borderColor = `rgba(${dangerColorRGB}, 0.3)`;
             } else if (timeLeftInSeconds <= 60) {
                 timerDisplay.style.color = 'var(--danger-color)';
                 timerDisplay.style.backgroundColor = `rgba(${dangerColorRGB}, 0.15)`;
+                timerDisplay.style.borderColor = `rgba(${dangerColorRGB}, 0.3)`;
             } else { 
                 timerDisplay.style.color = 'var(--warning-color)';
                 timerDisplay.style.backgroundColor = `rgba(${warningColorRGB}, 0.12)`;
+                timerDisplay.style.borderColor = `rgba(${warningColorRGB}, 0.2)`;
             }
         }
 
 
         function startTimer() {
+            if (isNoTimerMode) { // ADDED: Skip timer start if in no-timer mode
+                updateTimerDisplay(); // Ensure display is set to "وقت مفتوح"
+                return;
+            }
             updateTimerDisplay(); 
             clearInterval(timerInterval);
             timerInterval = setInterval(() => {
@@ -1271,6 +1241,7 @@
                 userAnswers: userAnswers,
                 flaggedQuestions: flaggedQuestions,
                 timeLeftInSeconds: timeLeftInSeconds,
+                isNoTimerMode: isNoTimerMode, // ADDED: Save no-timer mode state
                 timestamp: Date.now()
             };
             try {
@@ -1304,12 +1275,18 @@
                 userAnswers = savedState.userAnswers || [];
                 flaggedQuestions = savedState.flaggedQuestions || [];
                 timeLeftInSeconds = savedState.timeLeftInSeconds;
+                isNoTimerMode = savedState.isNoTimerMode || false; // ADDED: Restore no-timer mode
 
-
-                if (timeLeftInSeconds <= 0 || currentQuestionIndex >= sessionQuestions.length) {
+                // MODIFIED: Check for timed exam end condition
+                if (!isNoTimerMode && timeLeftInSeconds <= 0) { 
                     clearCurrentExamState(); 
                     return false; 
                 }
+                 if (currentQuestionIndex >= sessionQuestions.length && !(resultsArea.style.display === 'block' && resultsArea.classList.contains('visible'))) { // If exam was already finished
+                    clearCurrentExamState();
+                    return false;
+                }
+
 
                 landingPage.style.display = 'none';
                 if(oldResultsPage) oldResultsPage.style.display = 'none';
@@ -1324,7 +1301,11 @@
                 navigationControls.style.display = 'flex'; 
                 questionDisplayArea.style.display = 'block';
 
-                startTimer(); 
+                if (isNoTimerMode) { // ADDED: Handle UI for restored no-timer mode
+                    updateTimerDisplay(); // This will set "وقت مفتوح"
+                } else {
+                    startTimer(); 
+                }
                 displayCurrentQuestion();
                 renderQuestionNavPanel();
                 
@@ -1336,7 +1317,10 @@
             }
         }
 
-        function startExam(randomize = false) {
+        // MODIFIED: Added noTimer parameter
+        function startExam(randomize = false, noTimer = false) {
+            isNoTimerMode = noTimer; // ADDED: Set global flag
+            
             clearCurrentExamState(); 
             stopTimer(); 
 
@@ -1374,7 +1358,11 @@
                     nextBtn.innerHTML = `التالي <i class="fas fa-arrow-left icon-after-text"></i>`;
                 }
                 
-                startTimer();
+                if (isNoTimerMode) { // ADDED: Handle UI for no-timer mode start
+                    updateTimerDisplay(); // This will set "وقت مفتوح"
+                } else {
+                    startTimer();
+                }
                 displayCurrentQuestion();
                 renderQuestionNavPanel();
             }, 400);
@@ -1424,7 +1412,8 @@
 
 
         function handleNextQuestion() {
-            if (timeLeftInSeconds <= 0 && timerInterval) return;
+            // MODIFIED: Check for time up only if not in no-timer mode
+            if (!isNoTimerMode && timeLeftInSeconds <= 0 && timerInterval) return;
 
             const selectedOption = document.querySelector('input[name="q_option"]:checked');
             if (!selectedOption) {
@@ -1437,7 +1426,7 @@
             currentQuestionIndex++;
             
             if (currentQuestionIndex >= sessionQuestions.length) {
-                stopTimer();
+                if (!isNoTimerMode) stopTimer(); // Stop timer if it was running
                 showResults();
             } else {
                 displayCurrentQuestion();
@@ -1462,17 +1451,17 @@
         }
 
         function confirmEndExam() {
-            // Save current answer if any is selected before showing confirm dialog
             handleAnswerSelection(); 
             showConfirmEndModal();
-            // The actual ending of the exam is now handled by the modal's "Yes" button
         }
 
         function autoSubmitExam() {
+            // This function is primarily called by timer expiry.
+            // If called, it means time is up in a timed exam.
             if ((resultsArea.style.display === 'block' && resultsArea.classList.contains('visible')) || examPage.style.display !== 'block') {
                 return;
             }
-            stopTimer(); 
+            if (!isNoTimerMode) stopTimer(); 
             handleAnswerSelection(); 
             showResults(); 
             if(nextBtn) nextBtn.disabled = true;
@@ -1484,7 +1473,7 @@
         function showResults() {
             if (resultsArea.classList.contains('visible')) return;
 
-            stopTimer(); 
+            if (!isNoTimerMode) stopTimer(); 
             clearCurrentExamState(); 
 
             questionDisplayArea.style.display = 'none';
@@ -1577,8 +1566,9 @@
         }
         
         function restartExam() {
-            stopTimer();
+            if (!isNoTimerMode) stopTimer(); // Stop timer if it was running
             clearCurrentExamState();
+            isNoTimerMode = false; // Reset no-timer mode for landing page
             
             resultsArea.style.animation = 'fadeOutSlideUp 0.4s ease-in forwards';
             examPage.style.animation = 'fadeOutSlideUp 0.4s ease-in forwards';
@@ -1601,7 +1591,8 @@
         }
 
         function displayCurrentQuestion() {
-            if (timeLeftInSeconds <= 0 && timerInterval) {
+            // MODIFIED: Check for time up only if NOT in no-timer mode
+            if (!isNoTimerMode && timeLeftInSeconds <= 0 && timerInterval) {
                 if (!(resultsArea.style.display === 'block' && resultsArea.classList.contains('visible'))) {
                     autoSubmitExam();
                 }
@@ -1795,7 +1786,7 @@
         }
 
         function viewLastResults() {
-            stopTimer(); 
+            if (!isNoTimerMode) stopTimer(); // Stop timer if it was running
             landingPage.style.display = 'none';
             landingPage.style.animation = '';
             examPage.style.display = 'none';
@@ -1906,7 +1897,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            const preferredTheme = localStorage.getItem(THEME_KEY) || 'dark-theme'; // Default to dark
+            const preferredTheme = localStorage.getItem(THEME_KEY) || 'dark-theme'; 
             applyTheme(preferredTheme);
 
             if(totalQuestionsLandingSpan) {
@@ -1925,11 +1916,14 @@
                 if (examPage) examPage.style.display = 'none';
                 if (oldResultsPage) oldResultsPage.style.display = 'none';
                 if (resultsArea) resultsArea.style.display = 'none';
+                isNoTimerMode = false; // Ensure it's reset if no state restored
             }
 
-            if(timerDisplay && timeLeftInSeconds === EXAM_DURATION_SECONDS) { 
-                 updateTimerDisplay(); 
+            // If not restoring an active exam, ensure timer display is default for landing page context
+            if (landingPage.style.display === 'block' || !stateRestored) {
+                if(timerDisplay) timerDisplay.textContent = formatTime(EXAM_DURATION_SECONDS); 
             }
+            
             checkForOldResults();
 
             window.onclick = function(event) {
@@ -1942,7 +1936,7 @@
             }
 
             if(confirmEndBtnYes) confirmEndBtnYes.onclick = () => {
-                stopTimer();
+                if (!isNoTimerMode) stopTimer();
                 showResults();
                 hideConfirmEndModal();
             };
@@ -1954,7 +1948,7 @@
         window.addEventListener('beforeunload', () => {
             if (examPage.style.display === 'block' && 
                 !(resultsArea.style.display === 'block' && resultsArea.classList.contains('visible')) &&
-                timeLeftInSeconds > 0) {
+                (isNoTimerMode || timeLeftInSeconds > 0) ) { // MODIFIED: Also save if no-timer mode
                 handleAnswerSelection(); 
                 saveCurrentExamState();
             }
