@@ -1197,6 +1197,7 @@
         const LAST_RESULTS_KEY = 'loftExamLastResults_v3'; 
         const CURRENT_EXAM_STATE_KEY = 'loftCurrentExamState_v3';
         const THEME_KEY = 'loftExamTheme_v3';
+        const LAST_EXAM_ATTEMPT_COUNT_KEY = 'loftExamAttemptCount_v3'; // New key for attempt count
 
         function shuffleArray(array) {
             const newArray = [...array];
@@ -1614,16 +1615,38 @@
             }
             scoreContainer.innerHTML = `نتيجتك: ${score} من ${sessionQuestions.length} ${scoreIcon}`;
 
+            // --- Attempt Number Logic ---
+            let attemptCount = 0;
+            try {
+                const savedAttemptCount = localStorage.getItem(LAST_EXAM_ATTEMPT_COUNT_KEY);
+                if (savedAttemptCount) {
+                    attemptCount = parseInt(savedAttemptCount, 10);
+                }
+            } catch (e) { console.error("Error reading attempt count:", e); }
+            
+            attemptCount++; // Increment for the current completed exam
+
+            try {
+                localStorage.setItem(LAST_EXAM_ATTEMPT_COUNT_KEY, attemptCount.toString());
+            } catch (e) { console.error("Error saving attempt count:", e); }
+            // --- End Attempt Number Logic ---
 
             const resultsToSave = {
-                score: score, totalQuestions: sessionQuestions.length, 
+                score: score, 
+                totalQuestions: sessionQuestions.length, 
                 answers: userAnswers, 
                 sessionQuestionIdsInOrder: sessionQuestions.map(q => q.id), 
-                timestamp: new Date().toLocaleString('ar-EG')
+                timestamp: new Date().toLocaleString('ar-EG'),
+                attemptNumber: attemptCount // Store the attempt number with this specific result
             };
+
             try {
                 localStorage.setItem(LAST_RESULTS_KEY, JSON.stringify(resultsToSave));
-                if(viewLastResultsBtn) viewLastResultsBtn.disabled = false;
+                 // Update button text immediately after saving new results
+                if (viewLastResultsBtn) {
+                    viewLastResultsBtn.disabled = false;
+                    viewLastResultsBtn.innerHTML = `<i class="fas fa-history icon-before-text"></i> عرض نتائج المحاولة رقم ${attemptCount}`;
+                }
             } catch (e) { console.error("Error saving results to localStorage:", e); }
         }
         
@@ -1648,7 +1671,7 @@
                 landingPage.style.opacity = '0';
                 landingPage.style.transform = 'translateY(20px)';
                 landingPage.style.animation = 'fadeInSlideUp 0.6s ease-out forwards';
-                checkForOldResults();
+                checkForOldResults(); // This will update the button based on the latest saved result
             }, 400);
         }
 
@@ -1837,11 +1860,24 @@
         function checkForOldResults() {
             if (viewLastResultsBtn) {
                 try {
-                    const savedResults = localStorage.getItem(LAST_RESULTS_KEY);
-                    viewLastResultsBtn.disabled = !savedResults;
+                    const savedResultsJSON = localStorage.getItem(LAST_RESULTS_KEY);
+                    if (savedResultsJSON) {
+                        const savedResults = JSON.parse(savedResultsJSON);
+                        viewLastResultsBtn.disabled = false;
+                        if (savedResults.attemptNumber) {
+                            viewLastResultsBtn.innerHTML = `<i class="fas fa-history icon-before-text"></i> عرض نتائج المحاولة رقم ${savedResults.attemptNumber}`;
+                        } else {
+                            // Backward compatibility for results saved before this feature
+                            viewLastResultsBtn.innerHTML = `<i class="fas fa-history icon-before-text"></i> عرض نتائج آخر اختبار`;
+                        }
+                    } else {
+                        viewLastResultsBtn.disabled = true;
+                        viewLastResultsBtn.innerHTML = `<i class="fas fa-history icon-before-text"></i> عرض نتائج آخر اختبار`; // Default text
+                    }
                 } catch (e) {
-                    console.error("Error checking localStorage:", e);
+                    console.error("Error checking localStorage for old results:", e);
                     viewLastResultsBtn.disabled = true;
+                    viewLastResultsBtn.innerHTML = `<i class="fas fa-history icon-before-text"></i> عرض نتائج آخر اختبار`; // Default text on error
                 }
             }
         }
@@ -1887,7 +1923,15 @@
                     oldScoreContainer.style.borderColor = 'rgba(var(--danger-rgb), 0.8)';
                     oldScoreIcon = '<i class="fas fa-times-circle"></i>';
                 }
-                oldScoreContainer.innerHTML = `النتيجة السابقة (${lastResults.timestamp || ''}): ${lastResults.score} من ${lastResults.totalQuestions} ${oldScoreIcon}`;
+
+                let scoreHeaderText = `النتيجة السابقة`;
+                if (lastResults.attemptNumber) {
+                    scoreHeaderText = `نتائج المحاولة رقم ${lastResults.attemptNumber}`;
+                }
+                if (lastResults.timestamp) {
+                     scoreHeaderText += ` (${lastResults.timestamp})`;
+                }
+                oldScoreContainer.innerHTML = `${scoreHeaderText}: ${lastResults.score} من ${lastResults.totalQuestions} ${oldScoreIcon}`;
 
 
                 oldDetailedFeedbackContainer.innerHTML = '';
