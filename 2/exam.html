@@ -22,6 +22,7 @@
             --incorrect-color: #FF4747; /* Bright Red */
             --warning-color: #FFD700; /* Gold / Bright Yellow */
             --flagged-color: var(--warning-color);
+            --current-font-size-multiplier: 1; /* For JS font scaling */
         }
 
         body {
@@ -59,7 +60,7 @@
         h2 { font-size: 1.9em; font-weight: 500; }
         h3 { font-size: 1.6em; color: var(--secondary-accent); text-shadow: 0 0 8px var(--secondary-accent-glow); margin-top: 35px;}
 
-        p { margin-bottom: 20px; font-size: 1.15em; color: var(--text-muted); }
+        p { margin-bottom: 20px; font-size: calc(1.15em * var(--current-font-size-multiplier)); color: var(--text-muted); }
         .container > p { color: var(--text-light); }
 
         .button {
@@ -110,15 +111,23 @@
         .question-container { margin-bottom: 35px; text-align: right; }
 
         .exam-header-controls {
-            display: flex; justify-content: space-between; align-items: center;
+            display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
             margin-bottom: 25px; border-bottom: 2px solid var(--border-color); padding-bottom: 20px;
+            gap: 10px; /* Added gap for wrapped items */
         }
+        .exam-header-controls > * { margin-bottom: 5px; } /* Spacing for wrapped items */
+
         #timer {
             font-size: 1.4em; font-weight: 700; color: var(--warning-color);
             background-color: rgba(255, 215, 0, 0.05);
             padding: 10px 18px; border-radius: 10px;
             text-shadow: 0 0 8px rgba(255,215,0,0.5);
         }
+        #timer.untimed { /* Style for untimed display */
+            color: var(--primary-accent); 
+            text-shadow: 0 0 8px var(--primary-accent-glow);
+        }
+
 
         .progress-bar-container {
             width: 100%; background-color: var(--border-color);
@@ -133,14 +142,16 @@
 
         .question-top-bar {
             display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 15px; flex-wrap: wrap; /* Allow wrapping */
         }
-        #flagQuestionButton, #reviewFlaggedButton {
+         .question-top-bar > * { margin-bottom: 5px; } /* Spacing for wrapped items */
+
+        #flagQuestionButton, #reviewFlaggedButton, #openQuestionNavButton, #pauseExamButton {
             background: none; border: 2px solid var(--text-muted); color: var(--text-muted);
             padding: 8px 15px; border-radius: 8px; cursor: pointer; font-size: 0.95em;
-            transition: all 0.3s ease;
+            transition: all 0.3s ease; display: inline-flex; align-items: center;
         }
-        #flagQuestionButton:hover, #reviewFlaggedButton:hover {
+        #flagQuestionButton:hover, #reviewFlaggedButton:hover, #openQuestionNavButton:hover, #pauseExamButton:hover {
             border-color: var(--warning-color); color: var(--warning-color);
             box-shadow: 0 0 10px rgba(255,215,0,0.3);
         }
@@ -148,21 +159,27 @@
             background-color: var(--warning-color); color: var(--bg-deep-dark); border-color: var(--warning-color);
             font-weight: bold; box-shadow: 0 0 10px rgba(255,215,0,0.5);
         }
-        #flagQuestionButton i, #reviewFlaggedButton i { margin-right: 0; margin-left: 8px; } /* RTL specific */
+        #flagQuestionButton i, #reviewFlaggedButton i, #openQuestionNavButton i, #pauseExamButton i { margin-right: 0; margin-left: 8px; } /* RTL specific */
 
 
         #reviewFlaggedButton { border-color: var(--secondary-accent); color: var(--secondary-accent); }
         #reviewFlaggedButton:hover { box-shadow: 0 0 10px var(--secondary-accent-glow); }
+        #openQuestionNavButton { border-color: var(--primary-accent); color: var(--primary-accent); }
+        #openQuestionNavButton:hover { box-shadow: 0 0 10px var(--primary-accent-glow); }
+        #pauseExamButton.paused { border-color: var(--correct-color); color: var(--correct-color); }
 
 
-        .question-text { font-size: 1.5em; font-weight: 500; margin-bottom: 30px; color: var(--text-light); }
+        .question-text { font-size: calc(1.5em * var(--current-font-size-multiplier)); font-weight: 500; margin-bottom: 30px; color: var(--text-light); }
 
         .options-container label {
             display: block; background-color: rgba(255,255,255,0.02);
-            padding: 16px 22px; margin-bottom: 15px; border-radius: 12px;
+            padding: calc(16px * var(--current-font-size-multiplier)) calc(22px * var(--current-font-size-multiplier)); 
+            margin-bottom: calc(15px * var(--current-font-size-multiplier)); 
+            border-radius: 12px;
             cursor: pointer; transition: all 0.2s ease-out;
             border: 2px solid var(--border-color); text-align: right;
             position: relative; overflow: hidden;
+            font-size: calc(1em * var(--current-font-size-multiplier));
         }
         .options-container label::before { /* Hover/selected glow effect */
             content: ''; position: absolute; top:0; left:0; width:100%; height:100%;
@@ -172,7 +189,8 @@
         .options-container label:hover::before, .options-container label.selected-option::before { opacity: 0.3; }
         .options-container label:hover { border-color: var(--primary-accent); }
         .options-container input[type="radio"] {
-            margin-left: 18px; transform: scale(1.5);
+            margin-left: calc(18px * var(--current-font-size-multiplier)); 
+            transform: scale(calc(1.5 * var(--current-font-size-multiplier)));
             accent-color: var(--primary-accent); vertical-align: middle;
             position: relative; z-index: 1;
         }
@@ -185,6 +203,15 @@
             border-color: var(--primary-accent);
             box-shadow: 0 0 15px var(--primary-accent-glow);
         }
+        .font-size-controls { margin-bottom: 15px; text-align: right; }
+        .font-size-controls button {
+            background: var(--border-color); color: var(--text-light);
+            border: none; padding: 6px 12px; margin-right: 8px; border-radius: 6px; cursor: pointer;
+            font-size: 0.9em;
+        }
+        .font-size-controls button:hover { background: #444; }
+        .font-size-controls button i { margin-left: 5px; }
+
 
         #progressText { margin-top: 30px; font-size: 1.05em; color: var(--text-muted); }
         
@@ -200,8 +227,8 @@
         .category-performance strong { color: var(--text-light); }
 
         .review-area { margin-top: 40px; text-align: right; }
-        .review-filter { margin-bottom: 20px; }
-        .review-filter label { margin-right: 10px; color: var(--text-muted); }
+        .review-filter { margin-bottom: 20px; display: flex; flex-wrap: wrap; gap: 15px; align-items: center; }
+        .review-filter label { margin-right: 0; margin-left:5px; color: var(--text-muted); } /* RTL */
         .review-filter select {
             background-color: var(--border-color); color: var(--text-light);
             padding: 8px 12px; border-radius: 8px; border: 1px solid #555;
@@ -216,6 +243,7 @@
         }
         .review-item:hover { transform: translateY(-4px); box-shadow: 0 8px 25px rgba(0,0,0,0.25); }
         .review-item.incorrect { border-right-color: var(--incorrect-color); }
+        .review-item.unanswered { border-right-color: var(--text-muted); }
         .review-item.flagged-review { border-left: 7px solid var(--flagged-color); }
 
         .review-item p { margin: 10px 0; font-size: 1.05em; color: var(--text-muted); }
@@ -276,19 +304,95 @@
         }
         .timer-warning { animation: blinkWarningNeon 1s linear infinite; }
 
-        /* Flagged Review Modal Specifics */
-        #flaggedQuestionsList .flagged-q-item {
+        /* Flagged Review Modal & Question Nav Modal Specifics */
+        #flaggedQuestionsList .flagged-q-item, #questionNavList .q-nav-item {
             padding: 10px; margin-bottom: 8px;
             border-radius: 8px; background-color: var(--bg-deep-dark);
             border-right: 4px solid var(--warning-color);
             cursor: pointer; transition: background-color 0.2s, transform 0.2s;
         }
-        #flaggedQuestionsList .flagged-q-item:hover {
+        #flaggedQuestionsList .flagged-q-item:hover, #questionNavList .q-nav-item:hover {
             background-color: #2a2a2a; 
-            transform: translateX(5px);
+            transform: translateX(5px) scale(1.02);
         }
-        #flaggedQuestionsList .flagged-q-item strong { color: var(--primary-accent); }
-        #flaggedQuestionsList .flagged-q-item em { color: var(--text-muted); font-size: 0.9em; }
+        #flaggedQuestionsList .flagged-q-item strong, #questionNavList .q-nav-item strong { color: var(--primary-accent); }
+        #flaggedQuestionsList .flagged-q-item em, #questionNavList .q-nav-item em { color: var(--text-muted); font-size: 0.9em; }
+
+        #questionNavList .q-nav-item { /* Specific for Question Nav items */
+            border: 2px solid var(--border-color);
+            display: inline-flex; align-items: center; justify-content: center;
+            min-width: 45px; height: 45px; margin: 5px;
+            font-weight: 500;
+        }
+        #questionNavList .q-nav-item.answered {
+            background-color: rgba(0, 255, 127, 0.1);
+            border-color: rgba(0, 255, 127, 0.3);
+        }
+        #questionNavList .q-nav-item.flagged {
+            box-shadow: 0 0 0 2px var(--flagged-color) inset;
+        }
+        #questionNavList .q-nav-item.current {
+            border-color: var(--primary-accent);
+            color: var(--primary-accent);
+            font-weight: 700;
+            transform: scale(1.1);
+        }
+        
+        /* Pause Overlay */
+        #pauseOverlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(13, 13, 13, 0.97); /* --bg-deep-dark with more alpha */
+            display: none; /* Hidden by default */
+            flex-direction: column; align-items: center; justify-content: center;
+            z-index: 10; border-radius: 20px; /* Match container */
+            text-align: center;
+        }
+        #pauseOverlay h3 { color: var(--primary-accent); font-size: 2.2em; margin-bottom: 15px; }
+        #pauseOverlay p { color: var(--text-light); font-size: 1.2em; margin-bottom: 30px; }
+
+        .printable-area { /* Wrapper for results content to be printed */
+            /* styles for this div if needed, otherwise it's just a logical wrapper */
+        }
+
+        @media print {
+            body { background-color: white !important; color: black !important; }
+            body * { visibility: hidden; }
+            .printable-area, .printable-area * { visibility: visible; color: black !important; background-color: white !important; text-shadow: none !important; }
+            .printable-area { position: absolute; left: 0; top: 0; width: 100%; padding: 20px; font-size: 12pt; }
+            
+            .container { box-shadow: none !important; border: none !important; border-top: none !important; padding: 0 !important; }
+            .button, .exam-header-controls, .progress-bar-container, #reviewFilterContainer, .review-filter, .modal-overlay, footer, #lastExamButton, #clearStorageButton, .config-options, #restartButton, #printResultsButton, #retryIncorrectButton, #startNoTimerButton { 
+                display: none !important; 
+            }
+            
+            h1, h2, h3, h4, h5, h6 { color: black !important; text-shadow: none !important; margin-top: 10px; margin-bottom: 5px; }
+            p { color: black !important; margin-bottom: 8px; font-size: 11pt !important; line-height: 1.5 !important; }
+            strong { color: black !important; }
+
+            .results-summary #scoreText { color: black !important; font-size: 1.5em !important; }
+            #feedbackText { color: black !important; font-style: italic; }
+
+            .category-performance div { border: 1px solid #ccc; padding: 5px; margin-bottom: 5px; background-color: #f9f9f9 !important; }
+            
+            .review-item { 
+                page-break-inside: avoid; 
+                border: 1px solid #ccc !important; 
+                margin-bottom: 15px !important; padding: 10px !important;
+                border-right: 5px solid #ccc !important; /* Simplify border for print */
+            }
+            .review-item.incorrect { border-right-color: #555 !important; }
+            .review-item.flagged-review { border-left: 5px solid #999 !important; }
+            .review-item .user-answer-text.correct-text, .review-item .correct-answer-text  { color: #006400 !important; /* Dark Green */ }
+            .review-item .user-answer-text.incorrect-text { color: #8B0000 !important; /* Dark Red */ }
+            .review-item .explanation-text { border-top: 1px dashed #aaa !important; }
+            .answer-icon { display: none; } /* Hide icons in print */
+            .flagged-indicator { font-style: italic; }
+
+            #timeTakenText { font-size: 1em !important; }
+            .custom-credit-container, .custom-credit { display: none !important; } /* Hide credits in print */
+             #welcomeScreen { display: none !important; }
+        }
+
 
     </style>
     <script type="text/javascript">
@@ -323,16 +427,26 @@
             <button id="discardButton" class="button button-secondary" aria-label="تجاهل الجلسة المحفوظة والبدء من جديد"><i class="fas fa-times-circle"></i> تجاهل والبدء من جديد</button>
         </div>
         <button id="startButton" class="button" aria-label="ابدأ اختبار جديد"><i class="fas fa-bolt"></i> ابدأ اختبار جديد</button>
+        <button id="startNoTimerButton" class="button button-secondary" aria-label="ابدأ اختبار جديد بدون مؤقت"><i class="fas fa-infinity"></i> ابدأ بدون مؤقت</button>
         <button id="lastExamButton" class="button button-secondary" style="display:none;" aria-label="عرض نتائج آخر اختبار"><i class="fas fa-eye"></i> عرض آخر اختبار</button>
         <button id="clearStorageButton" class="button button-danger" style="display:none;" aria-label="مسح الجلسة المحفوظة"><i class="fas fa-trash-alt"></i> مسح الجلسة المحفوظة</button>
         <div class="custom-credit-container">
-            <p class="custom-credit">تم عمله بواسطة : بولا نعيم</p>
-            <p class="custom-credit">تحت اشراف : ابانوب جورج</p>
+            <p class="custom-credit"><b>تم انشائه بواسطة :
+                </b><br>
+                ليدر / بولا نعيم</p>
+            <p class="custom-credit"><b>تحت اشراف :
+            </b><br>
+                ليدر / ابانوب جورج
+                <br>
+                ليدر / اسماء خالد
+            </p>
         </div>
     </div>
 
     <div id="examScreen" class="container">
         <div class="exam-header-controls">
+            <button id="pauseExamButton" aria-label="إيقاف مؤقت للاختبار"><i class="fas fa-pause-circle"></i> إيقاف مؤقت</button>
+            <button id="openQuestionNavButton" aria-label="تصفح الأسئلة"><i class="fas fa-list-ol"></i> تصفح الأسئلة</button>
             <div id="timer" aria-live="polite">00:00</div>
             <button id="reviewFlaggedButton" aria-label="مراجعة الأسئلة المعلمة" style="display:none;"><i class="fas fa-stream"></i> مراجعة المعلمة (<span id="flaggedCount">0</span>)</button>
             <h2 id="questionNumberTitle">السؤال 1</h2>
@@ -341,6 +455,12 @@
         <div class="progress-bar-container">
             <div id="progressBar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
+        
+        <div id="pauseOverlay">
+            <h3><i class="fas fa-pause-circle"></i> الاختبار متوقف مؤقتًا</h3>
+            <p>اضغط على زر الاستئناف للمتابعة.</p>
+            <button id="resumeFromOverlayButton" class="button"><i class="fas fa-play-circle"></i> استئناف الاختبار</button>
+        </div>
 
         <div id="questionArea" class="question-container">
             <div class="question-top-bar">
@@ -348,6 +468,10 @@
                 <button id="flagQuestionButton" aria-label="تعليم السؤال للمراجعة" aria-pressed="false">
                     <i class="far fa-flag"></i> <span>علم السؤال</span>
                 </button>
+            </div>
+            <div class="font-size-controls">
+                <button id="decreaseFontButton" aria-label="تصغير حجم الخط"><i class="fas fa-search-minus"></i> تصغير الخط</button>
+                <button id="increaseFontButton" aria-label="تكبير حجم الخط"><i class="fas fa-search-plus"></i> تكبير الخط</button>
             </div>
             <p id="questionText" class="question-text"></p>
             <form id="optionsForm" role="radiogroup" aria-labelledby="questionText">
@@ -360,32 +484,48 @@
     </div>
 
     <div id="resultsScreen" class="container">
-        <h2><i class="fas fa-award"></i> نتائج الاختبار النهائية</h2>
-        <div class="results-summary">
-            <p id="scoreText"></p>
-            <p id="feedbackText"></p>
-            <p id="timeTakenText"></p>
-        </div>
-
-        <div class="category-performance">
-            <h4><i class="fas fa-chart-pie"></i> أداؤك حسب الفئة:</h4>
-            <div id="categoryPerformanceContainer">
-                <!-- Performance by category will be injected here -->
+        <div class="printable-area"> <!-- Added wrapper for print content -->
+            <h2><i class="fas fa-award"></i> نتائج الاختبار النهائية</h2>
+            <div class="results-summary">
+                <p id="scoreText"></p>
+                <p id="feedbackText"></p>
+                <p id="timeTakenText"></p>
             </div>
-        </div>
 
-        <div class="review-area">
-            <h3><i class="fas fa-tasks-alt"></i> مراجعة تفصيلية للإجابات:</h3>
-            <div class="review-filter">
-                <label for="categoryFilter">تصفية حسب الفئة:</label>
-                <select id="categoryFilter" aria-label="اختر فئة لتصفية مراجعة الأسئلة">
-                    <option value="all">كل الفئات</option>
-                    <!-- Categories will be populated here -->
-                </select>
+            <div class="category-performance">
+                <h4><i class="fas fa-chart-pie"></i> أداؤك حسب الفئة:</h4>
+                <div id="categoryPerformanceContainer">
+                    <!-- Performance by category will be injected here -->
+                </div>
             </div>
-            <div id="reviewContainer"></div>
-        </div>
+
+            <div class="review-area">
+                <h3><i class="fas fa-tasks-alt"></i> مراجعة تفصيلية للإجابات:</h3>
+                 <div id="reviewFilterContainer" class="review-filter">
+                    <div>
+                        <label for="categoryFilter">تصفية حسب الفئة:</label>
+                        <select id="categoryFilter" aria-label="اختر فئة لتصفية مراجعة الأسئلة">
+                            <option value="all">كل الفئات</option>
+                            <!-- Categories will be populated here -->
+                        </select>
+                    </div>
+                    <div>
+                        <label for="statusFilter">تصفية حسب الحالة:</label>
+                        <select id="statusFilter" aria-label="اختر حالة لتصفية مراجعة الأسئلة">
+                            <option value="all">الكل</option>
+                            <option value="correct">صحيحة</option>
+                            <option value="incorrect">خاطئة</option>
+                            <option value="unanswered">لم تتم الإجابة</option>
+                            <option value="flagged">معلمة</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="reviewContainer"></div>
+            </div>
+        </div> <!-- End of printable-area -->
         <button id="restartButton" class="button" aria-label="إعادة الاختبار"><i class="fas fa-history"></i> إعادة الاختبار</button>
+        <button id="retryIncorrectButton" class="button button-secondary" style="display:none;" aria-label="إعادة الأسئلة الخاطئة"><i class="fas fa-redo"></i> إعادة الأسئلة الخاطئة</button>
+        <button id="printResultsButton" class="button button-secondary" aria-label="طباعة النتائج"><i class="fas fa-print"></i> طباعة النتائج</button>
     </div>
 
     <!-- Custom Modal -->
@@ -410,7 +550,22 @@
                 <!-- Flagged questions will be listed here -->
             </div>
             <div class="modal-actions">
-                 <button class="button button-secondary" onclick="closeFlaggedReviewModal()">إغلاق</button> 
+                 <button class="button button-secondary" id="closeFlaggedReviewModalBtn">إغلاق</button> 
+            </div>
+        </div>
+    </div>
+
+    <!-- Question Navigation Modal -->
+    <div id="questionNavModalOverlay" class="modal-overlay">
+        <div id="questionNavModal" class="modal-content" style="max-width: 800px;" role="dialog" aria-labelledby="questionNavTitle">
+            <span id="questionNavModalCloseButton" class="modal-close-button" role="button" tabindex="0" aria-label="إغلاق نافذة تصفح الأسئلة">×</span>
+            <h3 id="questionNavTitle"><i class="fas fa-list-ol"></i> تصفح أسئلة الاختبار</h3>
+            <p>انقر على رقم السؤال للانتقال إليه مباشرة.</p>
+            <div id="questionNavList" style="max-height: 450px; overflow-y: auto; text-align: center; padding: 10px; display: flex; flex-wrap: wrap; justify-content: center; gap: 5px;">
+                <!-- Question navigation items will be listed here -->
+            </div>
+            <div class="modal-actions">
+                 <button class="button button-secondary" id="closeQuestionNavModalBtn">إغلاق</button> 
             </div>
         </div>
     </div>
@@ -421,9 +576,13 @@
         // --- CONFIGURATION ---
         let DYNAMIC_EXAM_DURATION_MINUTES = 30; 
         const BASE_TIME_PER_QUESTION_SECONDS = 30; 
-        const EXAM_STORAGE_KEY = 'eliteExamPlatform_v3.3'; // Incremented version for new features
-        const LAST_EXAM_RESULTS_KEY = 'eliteExamPlatform_lastResults_v1.1'; // Incremented if structure changes
+        const EXAM_STORAGE_KEY = 'eliteExamPlatform_v3.5'; // Incremented version
+        const LAST_EXAM_RESULTS_KEY = 'eliteExamPlatform_lastResults_v1.3'; // Incremented
 
+        // --- NEW CONFIGURATION FOR FEATURES ---
+        const MIN_FONT_MULTIPLIER = 0.8;
+        const MAX_FONT_MULTIPLIER = 1.5;
+        const FONT_STEP = 0.1;
 
         // --- END CONFIGURATION ---
 
@@ -736,12 +895,17 @@
         let timerInterval;
         let timeLeft; 
         let examStartTime;
+        let isExamPaused = false;
+        let currentFontSizeMultiplier = 1;
+        let isRetrySession = false;
+        let isUntimedExam = false; // New flag for untimed exams
 
         // DOM Elements
         const welcomeScreen = document.getElementById('welcomeScreen');
         const examScreen = document.getElementById('examScreen');
         const resultsScreen = document.getElementById('resultsScreen');
         const startButton = document.getElementById('startButton');
+        const startNoTimerButton = document.getElementById('startNoTimerButton'); // New button
         const lastExamButton = document.getElementById('lastExamButton');
         const questionNumberTitleEl = document.getElementById('questionNumberTitle');
         const questionTextEl = document.getElementById('questionText');
@@ -762,6 +926,7 @@
         const questionCategoryEl = document.getElementById('questionCategory');
         const categoryPerformanceContainer = document.getElementById('categoryPerformanceContainer');
         const categoryFilterSelect = document.getElementById('categoryFilter');
+        const statusFilterSelect = document.getElementById('statusFilter');
         const flagQuestionButton = document.getElementById('flagQuestionButton');
         const reviewFlaggedButton = document.getElementById('reviewFlaggedButton');
         const flaggedCountSpan = document.getElementById('flaggedCount');
@@ -769,6 +934,17 @@
         const flaggedQuestionsListEl = document.getElementById('flaggedQuestionsList');
         const timeTakenTextEl = document.getElementById('timeTakenText');
         const modalOverlay = document.getElementById('customModalOverlay');
+        const openQuestionNavButton = document.getElementById('openQuestionNavButton');
+        const questionNavModalOverlay = document.getElementById('questionNavModalOverlay');
+        const questionNavListEl = document.getElementById('questionNavList');
+        const increaseFontButton = document.getElementById('increaseFontButton');
+        const decreaseFontButton = document.getElementById('decreaseFontButton');
+        const pauseExamButton = document.getElementById('pauseExamButton');
+        const pauseOverlay = document.getElementById('pauseOverlay');
+        const resumeFromOverlayButton = document.getElementById('resumeFromOverlayButton');
+        const retryIncorrectButton = document.getElementById('retryIncorrectButton');
+        const printResultsButton = document.getElementById('printResultsButton');
+        const root = document.documentElement;
 
 
         // --- Initialization and Setup ---
@@ -777,6 +953,7 @@
             if (!allQuestionsData || allQuestionsData.length === 0) {
                 showModal("خطأ فادح", "قائمة الأسئلة فارغة أو لم يتم تحميلها. يرجى مراجعة المطور.", "إغلاق", "", () => hideModal(), null, false);
                 if(startButton) startButton.disabled = true;
+                if(startNoTimerButton) startNoTimerButton.disabled = true;
                 return;
             }
             
@@ -791,18 +968,17 @@
             checkLocalStorage();
             checkLastExamResults();
             setupKeyboardListeners();
+            setupNewFeatureListeners();
 
             const flaggedModalCloseBtn = document.getElementById('flaggedReviewModalCloseButton');
-            if (flaggedModalCloseBtn) {
-                flaggedModalCloseBtn.addEventListener('click', closeFlaggedReviewModal);
-            }
+            if (flaggedModalCloseBtn) flaggedModalCloseBtn.addEventListener('click', closeFlaggedReviewModal);
+            const closeFlaggedModalBtnDirect = document.getElementById('closeFlaggedReviewModalBtn');
+            if(closeFlaggedModalBtnDirect) closeFlaggedModalBtnDirect.addEventListener('click', closeFlaggedReviewModal);
+
+
+            if (nextButton) nextButton.addEventListener('click', handleNextQuestion);
+            if (prevButton) prevButton.addEventListener('click', handlePrevQuestion);
             
-            if (nextButton) { 
-                nextButton.addEventListener('click', handleNextQuestion);
-            }
-            if (prevButton) {
-                prevButton.addEventListener('click', handlePrevQuestion);
-            }
             if (lastExamButton) {
                 lastExamButton.addEventListener('click', () => {
                     if (welcomeScreen.style.display === 'block' || welcomeScreen.style.display === '') {
@@ -825,8 +1001,13 @@
                      if (e.key === 'Escape') closeFlaggedReviewModal();
                      return;
                 }
+                if (questionNavModalOverlay.style.display === 'flex') { 
+                     if (e.key === 'Escape') closeQuestionNavModal();
+                     return;
+                }
 
-                if (examScreen.style.display === 'block') {
+
+                if (examScreen.style.display === 'block' && !isExamPaused) { 
                     const currentQ = activeQuestions[currentQuestionIndex];
                     if (!currentQ) return;
 
@@ -855,11 +1036,14 @@
                     } else if (e.key.toLowerCase() === 'f') { 
                         toggleFlagQuestion();
                         e.preventDefault();
-                    } else if (e.key === 'ArrowLeft' && !nextButton.disabled) { // Next with Left Arrow
+                    } else if (e.key === 'ArrowLeft' && !nextButton.disabled) { 
                         handleNextQuestion();
                         e.preventDefault();
-                    } else if (e.key === 'ArrowRight' && !prevButton.disabled) { // Previous with Right Arrow
+                    } else if (e.key === 'ArrowRight' && !prevButton.disabled) { 
                         handlePrevQuestion();
+                        e.preventDefault();
+                    } else if (e.key.toLowerCase() === 'p') { 
+                        togglePauseExam();
                         e.preventDefault();
                     }
                 }
@@ -871,20 +1055,74 @@
                     });
                     if (event.target.checked) {
                         event.target.closest('label').classList.add('selected-option');
-                         // Auto-save answer on change
                         const currentQuestion = activeQuestions[currentQuestionIndex];
                         const userAnswerData = userAnswers.find(ua => ua.qId === currentQuestion.id);
                         if (userAnswerData) {
                             userAnswerData.userAnswer = event.target.value;
                             userAnswerData.isCorrect = (userAnswerData.userAnswer === currentQuestion.correctAnswer);
-                            saveExamState(); 
+                            if (!isRetrySession && !isUntimedExam) saveExamState(); 
                         }
                     }
                 }
             });
         }
 
+        function setupNewFeatureListeners() {
+            if (openQuestionNavButton) openQuestionNavButton.addEventListener('click', showQuestionNavModal);
+            const qNavModalCloseBtn = document.getElementById('questionNavModalCloseButton');
+            if (qNavModalCloseBtn) qNavModalCloseBtn.addEventListener('click', closeQuestionNavModal);
+            const qNavModalCloseBtnDirect = document.getElementById('closeQuestionNavModalBtn');
+            if(qNavModalCloseBtnDirect) qNavModalCloseBtnDirect.addEventListener('click', closeQuestionNavModal);
+
+            if (increaseFontButton) increaseFontButton.addEventListener('click', () => changeFontSize(FONT_STEP));
+            if (decreaseFontButton) decreaseFontButton.addEventListener('click', () => changeFontSize(-FONT_STEP));
+
+            if (pauseExamButton) pauseExamButton.addEventListener('click', togglePauseExam);
+            if (resumeFromOverlayButton) resumeFromOverlayButton.addEventListener('click', togglePauseExam);
+
+            if (retryIncorrectButton) retryIncorrectButton.addEventListener('click', handleRetryIncorrect);
+            if (printResultsButton) printResultsButton.addEventListener('click', () => window.print());
+            if (statusFilterSelect) statusFilterSelect.addEventListener('change', () => {
+                 if (resultsScreen.style.display === 'block' && !examScreen.style.display === 'block') {
+                     displayLastExamResults(); // To re-filter based on loaded userAnswers
+                 } else {
+                     renderReview(userAnswers);
+                 }
+            });
+
+            // Listener for "Start No Timer" button
+            if (startNoTimerButton) {
+                startNoTimerButton.addEventListener('click', () => {
+                    isUntimedExam = true;
+                    examDurationDisplayEl.textContent = "غير محدود";
+                    durationNoticeEl.textContent = "(اختبار بدون ضغط وقت)";
+
+                    showModal(
+                        "بدء اختبار بدون مؤقت",
+                        `سيتم بدء الاختبار بدون مؤقت زمني. يمكنك أخذ وقتك للإجابة على الأسئلة.<br>هل أنت مستعد للبدء؟`,
+                        "ابدأ الآن", "لاحقاً",
+                        () => {
+                            clearExamStateFromStorage();
+                            initExam(false, false); 
+                            hideModal();
+                        },
+                        () => { // On cancel
+                            isUntimedExam = false; 
+                            updateDurationDisplay(); // Restore original duration text
+                            hideModal();
+                        }
+                    );
+                });
+            }
+        }
+
+
         function updateDurationDisplay() {
+            if (isUntimedExam && welcomeScreen.style.display === 'block') { // If untimed mode was selected on welcome
+                examDurationDisplayEl.textContent = "غير محدود";
+                durationNoticeEl.textContent = "(اختبار بدون ضغط وقت)";
+                return;
+            }
             const selectedNum = numQuestionsSelect.value;
             let numQForCalc;
             if (selectedNum === 'all') {
@@ -900,7 +1138,7 @@
         }
         
         function populateCategoryFilter() {
-            const categories = [...new Set(allQuestionsData.map(q => q.category || "غير مصنف"))];
+            const categories = [...new Set(allQuestionsData.map(q => q.category || "غير مصنف"))].sort();
             categoryFilterSelect.innerHTML = '<option value="all">كل الفئات</option>'; 
             categories.forEach(cat => {
                 const option = document.createElement('option');
@@ -909,9 +1147,6 @@
                 categoryFilterSelect.appendChild(option);
             });
             categoryFilterSelect.addEventListener('change', () => {
-                // Determine which answers to review based on context (current exam or last exam)
-                // For now, assumes it's always current userAnswers if exam is active, or last exam if results are shown.
-                // This might need refinement if review can be triggered from multiple states for last exam.
                 if (resultsScreen.style.display === 'block' && !examScreen.style.display === 'block') {
                     try {
                         const savedResultsString = localStorage.getItem(LAST_EXAM_RESULTS_KEY);
@@ -974,8 +1209,10 @@
             }
         });
 
-        function initExam(resuming = false) {
-            if (!resuming) {
+        function initExam(resuming = false, isRetry = false) { 
+            isRetrySession = isRetry; 
+
+            if (!resuming && !isRetry) { 
                 currentQuestionIndex = 0;
                 score = 0;
                 
@@ -987,33 +1224,79 @@
                     numToSelect = Math.min(numToSelect, allQuestionsData.length);
                     activeQuestions = shuffleArray(allQuestionsData).slice(0, numToSelect);
                 }
-
+                
                 if (activeQuestions.length === 0 && allQuestionsData.length > 0) { 
                     showModal("خطأ", "لم يتم تحديد أسئلة. قد يكون هناك خطأ في إعدادات عدد الأسئلة.", "حسنًا", "", ()=>hideModal(), null, false);
                     welcomeScreen.style.display = 'block';
                     examScreen.style.display = 'none';
                     return;
-                } else if (allQuestionsData.length === 0) { 
-                    return;
-                }
+                } else if (allQuestionsData.length === 0) { return; }
                 
                 userAnswers = activeQuestions.map(q => ({ qId: q.id, userAnswer: null, isCorrect: false, isFlagged: false, category: q.category }));
+                
+                if (isUntimedExam) {
+                    timeLeft = Infinity; 
+                    examStartTime = null; 
+                    timerEl.textContent = "غير محدود";
+                    timerEl.classList.add('untimed');
+                    timerEl.classList.remove('timer-warning');
+                } else {
+                    timeLeft = DYNAMIC_EXAM_DURATION_MINUTES * 60;
+                    examStartTime = new Date().getTime();
+                    timerEl.classList.remove('untimed');
+                }
+
+            } else if (isRetry) { 
+                currentQuestionIndex = 0;
+                score = 0;
+                userAnswers = activeQuestions.map(q => ({ qId: q.id, userAnswer: null, isCorrect: false, isFlagged: false, category: q.category }));
+                // DYNAMIC_EXAM_DURATION_MINUTES and activeQuestions are set by handleRetryIncorrect
+                // Retries are always timed for now
+                isUntimedExam = false; 
                 timeLeft = DYNAMIC_EXAM_DURATION_MINUTES * 60;
                 examStartTime = new Date().getTime();
+                timerEl.classList.remove('untimed');
+            } else if (resuming) {
+                // isUntimedExam would have been loaded in resumeExam()
+                if (isUntimedExam) {
+                    timeLeft = Infinity;
+                    examStartTime = null;
+                    timerEl.textContent = "غير محدود";
+                    timerEl.classList.add('untimed');
+                    timerEl.classList.remove('timer-warning');
+                } else {
+                    // timeLeft and examStartTime loaded in resumeExam()
+                    timerEl.classList.remove('untimed');
+                }
             }
+            
+            isExamPaused = false;
+            pauseOverlay.style.display = 'none';
+            document.getElementById('questionArea').style.display = 'block';
+            pauseExamButton.innerHTML = '<i class="fas fa-pause-circle"></i> إيقاف مؤقت';
+            pauseExamButton.classList.remove('paused');
+            pauseExamButton.disabled = false;
+
             updateFlaggedCount();
             reviewFlaggedButton.style.display = 'inline-flex';
+            openQuestionNavButton.style.display = 'inline-flex';
+            pauseExamButton.style.display = 'inline-flex';
             welcomeScreen.style.display = 'none';
             examScreen.style.display = 'block';
             resultsScreen.style.display = 'none';
+            retryIncorrectButton.style.display = 'none'; 
             reviewContainer.innerHTML = ''; 
             
-            startTimer();
-            loadQuestion(); // This will also set initial prevButton state
-            saveExamState();
+            if (!isUntimedExam) {
+                startTimer(); 
+            }
+            loadQuestion(); 
+            if (!isRetrySession) saveExamState(); 
         }
 
         function loadQuestion() {
+            if (isExamPaused) return;
+
             optionsForm.reset();
             document.querySelectorAll('#optionsContainer label').forEach(label => {
                 label.classList.remove('selected-option');
@@ -1053,9 +1336,7 @@
                     '<i class="fas fa-chevron-circle-left"></i> السؤال التالي';
                  nextButton.setAttribute('aria-label', (currentQuestionIndex === activeQuestions.length - 1) ? 'إنهاء وتقديم الاختبار' : 'السؤال التالي');
 
-                if (prevButton) {
-                    prevButton.disabled = (currentQuestionIndex === 0);
-                }
+                if (prevButton) prevButton.disabled = (currentQuestionIndex === 0);
 
             } else { 
                 if (activeQuestions.length > 0) showResults(); 
@@ -1064,6 +1345,7 @@
                     examScreen.style.display = 'none';
                 }
             }
+             applyCurrentFontSize(); 
         }
 
         function createOptionElement(displayText, value, id, type, userAnswerData) {
@@ -1107,8 +1389,10 @@
         }
 
         function startTimer() {
+            if (isExamPaused || isUntimedExam) return;
             clearInterval(timerInterval); 
             timerInterval = setInterval(() => {
+                if (isExamPaused) return; 
                 timeLeft--;
                 const minutes = Math.floor(timeLeft / 60);
                 const seconds = timeLeft % 60;
@@ -1129,7 +1413,7 @@
         }
 
         function toggleFlagQuestion() { 
-            if (currentQuestionIndex >= activeQuestions.length) return; 
+            if (isExamPaused || currentQuestionIndex >= activeQuestions.length) return; 
             const currentQuestion = activeQuestions[currentQuestionIndex];
             const userAnswerData = userAnswers.find(ua => ua.qId === currentQuestion.id);
             if (userAnswerData) {
@@ -1138,7 +1422,7 @@
                 flagQuestionButton.innerHTML = userAnswerData.isFlagged ? '<i class="fas fa-flag"></i> <span>إلغاء التعليم</span>' : '<i class="far fa-flag"></i> <span>علم السؤال</span>';
                 flagQuestionButton.setAttribute('aria-pressed', userAnswerData.isFlagged.toString());
                 updateFlaggedCount();
-                saveExamState();
+                if (!isRetrySession) saveExamState();
             }
         }
         
@@ -1154,6 +1438,7 @@
         }
 
         function showFlaggedQuestionsReviewModal() {
+            if (isExamPaused) return;
             flaggedQuestionsListEl.innerHTML = ''; 
             const flagged = userAnswers.map((ua, index) => ({...ua, originalIndex: index})).filter(ua => ua.isFlagged);
 
@@ -1199,25 +1484,36 @@
         }
 
         function showResults(autoSubmitted = false) { 
-            clearInterval(timerInterval);
-            timerEl.classList.remove('timer-warning');
+            if (!isUntimedExam) {
+                clearInterval(timerInterval);
+                timerEl.classList.remove('timer-warning');
+            }
             calculateScore();
+            isExamPaused = false; 
+            pauseExamButton.disabled = true;
+
 
             examScreen.style.display = 'none';
             resultsScreen.style.display = 'block';
             reviewFlaggedButton.style.display = 'none'; 
+            openQuestionNavButton.style.display = 'none';
+            pauseExamButton.style.display = 'none';
 
-            const examEndTime = new Date().getTime();
-            let timeDiffSeconds;
-            if (examStartTime) {
-                 timeDiffSeconds = Math.round((examEndTime - examStartTime) / 1000);
-            } else { 
-                 timeDiffSeconds = DYNAMIC_EXAM_DURATION_MINUTES * 60 - Math.max(0, timeLeft);
+            if (isUntimedExam) {
+                 timeTakenTextEl.textContent = "الوقت المستغرق: غير محدد (اختبار بدون مؤقت)";
+            } else {
+                const examEndTime = new Date().getTime();
+                let timeDiffSeconds;
+                if (examStartTime) {
+                     timeDiffSeconds = Math.round((examEndTime - examStartTime) / 1000);
+                } else { 
+                     timeDiffSeconds = DYNAMIC_EXAM_DURATION_MINUTES * 60 - Math.max(0, timeLeft);
+                }
+                const minutesTaken = Math.floor(timeDiffSeconds / 60);
+                const secondsTaken = timeDiffSeconds % 60;
+                const timeTakenString = `الوقت المستغرق: ${minutesTaken} دقيقة و ${secondsTaken} ثانية.`;
+                timeTakenTextEl.textContent = timeTakenString;
             }
-            const minutesTaken = Math.floor(timeDiffSeconds / 60);
-            const secondsTaken = timeDiffSeconds % 60;
-            const timeTakenString = `الوقت المستغرق: ${minutesTaken} دقيقة و ${secondsTaken} ثانية.`;
-            timeTakenTextEl.textContent = timeTakenString;
             
             const totalQuestionsInExam = activeQuestions.length;
             const scoreString = `نتيجتك: ${score} من ${totalQuestionsInExam}`;
@@ -1226,7 +1522,8 @@
             let feedbackString = "";
             let feedbackColor = "";
             let percentage = totalQuestionsInExam > 0 ? (score / totalQuestionsInExam) * 100 : 0;
-            if (autoSubmitted && timeLeft <=0) { 
+
+            if (!isUntimedExam && autoSubmitted && timeLeft <=0) { 
                 feedbackString = "انتهى الوقت! هذه هي نتيجتك.";
                 feedbackColor = "var(--warning-color)";
             } else if (percentage >= 80) {
@@ -1242,40 +1539,60 @@
                 feedbackString = "تحتاج إلى بذل المزيد من الجهد. لا تيأس!";
                 feedbackColor = "var(--incorrect-color)";
             }
+
+            if (isRetrySession) { 
+                feedbackString = `نتائج محاولة الأسئلة الخاطئة: ${feedbackString}`;
+            }
             feedbackTextEl.textContent = feedbackString;
             feedbackTextEl.style.color = feedbackColor;
 
             const categoryPerformanceData = renderCategoryPerformance(true); 
             renderReview(userAnswers); 
-            clearExamStateFromStorage(); 
 
-            const resultsToSave = {
-                scoreString,
-                feedbackString,
-                feedbackColor,
-                timeTakenString,
-                categoryPerformanceData, 
-                userAnswersForReview: userAnswers.map(ua => ({...ua})), // Deep copy
-                activeQuestionsForReview: activeQuestions.map(q => q.id) 
-            };
-            saveLastExamResults(resultsToSave);
-            if(lastExamButton) lastExamButton.style.display = 'inline-flex';
+            if (!isRetrySession) { // Only save full, non-retry sessions
+                clearExamStateFromStorage(); 
+                const resultsToSave = {
+                    scoreString,
+                    feedbackString,
+                    feedbackColor,
+                    timeTakenString: timeTakenTextEl.textContent, // Use the determined string
+                    categoryPerformanceData, 
+                    userAnswersForReview: userAnswers.map(ua => ({...ua})), 
+                    activeQuestionsForReview: activeQuestions.map(q => q.id),
+                    isUntimed: isUntimedExam // Save untimed status
+                };
+                saveLastExamResults(resultsToSave);
+                if(lastExamButton) lastExamButton.style.display = 'inline-flex';
+            }
+            
+            const incorrectAnswers = userAnswers.filter(ua => !ua.isCorrect && ua.userAnswer !== null).length;
+            if (incorrectAnswers > 0 && !isRetrySession) {
+                retryIncorrectButton.style.display = 'inline-flex';
+            } else {
+                retryIncorrectButton.style.display = 'none';
+            }
+            // isRetrySession = false; // Already reset in initExam or handled by new session start
         }
         
         function renderCategoryPerformance(returnData = false) {
             categoryPerformanceContainer.innerHTML = '';
-            const currentAnswers = (resultsScreen.style.display === 'block' && !examScreen.style.display === 'block') 
-                                 ? (JSON.parse(localStorage.getItem(LAST_EXAM_RESULTS_KEY) || '{}').userAnswersForReview || []) 
-                                 : userAnswers;
-            const currentActiveQuestions = (resultsScreen.style.display === 'block' && !examScreen.style.display === 'block')
-                                 ? (JSON.parse(localStorage.getItem(LAST_EXAM_RESULTS_KEY) || '{}').activeQuestionsForReview || [])
-                                 : activeQuestions.map(q => q.id);
+            let currentAnswers, currentActiveQIds;
+
+            if (resultsScreen.style.display === 'block' && !examScreen.style.display === 'block' && !isRetrySession) { 
+                const savedResultsString = localStorage.getItem(LAST_EXAM_RESULTS_KEY);
+                const savedResults = savedResultsString ? JSON.parse(savedResultsString) : {};
+                currentAnswers = savedResults.userAnswersForReview || userAnswers; 
+                currentActiveQIds = savedResults.activeQuestionsForReview || activeQuestions.map(q => q.id);
+            } else { 
+                currentAnswers = userAnswers;
+                currentActiveQIds = activeQuestions.map(q => q.id);
+            }
 
 
-            const categories = [...new Set(currentAnswers.map(ua => ua.category || "غير مصنف"))];
+            const categories = [...new Set(currentAnswers.map(ua => ua.category || "غير مصنف"))].sort();
             let performanceData = []; 
 
-            if (categories.length === 0 && currentActiveQuestions.length > 0) { 
+            if (categories.length === 0 && currentActiveQIds.length > 0) { 
                  categoryPerformanceContainer.innerHTML = "<p>لم يتم الإجابة على أية أسئلة لعرض أداء الفئات.</p>";
                  if (returnData) return [];
                  return;
@@ -1302,21 +1619,39 @@
                 perfDiv.innerHTML = `<strong>${cat}:</strong> ${correctInCategory} / ${totalInCategory} (${percentage}%)`;
                 categoryPerformanceContainer.appendChild(perfDiv);
             });
-            if (returnData && examScreen.style.display !== 'block') return performanceData; // Only return data if it's for saving, not for active exam display
+            if (returnData && !isRetrySession && examScreen.style.display !== 'block') return performanceData;
         }
 
 
         function renderReview(answersToReview) { 
             reviewContainer.innerHTML = '';
-            let filteredAnswers = answersToReview;
+            let filteredAnswers = [...answersToReview]; 
             const selectedCategory = categoryFilterSelect.value;
+            const selectedStatus = statusFilterSelect.value;
 
             if (selectedCategory !== 'all') {
-                filteredAnswers = answersToReview.filter(ua => (ua.category || "غير مصنف") === selectedCategory);
+                filteredAnswers = filteredAnswers.filter(ua => (ua.category || "غير مصنف") === selectedCategory);
+            }
+
+            if (selectedStatus !== 'all') {
+                switch (selectedStatus) {
+                    case 'correct':
+                        filteredAnswers = filteredAnswers.filter(ua => ua.isCorrect);
+                        break;
+                    case 'incorrect':
+                        filteredAnswers = filteredAnswers.filter(ua => !ua.isCorrect && ua.userAnswer !== null);
+                        break;
+                    case 'unanswered':
+                        filteredAnswers = filteredAnswers.filter(ua => ua.userAnswer === null);
+                        break;
+                    case 'flagged':
+                        filteredAnswers = filteredAnswers.filter(ua => ua.isFlagged);
+                        break;
+                }
             }
             
             if(filteredAnswers.length === 0){
-                reviewContainer.innerHTML = "<p style='color:var(--text-muted);'>لا توجد إجابات لعرضها لهذه الفئة.</p>";
+                reviewContainer.innerHTML = "<p style='color:var(--text-muted);'>لا توجد إجابات لعرضها لهذه التصفية.</p>";
                 return;
             }
 
@@ -1340,7 +1675,7 @@
                     userAnswerDisplay = "لم تتم الإجابة";
                     iconClass = 'fas fa-minus-circle'; 
                     answerTextClass = 'incorrect-text'; 
-                    reviewItem.classList.add('incorrect');
+                    reviewItem.classList.add('unanswered'); 
                 } else if (answerData.isCorrect) {
                     iconClass = 'fas fa-check-circle';
                     answerTextClass = 'correct-text';
@@ -1367,7 +1702,7 @@
                         <i class="answer-icon ${iconClass}" style="color: ${answerData.userAnswer === null ? 'var(--text-muted)' : (answerData.isCorrect ? 'var(--correct-color)' : 'var(--incorrect-color)')};"></i>
                         <span class="user-answer-text ${answerTextClass}">${userAnswerDisplay}</span>
                     </p>
-                    ${(!answerData.isCorrect || answerData.userAnswer === null) ? `<p><strong>الإجابة الصحيحة:</strong> <span class="correct-answer-text">${correctAnswerDisplay}</span></p>` : ''}
+                    ${(answerData.userAnswer === null || !answerData.isCorrect) ? `<p><strong>الإجابة الصحيحة:</strong> <span class="correct-answer-text">${correctAnswerDisplay}</span></p>` : ''}
                     ${originalQuestion.explanation ? `<p class="explanation-text"><strong>الشرح:</strong> ${originalQuestion.explanation}</p>` : ''}
                 `;
                 reviewContainer.appendChild(reviewItem);
@@ -1389,6 +1724,7 @@
         }
 
         function saveLastExamResults(resultsData) {
+             if (isRetrySession) return; 
             try {
                 localStorage.setItem(LAST_EXAM_RESULTS_KEY, JSON.stringify(resultsData));
             } catch (e) {
@@ -1408,12 +1744,23 @@
                 welcomeScreen.style.display = 'none';
                 examScreen.style.display = 'none';
                 resultsScreen.style.display = 'block';
-                reviewFlaggedButton.style.display = 'none'; // Hide this during last exam review
+                reviewFlaggedButton.style.display = 'none'; 
+                openQuestionNavButton.style.display = 'none';
+                pauseExamButton.style.display = 'none';
+                retryIncorrectButton.style.display = 'none'; 
+
 
                 scoreTextEl.textContent = savedResults.scoreString;
                 feedbackTextEl.textContent = savedResults.feedbackString;
                 feedbackTextEl.style.color = savedResults.feedbackColor;
-                timeTakenTextEl.textContent = savedResults.timeTakenString;
+                
+                // Display time taken, considering if it was untimed
+                if (savedResults.isUntimed) {
+                    timeTakenTextEl.textContent = "الوقت المستغرق: غير محدد (اختبار بدون مؤقت)";
+                } else {
+                    timeTakenTextEl.textContent = savedResults.timeTakenString;
+                }
+
 
                 categoryPerformanceContainer.innerHTML = '';
                 if (savedResults.categoryPerformanceData && savedResults.categoryPerformanceData.length > 0) {
@@ -1426,7 +1773,12 @@
                     categoryPerformanceContainer.innerHTML = "<p>لا توجد بيانات أداء للفئات لهذا الاختبار.</p>";
                 }
                 
-                renderReview(savedResults.userAnswersForReview || []);
+                userAnswers = savedResults.userAnswersForReview || []; 
+                activeQuestions = (savedResults.activeQuestionsForReview || [])
+                                    .map(id => allQuestionsData.find(q => q.id === id))
+                                    .filter(q => q);
+                renderReview(userAnswers);
+                isUntimedExam = savedResults.isUntimed || false; // Set for context if needed later
 
             } catch (e) {
                 console.error("Error displaying last exam results:", e);
@@ -1438,19 +1790,20 @@
 
 
         function saveExamState() {
+            if (isRetrySession || isExamPaused) return; 
             const stateToSave = {
                 currentQuestionIndex,
                 userAnswers,
                 activeQuestionsOriginalIds: activeQuestions.map(q => q.id), 
-                timeLeft,
-                examStartTime: examStartTime || null, 
-                selectedNumQuestions: numQuestionsSelect.value 
+                timeLeft: isUntimedExam ? null : timeLeft, // Save null if untimed
+                examStartTime: isUntimedExam ? null : examStartTime, 
+                selectedNumQuestions: numQuestionsSelect.value,
+                isUntimedExam // Save untimed status
             };
             try {
                 localStorage.setItem(EXAM_STORAGE_KEY, JSON.stringify(stateToSave));
             } catch (e) {
                 console.error("Failed to save exam state:", e);
-                showModal("خطأ في الحفظ", "لم نتمكن من حفظ تقدمك. قد تكون مساحة التخزين ممتلئة.", "حسنًا", "", ()=>hideModal(), null, false);
             }
         }
 
@@ -1459,6 +1812,7 @@
             if (loadedState) {
                 currentQuestionIndex = loadedState.currentQuestionIndex;
                 userAnswers = loadedState.userAnswers;
+                isUntimedExam = loadedState.isUntimedExam || false; // Load untimed status
                 
                 activeQuestions = loadedState.activeQuestionsOriginalIds
                                     .map(id => allQuestionsData.find(q => q.id === id))
@@ -1467,25 +1821,38 @@
                 if (activeQuestions.length !== loadedState.activeQuestionsOriginalIds.length && activeQuestions.length > 0) {
                      showModal("تحذير بشأن الاستئناف", "تم تغيير بعض الأسئلة منذ آخر جلسة لك. قد لا تكون جميع الأسئلة المحفوظة متاحة. سنستكمل بما هو متاح.", "حسنًا", "", ()=>hideModal(), null, false);
                 }
-                
-                timeLeft = loadedState.timeLeft;
-                examStartTime = loadedState.examStartTime; 
-                
-                if (loadedState.selectedNumQuestions) {
-                    numQuestionsSelect.value = loadedState.selectedNumQuestions;
+                                
+                if (isUntimedExam) {
+                    timeLeft = Infinity;
+                    examStartTime = null;
+                    examDurationDisplayEl.textContent = "غير محدود (مستأنف)";
+                    durationNoticeEl.textContent = "";
+                } else {
+                    timeLeft = loadedState.timeLeft;
+                    examStartTime = loadedState.examStartTime; 
+                    if (loadedState.selectedNumQuestions) {
+                        numQuestionsSelect.value = loadedState.selectedNumQuestions;
+                    }
+                    updateDurationDisplay(); 
                 }
-                updateDurationDisplay(); 
 
 
-                if (activeQuestions.length === 0 || currentQuestionIndex >= activeQuestions.length || !timeLeft || timeLeft <=0) {
+                if (activeQuestions.length === 0 || currentQuestionIndex >= activeQuestions.length || (!isUntimedExam && (!timeLeft || timeLeft <=0)) ) {
                     showModal("خطأ في الاستئناف", "لا يمكن استئناف الجلسة. بيانات الجلسة غير صالحة أو منتهية. سنبدأ اختبارًا جديدًا.", "حسنًا", "", 
-                        ()=>{ clearExamStateFromStorage(); initExam(); hideModal();}, 
+                        ()=>{ 
+                            clearExamStateFromStorage(); 
+                            isUntimedExam = false; // Reset for new exam
+                            updateDurationDisplay(); 
+                            initExam(false, false); 
+                            hideModal();
+                        }, 
                         null, false);
                     return;
                 }
-                initExam(true); 
+                initExam(true, false); 
             } else {
-                initExam();
+                isUntimedExam = false; // Default to timed if no state
+                initExam(false, false);
             }
         }
         
@@ -1508,12 +1875,20 @@
             const savedState = loadExamState(); 
             const resumePromptEl = document.getElementById('resumePrompt'); 
             const clearStorageButton = document.getElementById('clearStorageButton'); 
+            let canResume = false;
             if (savedState && 
-                typeof savedState.timeLeft === 'number' && savedState.timeLeft > 0 &&
                 Array.isArray(savedState.activeQuestionsOriginalIds) && savedState.activeQuestionsOriginalIds.length > 0 &&
                 typeof savedState.currentQuestionIndex === 'number' && savedState.currentQuestionIndex < savedState.activeQuestionsOriginalIds.length &&
                 Array.isArray(savedState.userAnswers)
-            ) { 
+            ) {
+                if (savedState.isUntimedExam) { // If untimed, it's always resumable if basic structure is fine
+                    canResume = true;
+                } else if (typeof savedState.timeLeft === 'number' && savedState.timeLeft > 0) { // If timed, check timeLeft
+                    canResume = true;
+                }
+            }
+
+            if (canResume) { 
                 resumePromptEl.style.display = 'block'; 
                 clearStorageButton.style.display = 'inline-flex'; 
             } else { 
@@ -1524,16 +1899,25 @@
         }
         
         if(startButton) startButton.addEventListener('click', () => { 
+            isUntimedExam = false; // Ensure this is a timed exam
             updateDurationDisplay(); 
             showModal( "بدء الاختبار", `سيستمر الاختبار لمدة ${DYNAMIC_EXAM_DURATION_MINUTES} دقيقة.<br>هل أنت مستعد للبدء؟`, "ابدأ الآن", "لاحقاً", 
-                () => { clearExamStateFromStorage(); initExam(); hideModal(); },
-                () => hideModal() 
+                () => { clearExamStateFromStorage(); initExam(false, false); hideModal(); },
+                () => { updateDurationDisplay(); hideModal(); } // Reset duration display if cancelled
             ); 
         });
         document.getElementById('discardButton').addEventListener('click', () => { 
+            // Determine if the new exam will be timed or untimed based on which "start" button the user would click next
+            // For simplicity, assume they will click the timed start button.
+            isUntimedExam = false; 
             updateDurationDisplay(); 
-            showModal( "تجاهل الجلسة المحفوظة؟", `سيتم حذف تقدمك المحفوظ والبدء باختبار جديد لمدة ${DYNAMIC_EXAM_DURATION_MINUTES} دقيقة.<br>هل أنت متأكد؟`, "نعم، ابدأ جديد", "لا، العودة", 
-                () => { clearExamStateFromStorage(); document.getElementById('resumePrompt').style.display = 'none'; document.getElementById('clearStorageButton').style.display = 'none'; initExam(); hideModal(); },
+            showModal( "تجاهل الجلسة المحفوظة؟", `سيتم حذف تقدمك المحفوظ والبدء باختبار جديد (بمؤقت).<br>هل أنت متأكد؟`, "نعم، ابدأ جديد", "لا، العودة", 
+                () => { 
+                    clearExamStateFromStorage(); 
+                    document.getElementById('resumePrompt').style.display = 'none'; 
+                    document.getElementById('clearStorageButton').style.display = 'none'; 
+                    initExam(false, false); hideModal(); 
+                },
                 () => hideModal() 
             ); 
         });
@@ -1542,10 +1926,10 @@
             showModal( "مسح الجلسة المحفوظة؟", `هل أنت متأكد أنك تريد مسح الجلسة المحفوظة بشكل دائم؟<br>سيتم أيضاً مسح نتائج آخر اختبار محفوظ.`, "نعم، امسح الكل", "إلغاء", 
                 () => { 
                     clearExamStateFromStorage(); 
-                    localStorage.removeItem(LAST_EXAM_RESULTS_KEY); // مسح نتائج آخر اختبار أيضاً
+                    localStorage.removeItem(LAST_EXAM_RESULTS_KEY); 
                     document.getElementById('resumePrompt').style.display = 'none'; 
                     document.getElementById('clearStorageButton').style.display = 'none'; 
-                    if(lastExamButton) lastExamButton.style.display = 'none'; // إخفاء زر آخر اختبار
+                    if(lastExamButton) lastExamButton.style.display = 'none'; 
                     hideModal(); 
                     showModal("تم المسح", "تم مسح البيانات المحفوظة بنجاح.", "حسنًا", "", ()=>hideModal(), null, false); 
                 },
@@ -1553,38 +1937,40 @@
             ); 
         });
         restartButton.addEventListener('click', () => { 
+            isRetrySession = false; 
+            isUntimedExam = false; // Reset for welcome screen
             welcomeScreen.style.display = 'block'; 
             resultsScreen.style.display = 'none'; 
+            retryIncorrectButton.style.display = 'none';
             checkLocalStorage(); 
             checkLastExamResults();
             updateDurationDisplay(); 
+            currentFontSizeMultiplier = 1; 
+            applyCurrentFontSize();
         });
         
         function calculateScore() { score = userAnswers.reduce((acc, curr) => acc + (curr.isCorrect ? 1 : 0), 0); }
         
         function handlePrevQuestion() {
+            if (isExamPaused) return;
             if (currentQuestionIndex > 0) {
                 currentQuestionIndex--;
-                saveExamState(); 
+                if (!isRetrySession) saveExamState(); 
                 loadQuestion();
             }
         }
 
         function handleNextQuestion() {
-            if (currentQuestionIndex >= activeQuestions.length) return; 
+            if (isExamPaused || currentQuestionIndex >= activeQuestions.length) return; 
 
             const selectedOption = document.querySelector('input[name="option"]:checked');
             const currentQuestion = activeQuestions[currentQuestionIndex];
             const userAnswerData = userAnswers.find(ua => ua.qId === currentQuestion.id);
 
-            // Ensure answer is recorded even if not explicitly selected before 'Next'
-            // (already handled by onchange on radio buttons, but this is a fallback)
             if (selectedOption && userAnswerData && userAnswerData.userAnswer !== selectedOption.value) {
                  userAnswerData.userAnswer = selectedOption.value;
                  userAnswerData.isCorrect = (userAnswerData.userAnswer === currentQuestion.correctAnswer);
-                 // No need to saveExamState() here again if onchange already does it.
             }
-
 
             if (!selectedOption) {
                 if (currentQuestionIndex === activeQuestions.length - 1) { 
@@ -1595,7 +1981,7 @@
                                 userAnswerData.isCorrect = false;
                             }
                             currentQuestionIndex++; 
-                            saveExamState(); 
+                            if (!isRetrySession) saveExamState(); 
                             showResults();
                             hideModal();
                         },
@@ -1611,16 +1997,120 @@
             
             if (currentQuestionIndex === activeQuestions.length - 1) {
                  showModal( "إنهاء الاختبار؟", "هل أنت متأكد أنك تريد إنهاء الاختبار وتقديم إجاباتك؟", "نعم، قدم الإجابات", "لا، أكمل", 
-                    () => { currentQuestionIndex++; saveExamState(); showResults(); hideModal(); },
+                    () => { currentQuestionIndex++; if (!isRetrySession) saveExamState(); showResults(); hideModal(); },
                     () => hideModal()
                  );
             } else {
                 currentQuestionIndex++;
-                saveExamState(); // Ensure state is saved before loading next question
+                if (!isRetrySession) saveExamState(); 
                 loadQuestion();
             }
         }
         flagQuestionButton.addEventListener('click', toggleFlagQuestion);
+
+        // --- NEW FEATURE FUNCTIONS ---
+        function showQuestionNavModal() {
+            if (isExamPaused) return;
+            questionNavListEl.innerHTML = '';
+            activeQuestions.forEach((q, index) => {
+                const navItem = document.createElement('div');
+                navItem.className = 'q-nav-item';
+                navItem.textContent = index + 1;
+                navItem.setAttribute('role', 'button');
+                navItem.setAttribute('tabindex', '0');
+                navItem.setAttribute('aria-label', `الانتقال إلى السؤال ${index + 1}`);
+
+                const answerData = userAnswers[index];
+                if (answerData && answerData.userAnswer !== null) navItem.classList.add('answered');
+                if (answerData && answerData.isFlagged) navItem.classList.add('flagged');
+                if (index === currentQuestionIndex) navItem.classList.add('current');
+                
+                navItem.addEventListener('click', () => {
+                    currentQuestionIndex = index;
+                    loadQuestion();
+                    closeQuestionNavModal();
+                });
+                navItem.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        navItem.click();
+                        e.preventDefault();
+                    }
+                });
+                questionNavListEl.appendChild(navItem);
+            });
+            questionNavModalOverlay.style.display = 'flex';
+        }
+        function closeQuestionNavModal() {
+            questionNavModalOverlay.style.display = 'none';
+        }
+
+        function changeFontSize(step) {
+            if (isExamPaused) return;
+            const newMultiplier = currentFontSizeMultiplier + step;
+            if (newMultiplier >= MIN_FONT_MULTIPLIER && newMultiplier <= MAX_FONT_MULTIPLIER) {
+                currentFontSizeMultiplier = parseFloat(newMultiplier.toFixed(2)); 
+                applyCurrentFontSize();
+            }
+        }
+        function applyCurrentFontSize() {
+             root.style.setProperty('--current-font-size-multiplier', currentFontSizeMultiplier);
+        }
+
+        function togglePauseExam() {
+            isExamPaused = !isExamPaused;
+            if (isExamPaused) {
+                if (!isUntimedExam) clearInterval(timerInterval);
+                pauseOverlay.style.display = 'flex';
+                document.getElementById('questionArea').style.display = 'none'; 
+                pauseExamButton.innerHTML = '<i class="fas fa-play-circle"></i> استئناف';
+                pauseExamButton.classList.add('paused');
+                nextButton.disabled = true;
+                prevButton.disabled = true;
+                flagQuestionButton.disabled = true;
+                reviewFlaggedButton.disabled = true;
+                openQuestionNavButton.disabled = true;
+            } else {
+                if (!isUntimedExam) startTimer(); 
+                pauseOverlay.style.display = 'none';
+                document.getElementById('questionArea').style.display = 'block'; 
+                pauseExamButton.innerHTML = '<i class="fas fa-pause-circle"></i> إيقاف مؤقت';
+                pauseExamButton.classList.remove('paused');
+                nextButton.disabled = false; 
+                prevButton.disabled = (currentQuestionIndex === 0);
+                flagQuestionButton.disabled = false;
+                reviewFlaggedButton.disabled = false;
+                openQuestionNavButton.disabled = false;
+                loadQuestion(); 
+            }
+        }
+
+        function handleRetryIncorrect() {
+            const incorrectQuestions = userAnswers
+                .filter(ua => !ua.isCorrect && ua.userAnswer !== null) 
+                .map(ua => allQuestionsData.find(q => q.id === ua.qId))
+                .filter(q => q); 
+
+            if (incorrectQuestions.length === 0) {
+                showModal("لا توجد أسئلة خاطئة", "لقد أجبت على جميع الأسئلة بشكل صحيح أو لم تجب على أي أسئلة خاطئة.", "حسنًا", "", ()=>hideModal(), null, false);
+                return;
+            }
+            
+            activeQuestions = shuffleArray(incorrectQuestions); 
+            DYNAMIC_EXAM_DURATION_MINUTES = Math.max(1, Math.ceil((activeQuestions.length * BASE_TIME_PER_QUESTION_SECONDS) / 60));
+            isUntimedExam = false; // Retries are timed
+
+            showModal(
+                "إعادة المحاولة", 
+                `ستبدأ اختبارًا جديدًا بـ ${activeQuestions.length} من الأسئلة التي أخطأت بها. مدة هذا الاختبار ${DYNAMIC_EXAM_DURATION_MINUTES} دقيقة.`,
+                "ابدأ الإعادة", "إلغاء",
+                () => {
+                    initExam(false, true); 
+                    hideModal();
+                },
+                () => hideModal()
+            );
+        }
+
     </script>
     <footer style="background-color: var(--bg-dark-contrast); color: var(--primary-accent); text-align: center; padding: 15px 0; font-size: 1em; border-top: 2px solid var(--primary-accent); box-shadow: 0 0 10px var(--primary-accent-glow); margin-top: 40px; font-weight: 600; font-family: 'Tajawal', sans-serif;">
         <span>made by <i class="fas fa-user" style="margin-left: 8px; color: var(--secondary-accent);"></i> Bebo Naiem</span>
