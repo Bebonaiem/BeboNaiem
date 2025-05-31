@@ -1,0 +1,2372 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="msvalidate.01" content="A34EC6B20ABFBA232C8490E69CBFED1F" />
+    <title>موقع الامتحان</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            /* --- Improved Black Theme --- */
+            --primary-color-dark: #00bfff; /* Bright Cyan */
+            --primary-hover-dark: #0099cc;
+            --secondary-color-dark: #8a9ba8; /* Cool Gray */
+            --success-color-dark: #28c76f; /* Vibrant Green */
+            --success-gradient-end-dark: #1e9e4a;
+            --danger-color-dark: #ff4c4c; /* Bright Red */
+            --warning-color-dark: #ffb400; /* Bright Amber */
+
+            --app-bg-dark: #000000; /* True Black */
+            --card-bg-dark: #121212; /* Dark Gray Card */
+            --element-bg-dark: #1a1a1a; /* Darker element background */
+            --element-hover-bg-dark: #333333; /* Hover darker */
+            --border-color-dark: #444444; /* Softer border */
+
+            --text-primary-dark: #e6e6e6; /* Light Gray */
+            --text-secondary-dark: #a0a0a0; /* Medium Gray */
+            --text-on-primary-button-dark: #000000; /* Black text on bright buttons */
+            --text-on-dark-element-dark: #e6e6e6;
+
+            /* --- Light Theme (unchanged) --- */
+            --primary-color-light: #007bff;
+            --primary-hover-light: #0056b3;
+            --secondary-color-light: #6c757d;
+            --success-color-light: #198754;
+            --success-gradient-end-light: #146c43;
+            --danger-color-light: #dc3545;
+            --warning-color-light: #ffc107;
+
+            --app-bg-light: #f8f9fa;
+            --card-bg-light: #ffffff;
+            --element-bg-light: #eef2f7;
+            --element-hover-bg-light: #dfe6ef;
+            --border-color-light: #dee2e6;
+
+            --text-primary-light: #212529;
+            --text-secondary-light: #5a6268;
+            --text-on-primary-button-light: #ffffff;
+            --text-on-dark-element-light: #343a40;
+
+            /* Default to dark theme variables */
+            --primary-color: var(--primary-color-dark);
+            --primary-hover: var(--primary-hover-dark);
+            --primary-rgb: 0, 191, 255;
+            --secondary-color: var(--secondary-color-dark);
+            --secondary-rgb: 138, 155, 168;
+            --success-color: var(--success-color-dark);
+            --success-gradient-end: var(--success-gradient-end-dark);
+            --success-rgb: 40, 199, 111;
+            --danger-color: var(--danger-color-dark);
+            --danger-rgb: 255, 76, 76;
+            --warning-color: var(--warning-color-dark);
+            --warning-rgb: 255, 180, 0;
+
+            --app-bg: var(--app-bg-dark);
+            --card-bg: var(--card-bg-dark);
+            --element-bg: var(--element-bg-dark);
+            --element-hover-bg: var(--element-hover-bg-dark);
+            --border-color: var(--border-color-dark);
+
+            --text-primary: var(--text-primary-dark);
+            --text-secondary: var(--text-secondary-dark);
+            --text-on-primary-button: var(--text-on-primary-button-dark);
+            --text-on-dark-element: var(--text-on-dark-element-dark);
+
+            --font-family-primary: 'IBM Plex Sans Arabic', 'Tajawal', sans-serif;
+            --font-family-secondary: 'Tajawal', sans-serif;
+            --border-radius-sm: 10px;
+            --border-radius-md: 14px;
+            --box-shadow-sm: 0 3px 10px rgba(0, 191, 255, 0.3);
+            --box-shadow-md: 0 8px 20px rgba(0, 191, 255, 0.4);
+            --box-shadow-lg: 0 12px 30px rgba(0, 191, 255, 0.5);
+            --transition-fast: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        body.dark-theme {
+            --primary-color: var(--primary-color-dark);
+            --primary-hover: var(--primary-hover-dark);
+            --primary-rgb: 0, 191, 255;
+            --secondary-color: var(--secondary-color-dark);
+            --secondary-rgb: 138, 155, 168;
+            --success-color: var(--success-color-dark);
+            --success-gradient-end: var(--success-gradient-end-dark);
+            --success-rgb: 40, 199, 111;
+            --danger-color: var(--danger-color-dark);
+            --danger-rgb: 255, 76, 76;
+            --warning-color: var(--warning-color-dark);
+            --warning-rgb: 255, 180, 0;
+
+            --app-bg: var(--app-bg-dark);
+            --card-bg: var(--card-bg-dark);
+            --element-bg: var(--element-bg-dark);
+            --element-hover-bg: var(--element-hover-bg-dark);
+            --border-color: var(--border-color-dark);
+
+            --text-primary: var(--text-primary-dark);
+            --text-secondary: var(--text-secondary-dark);
+            --text-on-primary-button: var(--text-on-primary-button-dark);
+            --text-on-dark-element: var(--text-on-dark-element-dark);
+
+            --box-shadow-sm: 0 4px 12px rgba(0, 191, 255, 0.4);
+            --box-shadow-md: 0 10px 25px rgba(0, 191, 255, 0.5);
+            --box-shadow-lg: 0 15px 40px rgba(0, 191, 255, 0.6);
+        }
+
+        body.light-theme {
+            --primary-color: var(--primary-color-light);
+            --primary-hover: var(--primary-hover-light);
+            --primary-rgb: 0, 123, 255;
+            --secondary-color: var(--secondary-color-light);
+            --secondary-rgb: 108, 117, 125;
+            --success-color: var(--success-color-light);
+            --success-gradient-end: var(--success-gradient-end-light);
+            --success-rgb: 25, 135, 84;
+            --danger-color: var(--danger-color-light);
+            --danger-rgb: 220, 53, 69;
+            --warning-color: var(--warning-color-light);
+            --warning-rgb: 255, 193, 7;
+            --app-bg: var(--app-bg-light);
+            --card-bg: var(--card-bg-light);
+            --element-bg: var(--element-bg-light);
+            --element-hover-bg: var(--element-hover-bg-light);
+            --border-color: var(--border-color-light);
+            --text-primary: var(--text-primary-light);
+            --text-secondary: var(--text-secondary-light);
+            --text-on-primary-button: var(--text-on-primary-button-light);
+            --text-on-dark-element: var(--text-on-dark-element-light);
+            --box-shadow-sm: 0 2px 8px rgba(0,0,0, 0.08);
+            --box-shadow-md: 0 5px 15px rgba(0,0,0, 0.1);
+            --box-shadow-lg: 0 8px 25px rgba(0,0,0, 0.12);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: var(--font-family-primary);
+            line-height: 1.75; /* Increased line height */
+            background-color: var(--app-bg);
+            color: var(--text-primary);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            transition: background-color var(--transition-smooth), color var(--transition-smooth);
+        }
+
+        /* General Utilities */
+        .icon-before-text { margin-left: 10px; font-size: 0.95em; } 
+        .icon-after-text { margin-right: 10px; font-size: 0.95em; }
+
+        .landing-container {
+            background: linear-gradient(135deg, rgba(0, 191, 255, 0.15), rgba(0, 123, 255, 0.15));
+            padding: 60px 70px;
+            border-radius: var(--border-radius-md);
+            box-shadow: 0 0 25px rgba(0, 191, 255, 0.6);
+            text-align: center;
+            max-width: 750px;
+            width: 100%;
+            opacity: 0;
+            transform: translateY(20px) scale(0.95);
+            border: 1px solid rgba(0, 191, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInScaleUp 0.8s ease forwards;
+        }
+        .landing-container::before,
+        .landing-container::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.15;
+            pointer-events: none;
+        }
+        .landing-container::before {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(0, 191, 255, 0.4), transparent 70%);
+            top: -50px;
+            left: -50px;
+        }
+        .landing-container::after {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(0, 123, 255, 0.4), transparent 70%);
+            bottom: -100px;
+            right: -100px;
+        }
+
+        .landing-container .icon-wrapper {
+            font-size: 5em; /* Larger icon */
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            line-height: 1;
+            animation: gentleFloat 4s ease-in-out infinite;
+        }
+
+        .landing-container h1 {
+            color: var(--primary-color);
+            font-size: 3em; /* Larger heading */
+            font-weight: 800; /* Bolder */
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+        }
+        .landing-container p {
+            font-size: 1.3em; /* Slightly larger paragraph */
+            color: var(--text-secondary);
+            margin-bottom: 35px;
+            line-height: 1.9;
+            max-width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .landing-container p #totalQuestionsLanding,
+        .landing-container p #examDurationLanding {
+            color: var(--primary-color);
+            font-weight: 700;
+            background-color: rgba(var(--primary-rgb), 0.15);
+            padding: 2px 8px;
+            border-radius: 8px;
+            box-shadow: 0 0 8px rgba(var(--primary-rgb), 0.3);
+            transition: background-color 0.3s ease;
+        }
+        .landing-container p #totalQuestionsLanding:hover,
+        .landing-container p #examDurationLanding:hover {
+            background-color: rgba(var(--primary-rgb), 0.3);
+            box-shadow: 0 0 12px rgba(var(--primary-rgb), 0.5);
+            cursor: default;
+        }
+        .btn { /* Base button style */
+            border: none;
+            padding: 14px 32px;
+            font-size: 1.15em;
+            font-weight: 700; /* Semi-bold */
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+            transition: var(--transition-fast), transform 0.2s ease;
+            letter-spacing: 0.4px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            margin: 10px 12px; /* More consistent margin */
+            box-shadow: var(--box-shadow-sm);
+            user-select: none;
+        }
+        .btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: var(--box-shadow-md);
+        }
+        .btn:active {
+            transform: translateY(-1px) scale(0.98);
+            box-shadow: var(--box-shadow-sm);
+        }
+        .btn:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(145deg, var(--primary-color), var(--primary-hover));
+            color: var(--text-on-primary-button);
+            box-shadow: 0 6px 15px rgba(var(--primary-rgb), 0.5);
+        }
+         .btn-primary:hover {
+            background: linear-gradient(145deg, var(--primary-hover), var(--primary-color));
+            box-shadow: 0 8px 20px rgba(var(--primary-rgb), 0.7);
+        }
+
+        .btn-secondary {
+            background-color: var(--element-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        .btn-secondary:hover:not(:disabled) {
+            background-color: var(--element-hover-bg);
+            border-color: var(--secondary-color);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+        
+        .btn-success { 
+            background: linear-gradient(145deg, var(--success-color), var(--success-gradient-end));
+            color: #fff;
+            box-shadow: 0 6px 15px rgba(var(--success-rgb), 0.6);
+        }
+        .btn-success:hover {
+            background: linear-gradient(145deg, var(--success-gradient-end), var(--success-color));
+            box-shadow: 0 8px 20px rgba(var(--success-rgb), 0.8);
+        }
+        .btn-danger {
+            background: linear-gradient(145deg, var(--danger-color), color-mix(in srgb, var(--danger-color) 80%, black));
+            color: var(--text-on-primary-button);
+        }
+        .btn-danger:hover {
+            background: linear-gradient(145deg, color-mix(in srgb, var(--danger-color) 80%, black), var(--danger-color));
+        }
+        .btn-warning { /* For No Timer button */
+            background: linear-gradient(145deg, var(--warning-color), color-mix(in srgb, var(--warning-color) 85%, black));
+            color: var(--text-on-primary-button-dark); /* Ensure good contrast on warning yellow */
+            box-shadow: 0 6px 15px rgba(var(--warning-rgb), 0.6);
+        }
+        body.light-theme .btn-warning { /* Ensure good contrast for light theme as well */
+             color: var(--text-primary-light);
+        }
+        .btn-warning:hover {
+            background: linear-gradient(145deg, color-mix(in srgb, var(--warning-color) 85%, black), var(--warning-color));
+            box-shadow: 0 8px 20px rgba(var(--warning-rgb), 0.8);
+        }
+        .btn-essay-start { /* For Essay Questions Button */
+            background: linear-gradient(145deg, #17a2b8, #117a8b); /* Teal/Info color */
+            color: #ffffff;
+            box-shadow: 0 6px 15px rgba(23, 162, 184, 0.5);
+        }
+        .btn-essay-start:hover {
+            background: linear-gradient(145deg, #117a8b, #17a2b8);
+            box-shadow: 0 8px 20px rgba(23, 162, 184, 0.7);
+        }
+
+
+        .custom-credit {
+            font-family: var(--font-family-secondary);
+            font-size: 0.9em;
+            color: var(--text-secondary);
+            margin-top: 10px;
+            line-height: 1.5;
+            opacity: 0.8;
+        }
+
+        .loft-exam-container, .old-results-container {
+            width: 100%;
+            max-width: 850px; /* Wider for exam content */
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--box-shadow-lg);
+            overflow: hidden;
+            display: none;
+            opacity: 0;
+            border: 1px solid var(--border-color);
+        }
+         .old-results-container { margin-top: 35px; }
+
+        .exam-header {
+            background-image: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+            color: var(--text-on-primary-button);
+            padding: 18px 30px; 
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative; /* For potential absolute elements if needed */
+        }
+        .exam-header h1 {
+            font-size: 1.8em; 
+            font-weight: 600;
+            margin: 0;
+            letter-spacing: 0.5px;
+            flex-grow: 1;
+            text-align: center; 
+        }
+        .theme-toggle-btn {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: var(--text-on-primary-button);
+            font-size: 1.5em;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            transition: background-color var(--transition-fast), transform var(--transition-fast);
+            line-height: 1; /* Ensure icon is centered */
+        }
+        .theme-toggle-btn:hover {
+            background: rgba(255,255,255,0.2);
+            transform: rotate(15deg);
+        }
+
+
+        .progress-indicator {
+            padding: 12px 25px; 
+            background-color: var(--element-bg);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            gap: 15px; 
+        }
+        .progress-text {
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 0.95em; 
+            flex-shrink: 0;
+        }
+        .timer-display {
+            font-weight: 700;
+            font-size: 1.05em; 
+            color: var(--warning-color);
+            background-color: rgba(var(--warning-rgb), 0.12);
+            padding: 6px 12px; 
+            border-radius: var(--border-radius-sm);
+            min-width: 70px; 
+            text-align: center;
+            border: 1px solid rgba(var(--warning-rgb), 0.2);
+        }
+        .progress-bar-shell {
+            width: 45%; 
+            height: 10px; 
+            background-color: rgba(var(--text-secondary-rgb, 176,176,176), 0.2); /* Use text-secondary with alpha */
+            border-radius: var(--border-radius-sm);
+            overflow: hidden;
+        }
+        body.light-theme .progress-bar-shell {
+             background-color: rgba(var(--text-secondary-rgb, 90,98,104), 0.2);
+        }
+        .progress-bar-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--success-color) 0%, var(--success-gradient-end) 100%); 
+            border-radius: var(--border-radius-sm);
+            transition: width 0.5s cubic-bezier(0.25, 0.1, 0.25, 1); /* Smoother transition */
+        }
+        .question-nav-toggle-btn {
+            background-color: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            padding: 6px 12px;
+            font-size: 0.95em;
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+        .question-nav-toggle-btn:hover {
+            background-color: var(--element-hover-bg);
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        .question-nav-toggle-btn i { margin-right: 6px; } /* RTL: icon before text */
+
+
+        .question-actions {
+            display: flex;
+            justify-content: flex-start; /* Align to start for RTL */
+            align-items: center;
+            margin-bottom: 25px; /* More space */
+            padding-bottom: 15px;
+            border-bottom: 1px dashed var(--border-color);
+        }
+        .flag-question-btn {
+            background: transparent;
+            border: 1px solid var(--secondary-color);
+            color: var(--secondary-color);
+            padding: 8px 18px;
+            font-size: 0.95em;
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            font-weight: 500;
+        }
+        .flag-question-btn.flagged {
+            background-color: rgba(var(--warning-rgb), 0.15);
+            border-color: var(--warning-color);
+            color: var(--warning-color);
+            font-weight: 600;
+        }
+        .flag-question-btn:hover:not(.flagged) {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        .flag-question-btn i { margin-left: 8px; }
+
+
+        .question-display-area {
+            padding: 30px; 
+            min-height: 280px; 
+        }
+
+        .question-card-loft {
+            background-color: transparent;
+            padding: 0;
+            opacity: 0;
+            transform: translateX(30px); 
+        }
+        .question-statement {
+            font-weight: 600; /* Slightly bolder */
+            font-size: 1.35em; 
+            margin-bottom: 30px; 
+            color: var(--text-primary);
+            line-height: 1.7;
+        }
+        .options-list { display: flex; flex-direction: column; gap: 15px; } 
+        .option-item label {
+            display: flex;
+            align-items: center;
+            padding: 15px 22px; 
+            background-color: var(--element-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+            transition: var(--transition-smooth), box-shadow var(--transition-fast), border-color var(--transition-fast);
+            color: var(--text-on-dark-element);
+            font-size: 1.05em; 
+            box-shadow: var(--box-shadow-sm);
+        }
+        .option-item label:hover {
+            background-color: var(--element-hover-bg);
+            border-color: var(--primary-color);
+            transform: translateX(6px); /* RTL: slight move */
+            box-shadow: 0 0 12px rgba(var(--primary-rgb), 0.25); 
+        }
+
+        .option-item input[type="radio"] {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            width: 20px; 
+            height: 20px; 
+            border: 2px solid var(--text-secondary);
+            border-radius: 50%;
+            outline: none;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            position: relative;
+            vertical-align: middle;
+            margin-left: 15px; 
+            flex-shrink: 0; /* Prevent shrinking */
+        }
+        .option-item input[type="radio"]:checked {
+            border-color: var(--primary-color);
+            background-color: var(--primary-color);
+            box-shadow: 0 0 8px rgba(var(--primary-rgb), 0.5);
+        }
+        .option-item input[type="radio"]:checked::before {
+            content: '';
+            display: block;
+            width: 9px; 
+            height: 9px; 
+            background-color: var(--text-on-primary-button); /* Ensure contrast */
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1);
+            transition: transform 0.2s ease-out;
+        }
+         .option-item input[type="radio"]:focus-visible { /* More visible focus */
+            outline: 2px solid var(--primary-hover);
+            outline-offset: 2px;
+        }
+        .option-item input[type="radio"]:checked + span {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .navigation-controls {
+            padding: 25px; 
+            background-color: var(--element-bg);
+            border-top: 1px solid var(--border-color);
+            display: flex; 
+            justify-content: space-between; /* Space out buttons */
+            align-items: center; /* Align items vertically if they wrap or have different heights */
+            gap: 15px; 
+        }
+        /* Using .btn, .btn-primary, .btn-secondary from above */
+        
+        .results-area {
+            padding: 30px; 
+            text-align: center;
+        }
+        .results-area.visible, .old-results-container .results-area.visible { 
+            opacity: 0; 
+            transform: translateY(20px); 
+            animation: fadeInSlideUp 0.5s ease-out forwards;
+        }
+        .results-area h2 {
+            color: var(--primary-color);
+            font-size: 2.2em; 
+            font-weight: 700;
+            margin-bottom: 25px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .results-area h2 i { margin-left: 15px; } 
+
+        .score-display {
+            font-size: 1.8em; 
+            font-weight: 700;
+            padding: 20px; 
+            border-radius: var(--border-radius-md);
+            margin-bottom: 30px; 
+            transition: var(--transition-smooth);
+            display: flex; 
+            flex-direction: column; /* Allow items to stack vertically */
+            align-items: center;
+            justify-content: center;
+            text-align: center; /* Ensure text is centered */
+            border: 1px solid transparent; /* Base border */
+            box-shadow: var(--box-shadow-md);
+            line-height: 1.4; /* Adjust line height for stacked content */
+        }
+        .score-display i { margin-left: 12px; font-size: 1.1em; } 
+
+        .detailed-feedback-header {
+            font-size: 1.4em; 
+            color: var(--text-secondary);
+            margin-bottom: 18px; 
+            font-weight: 600;
+        }
+        .detailed-feedback {
+            text-align: right;
+            max-height: 350px; 
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            padding: 20px; 
+            border-radius: var(--border-radius-sm);
+            background-color: var(--element-bg); /* Slightly different from card-bg */
+        }
+        .feedback-item {
+            padding: 15px 18px; 
+            margin-bottom: 12px; 
+            border-radius: var(--border-radius-sm);
+            border-left-width: 5px; 
+            border-left-style: solid;
+            transition: var(--transition-smooth);
+            background-color: var(--card-bg); /* Item bg slightly different from container */
+            box-shadow: var(--box-shadow-sm);
+        }
+        .feedback-item:hover {
+            transform: translateY(-2px) scale(1.01); 
+            box-shadow: var(--box-shadow-md);
+        }
+        .feedback-item.correct { 
+            border-left-color: var(--success-color); 
+            background-color: rgba(var(--success-rgb), 0.08);
+        }
+        .feedback-item.incorrect { 
+            border-left-color: var(--danger-color); 
+            background-color: rgba(var(--danger-rgb), 0.08);
+        }
+
+        .feedback-item p { margin-bottom: 6px; font-size: 1em; color: var(--text-primary); } 
+        .feedback-item .user-answer { font-style: italic; color: var(--text-secondary); opacity: 0.9; }
+        .feedback-item .correct-answer-text { color: var(--success-color); font-weight: 600; }
+        .feedback-item.incorrect .user-answer { color: var(--danger-color); font-weight: 500; }
+        .feedback-item .explanation {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed var(--border-color);
+            font-size: 0.95em;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            white-space: pre-wrap; /* For explanations with newlines */
+        }
+        .feedback-item .explanation strong { color: var(--primary-color); font-weight: 600; }
+
+
+        /* Question Navigation Modal */
+        .q-nav-modal {
+            display: none;
+            position: fixed;
+            z-index: 1050; /* Higher z-index */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(var(--app-bg-rgb, 18,18,18), 0.75); /* Use app-bg with alpha */
+            backdrop-filter: blur(5px); /* Frosted glass effect */
+            animation: fadeInModal 0.3s ease-out;
+        }
+        body.light-theme .q-nav-modal {
+            background-color: rgba(var(--app-bg-rgb, 248,249,250), 0.75);
+        }
+        .q-nav-modal-content {
+            background-color: var(--card-bg);
+            margin: 8% auto; /* Adjusted margin */
+            padding: 30px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            width: 90%;
+            max-width: 650px;
+            box-shadow: var(--box-shadow-lg);
+            position: relative;
+        }
+         .q-nav-modal-content h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.6em;
+            text-align: center;
+        }
+        .q-nav-modal-close {
+            color: var(--text-secondary);
+            position: absolute;
+            top: 15px;
+            left: 25px; 
+            font-size: 2.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color var(--transition-fast), transform var(--transition-fast);
+        }
+        .q-nav-modal-close:hover,
+        .q-nav-modal-close:focus {
+            color: var(--primary-color);
+            transform: scale(1.1);
+        }
+        .q-nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(55px, 1fr)); /* Larger items */
+            gap: 12px;
+            margin-top: 20px;
+            max-height: 450px;
+            overflow-y: auto;
+            padding: 5px; /* Padding for scrollbar */
+        }
+        .q-nav-item {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            font-weight: 600; /* Bolder numbers */
+            background-color: var(--element-bg);
+            color: var(--text-on-dark-element);
+            box-shadow: var(--box-shadow-sm);
+        }
+        .q-nav-item:hover {
+            background-color: var(--element-hover-bg);
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: var(--box-shadow-md);
+        }
+        .q-nav-item.answered {
+            background-color: var(--success-color);
+            color: var(--text-on-primary-button);
+            border-color: var(--success-gradient-end);
+        }
+        .q-nav-item.current {
+            background-color: var(--primary-color);
+            color: var(--text-on-primary-button);
+            border-color: var(--primary-hover);
+            font-weight: 700;
+            transform: scale(1.08);
+            box-shadow: var(--box-shadow-md);
+        }
+        .q-nav-item.flagged { /* More prominent flagging */
+            position: relative;
+            overflow: hidden; /* To contain pseudo-element */
+        }
+        .q-nav-item.flagged::before {
+            content: "\f024"; /* Font Awesome flag icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            top: 2px;
+            right: 4px; /* RTL */
+            font-size: 0.7em;
+            color: var(--warning-color);
+            opacity: 0.9;
+        }
+        .q-nav-item.answered.flagged { /* Ensure answered flagged is distinct */
+             background-image: linear-gradient(45deg, var(--success-color) 70%, var(--warning-color) 120%);
+        }
+
+
+        @media (max-width: 768px) { /* Tablet and below */
+            .landing-container { padding: 30px 25px; max-width: 95%;}
+            .loft-exam-container, .old-results-container { max-width: 98%; }
+            .exam-header h1 { font-size: 1.5em; }
+            .progress-indicator { flex-wrap: wrap; } /* Allow wrapping */
+            .progress-bar-shell { width: 100%; order: 3; margin-top: 8px; } /* Full width on mobile */
+            .question-statement { font-size: 1.2em; }
+             .navigation-controls { flex-direction: column; gap: 10px; }
+            .navigation-controls .btn { width: 100%; } /* Full width buttons */
+        }
+
+        @media (max-width: 480px) { /* Mobile */
+            body { padding: 10px; }
+            .landing-container h1 { font-size: 2em; }
+            .landing-container p { font-size: 1.05em; }
+            .btn { font-size: 1em; padding: 10px 20px; }
+
+            .exam-header h1 { font-size: 1.3em; }
+            .progress-indicator { padding: 10px 15px; }
+            .question-display-area, .results-area { padding: 20px; }
+            .option-item label { padding: 12px 18px; font-size: 1em; }
+            .q-nav-modal-content { width: 95%; margin: 5% auto; padding: 20px;}
+            .q-nav-grid { grid-template-columns: repeat(auto-fill, minmax(48px, 1fr)); gap: 8px;}
+        }
+
+        @keyframes fadeInSlideUp {
+            from { opacity: 0; transform: translateY(25px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeOutSlideUp {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(-25px); }
+        }
+        @keyframes fadeInScaleUp {
+            from { opacity: 0; transform: scale(0.97); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes questionEntry {
+            from { opacity: 0; transform: translateX(35px); } 
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes questionExit {
+            from { opacity: 1; transform: translateX(0); }
+            to { opacity: 0; transform: translateX(-35px); } 
+        }
+        .question-card-loft.entering { animation: questionEntry 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
+        .question-card-loft.exiting { animation: questionExit 0.35s cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards; }
+
+        @keyframes gentleFloat { 
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+        @keyframes fadeInModal {
+            from { opacity: 0; transform: scale(0.95) translateY(-20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        /* Confirm End Exam Modal Styles */
+        .confirm-end-modal {
+            display: none;
+            position: fixed;
+            z-index: 1060; /* Higher than q-nav-modal */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(var(--app-bg-rgb, 18,18,18), 0.75);
+            backdrop-filter: blur(5px);
+            animation: fadeInModal 0.3s ease-out;
+        }
+        body.light-theme .confirm-end-modal {
+            background-color: rgba(var(--app-bg-rgb, 248,249,250), 0.75);
+        }
+        .confirm-end-modal-content {
+            background-color: var(--card-bg);
+            margin: 15% auto;
+            padding: 30px 35px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            width: 90%;
+            max-width: 500px;
+            box-shadow: var(--box-shadow-lg);
+            text-align: center;
+        }
+        .confirm-end-modal-content h2 {
+            color: var(--danger-color);
+            margin-bottom: 18px;
+            font-size: 1.7em;
+        }
+        .confirm-end-modal-content p {
+            font-size: 1.15em;
+            color: var(--text-secondary);
+            margin-bottom: 28px;
+            line-height: 1.7;
+        }
+        .confirm-end-modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        .tecno {
+            float: right;
+        }
+    </style>
+    <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "rrsfefhi32");
+</script>
+</head>
+<body class="dark-theme"> 
+
+    <div class="landing-container" id="landingPage">
+        <h4 class="tecno">قسم : تكنولوجيا التعليم</h4>
+        <br><br>
+        <div class="icon-wrapper"><i class="fas fa-tasks"></i></div>
+        <h1>اختبار في طرق التدريس</h1>
+        <p>
+            مرحباً بك! هذا الاختبار مصمم للتقييم الشحصي. يتكون من <span id="totalQuestionsLanding"></span> سؤال متنوع. لديك <span id="examDurationLanding">45</span> دقيقة لإكمال الاختبار.
+            نتمنى لك كل التوفيق!
+        </p>
+        <button class="btn btn-primary" onclick="startExam(false, false)" aria-label="ابدأ الاختبار بالترتيب الافتراضي">
+            <i class="fas fa-play icon-before-text"></i> ابدأ الاختبار الآن
+        </button>
+        <button class="btn btn-success" onclick="startExam(true, false)" aria-label="ابدأ الاختبار بترتيب عشوائي للأسئلة">
+            <i class="fas fa-random icon-before-text"></i> ابدأ بترتيب عشوائي
+        </button>
+        <button class="btn btn-warning" onclick="startExam(false, true)" aria-label="ابدأ الاختبار بدون مؤقت">
+            <i class="fas fa-hourglass-end icon-before-text"></i> ابدأ بدون مؤقت
+        </button>
+                <button class="btn btn-essay-start" onclick="startEssayExam()" aria-label="ابدأ أسئلة المقال" style="margin-top: 10px;">
+            <i class="fas fa-pen-alt icon-before-text"></i> ابدأ أسئلة المقال
+        </button>
+        <button class="btn btn-secondary" id="viewLastResultsBtn" onclick="viewLastResults()" style="margin-top: 10px;" disabled>
+            <i class="fas fa-history icon-before-text"></i> عرض نتائج آخر اختبار
+        </button>
+
+        <div style="margin-top: 30px;">
+            <p class="custom-credit"><b>تم انشائه بواسطة :
+                </b><br>
+                ليدر / بولا نعيم</p>
+            <p class="custom-credit"><b>تحت اشراف :
+            </b><br>
+                ليدر / ابانوب جورج
+                <br>
+                ليدر / اسماء خالد
+            </p>
+        </div>
+    </div>
+
+    <div class="loft-exam-container" id="examPage">
+        <header class="exam-header">
+             <button id="themeToggleBtn" class="theme-toggle-btn" onclick="toggleTheme()" aria-label="تبديل الوضع المظلم/المضيء">
+                <i class="fas fa-sun"></i>
+            </button>
+            <h1>اختبار طرق التدريس</h1>
+            <div style="width: 40px;"></div> <!-- Spacer for balance -->
+        </header>
+
+        <div class="progress-indicator" role="toolbar">
+            <button id="qNavToggleBtn" class="question-nav-toggle-btn btn" onclick="toggleQuestionNavModal()" aria-label="عرض قائمة الأسئلة">
+                <i class="fas fa-th-list"></i> الأسئلة
+            </button>
+            <span class="progress-text" id="progressInfoText" aria-live="polite">السؤال 0 من 0</span>
+            <div class="timer-display" id="timerDisplay" aria-live="off">45:00</div>
+            <div class="progress-bar-shell" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-labelledby="progressInfoText">
+                <div class="progress-bar-fill" id="progressBarFill" style="width: 0%;"></div>
+            </div>
+        </div>
+
+        <main class="question-display-area" id="questionDisplayArea">
+            <!-- Current question will be rendered here -->
+        </main>
+
+        <div class="results-area" id="resultsArea" style="display: none;">
+            <h2><i class="fas fa-poll-h"></i> نتائج الاختبار</h2>
+            <div class="score-display" id="scoreContainer"></div>
+            <h3 class="detailed-feedback-header">مراجعة الإجابات:</h3>
+            <div class="detailed-feedback" id="detailedFeedbackContainer"></div>
+             <button class="btn btn-secondary" onclick="restartExam()" style="margin-top: 25px;">
+                <i class="fas fa-redo-alt icon-before-text" ></i> إعادة الاختبار
+            </button>
+        </div>
+
+        <footer class="navigation-controls" id="navigationControls" role="navigation">
+            <button class="btn btn-secondary" id="prevBtn" onclick="handlePreviousQuestion()" disabled aria-label="السؤال السابق">
+                <i class="fas fa-arrow-right icon-before-text"></i> السابق
+            </button>
+            <button class="btn btn-danger" id="endExamBtn" onclick="confirmEndExam()" aria-label="إنهاء الاختبار الآن">
+                <i class="fas fa-stop-circle icon-before-text"></i> إنهاء الاختبار
+            </button>
+            <button class="btn btn-primary" id="nextBtn" onclick="handleNextQuestion()" disabled aria-label="السؤال التالي">
+                التالي <i class="fas fa-arrow-left icon-after-text"></i>
+            </button>
+        </footer>
+    </div>
+
+    <div class="old-results-container" id="oldResultsPage" style="display: none;">
+        <header class="exam-header">
+             <button id="themeToggleBtnOldResults" class="theme-toggle-btn" onclick="toggleTheme()" aria-label="تبديل الوضع المظلم/المضيء">
+                <i class="fas fa-sun"></i>
+            </button>
+            <h1>نتائج الاختبار السابق</h1>
+             <div style="width: 40px;"></div> <!-- Spacer -->
+        </header>
+        <div class="results-area visible" id="oldResultsDisplayArea">
+            <div class="score-display" id="oldScoreContainer"></div>
+            <h3 class="detailed-feedback-header">مراجعة الإجابات:</h3>
+            <div class="detailed-feedback" id="oldDetailedFeedbackContainer"></div>
+            <button class="btn btn-secondary" onclick="closeOldResults()" style="margin-top: 25px;">
+                <i class="fas fa-times icon-before-text"></i> إغلاق
+            </button>
+        </div>
+    </div>
+
+    <!-- Essay Exam Page -->
+    <div class="loft-exam-container" id="essayExamPage" style="display: none;">
+        <header class="exam-header">
+            <button id="themeToggleBtnEssay" class="theme-toggle-btn" onclick="toggleTheme()" aria-label="تبديل الوضع المظلم/المضيء">
+                <i class="fas fa-sun"></i>
+            </button>
+            <h1>أسئلة المقال</h1>
+            <button class="btn btn-secondary" onclick="backToLandingFromEssay()" style="font-size: 0.9em; padding: 8px 15px; margin:0; background-color: rgba(255,255,255,0.1); color:var(--text-on-primary-button); border: 1px solid rgba(255,255,255,0.2);">
+                <i class="fas fa-home icon-before-text"></i> الرئيسية
+            </button>
+        </header>
+    
+        <div class="question-display-area" id="essayQuestionDisplayArea" style="min-height: auto; padding-bottom: 15px;">
+            <!-- Essay question text will be rendered here -->
+        </div>
+    
+        <div style="padding: 0 30px 20px 30px;">
+            <label for="essayAnswerTextarea" style="display: block; margin-bottom: 10px; font-weight: 500; color: var(--text-secondary);">أدخل إجابتك هنا:</label>
+            <textarea id="essayAnswerTextarea" rows="10" style="width: 100%; padding: 12px; border-radius: var(--border-radius-sm); border: 1px solid var(--border-color); background-color: var(--element-bg); color: var(--text-on-dark-element); font-family: var(--font-family-primary); font-size: 1em; resize: vertical;"></textarea>
+        </div>
+    
+        <div class="results-area" id="essayFeedbackArea" style="display: none; padding: 20px 30px; text-align: right; border-top: 1px solid var(--border-color); margin-top:0;">
+            <h3 class="detailed-feedback-header" style="margin-bottom:15px; text-align:center;">الإجابة النموذجية والتقييم</h3>
+            <div id="essayModelAnswerDisplay" style="background-color: rgba(var(--primary-rgb), 0.05); padding: 15px; border-radius: var(--border-radius-sm); margin-bottom: 15px; border: 1px solid rgba(var(--primary-rgb), 0.2); white-space: pre-wrap; line-height:1.8; max-height: 200px; overflow-y: auto;">
+                <!-- Model answer will be shown here -->
+            </div>
+            <div id="essaySimilarityScoreDisplay" class="score-display" style="font-size: 1.5em; margin-bottom: 10px; padding: 15px;">
+                <!-- Similarity score will be shown here -->
+            </div>
+        </div>
+    
+        <footer class="navigation-controls" id="essayNavigationControls" role="navigation">
+            <button class="btn btn-secondary" id="prevEssayBtn" onclick="handlePreviousEssayQuestion()" disabled aria-label="السؤال المقالي السابق">
+                <i class="fas fa-arrow-right icon-before-text"></i> السابق
+            </button>
+            <button class="btn btn-success" id="submitEssayAnswerBtn" onclick="submitEssayAnswer()" aria-label="إرسال الإجابة">
+                <i class="fas fa-paper-plane icon-before-text"></i> إرسال الإجابة
+            </button>
+            <button class="btn btn-primary" id="nextEssayBtn" onclick="handleNextEssayQuestion()" disabled aria-label="السؤال المقالي التالي">
+                التالي <i class="fas fa-arrow-left icon-after-text"></i>
+            </button>
+        </footer>
+    </div>
+
+
+    <!-- Question Navigation Modal -->
+    <div id="questionNavModal" class="q-nav-modal">
+        <div class="q-nav-modal-content">
+            <span class="q-nav-modal-close" onclick="toggleQuestionNavModal()" aria-label="إغلاق قائمة الأسئلة">×</span>
+            <h2>قائمة الأسئلة</h2>
+            <div id="qNavGridContainer" class="q-nav-grid">
+                <!-- Navigation items will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirm End Exam Modal -->
+    <div id="confirmEndExamModal" class="confirm-end-modal">
+        <div class="confirm-end-modal-content">
+            <h2>تأكيد إنهاء الاختبار</h2>
+            <p id="confirmEndAttemptInfo" style="font-size: 1.05em; color: var(--text-secondary); margin-bottom: 8px; font-weight: 500;"></p>
+            <p id="confirmEndTimeInfo" style="font-size: 1.05em; color: var(--text-secondary); margin-bottom: 20px; font-weight: 500;"></p>
+            <p>هل أنت متأكد أنك تريد إنهاء الاختبار الآن؟ سيتم تصحيح إجاباتك الحالية.</p>
+            <div class="confirm-end-modal-buttons">
+                <button id="confirmEndBtnYes" class="btn btn-danger"><i class="fas fa-check icon-before-text"></i> نعم، قم بالإنهاء</button>
+                <button id="confirmEndBtnNo" class="btn btn-secondary"><i class="fas fa-times icon-before-text"></i> لا، استمر</button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+// --- Questions Start ---
+        const allQuestions = [
+            // --- True/False Questions ---
+            { type: "tf", id: "tf_1", text: "أسلوب التدريس هو طريقة من طرق التدريس التي يتبعها المعلم", answer: false, explanation: "أسلوب التدريس هو الكيفية التي يتناول بها المعلم طريقة التدريس أثناء قيامه بعملية التدريس، وهو يرتبط بالخصائص الشخصية للمعلم." },
+            { type: "tf", id: "tf_2", text: "الأهداف السلوكية هى أهداف تصف ما يقوم به المعلم", answer: false, explanation: "الأهداف السلوكية تصف الأداء المتوقع من المتعلم بعد مروره بخبرة تعليمية معينة." },
+            { type: "tf", id: "tf_3", text: "يركز المجال الوجداني للأهداف على القيم والإتجاهات والميول التي يجب أن يكتسبها المتعلمين", answer: true, explanation: "المجال الوجداني يتعلق بالمشاعر والقيم والاتجاهات والميول، مثل التقدير والاهتمام." },
+            { type: "tf", id: "tf_4", text: "التعلم التعاوني هو طريقة تقليدية في التدريس", answer: false, explanation: "التعلم التعاوني يعتبر من استراتيجيات التدريس الحديثة التي تركز على دور المتعلم النشط." },
+            { type: "tf", id: "tf_5", text: "من شروط التعلم التعاونى أن تتكون المجموعة من ۲۰ فرد أو ٢٥ على الأكثر.", answer: false, explanation: "مجموعات التعلم التعاوني الفعالة تتكون عادة من 2 إلى 6 أفراد لضمان المشاركة الفعالة." },
+            { type: "tf", id: "tf_6", text: "التعلم بالبحث يساعد المتعلمين على السعى نحو المعلومات والحلول تجاه موضوع ما", answer: true },
+            { type: "tf", id: "tf_7", text: "استخدام التعلم بالبحث ينمى لدى المتعلم مهارات التعلم الذاتي", answer: true },
+            { type: "tf", id: "tf_8", text: "استخدام التعلم بالبحث لا يساعد المتعلم على اكتساب الثقه بالنفس", answer: false, explanation: "بالعكس، التعلم بالبحث والوصول للنتائج يعزز ثقة المتعلم بنفسه وقدراته." },
+            { type: "tf", id: "tf_9", text: "إجراء التجارب والتمارين والأنشطة من صور التعلم بالبحث", answer: true },
+            { type: "tf", id: "tf_10", text: "مهارات التأكيد على المفاهيم والافكار الرئيسية من مهارات التعلم بالبحث", answer: true },
+            { type: "tf", id: "tf_11", text: "التعلم الالكتروني هو منظومة تعليمية لتقديم البرامج التعليمية للمتعلمين فى اى وقت واي مكان", answer: true },
+            { type: "tf", id: "tf_12", text: "من أسس التعلم الالكترونى التقييد بالزمان والمكان", answer: false, explanation: "من أهم مميزات التعلم الإلكتروني المرونة وعدم التقييد بالزمان والمكان." },
+            { type: "tf", id: "tf_13", text: "بيئات التعلم التقليدى هى كل البيئات التي يوجد فيها كل من المعلم والمتعلم والمحتوى التعليمى في حيز واحد", answer: true },
+            { type: "tf", id: "tf_14", text: "بيئة التعلم الالكتروني تسمح للطالب بالتفاعل مع مصادر التعلم البشرية وغير البشرية", answer: true },
+            { type: "tf", id: "tf_15", text: "التمركز حول المعلم من خصائص بيئات التعلم التفاعلية الالكترونية", answer: false, explanation: "بيئات التعلم التفاعلية الإلكترونية الحديثة تتمحور حول المتعلم وتفاعله." },
+            { type: "tf", id: "tf_16", text: "ارتباط الاستراتيجية بالمحتوى التدريسي من اسس توظيف استراتيجيات التعلم الإلكتروني", answer: false, explanation: "الأساس الأهم هو ارتباط الاستراتيجية بالأهداف التعليمية المراد تحقيقها." },
+            { type: "tf", id: "tf_17", text: "من اسس توظيف استراتيجيات التعلم الإلكتروني المرونة والقابلية للتطوير", answer: true },
+            { type: "tf", id: "tf_18", text: "موقف التعلم ومتطلباته من معايير اختيار استراتيجيات التعلم الالكتروني", answer: true },
+            { type: "tf", id: "tf_19", text: "المحاضرة الالكترونية هي طريقه ذات اتجاه واحد من المعلم الى طلابه", answer: true, explanation: "بشكلها التقليدي، نعم، ولكن يمكن دمج عناصر تفاعلية فيها." },
+            { type: "tf", id: "tf_20", text: "من مميزات المحاضرة الالكترونية مشاهدة المتعلم المحاضرة في وقت ومكان محدد", answer: false, explanation: "من مميزاتها إمكانية مشاهدتها في أي وقت ومكان يناسب المتعلم." },
+            { type: "tf", id: "tf_21", text: "تقدم العروض الالكترونية وفق نمطين نمط متزامن ونمط غير متزامن", answer: true },
+            { type: "tf", id: "tf_22", text: "تستخدم العروض الالكترونية في تدريس العلاقات المتبادلة والتمكن من المهارات", answer: true },
+            { type: "tf", id: "tf_23", text: "من شروط المشكلة المختارة للدراسة ان تكون ذات صلة بالدرس", answer: true },
+            { type: "tf", id: "tf_24", text: "الأهداف السلوكية هى أهداف تصف ما يقوم به المعلم.", answer: false, explanation: "الأهداف السلوكية تصف الأداء المتوقع من المتعلم بعد مروره بخبرة تعليمية معينة." },
+            { type: "tf", id: "tf_25", text: "تعد طريقة المناقشة من طرائق التدريس التقليدية", answer: true, explanation: "تعتبر طريقة المناقشة من الطرق التقليدية، لكن يمكن تطويرها وتحديثها لتصبح أكثر تفاعلية." },
+            { type: "tf", id: "tf_26", text: "التعلم التعاوني هو طريقة تقليدية في التدريس.", answer: false, explanation: "التعلم التعاوني يعتبر من استراتيجيات التدريس الحديثة التي تركز على دور المتعلم النشط." },
+            { type: "tf", id: "tf_27", text: "طريقة المحاضرة لا تسمح بعرض المعلومات بطريقة منظمة", answer: false, explanation: "من مميزات طريقة المحاضرة أنها تسمح بعرض المعلومات بطريقة منظمة ومتسلسلة." },
+            { type: "tf", id: "tf_28", text: "طريقة المحاضرة تعتبر من الطرق الحديثة في التدريس", answer: false, explanation: "طريقة المحاضرة تعتبر من الطرق التقليدية." },
+            { type: "tf", id: "tf_29", text: "من القواعد العامة التي تبنى عليها طرق التدريس التدرج من الصعب الى السهل", answer: false, explanation: "القاعدة العامة هي التدرج من السهل إلى الصعب." },
+            { type: "tf", id: "tf_30", text: "استخدام التعلم بالبحث لا يساعد المتعلم على اكتساب الثقه بالنفس.", answer: false, explanation: "بالعكس، التعلم بالبحث والوصول للنتائج يعزز ثقة المتعلم بنفسه وقدراته." },
+            { type: "tf", id: "tf_31", text: "طرق التدريس التقليدية تكون المتعلم محورا للعملية التعليمية", answer: false, explanation: "في الطرق التقليدية، غالبًا ما يكون المعلم هو محور العملية التعليمية." },
+            { type: "tf", id: "tf_32", text: "طرائق التدريس الحديثة يكون المتعلم محوراً للعملية التعليمية", answer: true },
+            { type: "tf", id: "tf_33", text: "التعلم هو عملية ذاتية وفردية يقوم بها المتعلم لاكتساب المعرفة والمهارات والخبرات من خلال التفاعل في البيئة المحيطة", answer: true },
+            { type: "tf", id: "tf_34", text: "التعلم يعتمد على دافعية المتعلم واستعدادة النفسي", answer: true },
+            { type: "tf", id: "tf_35", text: "التعلم هو عملية ذاتية يقوم بها المعلم لاكتساب المعرفة", answer: false, explanation: "التعلم عملية ذاتية يقوم بها المتعلم، أما المعلم فيقوم بعملية التعليم." },
+            { type: "tf", id: "tf_36", text: "التعلم هو عملية يقوم بها المعلم لايصال المعرفة للمتعلمين.", answer: false, explanation: "هذا وصف للتعليم، وليس التعلم الذي يقوم به المتعلم." },
+            { type: "tf", id: "tf_37", text: "التدريس هو عبارة عن طريقة التدريس التي يستخدمها المعلم", answer: false, explanation: "التدريس عملية أشمل تتضمن التخطيط والتنفيذ والتقويم، وطريقة التدريس جزء منها." },
+            { type: "tf", id: "tf_38", text: "التدريس اطار عملي يجمع بين التعليم والتعلم", answer: true },
+            { type: "tf", id: "tf_39", text: "التدريس عملية تفاعلية تضمن تخطيطا وتنفيذا وتقويماً من قبل المعلم", answer: true },
+            { type: "tf", id: "tf_40", text: "التدريس هو شرح الدروس من قبل المعلم", answer: false, explanation: "شرح الدروس هو جزء صغير من عملية التدريس الشاملة." },
+            { type: "tf", id: "tf_41", text: "طريقة التدريس تشمل أسلوب التدريس واستراتيجية التدريس", answer: false, explanation: "الاستراتيجية عادة ما تكون أعم وتشمل الطريقة والأسلوب." },
+            { type: "tf", id: "tf_42", text: "أسلوب التدريس اعم واشمل من طريقة التدريس", answer: false, explanation: "طريقة التدريس هي الإجراءات العامة، والأسلوب هو الكيفية الشخصية لتنفيذ الطريقة." },
+            { type: "tf", id: "tf_43", text: "استراتيجية التدريس تشمل أسلوب وطريقة التدريس", answer: true },
+            { type: "tf", id: "tf_44", text: "تتكون منظومة التدريس من الكتاب المدرسي والمتعلم", answer: false, explanation: "منظومة التدريس تشمل عناصر متعددة كالمعلم، المتعلم، المحتوى، البيئة، أساليب التقويم وغيرها." },
+            { type: "tf", id: "tf_45", text: "عملية التدريس تتكون من مرحلتين تخطيط وتنفيذ", answer: false, explanation: "عملية التدريس تتكون من ثلاث مراحل رئيسية: التخطيط، التنفيذ، والتقويم." },
+            { type: "tf", id: "tf_46", text: "الأهداف التربوية هي اهداف المناهج الدراسية", answer: false, explanation: "أهداف المناهج الدراسية هي جزء من الأهداف التربوية العامة والأوسع نطاقًا." },
+            { type: "tf", id: "tf_47", text: "تنقسم مستويات الأهداف التربوية الى اهداف عامة و اهداف خاصة و اهداف سلوكية", answer: true },
+            { type: "tf", id: "tf_48", text: "الأهداف التربوية تساعد المعلم في اختيار استراتيجيات التدريس المناسبة للاهداف ومستوى المتعلمين", answer: true },
+            { type: "tf", id: "tf_49", text: "يركز المجال المهاري على تنمية المهارات والقيم والاتجاهات", answer: false, explanation: "المجال المهاري (النفسحركي) يركز على تنمية المهارات الحركية والأدائية." },
+            { type: "tf", id: "tf_50", text: "الهدف السلوكي الجيد يصف سلوك المتعلم", answer: true },
+            { type: "tf", id: "tf_51", text: "الهدف السلوكي الجيد يجب ان يكون هدف مركبا", answer: false, explanation: "الهدف السلوكي الجيد يجب أن يكون بسيطا، محددا، قابلا للملاحظة والقياس، وليس مركبا." },
+            { type: "tf", id: "tf_52", text: "طريقة التدريس هي وسيلة المعلم من أجل إيصال أهداف الدرس لطلابه", answer: true },
+            { type: "tf", id: "tf_53", text: "استراتيجية التدريس هي خطة المعلم الشاملة لتحقيق الأهداف بعيدة المدى", answer: true },
+            { type: "tf", id: "tf_54", text: "استراتيجية التدريس هي خطة شاملة يضعها المعلم لتحقيق الأهداف قريبة المدى", answer: false, explanation: "الاستراتيجية ترتبط بتحقيق الأهداف العامة وبعيدة المدى، بينما التكتيكات والأساليب قد ترتبط بالأهداف قصيرة المدى." },
+            { type: "tf", id: "tf_55", text: "توجد في طرق التدريس بعض الطرق المثالية تماما التي ينبغي استخدامها", answer: false, explanation: "لا توجد طريقة تدريس مثالية لجميع المواقف والمتعلمين، بل يتم اختيار الأنسب حسب عدة عوامل." },
+            { type: "tf", id: "tf_56", text: "طريقة التعلم التعاوني من طرق التدريس التقليدي", answer: false, explanation: "التعلم التعاوني يعتبر من استراتيجيات التدريس الحديثة التي تركز على دور المتعلم النشط." },
+            { type: "tf", id: "tf_57", text: "من القواعد العامة التي تبنى عليها طرق التدريس التدرج من المحسوس الى المعقول", answer: true },
+
+            // --- Multiple Choice Questions ---
+            { type: "mcq", id: "mcq_1", text: "ما يلي من مميزات طريقة المحاضرة عدا:", options: ["طريقة تدريس اقتصادية", "تسهم في تذكر الطلاب للمعلومات", "تغطي حجم كبير من محتوى المقرر", "لا تحتاج لاماكنيات كبير"], correctAnswerText: "تسهم في تذكر الطلاب للمعلومات", explanation: "المحاضرة قد لا تكون الأفضل لتذكر المعلومات على المدى الطويل مقارنة بالطرق التفاعلية التي تشرك الطالب بشكل أكبر." },
+            { type: "mcq", id: "mcq_2", text: "مراحل عملية التدريس هي:", options: ["مرحلة التخطيط", "مرحلة التقويم", "مرحلة التنفيذ", "جميع ما سبق"], correctAnswerText: "جميع ما سبق", explanation: "عملية التدريس تشمل التخطيط المسبق، ثم تنفيذ الخطة، وأخيراً تقويم نتائج عملية التعلم والتعليم." },
+            { type: "mcq", id: "mcq_3", text: "من النتقادات الموجهة لطريقة المحاضرة:", options: ["تثير دافعية الطلبة للتعليم", "يمكن من خلالها إعطاء كم من المعلومات", "لا تأخذ في الاعتبار الفروق الفردية بين الطلبة", "تأخذ في الاعتبار الفروق الفردية"], correctAnswerText: "لا تأخذ في الاعتبار الفروق الفردية بين الطلبة", explanation: "طريقة المحاضرة غالبًا ما تقدم المحتوى بنفس الطريقة لجميع الطلاب، مما قد لا يناسب جميع أنماط التعلم أو مستويات الفهم." },
+            { type: "mcq", id: "mcq_4", text: "لطريقة المناقشة عدة عيوب منها:", options: ["اشتراك عدد كبير من المتعلمين في المناقشة", "استماع المتعلمين لما يطرحة زملاؤهم", "سيطرة عدد محدود من المتعلمين على المناقشة", "تمكن المعلم من السيطرة على المناقشة"], correctAnswerText: "سيطرة عدد محدود من المتعلمين على المناقشة", explanation: "أحد عيوب طريقة المناقشة هو احتمال سيطرة عدد قليل من الطلاب الأكثر جرأة على النقاش، بينما يظل الآخرون سلبيين." },
+            { type: "mcq", id: "mcq_5", text: "من المبادئ التي يجب ان يراعيها المعلم لتحسين طريقة التدريس:", options: ["مراعاة الفروق الفردية بين المتعلمين", "توفر مبادئ التعلم والتعليم في الطريقة", "تنظيم المحتوى بطريقة تساعد على التعلم الذاتي", "جميع ما سبق ذكرة"], correctAnswerText: "جميع ما سبق ذكرة", explanation: "جميع الخيارات المذكورة هي مبادئ هامة لتحسين طرق التدريس." },
+            { type: "mcq", id: "mcq_6", text: "ما يلي من معايير اختيار طريقة التدريس عدا:", options: ["التدرج من الصعب الى السهل", "التدرج من البسيط الى المركب", "الانتقال من العملي الى النظري", "الانتقال من المحسوس الى المعقول"], correctAnswerText: "التدرج من الصعب الى السهل", explanation: "المعيار الصحيح هو التدرج من السهل إلى الصعب لبناء الفهم تدريجيًا." },
+            { type: "mcq", id: "mcq_7", text: "ما يلي من استخدامات المحاضرة في مجالات عديدة ماعدا:", options: ["مناقشة الطلاب فيما يفعلونة", "تقديد موضوع جديد", "تلخيص ما سبق للطلة دراستة", "توجية وارشاد الطلبة الى مصادر معروفة"], correctAnswerText: "مناقشة الطلاب فيما يفعلونة", explanation: "مناقشة الطلاب هي سمة أساسية لطريقة المناقشة، وليست من استخدامات المحاضرة التقليدية التي تكون عادة أحادية الاتجاه." },
+            { type: "mcq", id: "mcq_8", text: "من مزايا طريقة المناقشة:", options: ["تدفع المتعلمين الى المشاركة بالدرس", "تنمي القدرات الفكرية والمعرفية للمتعلين", "تنمي لدى المتعلمين حب التعاون والعمل الجماعي", "جميع ما سبق ذكرة"], correctAnswerText: "جميع ما سبق ذكرة", explanation: "كل الخيارات المذكورة هي من مزايا طريقة المناقشة الفعالة." },
+            { type: "mcq", id: "mcq_9", text: "ما يلي من إجراءات طريقة حل المشكلات ماعدا:", options: ["الوصول الى احكام عامة حول المشكلة", "مناقشة الموضوعات القريبة للمشكلة", "الإحساس بالمشكلة", "تحديد المشكلة"], correctAnswerText: "مناقشة الموضوعات القريبة للمشكلة", explanation: "إجراءات حل المشكلات تركز على المشكلة المحددة وجمع المعلومات حولها، وليس بالضرورة مناقشة موضوعات قريبة بشكل عام كإجراء أساسي." },
+            { type: "mcq", id: "mcq_10", text: "من شروط المشكلة المختارة للدراسة:", options: ["تكوين مناسبة للدراسة وذات صلة قوية بالدرس", "تكون من المشكلات التي يعاني منها المجتمع", "تكون ذات صلة بمشكلات البيئة", "جميع ما سبق"], correctAnswerText: "تكوين مناسبة للدراسة وذات صلة قوية بالدرس", explanation: "يجب أن تكون المشكلة مناسبة لمستوى الطلاب ومرتبطة بموضوع الدرس." },
+            { type: "mcq", id: "mcq_11", text: "ما يلي من مميزات طريقة المحاضرة ماعدا:", options: ["طريقة تدريس اقتصادية", "تسهم في تذكر الطلاب للمعلومات", "تغطي حجم كبي من محتوى المقرر", "لا تحتاج لامكانيات كبيرة"], correctAnswerText: "تسهم في تذكر الطلاب للمعلومات", explanation: "المحاضرة قد لا تكون الأفضل لتذكر المعلومات على المدى الطويل مقارنة بالطرق التفاعلية التي تشرك الطالب بشكل أكبر." },
+            { type: "mcq", id: "mcq_12", text: "مراحل عملية التدريس هي:", options: ["مرحلة النخطيط", "مرحلة التنفيذ", "مرحلة التقويم", "جميع ما سبق"], correctAnswerText: "جميع ما سبق", explanation: "عملية التدريس تشمل التخطيط المسبق (النخطيط)، ثم تنفيذ الخطة، وأخيراً تقويم نتائج عملية التعلم والتعليم." },
+            { type: "mcq", id: "mcq_13", text: "من النتقادات الموجهة لطريقة التدريس:", options: ["تثير دافعية الطلبة للتعلم", "يمكن من خلالها إعطاء كم من المعلومات", "لا تأخذ في الاعتبار الفروق الفردية بين الطلبة", "تأخذ في الاعتبار الفروق الفردية بين الطلبة"], correctAnswerText: "لا تأخذ في الاعتبار الفروق الفردية بين الطلبة", explanation: "هذا النقد يوجه بشكل خاص للطرق التقليدية مثل المحاضرة التي قد لا تراعي الفروق الفردية بشكل كاف." },
+            { type: "mcq", id: "mcq_14", text: "من المبادئ التي يجب ان يراعيها المعلم لتحسين طريقة التدريس:", options: ["مراعاة الفروق الفردية بين المتعلمين", "توفر مبادئ التعلم والتعليم في الطريقة", "تنظيم المحتوى بطريقة تساعد على التعلم الذاتي", "جميع ما سبق ذكرة"], correctAnswerText: "جميع ما سبق ذكرة", explanation: "جميع الخيارات المذكورة هي مبادئ هامة لتحسين طرق التدريس." },
+            { type: "mcq", id: "mcq_15", text: "ما يلي من معايير اختيار طريقة التدريس ماعدا:", options: ["التدرج من الصعب الى السهل", "التدرج من البسيط الى المركب", "الانتقال من العملي للنظري", "الانتقال من المحسوس الى المعقول"], correctAnswerText: "التدرج من الصعب الى السهل", explanation: "المعيار الصحيح هو التدرج من السهل إلى الصعب لبناء الفهم تدريجيًا." },
+            { type: "mcq", id: "mcq_16", text: "ما يلي من استخدامات المحاضرة في مجالات عديدة ماعدا:", options: ["مناقشة الطلاب في ما يفعلونة", "تقديم موضوع جديد", "تلخيص ما سبق للطلبة دراستة", "توجية وارشاد الطلبة الى مصادر المعرفة"], correctAnswerText: "مناقشة الطلاب في ما يفعلونة", explanation: "مناقشة الطلاب هي سمة أساسية لطريقة المناقشة، وليست من استخدامات المحاضرة التقليدية التي تكون عادة أحادية الاتجاه." },
+            { type: "mcq", id: "mcq_17", text: "من مزايا طريقة المناقشة:", options: ["تدفع المتعلمين الى المشاركة بالدرس", "تنمى القدرات الفكرية والمعرفية للمتعلمين", "تنمى لدى المتعلمين حب التعاون والعمل الجماعي", "جميع ما سبق ذكرة"], correctAnswerText: "جميع ما سبق ذكرة", explanation: "كل الخيارات المذكورة هي من مزايا طريقة المناقشة الفعالة." },
+            { type: "mcq", id: "mcq_18", text: "لطريقة المناقشة عدة عيوب منها:", options: ["اشتراك عدد كبير من المتعلمين في المناقشة", "استماع المتعلمين لما يطرحه زملاؤهم", "سيطرة عدد محدود من المتعلمين على المناقشة", "تمكن المعلم من السيطرة على المناقشة"], correctAnswerText: "سيطرة عدد محدود من المتعلمين على المناقشة", explanation: "أحد عيوب طريقة المناقشة هو احتمال سيطرة عدد قليل من الطلاب الأكثر جرأة على النقاش، بينما يظل الآخرون سلبيين." },
+            { type: "mcq", id: "mcq_19", text: "ما يلي من إجراءات طريقة حل المشكلات ماعدا:", options: ["الوصول الى أحكام عامه حول المشكلة", "مناقشه الموضوعات القريبة للمشكلة", "الاحساس بالمشكلة", "تحديد المشكلة"], correctAnswerText: "مناقشه الموضوعات القريبة للمشكلة", explanation: "إجراءات حل المشكلات تركز على المشكلة المحددة وجمع المعلومات حولها، وليس بالضرورة مناقشة موضوعات قريبة بشكل عام كإجراء أساسي." },
+            { type: "mcq", id: "mcq_20", text: "من شروط المشكلة المختارة للدراسة:", options: ["تكون مناسبة للدراسة وذات صلة قوية بالدرس", "تكون من المشكلات التي يعاني منها المجتمع", "تكون ذات صلة بمشكلات البيئة", "جميع ما سبق"], correctAnswerText: "تكون مناسبة للدراسة وذات صلة قوية بالدرس", explanation: "يجب أن تكون المشكلة المختارة للدراسة مناسبة لمستوى الطلاب ومرتبطة بموضوع الدرس لضمان فهمهم وتفاعلهم." },
+            { type: "mcq", id: "mcq_21", text: "من إجراءات طريقة حل المشكلة:", options: ["يساعد المعلم طلابه على اختيار المشكلة المناسبة", "التقويم المستمر المصاحب لطريقة حل المشكلات", "يحث المعلم طلابه على القراءة والاطلاع على مصادر المعرفة", "جميع ما سبق"], correctAnswerText: "جميع ما سبق", explanation: "جميع الخيارات المذكورة هي من الأدوار الهامة للمعلم والإجراءات المتبعة في طريقة حل المشكلات." },
+            { type: "mcq", id: "mcq_22", text: "ما يلي من مزايا طريقة حل المشكلات ماعدا:", options: ["تنمية التفكير العلمي عند الطلاب", "تنمية المهارات العملية والتطبيقية للطلاب", "تنمية روح العمل الجماعي بين الطلاب", "تدريب المتعلمين على مواجهة المشكلات في الحياة الواقعية"], correctAnswerText: "تنمية المهارات العملية والتطبيقية للطلاب", explanation: "جميع الخيارات هي من مزايا طريقة حل المشكلات. ولكن إذا كان لا بد من اختيار واحدة \"عدا\"، فقد تكون تنمية المهارات العملية والتطبيقية أقل مباشرة من تنمية التفكير العلمي أو مواجهة المشكلات، على الرغم من أنها نتيجة طبيعية." },
+            { type: "mcq", id: "mcq_23", text: "من عيوب طريقة حل المشكلات:", options: ["الاعتماد على المعلم وحده في اختيار المشكلة", "عدم تعويد الطلاب على مهارات المناقشة", "قلة المعلومات او المادة العلمية", "جميع ما سبق"], correctAnswerText: "قلة المعلومات او المادة العلمية", explanation: "قد يكون من عيوب طريقة حل المشكلات أنها تتطلب وقتاً وجهداً في البحث عن المعلومات، وقد تكون بعض المعلومات غير متوفرة بسهولة أو تتطلب مستوى أعلى من الفهم." },
+            { type: "mcq", id: "mcq_24", text: "للهداف التربوية أهمية منها:", options: ["تسهم في تصميم المناهج الدراسية", "المساعدة في اختيار استراتيجيات التدريس", "أداة لتقويم اداء الطلاب وتحديد مدى تقدمهم", "جميع ما سبق"], correctAnswerText: "جميع ما سبق", explanation: "الأهداف التربوية توجه جميع جوانب العملية التعليمية بما في ذلك تصميم المناهج واختيار الاستراتيجيات والتقويم." },
+            { type: "mcq", id: "mcq_25", text: "تصنف الأهداف التعليمية الى:", options: ["أهداف تربوية وأهداف تعليمية", "أهداف عامه وأهداف خاصة وأهداف سلوكية", "أهداف اجرائية وأهداف نفسية وأهداف اجتماعية", "أهداف وجدانية وأهداف تربوية وأهداف سلوكية"], correctAnswerText: "أهداف عامه وأهداف خاصة وأهداف سلوكية", explanation: "هذا هو التصنيف الشائع لمستويات الأهداف التعليمية من حيث درجة العمومية والتخصيص." },
+            { type: "mcq", id: "mcq_26", text: "تصنف الاهداف بناء على المجالات التعليمية الى:", options: ["أهداف المناهج الدراسية وأهداف الصفوف الدراسية", "اهداف المجال المعرفى وأهداف المجال الوجدانى واهداف المجال المهاري", "الاهداف السيكولوجية والاهداف الانفعالية والاهداف التعليمية", "الاهداف التعليمية والنفسية والتربوية"], correctAnswerText: "اهداف المجال المعرفى وأهداف المجال الوجدانى واهداف المجال المهاري", explanation: "تصنيف بلوم الشهير يقسم الأهداف التعليمية إلى ثلاثة مجالات رئيسية: المعرفي، الوجداني، والمهاري (النفسحركي)." },
+            { type: "mcq", id: "mcq_27", text: "تصنيف الاهداف التعليمية له اهمية منها:", options: ["توضيح الرؤية", "التخطيط الفعال", "التقويم المنهجي", "جميع ماسبق"], correctAnswerText: "جميع ماسبق", explanation: "تصنيف الأهداف يساعد في توضيح ما يراد تحقيقه، ويسهل عملية التخطيط للوصول إليه، ويساعد في تقويم مدى تحققه." },
+            { type: "mcq", id: "mcq_28", text: "ما يلي من مواصفات الهدف السلوكي ماعدا:", options: ["يصف سلوك المتعلم", "واضح المعنى وقابل للفهم", "يصف سلوك المعلم", "قابل للملاحظة والقياس"], correctAnswerText: "يصف سلوك المعلم", explanation: "الهدف السلوكي يركز على ما يجب أن يكون المتعلم قادرًا على فعله بعد انتهاء عملية التعلم، وليس ما يفعله المعلم." },
+            { type: "mcq", id: "mcq_29", text: "فيما يلى مجموعة من الاهداف السلوكية الصحيحة ماعدا:", options: ["أن يشرح المعلم مكونات الحاسب الألى", "أن يذكر التلميذ وظائف الحاسب الألى", "ن يرسم المتعلم مكونات الحاسب الألى", "أن يقدر المتعلم قيمة الحاسب الألي في الحياة العملية"], correctAnswerText: "أن يشرح المعلم مكونات الحاسب الألى", explanation: "هذا الهدف يصف سلوك المعلم (يشرح المعلم)، بينما الأهداف السلوكية يجب أن تصف سلوك المتعلم (يذكر التلميذ، يرسم المتعلم، يقدر المتعلم)." },
+            { type: "mcq", id: "mcq_30", text: "يرتكز التعلم الالكترونى وفق منظوره الحديث على عدة أسس منها:", options: ["المتعلم إيجابي ونشط", "الاعتماد على توليد المعارف وليس استقبالها", "المعلم موجه ومرشد ومصمم لبيئة التعلم", "جميع ما سبق"], correctAnswerText: "جميع ما سبق", explanation: "التعلم الإلكتروني الحديث يؤكد على دور المتعلم النشط، وبناء المعرفة، ودور المعلم كميسر وموجه." },
+            { type: "mcq", id: "mcq_31", text: "ما يلى من خصائص بيئات التعلم التفاعلية الالكترونية ماعدا:", options: ["التمركز حول المعلم", "تعاونية والمشاركة", "اللاتزامنية في الزمان والمكان", "الموضوعية وعدم التحيز"], correctAnswerText: "التمركز حول المعلم", explanation: "بيئات التعلم التفاعلية الحديثة تتمحور حول المتعلم وتفاعله، وليس حول المعلم كما في الطرق التقليدية." },
+            { type: "mcq", id: "mcq_32", text: "توجد مجموعة من الاسس لتوظيف استراتيجيات التعلم الإلكتروني منها:", options: ["ارتباط الاستراتيجية بأساليب التقويم", "ارتباط الاستراتيجية بالأهداف.", "مراعاة ظروف المعلمين في بيئة التعلم", "جميع ما سبق."], correctAnswerText: "ارتباط الاستراتيجية بالأهداف.", explanation: "الأساس الأول عند اختيار وتوظيف أي استراتيجية تعليمية هو مدى مساهمتها في تحقيق الأهداف التعليمية المحددة." },
+            { type: "mcq", id: "mcq_33", text: "اختيار استراتيجيات التعلم الإلكتروني له عدة معايير منها:", options: ["المعلمين القائمين بالتدريس", "تعدد البيئات التعليمية الالكترونية.", "المتعلمين وخصائصهم", "جميع ما سبق."], correctAnswerText: "المتعلمين وخصائصهم", explanation: "خصائص المتعلمين (مثل عمرهم، خبراتهم السابقة، أنماط تعلمهم) هي من أهم المعايير عند اختيار استراتيجيات التعلم المناسبة." },
+            { type: "mcq", id: "mcq_34", text: "المحاضرة الالكترونية لها عدة مميزات منها:", options: ["يشاهد المتعلم المحاضرة فى المكان والوقت المناسب له", "استعراض مجموعة كبيرة من الخصائص والمفاهيم فى فترة زمنية قصيره", "إمكانية إعادة تشغيلها أو أجزاء منها لمرات متعددة", "جميع ما سبق"], correctAnswerText: "جميع ما سبق", explanation: "كل الخيارات المذكورة هي من مميزات المحاضرة الإلكترونية المسجلة." },
+            { type: "mcq", id: "mcq_35", text: "للتعلم التعاوني فوائد عديدة منها:", options: ["تبادل الافكار بين الطلاب", "مساعدة المعلمين في تنفيذ خططهم التدريسية.", "زيادة الدافعية للتعلم الذاتي", "جميع ما سبق."], correctAnswerText: "تبادل الافكار بين الطلاب", explanation: "تبادل الأفكار وتنوع وجهات النظر هو من أبرز فوائد التعلم التعاوني." },
+            { type: "mcq", id: "mcq_36", text: "ما يلى من شروط التعلم التعاوني ماعدا:", options: ["الانضباط وعدم استغلال الوقت في اللهو", "المجموعة تتكون من 4 افراد او ٦ على الأكثر", "المعلم مرجعا للطلاب في كل وقت", "اعتماد كل من الطلبة على الأخر"], correctAnswerText: "اعتماد كل من الطلبة على الأخر", explanation: "التعلم التعاوني يهدف إلى الاعتماد المتبادل الإيجابي (interdependence)، وليس الاعتماد الكلي السلبي لأحد الأفراد على الآخرين. كل فرد مسؤول عن دوره ومساهمته." },
+            { type: "mcq", id: "mcq_37", text: "التعلم بالبحث له اهمية منها:", options: ["جعل التعلم أسرع.", "جعل التعلم أمتع وأعمق.", "تنمية مهارات التعلم الذاتي لدى المتعلم.", "جميع ما سبق."], correctAnswerText: "جميع ما سبق.", explanation: "التعلم بالبحث يساهم في جعل التعلم أكثر متعة وعمقًا، وينمي مهارات التعلم الذاتي، وقد يؤدي إلى فهم أسرع لبعض المفاهيم نتيجة الاكتشاف الشخصي." }
+        ];
+        // --- Questions End ---
+
+        let sessionQuestions = []; 
+        let currentQuestionIndex = 0;
+        let userAnswers = []; 
+        let flaggedQuestions = []; 
+        let timerInterval;
+        let timeLeftInSeconds = 45 * 60; 
+        const EXAM_DURATION_SECONDS = 45 * 60;
+        let isNoTimerMode = false; 
+
+
+        const landingPage = document.getElementById('landingPage');
+        const examPage = document.getElementById('examPage');
+        const questionDisplayArea = document.getElementById('questionDisplayArea');
+        const progressInfoText = document.getElementById('progressInfoText');
+        const progressBarFill = document.getElementById('progressBarFill');
+        const nextBtn = document.getElementById('nextBtn');
+        const prevBtn = document.getElementById('prevBtn'); 
+        const resultsArea = document.getElementById('resultsArea');
+        const navigationControls = document.getElementById('navigationControls');
+        const scoreContainer = document.getElementById('scoreContainer');
+        const detailedFeedbackContainer = document.getElementById('detailedFeedbackContainer');
+        const timerDisplay = document.getElementById('timerDisplay');
+        const totalQuestionsLandingSpan = document.getElementById('totalQuestionsLanding');
+        const examDurationLandingSpan = document.getElementById('examDurationLanding');
+
+
+        const viewLastResultsBtn = document.getElementById('viewLastResultsBtn');
+        const oldResultsPage = document.getElementById('oldResultsPage');
+        const oldScoreContainer = document.getElementById('oldScoreContainer');
+        const oldDetailedFeedbackContainer = document.getElementById('oldDetailedFeedbackContainer');
+        
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        const themeToggleBtnOldResults = document.getElementById('themeToggleBtnOldResults');
+        const questionNavModal = document.getElementById('questionNavModal');
+        const qNavGridContainer = document.getElementById('qNavGridContainer');
+
+
+        const confirmEndExamModal = document.getElementById('confirmEndExamModal');
+        const confirmEndBtnYes = document.getElementById('confirmEndBtnYes');
+        const confirmEndBtnNo = document.getElementById('confirmEndBtnNo');
+
+
+        const LAST_RESULTS_KEY = 'loftExamLastResults_v3'; 
+        const CURRENT_EXAM_STATE_KEY = 'loftCurrentExamState_v3';
+        const THEME_KEY = 'loftExamTheme_v3';
+        const LAST_EXAM_ATTEMPT_COUNT_KEY = 'loftExamAttemptCount_v3'; 
+
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+
+        function applyTheme(theme) {
+            document.body.className = theme; 
+            const iconClass = theme === 'dark-theme' ? 'fa-sun' : 'fa-moon';
+            if (themeToggleBtn) themeToggleBtn.innerHTML = `<i class="fas ${iconClass}"></i>`;
+            if (themeToggleBtnOldResults) themeToggleBtnOldResults.innerHTML = `<i class="fas ${iconClass}"></i>`;
+            const essayThemeBtn = document.getElementById('themeToggleBtnEssay');
+            if (essayThemeBtn) essayThemeBtn.innerHTML = `<i class="fas ${iconClass}"></i>`;
+            localStorage.setItem(THEME_KEY, theme);
+            
+            if (examPage.style.display === 'block') { 
+                 updateTimerDisplay();
+            }
+        }
+
+        function toggleTheme() {
+            const currentTheme = document.body.classList.contains('dark-theme') ? 'dark-theme' : 'light-theme';
+            const newTheme = currentTheme === 'dark-theme' ? 'light-theme' : 'dark-theme';
+            applyTheme(newTheme);
+        }
+
+
+        function formatTime(totalSeconds) {
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        function updateTimerDisplay() {
+            if (!timerDisplay) return;
+
+            if (isNoTimerMode) { 
+                timerDisplay.textContent = "وقت مفتوح";
+                timerDisplay.style.color = 'var(--text-secondary)';
+                timerDisplay.style.backgroundColor = 'rgba(var(--secondary-rgb), 0.1)';
+                timerDisplay.style.borderColor = 'rgba(var(--secondary-rgb), 0.2)'; 
+                return;
+            }
+            
+            timerDisplay.textContent = formatTime(timeLeftInSeconds);
+            
+            const currentThemeIsDark = document.body.classList.contains('dark-theme');
+            const warningColorRGB = getComputedStyle(document.documentElement).getPropertyValue('--warning-rgb').trim();
+            const dangerColorRGB = getComputedStyle(document.documentElement).getPropertyValue('--danger-rgb').trim();
+
+
+            if (timeLeftInSeconds <= 0) { 
+                timerDisplay.textContent = '00:00';
+                timerDisplay.style.color = 'var(--danger-color)';
+                timerDisplay.style.backgroundColor = `rgba(${dangerColorRGB}, 0.15)`;
+                timerDisplay.style.borderColor = `rgba(${dangerColorRGB}, 0.3)`;
+            } else if (timeLeftInSeconds <= 60) {
+                timerDisplay.style.color = 'var(--danger-color)';
+                timerDisplay.style.backgroundColor = `rgba(${dangerColorRGB}, 0.15)`;
+                timerDisplay.style.borderColor = `rgba(${dangerColorRGB}, 0.3)`;
+            } else { 
+                timerDisplay.style.color = 'var(--warning-color)';
+                timerDisplay.style.backgroundColor = `rgba(${warningColorRGB}, 0.12)`;
+                timerDisplay.style.borderColor = `rgba(${warningColorRGB}, 0.2)`;
+            }
+        }
+
+
+        function startTimer() {
+            if (isNoTimerMode) { 
+                updateTimerDisplay(); 
+                return;
+            }
+            updateTimerDisplay(); 
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                timeLeftInSeconds--;
+                updateTimerDisplay();
+                if (timeLeftInSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    timeLeftInSeconds = 0; 
+                    updateTimerDisplay(); 
+                    if (!(resultsArea.style.display === 'block' && resultsArea.classList.contains('visible'))) {
+                        alert("انتهى الوقت! سيتم تصحيح إجاباتك الآن.");
+                        autoSubmitExam();
+                    }
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function saveCurrentExamState() {
+            if (examPage.style.display !== 'block' || (resultsArea.style.display === 'block' && resultsArea.classList.contains('visible'))) {
+                return;
+            }
+            const sessionQuestionIdsInOrder = sessionQuestions.map(q => q.id);
+            const stateToSave = {
+                sessionQuestionIdsInOrder: sessionQuestionIdsInOrder,
+                currentQuestionIndex: currentQuestionIndex,
+                userAnswers: userAnswers,
+                flaggedQuestions: flaggedQuestions,
+                timeLeftInSeconds: timeLeftInSeconds,
+                isNoTimerMode: isNoTimerMode, 
+                timestamp: Date.now()
+            };
+            try {
+                localStorage.setItem(CURRENT_EXAM_STATE_KEY, JSON.stringify(stateToSave));
+            } catch (e) { console.error("Error saving current exam state:", e); }
+        }
+
+        function clearCurrentExamState() {
+            try {
+                localStorage.removeItem(CURRENT_EXAM_STATE_KEY);
+            } catch (e) { console.error("Error clearing current exam state:", e); }
+        }
+
+        function loadAndRestoreExamState() {
+            try {
+                const savedStateJSON = localStorage.getItem(CURRENT_EXAM_STATE_KEY);
+                if (!savedStateJSON) return false;
+
+                const savedState = JSON.parse(savedStateJSON);
+                
+                if (!savedState.sessionQuestionIdsInOrder || savedState.sessionQuestionIdsInOrder.length === 0) {
+                    clearCurrentExamState(); return false; 
+                }
+                sessionQuestions = savedState.sessionQuestionIdsInOrder.map(id => allQuestions.find(q => q.id === id)).filter(q => q); 
+                
+                if(sessionQuestions.length !== savedState.sessionQuestionIdsInOrder.length || sessionQuestions.length === 0){
+                     clearCurrentExamState(); return false; 
+                }
+
+                currentQuestionIndex = savedState.currentQuestionIndex;
+                userAnswers = savedState.userAnswers || [];
+                flaggedQuestions = savedState.flaggedQuestions || [];
+                timeLeftInSeconds = savedState.timeLeftInSeconds;
+                isNoTimerMode = savedState.isNoTimerMode || false; 
+
+                if (!isNoTimerMode && timeLeftInSeconds <= 0) { 
+                    clearCurrentExamState(); 
+                    return false; 
+                }
+                 if (currentQuestionIndex >= sessionQuestions.length && !(resultsArea.style.display === 'block' && resultsArea.classList.contains('visible'))) {
+                    clearCurrentExamState();
+                    return false;
+                }
+
+
+                landingPage.style.display = 'none';
+                if(oldResultsPage) oldResultsPage.style.display = 'none';
+                if(essayExamPage) essayExamPage.style.display = 'none';
+                
+                examPage.style.display = 'block';
+                examPage.style.opacity = '1';
+                examPage.style.transform = 'none';
+                examPage.style.animation = '';
+
+                resultsArea.style.display = 'none';
+                resultsArea.classList.remove('visible');
+                navigationControls.style.display = 'flex'; 
+                questionDisplayArea.style.display = 'block';
+
+                if (isNoTimerMode) { 
+                    updateTimerDisplay(); 
+                } else {
+                    startTimer(); 
+                }
+                displayCurrentQuestion();
+                renderQuestionNavPanel();
+                
+                return true;
+            } catch (e) {
+                console.error("Error loading/restoring exam state:", e);
+                clearCurrentExamState();
+                return false;
+            }
+        }
+
+        function startExam(randomize = false, noTimer = false) {
+            isNoTimerMode = noTimer; 
+            
+            clearCurrentExamState(); 
+            stopTimer(); 
+
+            if (randomize) {
+                sessionQuestions = shuffleArray(allQuestions);
+            } else {
+                sessionQuestions = [...allQuestions];
+            }
+
+            landingPage.style.animation = 'fadeOutSlideUp 0.4s ease-in forwards';
+            if(oldResultsPage) oldResultsPage.style.display = 'none';
+            if(essayExamPage) essayExamPage.style.display = 'none';
+
+            setTimeout(() => {
+                landingPage.style.display = 'none';
+                landingPage.style.animation = '';
+
+                examPage.style.display = 'block';
+                examPage.style.opacity = '0';
+                examPage.style.transform = 'scale(0.97)';
+                examPage.style.animation = 'fadeInScaleUp 0.5s ease-out forwards';
+
+                currentQuestionIndex = 0;
+                userAnswers = [];
+                flaggedQuestions = [];
+                timeLeftInSeconds = EXAM_DURATION_SECONDS; 
+
+                resultsArea.style.display = 'none';
+                resultsArea.classList.remove('visible');
+                navigationControls.style.display = 'flex'; 
+                questionDisplayArea.style.display = 'block';
+                
+                if(prevBtn) prevBtn.disabled = true; 
+                if(nextBtn) {
+                    nextBtn.disabled = true;
+                    nextBtn.innerHTML = `التالي <i class="fas fa-arrow-left icon-after-text"></i>`;
+                }
+                
+                if (isNoTimerMode) { 
+                    updateTimerDisplay(); 
+                } else {
+                    startTimer();
+                }
+                displayCurrentQuestion();
+                renderQuestionNavPanel();
+            }, 400);
+        }
+        
+        function handleAnswerSelection() {
+            const selectedOption = document.querySelector('input[name="q_option"]:checked');
+            if (!selectedOption || currentQuestionIndex >= sessionQuestions.length) {
+                if(nextBtn) nextBtn.disabled = true;
+                return;
+            }
+            if(nextBtn) nextBtn.disabled = false;
+
+
+            const currentQ = sessionQuestions[currentQuestionIndex];
+            const existingAnswerIndex = userAnswers.findIndex(ans => ans.questionId === currentQ.id);
+            
+            let userAnswerValue = selectedOption.value;
+            let isCorrect = false;
+            let correctAnswerText;
+
+            if (currentQ.type === "tf") {
+                const userAnswerBoolean = (userAnswerValue === 'true');
+                isCorrect = (userAnswerBoolean === currentQ.answer);
+                correctAnswerText = currentQ.answer ? 'صحيح' : 'خطأ';
+            } else if (currentQ.type === "mcq") {
+                isCorrect = (userAnswerValue === currentQ.correctAnswerText);
+                correctAnswerText = currentQ.correctAnswerText;
+            }
+            
+            const answerData = {
+                questionId: currentQ.id,
+                userAnswerValue: userAnswerValue,
+                isCorrect: isCorrect,
+                correctAnswer: correctAnswerText,
+                questionIndexInSession: currentQuestionIndex 
+            };
+
+            if (existingAnswerIndex !== -1) {
+                userAnswers[existingAnswerIndex] = answerData;
+            } else {
+                userAnswers.push(answerData);
+            }
+            renderQuestionNavPanel(); 
+            saveCurrentExamState(); 
+        }
+
+
+        function handleNextQuestion() {
+            if (!isNoTimerMode && timeLeftInSeconds <= 0 && timerInterval) return;
+
+            const selectedOption = document.querySelector('input[name="q_option"]:checked');
+            if (!selectedOption) {
+                alert("الرجاء اختيار إجابة للمتابعة.");
+                return;
+            }
+            
+            handleAnswerSelection(); 
+
+            currentQuestionIndex++;
+            
+            if (currentQuestionIndex >= sessionQuestions.length) {
+                if (!isNoTimerMode) stopTimer(); 
+                showResults();
+            } else {
+                displayCurrentQuestion();
+                renderQuestionNavPanel(); 
+            }
+        }
+
+        function handlePreviousQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                saveCurrentExamState(); 
+                displayCurrentQuestion();
+                renderQuestionNavPanel();
+            }
+        }
+        
+        function showConfirmEndModal() {
+            const attemptInfoEl = document.getElementById('confirmEndAttemptInfo');
+            const timeInfoEl = document.getElementById('confirmEndTimeInfo');
+
+            if (attemptInfoEl && timeInfoEl) {
+                let displayAttemptNumber = 1;
+                try {
+                    const savedAttemptCount = localStorage.getItem(LAST_EXAM_ATTEMPT_COUNT_KEY);
+                    if (savedAttemptCount) {
+                        displayAttemptNumber = parseInt(savedAttemptCount, 10) + 1;
+                    }
+                } catch (e) {
+                    console.error("Error reading attempt count for confirm modal:", e);
+                }
+                attemptInfoEl.innerHTML = `<i class="fas fa-hashtag icon-before-text" style="color: var(--primary-color);"></i> سيتم تسجيل هذه المحاولة بالرقم: <strong style="color: var(--primary-color);">${displayAttemptNumber}</strong>`;
+
+                const now = new Date();
+                const formattedDateTime = now.toLocaleString('ar-EG', {
+                    weekday: 'long', 
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                });
+                timeInfoEl.innerHTML = `<i class="fas fa-calendar-alt icon-before-text" style="color: var(--primary-color);"></i> التاريخ والوقت الحالي: <strong style="color: var(--primary-color);">${formattedDateTime}</strong>`;
+            }
+
+            if(confirmEndExamModal) confirmEndExamModal.style.display = "block";
+        }
+
+        function hideConfirmEndModal() {
+            if(confirmEndExamModal) confirmEndExamModal.style.display = "none";
+        }
+
+        function confirmEndExam() {
+            handleAnswerSelection(); 
+            showConfirmEndModal();
+        }
+
+        function autoSubmitExam() {
+            if ((resultsArea.style.display === 'block' && resultsArea.classList.contains('visible')) || examPage.style.display !== 'block') {
+                return;
+            }
+            if (!isNoTimerMode) stopTimer(); 
+            handleAnswerSelection(); 
+            showResults(); 
+            if(nextBtn) nextBtn.disabled = true;
+            if(prevBtn) prevBtn.disabled = true;
+            const radioInputs = questionDisplayArea.querySelectorAll('input[type="radio"]');
+            if(radioInputs) radioInputs.forEach(input => input.disabled = true);
+        }
+
+        function showResults() {
+            if (resultsArea.classList.contains('visible')) return;
+
+            if (!isNoTimerMode) stopTimer(); 
+            clearCurrentExamState(); 
+
+            questionDisplayArea.style.display = 'none';
+            navigationControls.style.display = 'none'; 
+            if(progressInfoText) progressInfoText.textContent = 'اكتمل الاختبار!';
+            if(progressBarFill) progressBarFill.style.width = '100%';
+            if(progressBarFill.parentElement) progressBarFill.parentElement.setAttribute('aria-valuenow', '100');
+            
+            resultsArea.style.display = 'block';
+            resultsArea.classList.add('visible');
+            resultsArea.style.opacity = '0'; 
+            resultsArea.style.transform = 'translateY(20px)';
+            resultsArea.style.animation = 'fadeInSlideUp 0.5s ease-out forwards';
+
+            let score = 0;
+            detailedFeedbackContainer.innerHTML = '';
+
+            sessionQuestions.forEach((q_session, index) => {
+                const userAnswerData = userAnswers.find(ans => ans.questionId === q_session.id);
+                const originalQuestionData = allQuestions.find(oq => oq.id === q_session.id); 
+
+                let isCorrect = false;
+                let userAnswerDisplay = "لم تتم الإجابة";
+                let correctAnswerForDisplay = q_session.type === "tf" ? (q_session.answer ? 'صحيح' : 'خطأ') : q_session.correctAnswerText;
+
+
+                if (userAnswerData) {
+                    isCorrect = userAnswerData.isCorrect;
+                    userAnswerDisplay = userAnswerData.userAnswerValue;
+                    if (q_session.type === 'tf') {
+                        userAnswerDisplay = (userAnswerData.userAnswerValue === 'true') ? 'صحيح' : 'خطأ';
+                    }
+                }
+                if (isCorrect) score++;
+
+
+                const feedbackItem = document.createElement('div');
+                feedbackItem.classList.add('feedback-item', isCorrect ? 'correct' : 'incorrect');
+                
+                let explanationHTML = '';
+                if (originalQuestionData && originalQuestionData.explanation) {
+                    explanationHTML = `<div class="explanation"><strong>توضيح:</strong> ${originalQuestionData.explanation}</div>`;
+                }
+
+                feedbackItem.innerHTML = `
+                    <p><strong>السؤال ${index + 1}:</strong> ${q_session.text}</p>
+                    <p class="user-answer">إجابتك: ${userAnswerDisplay}</p>
+                    ${!isCorrect ? `<p>الإجابة الصحيحة: <span class="correct-answer-text">${correctAnswerForDisplay}</span></p>` : ''}
+                    ${explanationHTML}
+                `;
+                detailedFeedbackContainer.appendChild(feedbackItem);
+            });
+
+            let attemptCount = 0;
+            try {
+                const savedAttemptCount = localStorage.getItem(LAST_EXAM_ATTEMPT_COUNT_KEY);
+                if (savedAttemptCount) {
+                    attemptCount = parseInt(savedAttemptCount, 10);
+                }
+            } catch (e) { console.error("Error reading attempt count:", e); }
+            
+            attemptCount++; 
+
+            try {
+                localStorage.setItem(LAST_EXAM_ATTEMPT_COUNT_KEY, attemptCount.toString());
+            } catch (e) { console.error("Error saving attempt count:", e); }
+            
+            const completionTimestamp = new Date().toLocaleString('ar-EG', {
+                 weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
+                 hour: '2-digit', minute: '2-digit'
+            });
+
+            let scoreIcon = '';
+            let scoreTextPrefix = `نتائج المحاولة رقم ${attemptCount}`;
+            
+            if (score === sessionQuestions.length) {
+                scoreContainer.style.backgroundColor = 'var(--success-color)';
+                scoreContainer.style.color = 'var(--text-on-primary-button)';
+                scoreContainer.style.borderColor = 'var(--success-gradient-end)';
+                scoreIcon = '<i class="fas fa-trophy"></i>';
+            } else if (score >= sessionQuestions.length * 0.7) {
+                scoreContainer.style.backgroundColor = 'var(--success-color)'; 
+                scoreContainer.style.color = 'var(--text-on-primary-button)';
+                scoreContainer.style.borderColor = 'var(--success-gradient-end)';
+                scoreIcon = '<i class="fas fa-check-circle"></i>';
+            } else if (score >= sessionQuestions.length * 0.4) {
+                scoreContainer.style.backgroundColor = 'var(--warning-color)';
+                scoreContainer.style.color = document.body.classList.contains('dark-theme') ? '#000' : 'var(--text-primary-light)';
+                scoreContainer.style.borderColor = 'rgba(var(--warning-rgb), 0.5)';
+                scoreIcon = '<i class="fas fa-exclamation-circle"></i>';
+            } else {
+                scoreContainer.style.backgroundColor = 'var(--danger-color)';
+                scoreContainer.style.color = 'var(--text-on-primary-button)';
+                scoreContainer.style.borderColor = 'rgba(var(--danger-rgb), 0.8)';
+                scoreIcon = '<i class="fas fa-times-circle"></i>';
+            }
+
+            scoreContainer.innerHTML = `
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 10px; font-size: 0.9em;">
+                    <span style="font-weight: 600;">${scoreTextPrefix} (${completionTimestamp}) ${scoreIcon}</span>
+                    <span style="font-size: 1.3em; font-weight: bold;">النتيجة: ${score} من ${sessionQuestions.length}</span>
+                </div>
+            `;
+
+
+            const resultsToSave = {
+                score: score, 
+                totalQuestions: sessionQuestions.length, 
+                answers: userAnswers, 
+                sessionQuestionIdsInOrder: sessionQuestions.map(q => q.id), 
+                timestamp: completionTimestamp,
+                attemptNumber: attemptCount 
+            };
+
+            try {
+                localStorage.setItem(LAST_RESULTS_KEY, JSON.stringify(resultsToSave));
+                if (viewLastResultsBtn) {
+                    viewLastResultsBtn.disabled = false;
+                    viewLastResultsBtn.innerHTML = `<i class="fas fa-history icon-before-text"></i> عرض نتائج المحاولة رقم ${attemptCount}`;
+                }
+            } catch (e) { console.error("Error saving results to localStorage:", e); }
+        }
+        
+        function restartExam() {
+            if (!isNoTimerMode) stopTimer(); 
+            clearCurrentExamState();
+            isNoTimerMode = false; 
+            
+            resultsArea.style.animation = 'fadeOutSlideUp 0.4s ease-in forwards';
+            examPage.style.animation = 'fadeOutSlideUp 0.4s ease-in forwards';
+
+            setTimeout(() => {
+                resultsArea.style.display = 'none';
+                resultsArea.classList.remove('visible');
+                resultsArea.style.animation = '';
+
+                examPage.style.display = 'none';
+                examPage.style.animation = '';
+                navigationControls.style.display = 'flex'; 
+
+                landingPage.style.display = 'block';
+                landingPage.style.opacity = '0';
+                landingPage.style.transform = 'translateY(20px)';
+                landingPage.style.animation = 'fadeInSlideUp 0.6s ease-out forwards';
+                checkForOldResults(); 
+            }, 400);
+        }
+
+        function displayCurrentQuestion() {
+            if (!isNoTimerMode && timeLeftInSeconds <= 0 && timerInterval) {
+                if (!(resultsArea.style.display === 'block' && resultsArea.classList.contains('visible'))) {
+                    autoSubmitExam();
+                }
+                return;
+            }
+
+            if (currentQuestionIndex >= sessionQuestions.length) {
+                if (!(resultsArea.style.display === 'block' && resultsArea.classList.contains('visible'))) {
+                     showResults();
+                }
+                return;
+            }
+
+            const q = sessionQuestions[currentQuestionIndex];
+            let optionsHTML = '';
+
+            const flagBtnHTML = `
+                <button class="flag-question-btn btn" onclick="toggleFlagQuestion('${q.id}')" aria-pressed="${flaggedQuestions.includes(q.id)}">
+                    <i class="fas fa-flag"></i> ${flaggedQuestions.includes(q.id) ? 'إلغاء التعليم' : 'تعليم للمراجعة'}
+                </button>`;
+
+            if (q.type === "tf") {
+                optionsHTML = `
+                    <div class="option-item">
+                        <label>
+                            <input type="radio" name="q_option" value="true" onchange="handleAnswerSelection()">
+                            <span><i class="fas fa-check icon-before-text" style="color: var(--success-color);"></i> صحيح</span>
+                        </label>
+                    </div>
+                    <div class="option-item">
+                        <label>
+                            <input type="radio" name="q_option" value="false" onchange="handleAnswerSelection()">
+                            <span><i class="fas fa-times icon-before-text" style="color: var(--danger-color);"></i> خطأ</span>
+                        </label>
+                    </div>
+                `;
+            } else if (q.type === "mcq") {
+                optionsHTML = q.options.map(opt => `
+                    <div class="option-item">
+                        <label>
+                            <input type="radio" name="q_option" value="${opt.replace(/"/g, '"')}" onchange="handleAnswerSelection()">
+                            <span>${opt}</span>
+                        </label>
+                    </div>
+                `).join('');
+            }
+
+            const questionCardHTML = `
+                <div class="question-card-loft">
+                    <div class="question-actions">
+                        ${flagBtnHTML}
+                    </div>
+                    <p class="question-statement" id="questionStatement${q.id}">${q.text}</p>
+                    <div class="options-list" role="radiogroup" aria-labelledby="questionStatement${q.id}">
+                        ${optionsHTML}
+                    </div>
+                </div>
+            `;
+            
+            const oldCard = questionDisplayArea.querySelector('.question-card-loft');
+            if (oldCard) {
+                oldCard.classList.remove('entering');
+                oldCard.classList.add('exiting');
+                oldCard.addEventListener('animationend', () => {
+                    if (oldCard.classList.contains('exiting')) { 
+                        questionDisplayArea.innerHTML = questionCardHTML; 
+                        const newCard = questionDisplayArea.querySelector('.question-card-loft');
+                        if (newCard) newCard.classList.add('entering');
+                        postRenderQuestionSetup();
+                    }
+                }, { once: true });
+            } else {
+                questionDisplayArea.innerHTML = questionCardHTML; 
+                const newCard = questionDisplayArea.querySelector('.question-card-loft');
+                if (newCard) newCard.classList.add('entering');
+                postRenderQuestionSetup();
+            }
+            
+            if(progressInfoText) progressInfoText.textContent = `السؤال ${currentQuestionIndex + 1} من ${sessionQuestions.length}`;
+            const progressPercent = sessionQuestions.length > 0 ? ((currentQuestionIndex + 1) / sessionQuestions.length) * 100 : 0;
+            if(progressBarFill) progressBarFill.style.width = `${progressPercent}%`;
+            if(progressBarFill.parentElement) progressBarFill.parentElement.setAttribute('aria-valuenow', Math.round(progressPercent));
+        }
+
+        function postRenderQuestionSetup() {
+            if(nextBtn) {
+                nextBtn.disabled = true; 
+                if (currentQuestionIndex === sessionQuestions.length - 1) {
+                    nextBtn.innerHTML = `إنهاء الاختبار <i class="fas fa-flag-checkered icon-after-text"></i>`;
+                     nextBtn.setAttribute('aria-label', 'إنهاء الاختبار');
+                } else {
+                    nextBtn.innerHTML = `التالي <i class="fas fa-arrow-left icon-after-text"></i>`;
+                    nextBtn.setAttribute('aria-label', 'السؤال التالي');
+                }
+            }
+
+            if (prevBtn) {
+                prevBtn.disabled = (currentQuestionIndex === 0);
+            }
+
+            const currentQId = sessionQuestions[currentQuestionIndex].id;
+            const previousAnswerForThisQuestion = userAnswers.find(ans => ans.questionId === currentQId);
+            if (previousAnswerForThisQuestion) {
+                const escapedValue = previousAnswerForThisQuestion.userAnswerValue.replace(/"/g, '\\"');
+                const optionInput = document.querySelector(`input[name="q_option"][value="${escapedValue}"]`);
+                if (optionInput) {
+                    optionInput.checked = true;
+                    if(nextBtn) nextBtn.disabled = false; 
+                }
+            }
+            const flagButton = questionDisplayArea.querySelector('.flag-question-btn');
+            if (flagButton) {
+                const isFlagged = flaggedQuestions.includes(currentQId);
+                flagButton.classList.toggle('flagged', isFlagged);
+                flagButton.innerHTML = `<i class="fas fa-flag"></i> ${isFlagged ? 'إلغاء التعليم' : 'تعليم للمراجعة'}`;
+                flagButton.setAttribute('aria-pressed', isFlagged);
+            }
+        }
+        
+        function toggleFlagQuestion(questionId) {
+            const index = flaggedQuestions.indexOf(questionId);
+            if (index > -1) {
+                flaggedQuestions.splice(index, 1);
+            } else {
+                flaggedQuestions.push(questionId);
+            }
+            postRenderQuestionSetup(); 
+            renderQuestionNavPanel(); 
+            saveCurrentExamState();
+        }
+
+
+        function renderQuestionNavPanel() {
+            if (!qNavGridContainer || !sessionQuestions) return;
+            qNavGridContainer.innerHTML = '';
+            sessionQuestions.forEach((q, index) => {
+                const item = document.createElement('button');
+                item.classList.add('q-nav-item');
+                item.textContent = index + 1;
+                item.setAttribute('aria-label', `الانتقال إلى السؤال ${index + 1}`);
+                
+                const userAnswer = userAnswers.find(ans => ans.questionId === q.id);
+                if (userAnswer) {
+                    item.classList.add('answered');
+                }
+                if (flaggedQuestions.includes(q.id)) {
+                    item.classList.add('flagged');
+                }
+                if (index === currentQuestionIndex) {
+                    item.classList.add('current');
+                    item.setAttribute('aria-current', 'true');
+                }
+                item.onclick = () => {
+                    navigateToQuestion(index);
+                    toggleQuestionNavModal(); 
+                };
+                qNavGridContainer.appendChild(item);
+            });
+        }
+
+        function navigateToQuestion(index) {
+            if (index >= 0 && index < sessionQuestions.length) {
+                handleAnswerSelection(); 
+                currentQuestionIndex = index;
+                saveCurrentExamState();
+                displayCurrentQuestion();
+                renderQuestionNavPanel(); 
+            }
+        }
+
+        function toggleQuestionNavModal() {
+            if (questionNavModal.style.display === "block") {
+                questionNavModal.style.display = "none";
+            } else {
+                renderQuestionNavPanel(); 
+                questionNavModal.style.display = "block";
+            }
+        }
+
+
+        function checkForOldResults() {
+            if (viewLastResultsBtn) {
+                try {
+                    const savedResultsJSON = localStorage.getItem(LAST_RESULTS_KEY);
+                    if (savedResultsJSON) {
+                        const savedResults = JSON.parse(savedResultsJSON);
+                        viewLastResultsBtn.disabled = false;
+                        if (savedResults.attemptNumber) {
+                            viewLastResultsBtn.innerHTML = `<i class="fas fa-history icon-before-text"></i> عرض نتائج المحاولة رقم ${savedResults.attemptNumber}`;
+                        } else {
+                            viewLastResultsBtn.innerHTML = `<i class="fas fa-history icon-before-text"></i> عرض نتائج آخر اختبار`;
+                        }
+                    } else {
+                        viewLastResultsBtn.disabled = true;
+                        viewLastResultsBtn.innerHTML = `<i class="fas fa-history icon-before-text"></i> عرض نتائج آخر اختبار`; 
+                    }
+                } catch (e) {
+                    console.error("Error checking localStorage for old results:", e);
+                    viewLastResultsBtn.disabled = true;
+                    viewLastResultsBtn.innerHTML = `<i class="fas fa-history icon-before-text"></i> عرض نتائج آخر اختبار`; 
+                }
+            }
+        }
+
+        function viewLastResults() {
+            if (!isNoTimerMode) stopTimer(); 
+            landingPage.style.display = 'none';
+            landingPage.style.animation = '';
+            examPage.style.display = 'none';
+            examPage.style.animation = '';
+            if(oldResultsPage) oldResultsPage.style.display = 'none';
+            if(essayExamPage) essayExamPage.style.display = 'none';
+
+            try {
+                const savedData = localStorage.getItem(LAST_RESULTS_KEY);
+                if (!savedData) {
+                    alert("لا توجد نتائج سابقة محفوظة.");
+                    landingPage.style.display = 'block';
+                    landingPage.style.animation = 'fadeInSlideUp 0.6s ease-out forwards';
+                    return;
+                }
+                const lastResults = JSON.parse(savedData);
+                
+                let oldScoreIcon = '';
+                let scoreHeaderText = `النتيجة السابقة`;
+                 if (lastResults.attemptNumber) {
+                    scoreHeaderText = `نتائج المحاولة رقم ${lastResults.attemptNumber}`;
+                }
+
+                if (lastResults.score === lastResults.totalQuestions) {
+                    oldScoreContainer.style.backgroundColor = 'var(--success-color)';
+                    oldScoreContainer.style.color = 'var(--text-on-primary-button)';
+                    oldScoreContainer.style.borderColor = 'var(--success-gradient-end)';
+                    oldScoreIcon = '<i class="fas fa-trophy"></i>';
+                } else if (lastResults.score >= lastResults.totalQuestions * 0.7) {
+                    oldScoreContainer.style.backgroundColor = 'var(--success-color)';
+                    oldScoreContainer.style.color = 'var(--text-on-primary-button)';
+                     oldScoreContainer.style.borderColor = 'var(--success-gradient-end)';
+                    oldScoreIcon = '<i class="fas fa-check-circle"></i>';
+                } else if (lastResults.score >= lastResults.totalQuestions * 0.4) {
+                    oldScoreContainer.style.backgroundColor = 'var(--warning-color)';
+                    oldScoreContainer.style.color = document.body.classList.contains('dark-theme') ? '#000' : 'var(--text-primary-light)';
+                    oldScoreContainer.style.borderColor = 'rgba(var(--warning-rgb), 0.5)';
+                    oldScoreIcon = '<i class="fas fa-exclamation-circle"></i>';
+                } else {
+                    oldScoreContainer.style.backgroundColor = 'var(--danger-color)';
+                    oldScoreContainer.style.color = 'var(--text-on-primary-button)';
+                    oldScoreContainer.style.borderColor = 'rgba(var(--danger-rgb), 0.8)';
+                    oldScoreIcon = '<i class="fas fa-times-circle"></i>';
+                }
+                
+                oldScoreContainer.innerHTML = `
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 10px; font-size: 0.9em;">
+                        <span style="font-weight: 600;">${scoreHeaderText} (${lastResults.timestamp || ''}) ${oldScoreIcon}</span>
+                        <span style="font-size: 1.3em; font-weight: bold;">النتيجة: ${lastResults.score} من ${lastResults.totalQuestions}</span>
+                    </div>
+                `;
+
+
+                oldDetailedFeedbackContainer.innerHTML = '';
+                if (lastResults.answers && Array.isArray(lastResults.answers) && lastResults.sessionQuestionIdsInOrder) {
+                     lastResults.sessionQuestionIdsInOrder.forEach((qId, index) => {
+                        const originalQuestionData = allQuestions.find(oq => oq.id === qId);
+                        if (!originalQuestionData) return; 
+
+                        const userAnswerData = lastResults.answers.find(ans => ans.questionId === qId);
+                        
+                        let isCorrect = false;
+                        let userAnswerDisplay = "لم تتم الإجابة";
+                        let correctAnswerForDisplay = originalQuestionData.type === "tf" ? (originalQuestionData.answer ? 'صحيح' : 'خطأ') : originalQuestionData.correctAnswerText;
+
+                        if (userAnswerData) {
+                            isCorrect = userAnswerData.isCorrect;
+                            userAnswerDisplay = userAnswerData.userAnswerValue;
+                             if (originalQuestionData.type === 'tf') {
+                                userAnswerDisplay = (userAnswerData.userAnswerValue === 'true') ? 'صحيح' : 'خطأ';
+                            }
+                        }
+
+                        const feedbackItem = document.createElement('div');
+                        feedbackItem.classList.add('feedback-item', isCorrect ? 'correct' : 'incorrect');
+                        
+                        let explanationHTML = '';
+                        if (originalQuestionData.explanation) {
+                            explanationHTML = `<div class="explanation"><strong>توضيح:</strong> ${originalQuestionData.explanation}</div>`;
+                        }
+
+                        feedbackItem.innerHTML = `
+                            <p><strong>السؤال ${index + 1}:</strong> ${originalQuestionData.text}</p>
+                            <p class="user-answer">إجابتك: ${userAnswerDisplay}</p>
+                            ${!isCorrect ? `<p>الإجابة الصحيحة: <span class="correct-answer-text">${correctAnswerForDisplay}</span></p>` : ''}
+                            ${explanationHTML}
+                        `;
+                        oldDetailedFeedbackContainer.appendChild(feedbackItem);
+                    });
+                }
+
+
+                if(oldResultsPage) {
+                    oldResultsPage.style.display = 'block';
+                    oldResultsPage.style.opacity = '0';
+                    oldResultsPage.style.transform = 'translateY(20px)';
+                    oldResultsPage.style.animation = 'fadeInSlideUp 0.5s ease-out forwards';
+                }
+            } catch (e) {
+                console.error("Error displaying last results:", e);
+                alert("حدث خطأ أثناء عرض النتائج السابقة.");
+                landingPage.style.display = 'block';
+                landingPage.style.animation = 'fadeInSlideUp 0.6s ease-out forwards';
+            }
+        }
+
+        function closeOldResults() {
+            if(oldResultsPage){
+                oldResultsPage.style.animation = 'fadeOutSlideUp 0.4s ease-in forwards';
+                 setTimeout(() => {
+                    oldResultsPage.style.display = 'none';
+                    oldResultsPage.style.animation = '';
+                    landingPage.style.display = 'block';
+                    landingPage.style.opacity = '0';
+                    landingPage.style.transform = 'translateY(20px)';
+                    landingPage.style.animation = 'fadeInSlideUp 0.6s ease-out forwards';
+                    checkForOldResults();
+                }, 400);
+            }
+        }
+
+        // --- Essay Questions Logic ---
+        const essayQuestionsData = [
+            {
+                id: "essay_q1",
+                title: "السؤال الأول: مفاهيم أساسية",
+                text: "اكتب فيما يلي:\n1. مفهوم التعليم.\n2. مفهوم التعلم.\n3. مفهوم التدريس.",
+                modelAnswer: "التعلم:\nهو عملية ذاتية وفردية يقوم بها المتعلم لاكتساب المعرفة والمهارات والخبرات من خلال التفاعل مع البيئة المحيطة به.\n\nالتعليم:\nهو عملية موجهة يقوم بها المعلم بهدف إيصال المعرفة وتنظيمها للمتعلمين و يتميز التعليم بطابعه المخطط، حيث يسعى المعلم إلى تقديم المحتوى بطريقة تسهم في تحقيق أهداف تعليمية محددة.\n\nالتدريس:\nهو الإطار العملي الذي يجمع بين التعليم والتعلم. إنه عملية تفاعلية تتضمن تخطيطا وتنفيذا وتقويما من قبل المعلم."
+            },
+            {
+                id: "essay_q2",
+                title: "السؤال الثاني: طريقة المحاضرة",
+                text: "مزايا طريقة المحاضرة و الانتقادات المقدمة إليها؟",
+                modelAnswer: "مزايا طريقة المحاضرة:\n1. اقتصادية:\n   • تساعد على تغطية حجم كبير من محتوى المقرر الدراسي.\n   • لا تتطلب إنشاء مختبرات أو شراء مواد وأدوات قد تكون مكلفة لبعض المدارس.\n2. تنظيم المعلومات: تسمح بعرض المعلومات بشكل متصل ومنظم، مما يقلل من الفجوات التي قد تشتت الأفكار.\n3. مناسبة لموضوعات جديدة: مناسبة لتقديم موضوعات جديدة وخاصة عند عدم توافر وسائل تعليمية أخرى.\n4. إمكانية أن تكون مشوقة وفعالة نسبياً (بشروط): إذا تميز المعلم بلغة خطابية وأسلوب عرض جذاب، واستخدم وسائل تعليمية متنوعة، واستطاع جذب انتباه الطلبة.\n5. متعددة الاستخدام: يمكن استخدامها لتلخيص موضوع سبق دراسته، تقديم موضوع جديد، تلخيص نتائج نشاطات، أو توجيه الطلاب لمصادر المعرفة.\n6. نقل الخبرات الشخصية: تسمح للمعلم بنقل خبراته الشخصية التي يصعب نقلها بطرق أخرى غير الإلقاء.\n\nالانتقادات على طريقة المحاضرة:\n1. سلبية المتعلم: يكون المتعلم سلبياً بشكل عام، حيث يعتمد على الاستماع والتلقين فقط.\n2. إهمال الجانب العملي والتطبيقي: لا توفر الخبرة العملية التطبيقية أو الحسية المباشرة للطالب.\n3. إهمال حاجات واهتمامات الطلبة: قد تهمل حاجات الطلبة واهتماماتهم، مما يضعف ميولهم نحو المادة.\n4. إثارة الملل: يمكن أن تسبب الملل والنعاس للطلاب، خاصة إذا كان أسلوب المعلم مملاً.\n5. عدم مراعاة الفروق الفردية: لا تأخذ في الاعتبار الفروق الفردية بين الطلبة في مستويات تفكيرهم وأنماط تعلمهم.\n6. ضعف المساعدة على التذكر والاحتفاظ: لا تساعد بشكل فعال على تذكر المعارف والاحتفاظ بها على المدى الطويل.\n7. تركيز التقويم على الكم: إذا كانت هي الطريقة السائدة، يميل التقويم للتركيز على قياس كمية المعلومات المحفوظة بدلاً من الفهم والتطبيق."
+            },
+            {
+                id: "essay_q3",
+                title: "السؤال الثالث: طريقة حل المشكلات",
+                text: "إجراءات طريقة حل المشكلات و مميزاتها و عيوبها؟",
+                modelAnswer: "إجراءات طريقة حل المشكلات (بشكل مبسط):\n1. الإحساس بالمشكلة: يشعر الطلاب بوجود مشكلة أو تساؤل يحتاج إلى حل.\n2. تحديد المشكلة: يتم تحديد المشكلة الرئيسية وملامحها بشكل واضح (بمساعدة المعلم).\n3. جمع المعلومات: يقوم الطلاب بجمع المعلومات والحقائق المتعلقة بالمشكلة من مصادر مختلفة.\n4. التفكير في الحلول واختيار أنسبها: يتم التفكير في حلول ممكنة، ويتم تحليلها وتقييمها للوصول إلى أفضل حل.\n5. تطبيق الحل والوصول إلى نتائج: يتم تطبيق الحل الذي تم التوصل إليه.\n(يذكر النص أيضاً دور المعلم في حث الطلاب على القراءة والاطلاع، مساعدتهم في اختيار المشكلة، تشجيعهم على الاستمرار، وضرورة وجود تقويم مستمر).\n\nمزايا طريقة حل المشكلات:\n• تنمية اتجاه التفكير العلمي ومهاراته لدى الطالب.\n• تدريب التلاميذ على مواجهة المشكلات في الحياة الواقعية.\n• تنمية روح العمل الجماعي وإقامة علاقات اجتماعية بين الطلاب.\n• إثارة اهتمام التلاميذ وتحفيزهم لبذل الجهد لحل المشكلة.\n\nعيوب طريقة حل المشكلات:\n• صعوبة تطبيقها في كل المواقف التعليمية.\n• قد تتطلب معلومات أو مادة علمية قد لا تكون متوفرة أو مفهومة للطلاب عند استخدامها.\n• قد يواجه المعلم صعوبة في اختيار المشكلة المناسبة لمستوى ونضج التلاميذ أو تحديدها بشكل دقيق.\n• تحتاج إلى إمكانيات (موارد) وتتطلب معلماً مدرباً بكفاءة عالية."
+            },
+            {
+                id: "essay_q4",
+                title: "السؤال الرابع: التعلم التعاوني",
+                text: "فوائد و شروط طريقة التعلم التعاوني؟",
+                modelAnswer: "فوائد التعليم التعاوني:\n• تخفف على الطالب الرهبة والخوف من الدراسة مقارنة بطريقة التعليم التقليدية التي يعتمد فيها المعلم فقط.\n• تتيح تبادل الأفكار بين الطلاب وتساعد على معرفة وجهات النظر المختلفة، مما يؤدي إلى اكتشاف حلول ونتائج جديدة ومهمة.\n• تعزز روح التعاون لدى الأفراد وتخلق جوا من المرح والراحة لدى الطلاب.\n• تتيح الفرصة لكل طالب للسؤال والاستعانة بزملائه عند الحاجة بدلا من المعلم.\n\nشروط التعليم التعاوني:\n• حجم المجموعة: أن تتكون المجموعة من 4 إلى 6 أفراد كحد أقصى لضمان تركيز المجموعة وعدم تشتتها.\n• التعاون المشترك: ألا يعتمد كل طالب كليًا على الآخر، بل تقوم الطريقة على التعاون والعمل الجماعي المشترك بين أفراد المجموعة.\n• دور المعلم كمرجع: أن يكون المعلم مرجعًا للطلاب يجيب على ما لا يعرفونه.\n• النقاش المتبادل واحترام الآراء: أن يتناقش الطلاب مع بعضهم البعض ويأخذ كل فرد آراء الآخرين في الاعتبار دون الحياد عن رأي المجموعة، مع الحفاظ على حس المسؤولية الفردية (أو اعتبار أي فرد نفسه مستقلاً عن الآخر بمعنى مساهمته الفردية).\n• الانضباط واستغلال الوقت: الالتزام بالانضباط وعدم استغلال الوقت المخصص للمجموعة في اللهو، والالتزام بالنقاش وتجنب الحديث غير المفيد."
+            }
+        ];
+
+        let currentEssayQuestionIndex = 0;
+        let essayUserSubmissions = []; 
+
+        const essayExamPage = document.getElementById('essayExamPage');
+        const essayQuestionDisplayArea = document.getElementById('essayQuestionDisplayArea');
+        const essayAnswerTextarea = document.getElementById('essayAnswerTextarea');
+        const essayFeedbackArea = document.getElementById('essayFeedbackArea');
+        const essayModelAnswerDisplay = document.getElementById('essayModelAnswerDisplay');
+        const essaySimilarityScoreDisplay = document.getElementById('essaySimilarityScoreDisplay');
+        const prevEssayBtn = document.getElementById('prevEssayBtn');
+        const submitEssayAnswerBtn = document.getElementById('submitEssayAnswerBtn');
+        const nextEssayBtn = document.getElementById('nextEssayBtn');
+
+        function normalizeArabic(text) {
+            if (!text) return '';
+            return text
+                .replace(/[أإآ]/g, 'ا')
+                .replace(/ى/g, 'ي')
+                .replace(/ؤ/g, 'و')
+                .replace(/ئ/g, 'ي')
+                .replace(/ة/g, 'ه');
+        }
+
+        function removePunctuationAndDiacritics(text) {
+            if (!text) return '';
+            let cleaned = text.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?؟،؛]/g, " ");
+            cleaned = cleaned.replace(/[\u0617-\u061A\u064B-\u0652]/g, "");
+            // cleaned = cleaned.replace(/[0-9٠-٩]/g, " "); // Keep numbers for now
+            cleaned = cleaned.replace(/\s+/g, ' ').trim();
+            return cleaned;
+        }
+
+        function calculateSimilarity(userText, modelText) {
+            if (!userText || !modelText) return 0;
+
+            let normUserText = normalizeArabic(userText.toLowerCase());
+            let normModelText = normalizeArabic(modelText.toLowerCase());
+
+            let cleanUserText = removePunctuationAndDiacritics(normUserText);
+            let cleanModelText = removePunctuationAndDiacritics(normModelText);
+
+            const userWords = new Set(cleanUserText.split(' ').filter(word => word.length > 0)); 
+            const modelWords = new Set(cleanModelText.split(' ').filter(word => word.length > 0));
+
+            if (userWords.size === 0 && modelWords.size === 0) return 100; 
+            if (userWords.size === 0 || modelWords.size === 0) return 0; 
+
+            const intersection = new Set([...userWords].filter(word => modelWords.has(word)));
+            const union = new Set([...userWords, ...modelWords]);
+
+            if (union.size === 0) return 0; 
+
+            const similarity = (intersection.size / union.size) * 100;
+            return Math.round(similarity);
+        }
+
+        function startEssayExam() {
+            landingPage.style.animation = 'fadeOutSlideUp 0.4s ease-in forwards';
+            if (examPage) examPage.style.display = 'none';
+            if (oldResultsPage) oldResultsPage.style.display = 'none';
+
+            setTimeout(() => {
+                landingPage.style.display = 'none';
+                landingPage.style.animation = '';
+
+                if (essayExamPage) {
+                    essayExamPage.style.display = 'block';
+                    essayExamPage.style.opacity = '0';
+                    essayExamPage.style.transform = 'scale(0.97)';
+                    essayExamPage.style.animation = 'fadeInScaleUp 0.5s ease-out forwards';
+                }
+                
+                currentEssayQuestionIndex = 0;
+                essayUserSubmissions = []; 
+                displayCurrentEssayQuestion();
+            }, 400);
+        }
+
+        function displayCurrentEssayQuestion() {
+            if (!essayExamPage || currentEssayQuestionIndex < 0 || currentEssayQuestionIndex >= essayQuestionsData.length) {
+                backToLandingFromEssay();
+                return;
+            }
+
+            const question = essayQuestionsData[currentEssayQuestionIndex];
+            
+            if (essayQuestionDisplayArea) {
+                essayQuestionDisplayArea.innerHTML = `
+                    <h2 style="margin-bottom: 15px; color: var(--primary-color); text-align: center;">${question.title}</h2>
+                    <p class="question-statement" style="white-space: pre-wrap; font-size: 1.2em;">${question.text}</p>
+                `;
+            }
+            
+            const existingSubmission = essayUserSubmissions.find(ans => ans.id === question.id);
+
+            if (essayAnswerTextarea) {
+                essayAnswerTextarea.value = existingSubmission ? existingSubmission.userAnswer : '';
+                essayAnswerTextarea.disabled = !!existingSubmission;
+            }
+            if (submitEssayAnswerBtn) submitEssayAnswerBtn.disabled = !!existingSubmission;
+            if (nextEssayBtn) nextEssayBtn.disabled = !existingSubmission;
+
+
+            if (existingSubmission) {
+                if (essayModelAnswerDisplay) essayModelAnswerDisplay.innerHTML = `<strong>الإجابة النموذجية:</strong><br>${question.modelAnswer.replace(/\n/g, '<br>')}`;
+                if (essaySimilarityScoreDisplay) {
+                    essaySimilarityScoreDisplay.innerHTML = `نسبة التطابق: ${existingSubmission.similarity}%`;
+                    const score = existingSubmission.similarity;
+                    if (score >= 75) {
+                        essaySimilarityScoreDisplay.style.backgroundColor = 'var(--success-color)';
+                        essaySimilarityScoreDisplay.style.color = 'var(--text-on-primary-button)';
+                        essaySimilarityScoreDisplay.style.borderColor = 'var(--success-gradient-end)';
+                    } else if (score >= 40) {
+                        essaySimilarityScoreDisplay.style.backgroundColor = 'var(--warning-color)';
+                        essaySimilarityScoreDisplay.style.color = document.body.classList.contains('dark-theme') ? '#000' : 'var(--text-primary-light)';
+                        essaySimilarityScoreDisplay.style.borderColor = 'rgba(var(--warning-rgb), 0.5)';
+                    } else {
+                        essaySimilarityScoreDisplay.style.backgroundColor = 'var(--danger-color)';
+                        essaySimilarityScoreDisplay.style.color = 'var(--text-on-primary-button)';
+                        essaySimilarityScoreDisplay.style.borderColor = 'rgba(var(--danger-rgb), 0.8)';
+                    }
+                }
+                 if (essayFeedbackArea) essayFeedbackArea.style.display = 'block';
+            } else {
+                if (essayFeedbackArea) essayFeedbackArea.style.display = 'none';
+                if (essayModelAnswerDisplay) essayModelAnswerDisplay.innerHTML = '';
+                if (essaySimilarityScoreDisplay) essaySimilarityScoreDisplay.innerHTML = '';
+            }
+
+            if (prevEssayBtn) prevEssayBtn.disabled = (currentEssayQuestionIndex === 0);
+
+            if (nextEssayBtn) {
+                if (currentEssayQuestionIndex === essayQuestionsData.length - 1) {
+                    nextEssayBtn.innerHTML = `إنهاء أسئلة المقال <i class="fas fa-flag-checkered icon-after-text"></i>`;
+                } else {
+                    nextEssayBtn.innerHTML = `السؤال التالي <i class="fas fa-arrow-left icon-after-text"></i>`;
+                }
+            }
+        }
+
+        function submitEssayAnswer() {
+            if (currentEssayQuestionIndex < 0 || currentEssayQuestionIndex >= essayQuestionsData.length) return;
+
+            const question = essayQuestionsData[currentEssayQuestionIndex];
+            const userAnswer = essayAnswerTextarea.value.trim();
+
+            if (!userAnswer) {
+                alert("الرجاء إدخال إجابتك.");
+                return;
+            }
+
+            const similarity = calculateSimilarity(userAnswer, question.modelAnswer);
+
+            const submissionData = {
+                id: question.id,
+                userAnswer: userAnswer,
+                modelAnswer: question.modelAnswer,
+                similarity: similarity
+            };
+            
+            const existingAnsIndex = essayUserSubmissions.findIndex(ans => ans.id === question.id);
+            if (existingAnsIndex > -1) {
+                essayUserSubmissions[existingAnsIndex] = submissionData;
+            } else {
+                essayUserSubmissions.push(submissionData);
+            }
+
+            displayCurrentEssayQuestion(); // Re-render to show feedback and update buttons
+        }
+
+        function handleNextEssayQuestion() {
+            if (currentEssayQuestionIndex < essayQuestionsData.length - 1) {
+                currentEssayQuestionIndex++;
+                displayCurrentEssayQuestion();
+            } else {
+                backToLandingFromEssay("لقد أكملت أسئلة المقال بنجاح!");
+            }
+        }
+
+        function handlePreviousEssayQuestion() {
+            if (currentEssayQuestionIndex > 0) {
+                currentEssayQuestionIndex--;
+                displayCurrentEssayQuestion();
+            }
+        }
+
+        function backToLandingFromEssay(message = "") {
+            if (essayExamPage) {
+                essayExamPage.style.animation = 'fadeOutSlideUp 0.4s ease-in forwards';
+            }
+            
+            setTimeout(() => {
+                if (essayExamPage) {
+                    essayExamPage.style.display = 'none';
+                    essayExamPage.style.animation = '';
+                }
+
+                landingPage.style.display = 'block';
+                landingPage.style.opacity = '0';
+                landingPage.style.transform = 'translateY(20px)';
+                landingPage.style.animation = 'fadeInSlideUp 0.6s ease-out forwards';
+                
+                if (message) {
+                    console.log(message);
+                }
+                checkForOldResults(); 
+            }, 400);
+        }
+
+
+        // --- End of Essay Questions Logic ---
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const preferredTheme = localStorage.getItem(THEME_KEY) || 'dark-theme'; 
+            applyTheme(preferredTheme);
+
+            if(totalQuestionsLandingSpan) {
+                totalQuestionsLandingSpan.textContent = allQuestions.length;
+            }
+            if(examDurationLandingSpan) {
+                examDurationLandingSpan.textContent = EXAM_DURATION_SECONDS / 60;
+            }
+
+
+            const stateRestored = loadAndRestoreExamState();
+            
+            if (!stateRestored) { 
+                landingPage.style.display = 'block';
+                landingPage.style.animation = 'fadeInSlideUp 0.6s ease-out forwards'; 
+                if (examPage) examPage.style.display = 'none';
+                if (oldResultsPage) oldResultsPage.style.display = 'none';
+                if (essayExamPage) essayExamPage.style.display = 'none';
+                if (resultsArea) resultsArea.style.display = 'none';
+                isNoTimerMode = false; 
+            }
+
+            if (landingPage.style.display === 'block' || !stateRestored) {
+                if(timerDisplay) timerDisplay.textContent = formatTime(EXAM_DURATION_SECONDS); 
+            }
+            
+            checkForOldResults();
+
+            window.onclick = function(event) {
+                if (event.target == questionNavModal && questionNavModal.style.display === "block") {
+                    toggleQuestionNavModal();
+                }
+                if (event.target == confirmEndExamModal && confirmEndExamModal.style.display === "block") {
+                    hideConfirmEndModal();
+                }
+            }
+
+            if(confirmEndBtnYes) confirmEndBtnYes.onclick = () => {
+                if (!isNoTimerMode) stopTimer();
+                showResults();
+                hideConfirmEndModal();
+            };
+            if(confirmEndBtnNo) confirmEndBtnNo.onclick = () => {
+                hideConfirmEndModal();
+            }
+        });
+
+        window.addEventListener('beforeunload', () => {
+            if (examPage.style.display === 'block' && 
+                !(resultsArea.style.display === 'block' && resultsArea.classList.contains('visible')) &&
+                (isNoTimerMode || timeLeftInSeconds > 0) ) { 
+                handleAnswerSelection(); 
+                saveCurrentExamState();
+            }
+        });
+
+    </script>
+    <footer style="width:100vw;max-width:100vw;background:linear-gradient(90deg,rgba(0,191,255,0.08),rgba(0,123,255,0.08));border-top:1px solid var(--border-color);margin-top:40px;padding:18px 0 10px 0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-family:'Tajawal',sans-serif;color:var(--text-secondary);font-size:1.05em;opacity:0.93;letter-spacing:0.5px;box-shadow:0 -2px 12px rgba(0,191,255,0.07);">
+        <div style="font-size:1.2em;display:flex;align-items:center;gap:7px;">
+            <i class='fas fa-crown' style='color:var(--primary-color);font-size:1.1em;'></i>
+            <span>Made by <b>Bebo Naiem</b></span>
+        </div>
+        <div style="font-size:0.98em;opacity:0.8;">تم انشائه بواسطة <b>بولا نعيم</b></div>
+    </footer>
+</body>
+</html>
