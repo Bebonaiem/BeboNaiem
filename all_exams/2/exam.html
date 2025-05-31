@@ -243,7 +243,22 @@
         #progressText { margin-top: 30px; font-size: 1.05em; color: var(--text-muted); }
         
         .results-summary p { font-size: 1.35em; font-weight: 500; margin-bottom: 12px; }
-        .results-summary #scoreText { color: var(--primary-accent); font-size: 1.7em; font-weight: 700; text-shadow: 0 0 10px var(--primary-accent-glow); }
+        .results-summary #scoreText { 
+            color: var(--primary-accent); 
+            font-size: 1.7em; 
+            font-weight: 700; 
+            text-shadow: 0 0 10px var(--primary-accent-glow); 
+            line-height: 1.6; /* Adjust line height for multiple lines */
+        }
+        .results-summary #scoreText .score-details { /* Class for date/time and attempt */
+            display: block; /* Make them appear on new lines */
+            font-size: 0.6em; /* Smaller font size for details */
+            color: var(--text-muted); /* Muted color */
+            font-weight: 400; /* Normal weight */
+            text-shadow: none; /* No glow */
+            margin-top: 8px;
+        }
+
 
         .category-performance { margin-top: 20px; margin-bottom: 30px; }
         .category-performance h4 { color: var(--secondary-accent); margin-bottom: 10px; }
@@ -281,11 +296,7 @@
             border-radius: 7px;
             transition: width 0.6s cubic-bezier(0.25, 0.1, 0.25, 1); /* Smoother transition */
         }
-        /* Old style - remove if not needed elsewhere or integrate */
-        /* .category-performance div {
-            font-size: 1em; color: var(--text-muted);
-            background-color: rgba(0,0,0,0.1); padding: 8px; border-radius: 6px; margin-bottom: 5px;
-        } */
+
         .category-performance strong { color: var(--text-light); }
 
 
@@ -481,7 +492,7 @@
             .printable-area { position: absolute; left: 0; top: 0; width: 100%; padding: 20px; font-size: 12pt; }
 
             .container { box-shadow: none !important; border: none !important; border-top: none !important; padding: 0 !important; }
-            .button, .exam-header-controls, .progress-bar-container, #reviewFilterContainer, .review-filter, .modal-overlay, footer, #lastExamButton, #clearStorageButton, .config-options, #restartButton, #printResultsButton, #retryIncorrectButton, #startNoTimerButton {
+            .button, .exam-header-controls, .progress-bar-container, #reviewFilterContainer, .review-filter, .modal-overlay, footer, #lastExamButton, #clearStorageButton, .config-options, #restartButton, #printResultsButton, #retryIncorrectButton, #startNoTimerButton, #startRandomButton {
                 display: none !important;
             }
 
@@ -490,6 +501,7 @@
             strong { color: black !important; }
 
             .results-summary #scoreText { color: black !important; font-size: 1.5em !important; }
+            .results-summary #scoreText .score-details { font-size: 0.7em !important; color: #333 !important; }
             #feedbackText { color: black !important; font-style: italic; }
             
             .category-performance div { border: 1px solid #ccc; padding: 5px; margin-bottom: 5px; background-color: #f9f9f9 !important; }
@@ -570,6 +582,7 @@
         </div>
         <button id="startButton" class="button" aria-label="ابدأ اختبار جديد"><i class="fas fa-bolt"></i> ابدأ اختبار جديد</button>
         <button id="startNoTimerButton" class="button button-secondary" aria-label="ابدأ اختبار جديد بدون مؤقت"><i class="fas fa-infinity"></i> ابدأ بدون مؤقت</button>
+        <button id="startRandomButton" class="button button-secondary" aria-label="ابدأ اختبار جديد بعدد أسئلة عشوائي"><i class="fas fa-dice"></i> أسئلة عشوائية</button>
         <button id="lastExamButton" class="button button-secondary" style="display:none;" aria-label="عرض نتائج آخر اختبار"><i class="fas fa-eye"></i> عرض آخر اختبار</button>
         <button id="clearStorageButton" class="button button-danger" style="display:none;" aria-label="مسح الجلسة المحفوظة"><i class="fas fa-trash-alt"></i> مسح الجلسة المحفوظة</button>
         <div class="custom-credit-container">
@@ -722,8 +735,10 @@
         // --- CONFIGURATION ---
         let DYNAMIC_EXAM_DURATION_MINUTES = 30;
         const BASE_TIME_PER_QUESTION_SECONDS = 30;
-        const EXAM_STORAGE_KEY = 'eliteExamPlatform_v3.5'; // Incremented version
-        const LAST_EXAM_RESULTS_KEY = 'eliteExamPlatform_lastResults_v1.3'; // Incremented
+        const EXAM_STORAGE_KEY = 'eliteExamPlatform_v3.5'; 
+        const LAST_EXAM_RESULTS_KEY = 'eliteExamPlatform_lastResults_v1.3'; 
+        const ATTEMPT_COUNTER_KEY = 'eliteExamAttemptCounter_v1'; 
+
 
         // --- NEW CONFIGURATION FOR FEATURES ---
         const MIN_FONT_MULTIPLIER = 0.8;
@@ -1044,14 +1059,17 @@
         let isExamPaused = false;
         let currentFontSizeMultiplier = 1;
         let isRetrySession = false;
-        let isUntimedExam = false; // New flag for untimed exams
+        let isUntimedExam = false; 
+        let currentAttemptNumber; 
+
 
         // DOM Elements
         const welcomeScreen = document.getElementById('welcomeScreen');
         const examScreen = document.getElementById('examScreen');
         const resultsScreen = document.getElementById('resultsScreen');
         const startButton = document.getElementById('startButton');
-        const startNoTimerButton = document.getElementById('startNoTimerButton'); // New button
+        const startNoTimerButton = document.getElementById('startNoTimerButton'); 
+        const startRandomButton = document.getElementById('startRandomButton'); // New
         const lastExamButton = document.getElementById('lastExamButton');
         const questionNumberTitleEl = document.getElementById('questionNumberTitle');
         const questionTextEl = document.getElementById('questionText');
@@ -1100,6 +1118,7 @@
                 showModal("خطأ فادح", "قائمة الأسئلة فارغة أو لم يتم تحميلها. يرجى مراجعة المطور.", "إغلاق", "", () => hideModal(), null, false);
                 if(startButton) startButton.disabled = true;
                 if(startNoTimerButton) startNoTimerButton.disabled = true;
+                if(startRandomButton) startRandomButton.disabled = true;
                 return;
             }
 
@@ -1230,13 +1249,12 @@
             if (printResultsButton) printResultsButton.addEventListener('click', () => window.print());
             if (statusFilterSelect) statusFilterSelect.addEventListener('change', () => {
                  if (resultsScreen.style.display === 'block' && !examScreen.style.display === 'block') {
-                     displayLastExamResults(); // To re-filter based on loaded userAnswers
+                     displayLastExamResults(); 
                  } else {
                      renderReview(userAnswers);
                  }
             });
 
-            // Listener for "Start No Timer" button
             if (startNoTimerButton) {
                 startNoTimerButton.addEventListener('click', () => {
                     isUntimedExam = true;
@@ -1249,22 +1267,25 @@
                         "ابدأ الآن", "لاحقاً",
                         () => {
                             clearExamStateFromStorage();
-                            initExam(false, false);
+                            initExam(false, false); // numberOfQuestionsOverride will be null
                             hideModal();
                         },
-                        () => { // On cancel
+                        () => { 
                             isUntimedExam = false;
-                            updateDurationDisplay(); // Restore original duration text
+                            updateDurationDisplay(); 
                             hideModal();
                         }
                     );
                 });
             }
+            if (startRandomButton) { // Listener for the new random button
+                startRandomButton.addEventListener('click', handleStartRandomExam);
+            }
         }
 
 
         function updateDurationDisplay() {
-            if (isUntimedExam && welcomeScreen.style.display === 'block') { // If untimed mode was selected on welcome
+            if (isUntimedExam && welcomeScreen.style.display === 'block') { 
                 examDurationDisplayEl.textContent = "غير محدود";
                 durationNoticeEl.textContent = "(اختبار بدون ضغط وقت)";
                 return;
@@ -1355,22 +1376,39 @@
             }
         });
 
-        function initExam(resuming = false, isRetry = false) {
+        function initExam(resuming = false, isRetry = false, numberOfQuestionsOverride = null) {
             isRetrySession = isRetry;
 
             if (!resuming && !isRetry) {
                 currentQuestionIndex = 0;
                 score = 0;
 
-                const selectedNumValue = numQuestionsSelect.value;
-                if (selectedNumValue === 'all') {
-                    activeQuestions = shuffleArray(allQuestionsData);
-                } else {
-                    let numToSelect = parseInt(selectedNumValue);
-                    numToSelect = Math.min(numToSelect, allQuestionsData.length);
-                    activeQuestions = shuffleArray(allQuestionsData).slice(0, numToSelect);
+                try {
+                    let attemptCount = parseInt(localStorage.getItem(ATTEMPT_COUNTER_KEY)) || 0;
+                    attemptCount++;
+                    currentAttemptNumber = attemptCount;
+                    localStorage.setItem(ATTEMPT_COUNTER_KEY, attemptCount.toString());
+                } catch (e) {
+                    console.error("Error with attempt counter:", e);
+                    currentAttemptNumber = 1; 
                 }
 
+                if (numberOfQuestionsOverride !== null && numberOfQuestionsOverride > 0) { // For random start
+                    let numToSelect = Math.min(numberOfQuestionsOverride, allQuestionsData.length);
+                    activeQuestions = shuffleArray(allQuestionsData).slice(0, numToSelect);
+                    // DYNAMIC_EXAM_DURATION_MINUTES is pre-set by handleStartRandomExam
+                } else { // Standard start from dropdown
+                    const selectedNumValue = numQuestionsSelect.value;
+                    if (selectedNumValue === 'all') {
+                        activeQuestions = shuffleArray(allQuestionsData);
+                    } else {
+                        let numToSelect = parseInt(selectedNumValue);
+                        numToSelect = Math.min(numToSelect, allQuestionsData.length);
+                        activeQuestions = shuffleArray(allQuestionsData).slice(0, numToSelect);
+                    }
+                    // DYNAMIC_EXAM_DURATION_MINUTES is set by updateDurationDisplay() if timed and not untimed
+                }
+                
                 if (activeQuestions.length === 0 && allQuestionsData.length > 0) {
                     showModal("خطأ", "لم يتم تحديد أسئلة. قد يكون هناك خطأ في إعدادات عدد الأسئلة.", "حسنًا", "", ()=>hideModal(), null, false);
                     welcomeScreen.style.display = 'block';
@@ -1380,13 +1418,15 @@
 
                 userAnswers = activeQuestions.map(q => ({ qId: q.id, userAnswer: null, isCorrect: false, isFlagged: false, category: q.category }));
 
-                if (isUntimedExam) {
+                if (isUntimedExam) { 
                     timeLeft = Infinity;
                     examStartTime = null;
                     timerEl.textContent = "غير محدود";
                     timerEl.classList.add('untimed');
                     timerEl.classList.remove('timer-warning');
-                } else {
+                } else { 
+                    // DYNAMIC_EXAM_DURATION_MINUTES should be correctly set by the calling context
+                    // (updateDurationDisplay for standard, handleStartRandomExam for random, handleRetryIncorrect for retry)
                     timeLeft = DYNAMIC_EXAM_DURATION_MINUTES * 60;
                     examStartTime = new Date().getTime();
                     timerEl.classList.remove('untimed');
@@ -1396,14 +1436,13 @@
                 currentQuestionIndex = 0;
                 score = 0;
                 userAnswers = activeQuestions.map(q => ({ qId: q.id, userAnswer: null, isCorrect: false, isFlagged: false, category: q.category }));
-                // DYNAMIC_EXAM_DURATION_MINUTES and activeQuestions are set by handleRetryIncorrect
-                // Retries are always timed for now
-                isUntimedExam = false;
+                // activeQuestions and DYNAMIC_EXAM_DURATION_MINUTES are pre-set by handleRetryIncorrect
+                isUntimedExam = false; // Retries are always timed
                 timeLeft = DYNAMIC_EXAM_DURATION_MINUTES * 60;
                 examStartTime = new Date().getTime();
                 timerEl.classList.remove('untimed');
             } else if (resuming) {
-                // isUntimedExam would have been loaded in resumeExam()
+                // activeQuestions, timeLeft, examStartTime, currentAttemptNumber, isUntimedExam are loaded from state in resumeExam()
                 if (isUntimedExam) {
                     timeLeft = Infinity;
                     examStartTime = null;
@@ -1411,11 +1450,11 @@
                     timerEl.classList.add('untimed');
                     timerEl.classList.remove('timer-warning');
                 } else {
-                    // timeLeft and examStartTime loaded in resumeExam()
+                    // timeLeft, examStartTime are loaded from state
                     timerEl.classList.remove('untimed');
                 }
             }
-
+            
             isExamPaused = false;
             pauseOverlay.style.display = 'none';
             document.getElementById('questionArea').style.display = 'block';
@@ -1440,6 +1479,45 @@
             if (!isRetrySession) saveExamState();
         }
 
+        function handleStartRandomExam() {
+            if (allQuestionsData.length === 0) {
+                showModal("خطأ", "لا توجد أسئلة متاحة لبدء اختبار عشوائي.", "حسنًا", "", () => hideModal(), null, false);
+                return;
+            }
+
+            isUntimedExam = false; // Random exams are timed by default
+
+            const absoluteMinQuestions = 5; 
+            const minPossibleQuestions = Math.max(absoluteMinQuestions, Math.min(10, allQuestionsData.length));
+            const maxPossibleQuestions = Math.min(Math.floor(allQuestionsData.length * 0.8), allQuestionsData.length);
+
+            let numRandomQuestions;
+
+            if (allQuestionsData.length <= absoluteMinQuestions) { // If total questions is very small (e.g., <=5), use all
+                numRandomQuestions = allQuestionsData.length;
+            } else if (minPossibleQuestions >= maxPossibleQuestions) { // If calculated min ends up >= max (e.g. total questions 6-9 for min 10)
+                numRandomQuestions = allQuestionsData.length; // Use all questions in this specific scenario too
+            } else {
+                numRandomQuestions = Math.floor(Math.random() * (maxPossibleQuestions - minPossibleQuestions + 1)) + minPossibleQuestions;
+            }
+            numRandomQuestions = Math.max(1, numRandomQuestions); // Ensure at least 1 question is selected
+
+            DYNAMIC_EXAM_DURATION_MINUTES = Math.max(1, Math.ceil((numRandomQuestions * BASE_TIME_PER_QUESTION_SECONDS) / 60));
+            
+            showModal(
+                "اختبار بأسئلة عشوائية",
+                `سيتم اختيار ${numRandomQuestions} سؤالاً بشكل عشوائي.<br>مدة الاختبار: ${DYNAMIC_EXAM_DURATION_MINUTES} دقيقة.<br>هل أنت مستعد للبدء؟`,
+                "ابدأ الآن", "لاحقاً",
+                () => {
+                    clearExamStateFromStorage();
+                    initExam(false, false, numRandomQuestions); 
+                    hideModal();
+                },
+                () => hideModal()
+            );
+        }
+
+
         function loadQuestion() {
             if (isExamPaused) return;
 
@@ -1452,7 +1530,6 @@
                 const currentQuestion = activeQuestions[currentQuestionIndex];
                 const userAnswerData = userAnswers.find(ua => ua.qId === currentQuestion.id);
 
-                // Modified for styling via CSS
                 questionCategoryEl.innerHTML = `<i class="fas fa-tag"></i> الفئة: ${currentQuestion.category || 'غير مصنف'}`;
                 questionNumberTitleEl.textContent = `السؤال ${currentQuestionIndex + 1}`;
                 questionTextEl.textContent = currentQuestion.text;
@@ -1639,12 +1716,37 @@
             isExamPaused = false;
             pauseExamButton.disabled = true;
 
-
             examScreen.style.display = 'none';
             resultsScreen.style.display = 'block';
             reviewFlaggedButton.style.display = 'none';
             openQuestionNavButton.style.display = 'none';
             pauseExamButton.style.display = 'none';
+
+            const now = new Date();
+            const dateTimeString = `تاريخ ووقت الإكمال: ${now.toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' })} - ${now.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', hour12: true })}`;
+            let attemptString = "";
+            if (currentAttemptNumber && !isRetrySession) {
+                attemptString = `محاولة رقم: ${currentAttemptNumber}`;
+            } else if (isRetrySession) {
+                attemptString = `محاولة الأسئلة الخاطئة (لا تُحتسب كمحاولة كاملة)`;
+            } else {
+                const storedAttemptCount = parseInt(localStorage.getItem(ATTEMPT_COUNTER_KEY)) || 0;
+                if (storedAttemptCount > 0) {
+                     attemptString = `محاولة رقم: ${storedAttemptCount} (العدّاد العام)`;
+                } else {
+                     attemptString = `رقم المحاولة: غير محدد لهذه الجلسة`;
+                }
+            }
+
+            const totalQuestionsInExam = activeQuestions.length;
+            const mainScoreString = `نتيجتك: ${score} من ${totalQuestionsInExam}`;
+            
+            scoreTextEl.innerHTML = `
+                ${mainScoreString}
+                <span class="score-details">${dateTimeString}</span>
+                <span class="score-details">${attemptString}</span>
+            `;
+
 
             if (isUntimedExam) {
                  timeTakenTextEl.textContent = "الوقت المستغرق: غير محدد (اختبار بدون مؤقت)";
@@ -1661,10 +1763,6 @@
                 const timeTakenString = `الوقت المستغرق: ${minutesTaken} دقيقة و ${secondsTaken} ثانية.`;
                 timeTakenTextEl.textContent = timeTakenString;
             }
-
-            const totalQuestionsInExam = activeQuestions.length;
-            const scoreString = `نتيجتك: ${score} من ${totalQuestionsInExam}`;
-            scoreTextEl.textContent = scoreString;
 
             let feedbackString = "";
             let feedbackColor = "";
@@ -1696,17 +1794,19 @@
             const categoryPerformanceData = renderCategoryPerformance(true);
             renderReview(userAnswers);
 
-            if (!isRetrySession) { // Only save full, non-retry sessions
+            if (!isRetrySession) { 
                 clearExamStateFromStorage();
                 const resultsToSave = {
-                    scoreString,
+                    score: mainScoreString, 
                     feedbackString,
                     feedbackColor,
-                    timeTakenString: timeTakenTextEl.textContent, // Use the determined string
+                    timeTakenString: timeTakenTextEl.textContent,
                     categoryPerformanceData,
                     userAnswersForReview: userAnswers.map(ua => ({...ua})),
                     activeQuestionsForReview: activeQuestions.map(q => q.id),
-                    isUntimed: isUntimedExam // Save untimed status
+                    isUntimed: isUntimedExam,
+                    dateTimeCompleted: dateTimeString, 
+                    attemptNumberDisplay: attemptString 
                 };
                 saveLastExamResults(resultsToSave);
                 if(lastExamButton) lastExamButton.style.display = 'inline-flex';
@@ -1718,7 +1818,6 @@
             } else {
                 retryIncorrectButton.style.display = 'none';
             }
-            // isRetrySession = false; // Already reset in initExam or handled by new session start
         }
 
         function renderCategoryPerformance(returnData = false) {
@@ -1763,7 +1862,7 @@
                 performanceData.push(itemData);
 
                 const perfDiv = document.createElement('div');
-                perfDiv.className = 'category-perf-item'; // Add this class
+                perfDiv.className = 'category-perf-item'; 
                 perfDiv.innerHTML = `
                     <span><strong>${cat}:</strong> ${correctInCategory} / ${totalInCategory} (${percentage}%)</span>
                     <div class="category-perf-bar-container">
@@ -1902,24 +2001,26 @@
                 pauseExamButton.style.display = 'none';
                 retryIncorrectButton.style.display = 'none';
 
-
-                scoreTextEl.textContent = savedResults.scoreString;
+                scoreTextEl.innerHTML = `
+                    ${savedResults.score || "النتيجة: غير متوفرة"}
+                    <span class="score-details">${savedResults.dateTimeCompleted || "تاريخ ووقت الإكمال: غير متوفر"}</span>
+                    <span class="score-details">${savedResults.attemptNumberDisplay || "رقم المحاولة: غير متوفر"}</span>
+                `;
+                
                 feedbackTextEl.textContent = savedResults.feedbackString;
                 feedbackTextEl.style.color = savedResults.feedbackColor;
 
-                // Display time taken, considering if it was untimed
                 if (savedResults.isUntimed) {
                     timeTakenTextEl.textContent = "الوقت المستغرق: غير محدد (اختبار بدون مؤقت)";
                 } else {
                     timeTakenTextEl.textContent = savedResults.timeTakenString;
                 }
 
-
                 categoryPerformanceContainer.innerHTML = '';
                 if (savedResults.categoryPerformanceData && savedResults.categoryPerformanceData.length > 0) {
                     savedResults.categoryPerformanceData.forEach(item => {
                         const perfDiv = document.createElement('div');
-                        perfDiv.className = 'category-perf-item'; //Ensure class for styling
+                        perfDiv.className = 'category-perf-item';
                         perfDiv.innerHTML = `
                             <span><strong>${item.category}:</strong> ${item.correct} / ${item.total} (${item.percentage}%)</span>
                             <div class="category-perf-bar-container">
@@ -1937,7 +2038,7 @@
                                     .map(id => allQuestionsData.find(q => q.id === id))
                                     .filter(q => q);
                 renderReview(userAnswers);
-                isUntimedExam = savedResults.isUntimed || false; // Set for context if needed later
+                isUntimedExam = savedResults.isUntimed || false; 
 
             } catch (e) {
                 console.error("Error displaying last exam results:", e);
@@ -1954,10 +2055,11 @@
                 currentQuestionIndex,
                 userAnswers,
                 activeQuestionsOriginalIds: activeQuestions.map(q => q.id),
-                timeLeft: isUntimedExam ? null : timeLeft, // Save null if untimed
+                timeLeft: isUntimedExam ? null : timeLeft, 
                 examStartTime: isUntimedExam ? null : examStartTime,
                 selectedNumQuestions: numQuestionsSelect.value,
-                isUntimedExam // Save untimed status
+                isUntimedExam, 
+                currentAttemptNumber 
             };
             try {
                 localStorage.setItem(EXAM_STORAGE_KEY, JSON.stringify(stateToSave));
@@ -1971,7 +2073,8 @@
             if (loadedState) {
                 currentQuestionIndex = loadedState.currentQuestionIndex;
                 userAnswers = loadedState.userAnswers;
-                isUntimedExam = loadedState.isUntimedExam || false; // Load untimed status
+                isUntimedExam = loadedState.isUntimedExam || false; 
+                currentAttemptNumber = loadedState.currentAttemptNumber || (parseInt(localStorage.getItem(ATTEMPT_COUNTER_KEY)) || 1); 
 
                 activeQuestions = loadedState.activeQuestionsOriginalIds
                                     .map(id => allQuestionsData.find(q => q.id === id))
@@ -2000,18 +2103,18 @@
                     showModal("خطأ في الاستئناف", "لا يمكن استئناف الجلسة. بيانات الجلسة غير صالحة أو منتهية. سنبدأ اختبارًا جديدًا.", "حسنًا", "",
                         ()=>{
                             clearExamStateFromStorage();
-                            isUntimedExam = false; // Reset for new exam
+                            isUntimedExam = false; 
                             updateDurationDisplay();
-                            initExam(false, false);
+                            initExam(false, false, null); // Pass null for numberOfQuestionsOverride
                             hideModal();
                         },
                         null, false);
                     return;
                 }
-                initExam(true, false);
+                initExam(true, false, null); // Pass null for numberOfQuestionsOverride
             } else {
-                isUntimedExam = false; // Default to timed if no state
-                initExam(false, false);
+                isUntimedExam = false; 
+                initExam(false, false, null); // Pass null for numberOfQuestionsOverride
             }
         }
 
@@ -2040,9 +2143,9 @@
                 typeof savedState.currentQuestionIndex === 'number' && savedState.currentQuestionIndex < savedState.activeQuestionsOriginalIds.length &&
                 Array.isArray(savedState.userAnswers)
             ) {
-                if (savedState.isUntimedExam) { // If untimed, it's always resumable if basic structure is fine
+                if (savedState.isUntimedExam) { 
                     canResume = true;
-                } else if (typeof savedState.timeLeft === 'number' && savedState.timeLeft > 0) { // If timed, check timeLeft
+                } else if (typeof savedState.timeLeft === 'number' && savedState.timeLeft > 0) { 
                     canResume = true;
                 }
             }
@@ -2058,16 +2161,14 @@
         }
 
         if(startButton) startButton.addEventListener('click', () => {
-            isUntimedExam = false; // Ensure this is a timed exam
-            updateDurationDisplay();
+            isUntimedExam = false; 
+            updateDurationDisplay(); // This will set DYNAMIC_EXAM_DURATION_MINUTES
             showModal( "بدء الاختبار", `سيستمر الاختبار لمدة ${DYNAMIC_EXAM_DURATION_MINUTES} دقيقة.<br>هل أنت مستعد للبدء؟`, "ابدأ الآن", "لاحقاً",
-                () => { clearExamStateFromStorage(); initExam(false, false); hideModal(); },
-                () => { updateDurationDisplay(); hideModal(); } // Reset duration display if cancelled
+                () => { clearExamStateFromStorage(); initExam(false, false, null); hideModal(); },
+                () => { updateDurationDisplay(); hideModal(); } 
             );
         });
         document.getElementById('discardButton').addEventListener('click', () => {
-            // Determine if the new exam will be timed or untimed based on which "start" button the user would click next
-            // For simplicity, assume they will click the timed start button.
             isUntimedExam = false;
             updateDurationDisplay();
             showModal( "تجاهل الجلسة المحفوظة؟", `سيتم حذف تقدمك المحفوظ والبدء باختبار جديد (بمؤقت).<br>هل أنت متأكد؟`, "نعم، ابدأ جديد", "لا، العودة",
@@ -2075,14 +2176,14 @@
                     clearExamStateFromStorage();
                     document.getElementById('resumePrompt').style.display = 'none';
                     document.getElementById('clearStorageButton').style.display = 'none';
-                    initExam(false, false); hideModal();
+                    initExam(false, false, null); hideModal();
                 },
                 () => hideModal()
             );
         });
         document.getElementById('resumeButton').addEventListener('click', () => { resumeExam(); });
         document.getElementById('clearStorageButton').addEventListener('click', () => {
-            showModal( "مسح الجلسة المحفوظة؟", `هل أنت متأكد أنك تريد مسح الجلسة المحفوظة بشكل دائم؟<br>سيتم أيضاً مسح نتائج آخر اختبار محفوظ.`, "نعم، امسح الكل", "إلغاء",
+            showModal( "مسح الجلسة المحفوظة؟", `هل أنت متأكد أنك تريد مسح الجلسة المحفوظة بشكل دائم؟<br>سيتم أيضاً مسح نتائج آخر اختبار محفوظ. لا يتضمن هذا مسح عدّاد المحاولات العام.`, "نعم، امسح البيانات الحالية", "إلغاء",
                 () => {
                     clearExamStateFromStorage();
                     localStorage.removeItem(LAST_EXAM_RESULTS_KEY);
@@ -2090,14 +2191,14 @@
                     document.getElementById('clearStorageButton').style.display = 'none';
                     if(lastExamButton) lastExamButton.style.display = 'none';
                     hideModal();
-                    showModal("تم المسح", "تم مسح البيانات المحفوظة بنجاح.", "حسنًا", "", ()=>hideModal(), null, false);
+                    showModal("تم المسح", "تم مسح بيانات الجلسة وآخر نتائج بنجاح.", "حسنًا", "", ()=>hideModal(), null, false);
                 },
                 ()=>hideModal()
             );
         });
         restartButton.addEventListener('click', () => {
             isRetrySession = false;
-            isUntimedExam = false; // Reset for welcome screen
+            isUntimedExam = false; 
             welcomeScreen.style.display = 'block';
             resultsScreen.style.display = 'none';
             retryIncorrectButton.style.display = 'none';
@@ -2254,16 +2355,16 @@
                 return;
             }
 
-            activeQuestions = shuffleArray(incorrectQuestions);
+            activeQuestions = shuffleArray(incorrectQuestions); // This sets activeQuestions for retry
             DYNAMIC_EXAM_DURATION_MINUTES = Math.max(1, Math.ceil((activeQuestions.length * BASE_TIME_PER_QUESTION_SECONDS) / 60));
-            isUntimedExam = false; // Retries are timed
+            isUntimedExam = false; 
 
             showModal(
                 "إعادة المحاولة",
                 `ستبدأ اختبارًا جديدًا بـ ${activeQuestions.length} من الأسئلة التي أخطأت بها. مدة هذا الاختبار ${DYNAMIC_EXAM_DURATION_MINUTES} دقيقة.`,
                 "ابدأ الإعادة", "إلغاء",
                 () => {
-                    initExam(false, true);
+                    initExam(false, true, null); // Pass null for override, as retry logic handles activeQuestions itself
                     hideModal();
                 },
                 () => hideModal()
