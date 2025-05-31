@@ -263,7 +263,7 @@
         }
 
         .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
+            transform: translateY(11px) rotate(45deg);
         }
 
         .hamburger.active span:nth-child(2) {
@@ -271,7 +271,7 @@
         }
 
         .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(5px, -5px);
+            transform: translateY(-11px) rotate(-45deg);
         }
 
         .menu-overlay {
@@ -295,41 +295,126 @@
         .nav-menu {
             position: fixed;
             top: 0;
-            right: 0;
-            width: 250px;
+            left: -300px;
+            width: 300px;
             height: 100%;
-            background: var(--card-bg);
-            box-shadow: -4px 0 12px rgba(0, 0, 0, 0.2);
+            background: var(--primary);
+            padding: 0;
+            transition: 0.3s ease;
             z-index: 10;
-            transform: translateX(100%);
-            transition: transform 0.3s ease;
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 4px 0 15px rgba(0, 0, 0, 0.2);
         }
 
         .nav-menu.active {
-            transform: translateX(0);
+            left: 0;
+        }
+
+        .nav-logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            border: 2px solid var(--accent);
+            padding: 0.3rem;
+            object-fit: cover;
+            background-color: var(--card-bg);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .nav-logo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .nav-header {
+            padding: 2rem;
+            border-bottom: 1px solid var(--border);
+            text-align: center;
+            background: linear-gradient(to right, rgba(59, 130, 246, 0.1), transparent);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-header h3 {
+            color: var(--text);
+            font-size: 1.5rem;
+            margin: 0;
+            font-weight: 600;
         }
 
         .nav-menu ul {
             list-style: none;
-            padding: 1rem;
+            padding: 1rem 0;
+            margin: 0;
+            flex-grow: 1;
+            overflow-y: auto;
         }
 
         .nav-menu li {
-            margin-bottom: 1rem;
+            margin: 0;
         }
 
-        .nav-menu a {
-            color: var(--text);
+        .nav-link {
+            color: var(--text-secondary);
             text-decoration: none;
-            font-size: 1.2em;
+            font-size: 1.1rem;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 1rem;
+            padding: 1rem 2rem;
             transition: all 0.3s ease;
+            border-left: 3px solid transparent;
         }
 
-        .nav-menu a:hover {
+        .nav-link:hover {
             color: var(--accent);
+            background: rgba(59, 130, 246, 0.1);
+            border-left-color: var(--accent);
+        }
+
+        .nav-link i {
+            width: 20px;
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--accent);
+        }
+
+        .nav-footer {
+            padding: 1.5rem;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            background: linear-gradient(to right, transparent, rgba(59, 130, 246, 0.05));
+        }
+
+        /* RTL specific nav-menu styles */
+        [dir="rtl"] .nav-menu {
+            left: auto;
+            right: -300px;
+            border-right: none;
+            border-left: 1px solid var(--border);
+        }
+
+        [dir="rtl"] .nav-menu.active {
+            left: auto;
+            right: 0;
+        }
+
+        [dir="rtl"] .nav-link {
+            border-left: none;
+            border-right: 3px solid transparent;
+        }
+
+        [dir="rtl"] .nav-link:hover {
+            border-left-color: transparent;
+            border-right-color: var(--accent);
         }
 
         .lang-switch {
@@ -401,11 +486,39 @@
     <div class="menu-overlay"></div>
     
     <nav class="nav-menu">
+        <div class="nav-header">
+            <img src="img/Logo.png" alt="Logo" class="nav-logo">
+            <h3 class="translate" data-en="Menu" data-ar="القائمة">Menu</h3>
+        </div>
         <ul>
-            <li><a href="https://bebonaiem.dpdns.org"><i class="fas fa-home"></i> <span class="translate" data-en="Home" data-ar="الرئيسية">Home</span></a></li>
-            <li><a href="unknown-caller.html"><i class="fas fa-phone"></i> <span class="translate" data-en="Unknown Caller" data-ar="المتصل المجهول">Unknown Caller</span></a></li>
-            <li><a href="about.html"><i class="fas fa-user"></i> <span class="translate" data-en="About" data-ar="عني">About</span></a></li>
+            <li>
+                <a href="index.html" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    <span class="translate" data-en="Home" data-ar="الرئيسية">Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="unknown-caller.html" class="nav-link">
+                    <i class="fas fa-phone"></i>
+                    <span class="translate" data-en="Unknown Caller" data-ar="المتصل المجهول">Unknown Caller</span>
+                </a>
+            </li>
+            <li>
+                <a href="all_exams/all.html" class="nav-link">
+                    <i class="fas fa-file-alt"></i>
+                    <span class="translate" data-en="All Exams" data-ar="جميع الامتحانات">All Exams</span>
+                </a>
+            </li>
+            <li>
+                <a href="about.html" class="nav-link">
+                    <i class="fas fa-user"></i>
+                    <span class="translate" data-en="About" data-ar="عني">About</span>
+                </a>
+            </li>
         </ul>
+        <div class="nav-footer">
+            <p class="translate" data-en="© 2025 Bebo Naiem" data-ar="© 2025 بيبو نعيم">© 2025 Bebo Naiem</p>
+        </div>
     </nav>
 
     <div class="background" id="bgAnimation"></div>
