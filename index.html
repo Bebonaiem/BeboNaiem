@@ -1,977 +1,1000 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bebo Naiem - Portfolio</title>
-    <meta name="description" content="Explore Bebo Naiem's creative portfolio featuring interactive stories, horror narratives, and innovative digital projects. Expert developer and digital storyteller.">
-    <meta name="keywords" content="Bebo Naiem, developer portfolio, creative developer, digital storyteller, interactive stories, horror stories, web development, frontend developer, UI designer, UX designer, interactive narratives, horror game developer, creative storytelling, web designer, portfolio website, digital experiences, immersive stories, JavaScript developer, HTML5 developer, CSS3 expert, responsive design, mobile-first design, interactive web experiences, Arabic content creator, bilingual developer, horror narrative designer, multimedia storyteller, educational content creator, Faculty of Specific Education projects, interactive horror, web animation">
-    <meta name="author" content="Bebo Naiem">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://bebonaiem.dpdns.org/">
-    <meta property="og:title" content="Bebo Naiem - Creative Developer & Digital Storyteller">
-    <meta property="og:description" content="Explore Bebo Naiem's creative portfolio featuring interactive stories, horror narratives, and innovative digital projects.">
-    <meta property="og:image" content="img/Logo.png">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://bebonaiem.dpdns.org/">
-    <meta property="twitter:title" content="Bebo Naiem - Creative Developer & Digital Storyteller">
-    <meta property="twitter:description" content="Explore Bebo Naiem's creative portfolio featuring interactive stories, horror narratives, and innovative digital projects.">
-    <meta property="twitter:image" content="img/Logo.png">
-
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://bebonaiem.dpdns.org/">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
-    <link type="icon/png" rel="icon" href="img/Logo.png">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7696225868255842" crossorigin="anonymous"></script>
-    <meta name="google-adsense-account" content="ca-pub-7696225868255842">
-
-    <!-- Clarity tracking code for https://bebonaiem.dpdns.org -->
-<script>
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "ree0lwwe0j");
-</script>
-
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-M9TRXWT7');</script>
-    <!-- End Google Tag Manager -->
-
-
-
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-VPSEYK9J3K"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-VPSEYK9J3K');
-</script>
-
-
-
-    <style>
-        :root {
-            --primary: #0f172a; /* Deep blue-black */
-            --secondary: #1e293b; /* Slate dark */
-            --accent: #3b82f6; /* Bright blue */
-            --accent-hover: #60a5fa; /* Lighter blue for hover */
-            --text: #f8fafc; /* Off-white */
-            --text-secondary: #94a3b8; /* Muted text */
-            --card-bg: #1e293b; /* Slate dark */
-            --border: #334155; /* Slate border */
-            --gradient: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --hover-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(255, 111, 97, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(255, 111, 97, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 111, 97, 0); }
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background-color: var(--secondary);
-            color: var(--text);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Animated background */
-        .background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.4;
-            background: 
-                radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
-        }
-
-        header {
-            background: linear-gradient(to bottom, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95));
-            padding: 3rem 1rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            border-bottom: 1px solid var(--border);
-        }
-
-        header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--gradient);
-            opacity: 0.1;
-            z-index: 0;
-        }
-
-        .header-content {
-            position: relative;
-            z-index: 1;
-            animation: fadeInUp 1s ease-out;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem 1rem;
-        }
-
-        h1 {
-            color: #fff;
-            margin-bottom: 1rem;
-            font-size: 3rem;
-            font-weight: 700;
-            background: var(--gradient);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .name-section {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif !important;
-            direction: ltr !important;
-        }
-
-        .subtitle {
-            color: var(--text);
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-
-        .social-links {
-            margin-top: 2rem;
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-        }
-
-        .social-links a {
-            color: var(--text);
-            font-size: 1.5rem;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            background: rgba(59, 130, 246, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .social-links a:hover {
-            color: var(--text);
-            background: var(--accent);
-            transform: translateY(-3px);
-        }
-
-        .section-title {
-            font-size: 2.2rem;
-            color: var(--accent);
-            text-align: center;
-            margin-bottom: 2.5rem;
-            position: relative;
-            padding-bottom: 0.5rem;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background: var(--gradient);
-            border-radius: 2px;
-        }
-
-        #intro-about {
-            text-align: center;
-            margin-bottom: 4rem; /* Increased margin */
-        }
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Bebo Naiem - Portfolio</title>
+        <meta name="description" content="Explore Bebo Naiem's creative portfolio featuring interactive stories, horror narratives, and innovative digital projects. Expert developer and digital storyteller.">
+        <meta name="keywords" content="Bebo Naiem, developer portfolio, creative developer, digital storyteller, interactive stories, horror stories, web development, frontend developer, UI designer, UX designer, interactive narratives, horror game developer, creative storytelling, web designer, portfolio website, digital experiences, immersive stories, JavaScript developer, HTML5 developer, CSS3 expert, responsive design, mobile-first design, interactive web experiences, Arabic content creator, bilingual developer, horror narrative designer, multimedia storyteller, educational content creator, Faculty of Specific Education projects, interactive horror, web animation">
+        <meta name="author" content="Bebo Naiem">
         
-        #intro-about p {
-            font-size: 1.15rem; /* Slightly larger */
-            line-height: 1.8;
-            max-width: 800px;
-            margin: 0 auto; /* Removed bottom margin from here */
-            opacity: 0.9;
-        }
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://bebonaiem.dpdns.org/">
+        <meta property="og:title" content="Bebo Naiem - Creative Developer & Digital Storyteller">
+        <meta property="og:description" content="Explore Bebo Naiem's creative portfolio featuring interactive stories, horror narratives, and innovative digital projects.">
+        <meta property="og:image" content="img/Logo.png">
 
-        [dir="rtl"] #intro-about p {
-            text-align: center; 
-        }
+        <!-- Twitter -->
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:url" content="https://bebonaiem.dpdns.org/">
+        <meta property="twitter:title" content="Bebo Naiem - Creative Developer & Digital Storyteller">
+        <meta property="twitter:description" content="Explore Bebo Naiem's creative portfolio featuring interactive stories, horror narratives, and innovative digital projects.">
+        <meta property="twitter:image" content="img/Logo.png">
 
-        #skills .skills-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 1rem; /* Relative to section title */
-            margin-bottom: 4rem; /* Spacing before projects */
-        }
-
-        .skill-category {
-            background-color: var(--card-bg);
-            padding: 2rem;
-            border-radius: 10px;
-            border: 1px solid var(--border);
-            box-shadow: var(--card-shadow);
-            transition: all 0.3s ease;
-            animation: fadeInUp 0.6s ease-out forwards; /* Added animation */
-            opacity: 0; /* For animation */
-        }
-        .skill-category:nth-of-type(1) { animation-delay: 0.3s; }
-        .skill-category:nth-of-type(2) { animation-delay: 0.5s; }
-
-
-        .skill-category:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--hover-shadow);
-            border-color: var(--accent);
-        }
-
-        .skill-category h3 {
-            font-size: 1.5rem;
-            color: var(--accent);
-            margin-bottom: 1.5rem;
-            border-bottom: 2px solid var(--accent);
-            padding-bottom: 0.5rem;
-            display: inline-block;
-        }
-
-        .skill-category ul {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .skill-category li {
-            margin-bottom: 0.8rem;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            color: var(--text-secondary);
-            opacity: 0.9;
-            transition: color 0.3s ease;
-        }
-        .skill-category li:hover {
-            color: var(--accent);
-        }
-
-        .skill-category li i {
-            color: var(--accent);
-            font-size: 1.2em;
-            width: 20px; 
-            text-align: center;
-            transition: transform 0.3s ease;
-        }
-        .skill-category li:hover i {
-            transform: scale(1.1);
-        }
-
-
-        [dir="rtl"] .skill-category li {
-            gap: 0.8rem; 
-        }
+        <!-- Canonical URL -->
+        <link rel="canonical" href="https://bebonaiem.dpdns.org/">
         
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 2rem;
-            /* margin-top: 3rem; Removed, sections above have margin-bottom */
-            padding: 0 1rem;
-        }
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+        <link type="icon/png" rel="icon" href="img/Logo.png">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7696225868255842" crossorigin="anonymous"></script>
+        <meta name="google-adsense-account" content="ca-pub-7696225868255842">
 
-        .project-card {
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            overflow: hidden;
-            transition: all 0.4s ease;
-            border: 1px solid var(--border);
-            box-shadow: var(--card-shadow);
-            position: relative;
-            animation: fadeInUp 0.6s ease-out forwards;
-            opacity: 0;
-        }
+        <!-- Clarity tracking code for https://bebonaiem.dpdns.org -->
+    <script>
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "ree0lwwe0j");
+    </script>
 
-        .project-card:nth-child(1) { animation-delay: 0.2s; }
-        .project-card:nth-child(2) { animation-delay: 0.4s; }
-        .project-card:nth-child(3) { animation-delay: 0.6s; }
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-M9TRXWT7');</script>
+        <!-- End Google Tag Manager -->
 
-        .project-card:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--hover-shadow);
-            border-color: var(--accent);
-        }
 
-        .project-image {
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
-            transition: transform 0.4s ease;
-        }
 
-        .project-card:hover .project-image {
-            transform: scale(1.05);
-        }
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VPSEYK9J3K"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-        .project-content {
-            padding: 2rem;
-            position: relative;
-        }
+    gtag('config', 'G-VPSEYK9J3K');
+    </script>
 
-        .project-title {
-            color: var(--text);
-            font-size: 1.4rem;
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
 
-        .project-description {
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-            line-height: 1.7;
-            opacity: 0.9;
-        }
 
-        .project-link {
-            display: inline-flex;
-            align-items: center;
-            padding: 0.8rem 1.5rem;
-            background: var(--gradient);
-            color: var(--text);
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            gap: 0.5rem;
-        }
+        <style>
+            :root {
+                --primary: #0f172a; /* Deep blue-black */
+                --secondary: #1e293b; /* Slate dark */
+                --accent: #3b82f6; /* Bright blue */
+                --accent-hover: #60a5fa; /* Lighter blue for hover */
+                --text: #f8fafc; /* Off-white */
+                --text-secondary: #94a3b8; /* Muted text */
+                --card-bg: #1e293b; /* Slate dark */
+                --border: #334155; /* Slate border */
+                --gradient: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+                --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+                --hover-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            }
 
-        .project-link:hover {
-            background: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent) 100%);
-            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
-        }
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            }
 
-        .project-link i {
-            font-size: 0.9em;
-            transition: transform 0.3s ease;
-        }
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
 
-        .project-link:hover i {
-            transform: translateX(3px);
-        }
+            @keyframes float {
+                0% { transform: translateY(0px); }
+                50% { transform: translateY(-10px); }
+                100% { transform: translateY(0px); }
+            }
 
-        .project-tags {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
+            @keyframes pulse {
+                0% { box-shadow: 0 0 0 0 rgba(255, 111, 97, 0.4); }
+                70% { box-shadow: 0 0 0 10px rgba(255, 111, 97, 0); }
+                100% { box-shadow: 0 0 0 0 rgba(255, 111, 97, 0); }
+            }
 
-        .project-tag {
-            padding: 0.3rem 0.8rem;
-            background: rgba(59, 130, 246, 0.1);
-            color: var(--accent);
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 500;
-        }
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+                background-color: var(--secondary);
+                color: var(--text);
+                line-height: 1.6;
+                overflow-x: hidden;
+            }
 
-        footer {
-            background: linear-gradient(to top, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95));
-            padding: 3rem 1rem;
-            text-align: center;
-            margin-top: 6rem;
-            border-top: 1px solid var(--border);
-            position: relative;
-        }
+            /* Animated background */
+            .background {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: -1;
+                opacity: 0.4;
+                background: 
+                    radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
+            }
 
-        footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--gradient);
-            opacity: 0.05;
-            z-index: 0;
-        }
+            header {
+                background: linear-gradient(to bottom, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95));
+                padding: 3rem 1rem;
+                text-align: center;
+                position: relative;
+                overflow: hidden;
+                border-bottom: 1px solid var(--border);
+            }
 
-        .footer-content {
-            position: relative;
-            z-index: 1;
-            max-width: 1200px;
-            margin: 0 auto;
-            opacity: 0.9;
-        }
+            header::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: var(--gradient);
+                opacity: 0.1;
+                z-index: 0;
+            }
 
-        @media (max-width: 768px) {
-            .projects-grid {
-                grid-template-columns: 1fr;
-                padding: 0 0.5rem;
+            .header-content {
+                position: relative;
+                z-index: 1;
+                animation: fadeInUp 1s ease-out;
+            }
+
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 2rem 1rem;
             }
 
             h1 {
-                font-size: 2.2rem;
-            }
-            .section-title {
-                font-size: 1.8rem;
-            }
-            #intro-about p {
-                font-size: 1rem;
-            }
-            .skill-category h3 {
-                font-size: 1.3rem;
-            }
-            .skill-category li {
-                font-size: 0.9rem;
+                color: #fff;
+                margin-bottom: 1rem;
+                font-size: 3rem;
+                font-weight: 700;
+                background: var(--gradient);
+                background-clip: text;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
             }
 
+            .name-section {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif !important;
+                direction: ltr !important;
+            }
 
             .subtitle {
-                font-size: 1.1rem;
+                color: var(--text);
+                font-size: 1.3rem;
+                margin-bottom: 2rem;
+                opacity: 0.9;
             }
 
-            .project-card {
-                margin-bottom: 1rem;
+            .social-links {
+                margin-top: 2rem;
+                display: flex;
+                justify-content: center;
+                gap: 1.5rem;
             }
 
             .social-links a {
-                width: 45px;
-                height: 45px;
-                font-size: 1.3rem;
-            }
-
-            .lang-switch {
-                top: 10px;
-                right: 10px;
-                padding: 0.6rem 1rem;
-            }
-
-            [dir="rtl"] .lang-switch {
-                left: 10px;
-                right: auto;
-            }
-        }
-
-        /* Scroll reveal animation */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Language switcher button */
-        .lang-switch {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-            background: var(--gradient);
-            color: var(--text);
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .lang-switch:hover {
-            background: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent) 100%);
-            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
-        }
-
-        /* RTL specific styles */
-        [dir="rtl"] body {
-            font-family: 'Tajawal', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-        }
-
-        [dir="rtl"] .lang-switch {
-            left: 20px;
-            right: auto;
-        }
-
-        [dir="rtl"] .project-description {
-            text-align: right;
-        }
-        [dir="rtl"] .skill-category h3 {
-            /* text-align: right; /* If needed, but inline-block usually handles it */
-        }
-        [dir="rtl"] .skill-category li {
-            /* text-align: right; /* If needed */
-        }
-
-
-        /* Hamburger Menu Styles */
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            justify-content: space-around;
-            width: 30px;
-            height: 25px;
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 1001;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-        }
-
-        .hamburger span {
-            width: 100%;
-            height: 3px;
-            background: var(--text);
-            border-radius: 3px;
-            transition: all 0.3s ease;
-        }
-
-        .nav-menu {
-            position: fixed;
-            top: 0;
-            left: -100%;
-            height: 100vh;
-            width: 250px;
-            background: var(--primary);
-            padding: 80px 20px 20px;
-            transition: 0.3s ease;
-            z-index: 1000;
-            border-right: 1px solid var(--border);
-        }
-
-        .nav-menu.active {
-            left: 0;
-        }
-
-        .nav-menu ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .nav-menu li {
-            margin: 20px 0;
-        }
-
-        .nav-menu a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: color 0.3s ease;
-        }
-
-        .nav-menu a:hover {
-            color: var(--accent);
-        }
-
-        .menu-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(15, 23, 42, 0.9);
-            z-index: 999;
-            display: none;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .menu-overlay.active {
-            display: block;
-            opacity: 1;
-        }
-
-        /* RTL Hamburger Menu */
-        [dir="rtl"] .hamburger {
-            left: auto;
-            right: 20px;
-        }
-
-        [dir="rtl"] .nav-menu {
-            left: auto;
-            right: -100%;
-            border-right: none;
-            border-left: 1px solid var(--border);
-        }
-
-        [dir="rtl"] .nav-menu.active {
-            left: auto;
-            right: 0;
-        }
-
-        @media (max-width: 768px) {
-            .hamburger {
+                color: var(--text);
+                font-size: 1.5rem;
+                width: 50px;
+                height: 50px;
                 display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                background: rgba(59, 130, 246, 0.1);
+                transition: all 0.3s ease;
             }
 
+            .social-links a:hover {
+                color: var(--text);
+                background: var(--accent);
+                transform: translateY(-3px);
+            }
+
+            .section-title {
+                font-size: 2.2rem;
+                color: var(--accent);
+                text-align: center;
+                margin-bottom: 2.5rem;
+                position: relative;
+                padding-bottom: 0.5rem;
+            }
+
+            .section-title::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 80px;
+                height: 3px;
+                background: var(--gradient);
+                border-radius: 2px;
+            }
+
+            #intro-about {
+                text-align: center;
+                margin-bottom: 4rem; /* Increased margin */
+            }
+            
+            #intro-about p {
+                font-size: 1.15rem; /* Slightly larger */
+                line-height: 1.8;
+                max-width: 800px;
+                margin: 0 auto; /* Removed bottom margin from here */
+                opacity: 0.9;
+            }
+
+            [dir="rtl"] #intro-about p {
+                text-align: center; 
+            }
+
+            #skills .skills-container {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 2rem;
+                margin-top: 1rem; /* Relative to section title */
+                margin-bottom: 4rem; /* Spacing before projects */
+            }
+
+            .skill-category {
+                background-color: var(--card-bg);
+                padding: 2rem;
+                border-radius: 10px;
+                border: 1px solid var(--border);
+                box-shadow: var(--card-shadow);
+                transition: all 0.3s ease;
+                animation: fadeInUp 0.6s ease-out forwards; /* Added animation */
+                opacity: 0; /* For animation */
+            }
+            .skill-category:nth-of-type(1) { animation-delay: 0.3s; }
+            .skill-category:nth-of-type(2) { animation-delay: 0.5s; }
+
+
+            .skill-category:hover {
+                transform: translateY(-5px);
+                box-shadow: var(--hover-shadow);
+                border-color: var(--accent);
+            }
+
+            .skill-category h3 {
+                font-size: 1.5rem;
+                color: var(--accent);
+                margin-bottom: 1.5rem;
+                border-bottom: 2px solid var(--accent);
+                padding-bottom: 0.5rem;
+                display: inline-block;
+            }
+
+            .skill-category ul {
+                list-style: none;
+                padding-left: 0;
+            }
+
+            .skill-category li {
+                margin-bottom: 0.8rem;
+                font-size: 1rem;
+                display: flex;
+                align-items: center;
+                gap: 0.8rem;
+                color: var(--text-secondary);
+                opacity: 0.9;
+                transition: color 0.3s ease;
+            }
+            .skill-category li:hover {
+                color: var(--accent);
+            }
+
+            .skill-category li i {
+                color: var(--accent);
+                font-size: 1.2em;
+                width: 20px; 
+                text-align: center;
+                transition: transform 0.3s ease;
+            }
+            .skill-category li:hover i {
+                transform: scale(1.1);
+            }
+
+
+            [dir="rtl"] .skill-category li {
+                gap: 0.8rem; 
+            }
+            
+            .projects-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+                gap: 2rem;
+                /* margin-top: 3rem; Removed, sections above have margin-bottom */
+                padding: 0 1rem;
+            }
+
+            .project-card {
+                background-color: var(--card-bg);
+                border-radius: 12px;
+                overflow: hidden;
+                transition: all 0.4s ease;
+                border: 1px solid var(--border);
+                box-shadow: var(--card-shadow);
+                position: relative;
+                animation: fadeInUp 0.6s ease-out forwards;
+                opacity: 0;
+            }
+
+            .project-card:nth-child(1) { animation-delay: 0.2s; }
+            .project-card:nth-child(2) { animation-delay: 0.4s; }
+            .project-card:nth-child(3) { animation-delay: 0.6s; }
+
+            .project-card:hover {
+                transform: translateY(-10px);
+                box-shadow: var(--hover-shadow);
+                border-color: var(--accent);
+            }
+
+            .project-image {
+                width: 100%;
+                height: 220px;
+                object-fit: cover;
+                transition: transform 0.4s ease;
+            }
+
+            .project-card:hover .project-image {
+                transform: scale(1.05);
+            }
+
+            .project-content {
+                padding: 2rem;
+                position: relative;
+            }
+
+            .project-title {
+                color: var(--text);
+                font-size: 1.4rem;
+                margin-bottom: 1rem;
+                font-weight: 600;
+            }
+
+            .project-description {
+                color: var(--text-secondary);
+                margin-bottom: 1.5rem;
+                line-height: 1.7;
+                opacity: 0.9;
+            }
+
+            .project-link {
+                display: inline-flex;
+                align-items: center;
+                padding: 0.8rem 1.5rem;
+                background: var(--gradient);
+                color: var(--text);
+                text-decoration: none;
+                border-radius: 6px;
+                font-weight: 500;
+                transition: all 0.3s ease;
+                gap: 0.5rem;
+            }
+
+            .project-link:hover {
+                background: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent) 100%);
+                box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+            }
+
+            .project-link i {
+                font-size: 0.9em;
+                transition: transform 0.3s ease;
+            }
+
+            .project-link:hover i {
+                transform: translateX(3px);
+            }
+
+            .project-tags {
+                display: flex;
+                gap: 0.5rem;
+                margin-bottom: 1rem;
+            }
+
+            .project-tag {
+                padding: 0.3rem 0.8rem;
+                background: rgba(59, 130, 246, 0.1);
+                color: var(--accent);
+                border-radius: 20px;
+                font-size: 0.85rem;
+                font-weight: 500;
+            }
+
+            footer {
+                background: linear-gradient(to top, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95));
+                padding: 3rem 1rem;
+                text-align: center;
+                margin-top: 6rem;
+                border-top: 1px solid var(--border);
+                position: relative;
+            }
+
+            footer::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: var(--gradient);
+                opacity: 0.05;
+                z-index: 0;
+            }
+
+            .footer-content {
+                position: relative;
+                z-index: 1;
+                max-width: 1200px;
+                margin: 0 auto;
+                opacity: 0.9;
+            }
+
+            @media (max-width: 768px) {
+                .projects-grid {
+                    grid-template-columns: 1fr;
+                    padding: 0 0.5rem;
+                }
+
+                h1 {
+                    font-size: 2.2rem;
+                }
+                .section-title {
+                    font-size: 1.8rem;
+                }
+                #intro-about p {
+                    font-size: 1rem;
+                }
+                .skill-category h3 {
+                    font-size: 1.3rem;
+                }
+                .skill-category li {
+                    font-size: 0.9rem;
+                }
+
+
+                .subtitle {
+                    font-size: 1.1rem;
+                }
+
+                .project-card {
+                    margin-bottom: 1rem;
+                }
+
+                .social-links a {
+                    width: 45px;
+                    height: 45px;
+                    font-size: 1.3rem;
+                }
+
+                .lang-switch {
+                    top: 10px;
+                    right: 10px;
+                    padding: 0.6rem 1rem;
+                }
+
+                [dir="rtl"] .lang-switch {
+                    left: 10px;
+                    right: auto;
+                }
+            }
+
+            /* Scroll reveal animation */
+            .reveal {
+                opacity: 0;
+                transform: translateY(30px);
+                transition: all 0.8s ease;
+            }
+
+            .reveal.active {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            /* Language switcher button */
             .lang-switch {
-                right: 20px; /* Default for LTR */
-                left: auto; 
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 1000;
+                background: var(--gradient);
+                color: var(--text);
+                border: none;
+                padding: 0.8rem 1.5rem;
+                border-radius: 6px;
+                cursor: pointer;
+                font-weight: 500;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                transition: all 0.3s ease;
             }
-            
+
+            .lang-switch:hover {
+                background: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent) 100%);
+                box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+            }
+
+            /* RTL specific styles */
+            [dir="rtl"] body {
+                font-family: 'Tajawal', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            }
+
             [dir="rtl"] .lang-switch {
-                left: 20px; /* Specific for RTL */
+                left: 20px;
                 right: auto;
             }
-            
-            /* Ensure hamburger is on the opposite side of lang switch in mobile */
+
+            [dir="rtl"] .project-description {
+                text-align: right;
+            }
+            [dir="rtl"] .skill-category h3 {
+                /* text-align: right; /* If needed, but inline-block usually handles it */
+            }
+            [dir="rtl"] .skill-category li {
+                /* text-align: right; /* If needed */
+            }
+
+
+            /* Hamburger Menu Styles */
             .hamburger {
-                left: 20px; /* Default for LTR */
-                right: auto;
+                display: none;
+                flex-direction: column;
+                justify-content: space-around;
+                width: 30px;
+                height: 25px;
+                position: fixed;
+                top: 20px;
+                left: 20px;
+                z-index: 1001;
+                background: transparent;
+                border: none;
+                cursor: pointer;
+                padding: 0;
             }
+
+            .hamburger span {
+                width: 100%;
+                height: 3px;
+                background: var(--text);
+                border-radius: 3px;
+                transition: all 0.3s ease;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                height: 100vh;
+                width: 250px;
+                background: var(--primary);
+                padding: 80px 20px 20px;
+                transition: 0.3s ease;
+                z-index: 1000;
+                border-right: 1px solid var(--border);
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-menu ul {
+                list-style: none;
+                padding: 0;
+            }
+
+            .nav-menu li {
+                margin: 20px 0;
+            }
+
+            .nav-menu a {
+                color: var(--text-secondary);
+                text-decoration: none;
+                font-size: 1.1rem;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                transition: color 0.3s ease;
+            }
+
+            .nav-menu a:hover {
+                color: var(--accent);
+            }
+
+            .menu-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(15, 23, 42, 0.9);
+                z-index: 999;
+                display: none;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+
+            .menu-overlay.active {
+                display: block;
+                opacity: 1;
+            }
+
+            /* RTL Hamburger Menu */
             [dir="rtl"] .hamburger {
-                right: 20px; /* Specific for RTL */
                 left: auto;
+                right: 20px;
             }
-        }
-    </style>
-</head>
-<body>
-    <button class="lang-switch" onclick="toggleLanguage()">
-        <i class="fas fa-globe"></i>
-        <span class="lang-text">عربي</span>
-    </button>
 
-    <button class="hamburger" aria-label="Menu">
-        <span></span>
-        <span></span>
-        <span></span>
-    </button>
+            [dir="rtl"] .nav-menu {
+                left: auto;
+                right: -100%;
+                border-right: none;
+                border-left: 1px solid var(--border);
+            }
 
-    <div class="menu-overlay"></div>
-    
-    <nav class="nav-menu">
-        <ul>
-            <li><a href="https://bebonaiem.dpdns.org"><i class="fas fa-home"></i> <span class="translate" data-en="Home" data-ar="الرئيسية">Home</span></a></li>
-            <li><a href="unknown-caller.html"><i class="fas fa-phone"></i> <span class="translate" data-en="Unknown Caller" data-ar="المتصل المجهول">Unknown Caller</span></a></li>
-            <li><a href="about.html"><i class="fas fa-user"></i> <span class="translate" data-en="About" data-ar="عني">About</span></a></li>
-        </ul>
-    </nav>
+            [dir="rtl"] .nav-menu.active {
+                left: auto;
+                right: 0;
+            }
 
-    <div class="background"></div>
-    
-    <header>
-        <div class="header-content">
-            <h1 class="name-section">Bebo Naiem</h1>
-            <p class="subtitle translate" data-en="Creative Developer & Digital Storyteller" data-ar="مطور مبدع وراوي قصص رقمي">Creative Developer & Digital Storyteller</p>
-            <div class="social-links">
-                <a href="https://www.facebook.com/bebo.naiem13" target="_blank" aria-label="Facebook" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                <a href="https://www.instagram.com/bebonaiem/" target="_blank" aria-label="Instagram" title="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="https://www.youtube.com/@Bebo_Naiem" target="_blank" aria-label="YouTube" title="YouTube"><i class="fab fa-youtube"></i></a>
-                <a href="about.html" aria-label="About" title="About"><i class="fas fa-user"></i></a>
-            </div>
-        </div>
-    </header>
+            @media (max-width: 768px) {
+                .hamburger {
+                    display: flex;
+                }
 
-    <main class="container">
-        <div class="projects-grid">
-            <!-- unknown caller Project -->
-            <div class="project-card reveal">
-                <img src="img/1.png" alt="unknown caller Project" class="project-image">
-                <div class="project-content">
-                    <div class="project-tags">
-                        <span class="project-tag translate" data-en="Interactive Story" data-ar="قصة تفاعلية">Interactive Story</span>
-                        <span class="project-tag translate" data-en="Horror" data-ar="رعب">Horror</span>
-                    </div>
-                    <h2 class="project-title translate" data-en="Unknown Caller" data-ar="المتصل المجهول">المتصل المجهول</h2>
-                    <p class="project-description translate" data-en="A captivating short scenario created for the Faculty of Specific Education. An interactive horror story that follows the mysterious events in an abandoned house." data-ar="سيناريو قصير مثير للاهتمام تم إنشاؤه لكلية التربية النوعية. قصة رعب تفاعلية تتبع الأحداث الغامضة في منزل مهجور.">A captivating short scenario created for the Faculty of Specific Education. An interactive horror story that follows the mysterious events in an abandoned house.</p>
-                    <a href="unknown-caller.html" class="project-link">
-                        <span class="translate" data-en="View Project" data-ar="عرض المشروع">View Project</span>
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Template for future projects -->
-            <div class="project-card reveal">
-                <img src="programming(1)/img11/1.jpg" alt="Sec Project" class="project-image">
-                <div class="project-content">
-                    <div class="project-tags">
-                        <span class="project-tag translate" data-en="Educational" data-ar="تعليمي">Educational</span>
-                        <span class="project-tag translate" data-en="Immunology" data-ar="علم المناعة">Immunology</span>
-                    </div>
-                    <h2 class="project-title translate" data-en="Immunology Project" data-ar="مشروع علم المناعة">Immunology Project</h2>
-                    <p class="project-description translate" data-en="An educational project about the immune system and its organs, created for the Faculty of Specific Education." data-ar="مشروع تعليمي عن الجهاز المناعي وأعضائه، تم إنشاؤه لكلية التربية النوعية.">An educational project about the immune system and its organs, created for the Faculty of Specific Education.</p>
-                    <a href="programming(1)/index11 (2).html" class="project-link">
-                        <span class="translate" data-en="View Project" data-ar="عرض المشروع">View Project</span>
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Another Template for future projects -->
-            <div class="project-card reveal">
-                <img src="https://placehold.co/400x300/3c424f/ff6f61/png?text=In+The+Works" alt="In The Works" class="project-image">
-                <div class="project-content">
-                    <div class="project-tags">
-                        <span class="project-tag translate" data-en="Exploration" data-ar="استكشاف">Exploration</span>
-                        <span class="project-tag translate" data-en="Narrative Game" data-ar="لعبة سردية">Narrative Game</span>
-                    </div>
-                    <h2 class="project-title translate" data-en="Project Beta" data-ar="مشروع بيتا">Project Beta</h2>
-                    <p class="project-description translate" data-en="Currently exploring new concepts for an immersive narrative experience. Check back for updates on this developing project." data-ar="أقوم حاليًا باستكشاف مفاهيم جديدة لتجربة سردية غامرة. تحقق مرة أخرى للحصول على تحديثات حول هذا المشروع قيد التطوير.">Currently exploring new concepts for an immersive narrative experience. Check back for updates on this developing project.</p>
-                    <a href="#" class="project-link" style="opacity: 0.7; pointer-events: none;">
-                        <span class="translate" data-en="In Development" data-ar="قيد التطوير">In Development</span>
-                        <i class="fas fa-cogs"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Intro About Section -->
-        <section id="intro-about" class="reveal">
-            <h2 class="section-title translate" data-en="A Glimpse Into My World" data-ar="نظرة إلى عالمي">A Glimpse Into My World</h2>
-            <p class="translate" 
-               data-en="Hello! I'm Bebo Naiem, a Creative Developer and Digital Storyteller with a deep passion for crafting immersive and engaging digital experiences. My journey, rooted in the Faculty of Specific Education, has equipped me with a unique blend of technical expertise and creative vision. I specialize in bringing narratives to life, particularly within the horror genre, through interactive web projects. Dive into my portfolio and discover the worlds I've built."
-               data-ar="مرحباً! أنا بيبو نعيم، مطور مبدع وراوي قصص رقمي بشغف عميق لصياغة تجارب رقمية غامرة وجذابة. رحلتي، المتجذرة في كلية التربية النوعية، زودتني بمزيج فريد من الخبرة التقنية والرؤية الإبداعية. أتخصص في بث الحياة في السرديات، خاصة ضمن نوع الرعب، من خلال مشاريع الويب التفاعلية. تفضل بالاطلاع على معرض أعمالي واكتشف العوالم التي بنيتها.">
-               Hello! I'm Bebo Naiem, a Creative Developer and Digital Storyteller...
-            </p>
-        </section>
-
-        <!-- Skills Section -->
-        <section id="skills" class="reveal">
-            <h2 class="section-title translate" data-en="My Creative Arsenal" data-ar="ترسانتي الإبداعية">My Creative Arsenal</h2>
-            <div class="skills-container">
-                <div class="skill-category">
-                    <h3 class="translate" data-en="Development" data-ar="التطوير">Development</h3>
-                    <ul>
-                        <li><i class="fab fa-html5"></i> <span class="translate" data-en="HTML5" data-ar="HTML5">HTML5</span></li>
-                        <li><i class="fab fa-css3-alt"></i> <span class="translate" data-en="CSS3" data-ar="CSS3">CSS3</span></li>
-                        <li><i class="fab fa-js-square"></i> <span class="translate" data-en="JavaScript" data-ar="جافاسكريبت">JavaScript</span></li>
-                        <li><i class="fas fa-mobile-alt"></i> <span class="translate" data-en="Responsive Design" data-ar="تصميم متجاوب">Responsive Design</span></li>
-                        <li><i class="fas fa-magic"></i> <span class="translate" data-en="Web Animation" data-ar="رسوم متحركة للويب">Web Animation</span></li>
-                    </ul>
-                </div>
-                <div class="skill-category">
-                    <h3 class="translate" data-en="Storytelling & Design" data-ar="سرد القصص والتصميم">Storytelling & Design</h3>
-                    <ul>
-                        <li><i class="fas fa-comments"></i> <span class="translate" data-en="Interactive Narratives" data-ar="السرد التفاعلي">Interactive Narratives</span></li>
-                        <li><i class="fas fa-ghost"></i> <span class="translate" data-en="Horror Storytelling" data-ar="سرد قصص الرعب">Horror Storytelling</span></li>
-                        <li><i class="fas fa-object-group"></i> <span class="translate" data-en="UI/UX Design Principles" data-ar="مبادئ تصميم UI/UX">UI/UX Design Principles</span></li>
-                        <li><i class="fas fa-photo-video"></i> <span class="translate" data-en="Multimedia Content" data-ar="محتوى الوسائط المتعددة">Multimedia Content</span></li>
-                        <li><i class="fas fa-lightbulb"></i> <span class="translate" data-en="Creative Concepting" data-ar="التصور الإبداعي">Creative Concepting</span></li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <div class="ad-container" style="text-align: center; margin: 4rem auto 2rem auto; max-width: 100%; overflow: hidden;">
-            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7696225868255842"
-            crossorigin="anonymous"></script>
-            <!-- first -->
-            <ins class="adsbygoogle"
-                style="display:block"
-                data-ad-client="ca-pub-7696225868255842"
-                data-ad-slot="2320732927"
-                data-ad-format="auto"
-                data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-       </script>
-        </div>
-    </main>
-
-    <footer>
-        <div class="footer-content">
-            <p class="translate" data-en="© 2025 Bebo Naiem. All rights reserved." data-ar="© 2025 Bebo Naiem. جميع الحقوق محفوظة.">© 2025 Bebo Naiem. All rights reserved.</p>
-        </div>
-    </footer>
-
-
-
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M9TRXWT7"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
-
-
-
-
-    <script>
-        // Scroll reveal animation
-        function revealElements() { // Renamed for clarity
-            const reveals = document.querySelectorAll('.reveal');
-            
-            reveals.forEach(element => {
-                const elementTop = element.getBoundingClientRect().top;
-                const elementVisible = 100; // Adjusted for earlier reveal
+                .lang-switch {
+                    right: 20px; /* Default for LTR */
+                    left: auto; 
+                }
                 
-                if (elementTop < window.innerHeight - elementVisible) {
-                    element.classList.add('active');
+                [dir="rtl"] .lang-switch {
+                    left: 20px; /* Specific for RTL */
+                    right: auto;
                 }
-            });
-
-            // Animate skill categories individually if they are in view
-            const skillCategories = document.querySelectorAll('.skill-category');
-            skillCategories.forEach(category => {
-                const elementTop = category.getBoundingClientRect().top;
-                const elementVisible = 100;
-                if (elementTop < window.innerHeight - elementVisible) {
-                    // The fadeInUp animation is now directly on .skill-category
-                    // No need to add 'active' if animation is auto-playing via CSS
+                
+                /* Ensure hamburger is on the opposite side of lang switch in mobile */
+                .hamburger {
+                    left: 20px; /* Default for LTR */
+                    right: auto;
                 }
-            });
-        }
-
-        // Add event listeners
-        window.addEventListener('scroll', revealElements);
-        window.addEventListener('load', revealElements);
-
-        // Initial check for elements in view
-        revealElements();
-
-        // Language switching functionality
-        function toggleLanguage() {
-            const currentLang = document.documentElement.lang;
-            const newLang = currentLang === 'en' ? 'ar' : 'en';
-            const direction = newLang === 'ar' ? 'rtl' : 'ltr';
-            
-            // Update HTML attributes
-            document.documentElement.lang = newLang;
-            document.documentElement.dir = direction;
-            
-            // Update button text
-            const langBtn = document.querySelector('.lang-switch .lang-text');
-            langBtn.textContent = newLang === 'ar' ? 'English' : 'عربي';
-            
-            // Update all translatable elements
-            document.querySelectorAll('.translate').forEach(element => {
-                const translation = element.dataset[newLang];
-                if (translation) { // Check if translation exists
-                    // For elements that might contain only text nodes (like p, span, h2)
-                    if (element.childNodes.length === 1 && element.childNodes[0].nodeType === Node.TEXT_NODE) {
-                        element.textContent = translation;
-                    } else {
-                        // For elements that might have mixed content or specific structure
-                        // This part might need adjustment based on how you structure your .translate elements
-                        // For now, a simple textContent update is often sufficient.
-                        // If an element has child elements that are *also* .translate, they'll be handled by the loop.
-                        // If an element has non-translatable children, this might overwrite them.
-                        // A more robust solution would be to only update the direct text content.
-                        
-                        // A safer approach for mixed content:
-                        // Find the main text node to update if possible, or just set textContent.
-                        // For this project, textContent should be fine for most .translate elements.
-                        element.textContent = translation; 
-                    }
+                [dir="rtl"] .hamburger {
+                    right: 20px; /* Specific for RTL */
+                    left: auto;
                 }
-            });
-            
-            // Save language preference
-            localStorage.setItem('preferred-lang', newLang);
-        }
-
-        // Load saved language preference
-        document.addEventListener('DOMContentLoaded', () => {
-            const savedLang = localStorage.getItem('preferred-lang') || 'en'; // Default to 'en' if nothing saved
-            
-            // Set initial state based on savedLang before toggling (if needed)
-            document.documentElement.lang = savedLang;
-            document.documentElement.dir = savedLang === 'ar' ? 'rtl' : 'ltr';
-            const langBtn = document.querySelector('.lang-switch .lang-text');
-            langBtn.textContent = savedLang === 'ar' ? 'English' : 'عربي';
-            document.querySelectorAll('.translate').forEach(element => {
-                const translation = element.dataset[savedLang];
-                if (translation) {
-                     // Initial load: simple textContent update is fine
-                    element.textContent = translation;
-                }
-            });
-
-            // If the initial setup based on savedLang is different from a hardcoded 'en',
-            // no toggle is needed, it's already set.
-            // The toggleLanguage function is primarily for user interaction.
-        });
-
-        // Hamburger menu functionality
-        const hamburger = document.querySelector('.hamburger');
-        const navMenu = document.querySelector('.nav-menu');
-        const menuOverlay = document.querySelector('.menu-overlay');
-
-        function toggleMenu() {
-            const isActive = navMenu.classList.contains('active');
-            hamburger.classList.toggle('active');
-            navMenu.classList.toggle('active');
-            menuOverlay.classList.toggle('active');
-            
-            if (!isActive) { // Menu is being opened
-                document.body.style.overflow = 'hidden';
-            } else { // Menu is being closed
-                document.body.style.overflow = '';
             }
-        }
+        </style>
+    </head>
+    <body>
+        <button class="lang-switch" onclick="toggleLanguage()">
+            <i class="fas fa-globe"></i>
+            <span class="lang-text">عربي</span>
+        </button>
 
-        hamburger.addEventListener('click', toggleMenu);
-        menuOverlay.addEventListener('click', toggleMenu);
+        <button class="hamburger" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
 
-        // Close menu when clicking a link
-        document.querySelectorAll('.nav-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                if (navMenu.classList.contains('active')) { // Only toggle if menu is open
-                    toggleMenu();
-                }
+        <div class="menu-overlay"></div>
+        
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="https://bebonaiem.dpdns.org"><i class="fas fa-home"></i> <span class="translate" data-en="Home" data-ar="الرئيسية">Home</span></a></li>
+                <li><a href="unknown-caller.html"><i class="fas fa-phone"></i> <span class="translate" data-en="Unknown Caller" data-ar="المتصل المجهول">Unknown Caller</span></a></li>
+                <li><a href="about.html"><i class="fas fa-user"></i> <span class="translate" data-en="About" data-ar="عني">About</span></a></li>
+            </ul>
+        </nav>
+
+        <div class="background"></div>
+        
+        <header>
+            <div class="header-content">
+                <h1 class="name-section">Bebo Naiem</h1>
+                <p class="subtitle translate" data-en="Creative Developer & Digital Storyteller" data-ar="مطور مبدع وراوي قصص رقمي">Creative Developer & Digital Storyteller</p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/bebo.naiem13" target="_blank" aria-label="Facebook" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/bebonaiem/" target="_blank" aria-label="Instagram" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.youtube.com/@Bebo_Naiem" target="_blank" aria-label="YouTube" title="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="about.html" aria-label="About" title="About"><i class="fas fa-user"></i></a>
+                </div>
+            </div>
+        </header>
+
+        <main class="container">
+            <div class="projects-grid">
+                <!-- unknown caller Project -->
+                <div class="project-card reveal">
+                    <img src="img/1.png" alt="unknown caller Project" class="project-image">
+                    <div class="project-content">
+                        <div class="project-tags">
+                            <span class="project-tag translate" data-en="Interactive Story" data-ar="قصة تفاعلية">Interactive Story</span>
+                            <span class="project-tag translate" data-en="Horror" data-ar="رعب">Horror</span>
+                        </div>
+                        <h2 class="project-title translate" data-en="Unknown Caller" data-ar="المتصل المجهول">المتصل المجهول</h2>
+                        <p class="project-description translate" data-en="A captivating short scenario created for the Faculty of Specific Education. An interactive horror story that follows the mysterious events in an abandoned house." data-ar="سيناريو قصير مثير للاهتمام تم إنشاؤه لكلية التربية النوعية. قصة رعب تفاعلية تتبع الأحداث الغامضة في منزل مهجور.">A captivating short scenario created for the Faculty of Specific Education. An interactive horror story that follows the mysterious events in an abandoned house.</p>
+                        <a href="unknown-caller.html" class="project-link">
+                            <span class="translate" data-en="View Project" data-ar="عرض المشروع">View Project</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Template for future projects -->
+                <div class="project-card reveal">
+                    <img src="programming(1)/img11/1.jpg" alt="Sec Project" class="project-image">
+                    <div class="project-content">
+                        <div class="project-tags">
+                            <span class="project-tag translate" data-en="Educational" data-ar="تعليمي">Educational</span>
+                            <span class="project-tag translate" data-en="Immunology" data-ar="علم المناعة">Immunology</span>
+                        </div>
+                        <h2 class="project-title translate" data-en="Immunology Project" data-ar="مشروع علم المناعة">Immunology Project</h2>
+                        <p class="project-description translate" data-en="An educational project about the immune system and its organs, created for the Faculty of Specific Education." data-ar="مشروع تعليمي عن الجهاز المناعي وأعضائه، تم إنشاؤه لكلية التربية النوعية.">An educational project about the immune system and its organs, created for the Faculty of Specific Education.</p>
+                        <a href="programming(1)/index11 (2).html" class="project-link">
+                            <span class="translate" data-en="View Project" data-ar="عرض المشروع">View Project</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Another Template for future projects -->
+                <div class="project-card reveal">
+                    <img src="https://placehold.co/400x300/3c424f/ff6f61/png?text=In+The+Works" alt="In The Works" class="project-image">
+                    <div class="project-content">
+                        <div class="project-tags">
+                            <span class="project-tag translate" data-en="Exploration" data-ar="استكشاف">Exploration</span>
+                            <span class="project-tag translate" data-en="Narrative Game" data-ar="لعبة سردية">Narrative Game</span>
+                        </div>
+                        <h2 class="project-title translate" data-en="Project Beta" data-ar="مشروع بيتا">Project Beta</h2>
+                        <p class="project-description translate" data-en="Currently exploring new concepts for an immersive narrative experience. Check back for updates on this developing project." data-ar="أقوم حاليًا باستكشاف مفاهيم جديدة لتجربة سردية غامرة. تحقق مرة أخرى للحصول على تحديثات حول هذا المشروع قيد التطوير.">Currently exploring new concepts for an immersive narrative experience. Check back for updates on this developing project.</p>
+                        <a href="#" class="project-link" style="opacity: 0.7; pointer-events: none;">
+                            <span class="translate" data-en="In Development" data-ar="قيد التطوير">In Development</span>
+                            <i class="fas fa-cogs"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exams Section -->
+            <section id="exams" class="reveal">
+                <h2 class="section-title translate" data-en="Educational Resources" data-ar="الموارد التعليمية">Educational Resources</h2>
+                <div class="projects-grid">
+                    <!-- All Exams Collection -->
+                    <div class="project-card reveal">
+                        <img src="img/Logo.png" alt="All Exams" class="project-image">
+                        <div class="project-content">
+                            <div class="project-tags">
+                                <span class="project-tag translate" data-en="Collection" data-ar="مجموعة">Collection</span>
+                                <span class="project-tag translate" data-en="Educational" data-ar="تعليمي">Educational</span>
+                            </div>
+                            <h2 class="project-title translate" data-en="All Exams" data-ar="جميع الامتحانات">All Exams</h2>
+                            <p class="project-description translate" data-en="Access our complete collection of educational exams and resources. Perfect for students and educators looking to test their knowledge." data-ar="الوصول إلى مجموعتنا الكاملة من الامتحانات والموارد التعليمية. مثالي للطلاب والمعلمين الذين يتطلعون إلى اختبار معرفتهم.">Access our complete collection of educational exams and resources. Perfect for students and educators looking to test their knowledge.</p>
+                            <a href="all_exams.html" class="project-link">
+                                <span class="translate" data-en="View All Exams" data-ar="عرض جميع الامتحانات">View All Exams</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Intro About Section -->
+            <section id="intro-about" class="reveal">
+                <h2 class="section-title translate" data-en="A Glimpse Into My World" data-ar="نظرة إلى عالمي">A Glimpse Into My World</h2>
+                <p class="translate" 
+                data-en="Hello! I'm Bebo Naiem, a Creative Developer and Digital Storyteller with a deep passion for crafting immersive and engaging digital experiences. My journey, rooted in the Faculty of Specific Education, has equipped me with a unique blend of technical expertise and creative vision. I specialize in bringing narratives to life, particularly within the horror genre, through interactive web projects. Dive into my portfolio and discover the worlds I've built."
+                data-ar="مرحباً! أنا بيبو نعيم، مطور مبدع وراوي قصص رقمي بشغف عميق لصياغة تجارب رقمية غامرة وجذابة. رحلتي، المتجذرة في كلية التربية النوعية، زودتني بمزيج فريد من الخبرة التقنية والرؤية الإبداعية. أتخصص في بث الحياة في السرديات، خاصة ضمن نوع الرعب، من خلال مشاريع الويب التفاعلية. تفضل بالاطلاع على معرض أعمالي واكتشف العوالم التي بنيتها.">
+                Hello! I'm Bebo Naiem, a Creative Developer and Digital Storyteller...
+                </p>
+            </section>
+
+            <!-- Skills Section -->
+            <section id="skills" class="reveal">
+                <h2 class="section-title translate" data-en="My Creative Arsenal" data-ar="ترسانتي الإبداعية">My Creative Arsenal</h2>
+                <div class="skills-container">
+                    <div class="skill-category">
+                        <h3 class="translate" data-en="Development" data-ar="التطوير">Development</h3>
+                        <ul>
+                            <li><i class="fab fa-html5"></i> <span class="translate" data-en="HTML5" data-ar="HTML5">HTML5</span></li>
+                            <li><i class="fab fa-css3-alt"></i> <span class="translate" data-en="CSS3" data-ar="CSS3">CSS3</span></li>
+                            <li><i class="fab fa-js-square"></i> <span class="translate" data-en="JavaScript" data-ar="جافاسكريبت">JavaScript</span></li>
+                            <li><i class="fas fa-mobile-alt"></i> <span class="translate" data-en="Responsive Design" data-ar="تصميم متجاوب">Responsive Design</span></li>
+                            <li><i class="fas fa-magic"></i> <span class="translate" data-en="Web Animation" data-ar="رسوم متحركة للويب">Web Animation</span></li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h3 class="translate" data-en="Storytelling & Design" data-ar="سرد القصص والتصميم">Storytelling & Design</h3>
+                        <ul>
+                            <li><i class="fas fa-comments"></i> <span class="translate" data-en="Interactive Narratives" data-ar="السرد التفاعلي">Interactive Narratives</span></li>
+                            <li><i class="fas fa-ghost"></i> <span class="translate" data-en="Horror Storytelling" data-ar="سرد قصص الرعب">Horror Storytelling</span></li>
+                            <li><i class="fas fa-object-group"></i> <span class="translate" data-en="UI/UX Design Principles" data-ar="مبادئ تصميم UI/UX">UI/UX Design Principles</span></li>
+                            <li><i class="fas fa-photo-video"></i> <span class="translate" data-en="Multimedia Content" data-ar="محتوى الوسائط المتعددة">Multimedia Content</span></li>
+                            <li><i class="fas fa-lightbulb"></i> <span class="translate" data-en="Creative Concepting" data-ar="التصور الإبداعي">Creative Concepting</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <div class="ad-container" style="text-align: center; margin: 4rem auto 2rem auto; max-width: 100%; overflow: hidden;">
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7696225868255842"
+                crossorigin="anonymous"></script>
+                <!-- first -->
+                <ins class="adsbygoogle"
+                    style="display:block"
+                    data-ad-client="ca-pub-7696225868255842"
+                    data-ad-slot="2320732927"
+                    data-ad-format="auto"
+                    data-full-width-responsive="true"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <p class="translate" data-en="© 2025 Bebo Naiem. All rights reserved." data-ar="© 2025 Bebo Naiem. جميع الحقوق محفوظة.">© 2025 Bebo Naiem. All rights reserved.</p>
+            </div>
+        </footer>
+
+
+
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M9TRXWT7"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+        <!-- End Google Tag Manager (noscript) -->
+
+
+
+
+        <script>
+            // Scroll reveal animation
+            function revealElements() { // Renamed for clarity
+                const reveals = document.querySelectorAll('.reveal');
+                
+                reveals.forEach(element => {
+                    const elementTop = element.getBoundingClientRect().top;
+                    const elementVisible = 100; // Adjusted for earlier reveal
+                    
+                    if (elementTop < window.innerHeight - elementVisible) {
+                        element.classList.add('active');
+                    }
+                });
+
+                // Animate skill categories individually if they are in view
+                const skillCategories = document.querySelectorAll('.skill-category');
+                skillCategories.forEach(category => {
+                    const elementTop = category.getBoundingClientRect().top;
+                    const elementVisible = 100;
+                    if (elementTop < window.innerHeight - elementVisible) {
+                        // The fadeInUp animation is now directly on .skill-category
+                        // No need to add 'active' if animation is auto-playing via CSS
+                    }
+                });
+            }
+
+            // Add event listeners
+            window.addEventListener('scroll', revealElements);
+            window.addEventListener('load', revealElements);
+
+            // Initial check for elements in view
+            revealElements();
+
+            // Language switching functionality
+            function toggleLanguage() {
+                const currentLang = document.documentElement.lang;
+                const newLang = currentLang === 'en' ? 'ar' : 'en';
+                const direction = newLang === 'ar' ? 'rtl' : 'ltr';
+                
+                // Update HTML attributes
+                document.documentElement.lang = newLang;
+                document.documentElement.dir = direction;
+                
+                // Update button text
+                const langBtn = document.querySelector('.lang-switch .lang-text');
+                langBtn.textContent = newLang === 'ar' ? 'English' : 'عربي';
+                
+                // Update all translatable elements
+                document.querySelectorAll('.translate').forEach(element => {
+                    const translation = element.dataset[newLang];
+                    if (translation) { // Check if translation exists
+                        // For elements that might contain only text nodes (like p, span, h2)
+                        if (element.childNodes.length === 1 && element.childNodes[0].nodeType === Node.TEXT_NODE) {
+                            element.textContent = translation;
+                        } else {
+                            // For elements that might have mixed content or specific structure
+                            // This part might need adjustment based on how you structure your .translate elements
+                            // For now, a simple textContent update is often sufficient.
+                            // If an element has child elements that are *also* .translate, they'll be handled by the loop.
+                            // If an element has non-translatable children, this might overwrite them.
+                            // A more robust solution would be to only update the direct text content.
+                            
+                            // A safer approach for mixed content:
+                            // Find the main text node to update if possible, or just set textContent.
+                            // For this project, textContent should be fine for most .translate elements.
+                            element.textContent = translation; 
+                        }
+                    }
+                });
+                
+                // Save language preference
+                localStorage.setItem('preferred-lang', newLang);
+            }
+
+            // Load saved language preference
+            document.addEventListener('DOMContentLoaded', () => {
+                const savedLang = localStorage.getItem('preferred-lang') || 'en'; // Default to 'en' if nothing saved
+                
+                // Set initial state based on savedLang before toggling (if needed)
+                document.documentElement.lang = savedLang;
+                document.documentElement.dir = savedLang === 'ar' ? 'rtl' : 'ltr';
+                const langBtn = document.querySelector('.lang-switch .lang-text');
+                langBtn.textContent = savedLang === 'ar' ? 'English' : 'عربي';
+                document.querySelectorAll('.translate').forEach(element => {
+                    const translation = element.dataset[savedLang];
+                    if (translation) {
+                        // Initial load: simple textContent update is fine
+                        element.textContent = translation;
+                    }
+                });
+
+                // If the initial setup based on savedLang is different from a hardcoded 'en',
+                // no toggle is needed, it's already set.
+                // The toggleLanguage function is primarily for user interaction.
             });
-        });
-    </script>
-</body>
-</html>
+
+            // Hamburger menu functionality
+            const hamburger = document.querySelector('.hamburger');
+            const navMenu = document.querySelector('.nav-menu');
+            const menuOverlay = document.querySelector('.menu-overlay');
+
+            function toggleMenu() {
+                const isActive = navMenu.classList.contains('active');
+                hamburger.classList.toggle('active');
+                navMenu.classList.toggle('active');
+                menuOverlay.classList.toggle('active');
+                
+                if (!isActive) { // Menu is being opened
+                    document.body.style.overflow = 'hidden';
+                } else { // Menu is being closed
+                    document.body.style.overflow = '';
+                }
+            }
+
+            hamburger.addEventListener('click', toggleMenu);
+            menuOverlay.addEventListener('click', toggleMenu);
+
+            // Close menu when clicking a link
+            document.querySelectorAll('.nav-menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (navMenu.classList.contains('active')) { // Only toggle if menu is open
+                        toggleMenu();
+                    }
+                });
+            });
+        </script>
+    </body>
+    </html>
