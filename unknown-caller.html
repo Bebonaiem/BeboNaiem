@@ -957,7 +957,7 @@
         .hamburger {
             position: fixed;
             top: 20px;
-            left: 20px; /* Adjusted position since About button is removed */
+            left: 20px;
             width: 40px;
             height: 40px;
             background: var(--primary);
@@ -967,8 +967,15 @@
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            z-index: 100;
-            transition: background-color 0.3s ease;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            border: none;
+            outline: none;
+        }
+
+        .hamburger:hover {
+            background: var(--accent);
+            transform: scale(1.05);
         }
 
         .hamburger span {
@@ -977,7 +984,8 @@
             height: 3px;
             background: var(--text);
             margin: 3px 0;
-            transition: transform 0.3s ease, opacity 0.3s ease;
+            transition: all 0.3s ease;
+            border-radius: 3px;
         }
 
         .hamburger.active span:nth-child(1) {
@@ -992,24 +1000,19 @@
             transform: rotate(-45deg) translate(5px, -5px);
         }
 
-        @media (max-width: 768px) {
-            .hamburger {
-                top: 10px;
-                left: 20px;
-            }
-        }
-
         .menu-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.8);
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-            z-index: 99;
+            transition: all 0.3s ease;
+            z-index: 998;
+            -webkit-backdrop-filter: blur(5px);
+            backdrop-filter: blur(5px);
         }
 
         .menu-overlay.active {
@@ -1020,44 +1023,158 @@
         .nav-menu {
             position: fixed;
             top: 0;
-            right: -100%;
-            width: 250px;
-            height: 100%;
-            background: var(--card-bg);
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-            transition: right 0.3s ease;
-            z-index: 101;
+            left: -300px; /* Changed from right to left */
+            width: 300px;
+            height: 100vh;
+            background: var(--primary);
+            padding: 0;
+            transition: 0.3s ease;
+            z-index: 1000;
+            border-right: 1px solid var(--border-color); /* Changed from border-left to border-right */
             display: flex;
             flex-direction: column;
-            padding: 1rem;
+            box-shadow: -4px 0 15px rgba(0, 0, 0, 0.2); /* Adjusted shadow direction */
         }
 
         .nav-menu.active {
-            right: 0;
+            left: 0; /* Changed from right to left */
+        }
+
+        .nav-logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            border: 2px solid var(--accent);
+            padding: 0.3rem;
+            object-fit: cover;
+            background-color: var(--card-bg);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .nav-logo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .nav-header {
+            padding: 2rem;
+            border-bottom: 1px solid var(--border-color);
+            text-align: center;
+            background: linear-gradient(to right, rgba(59, 130, 246, 0.1), transparent);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-header h3 {
+            color: var(--text);
+            font-size: 1.5rem;
+            margin: 0;
+            font-weight: 600;
         }
 
         .nav-menu ul {
             list-style: none;
-            padding: 0;
+            padding: 1rem 0;
             margin: 0;
+            flex-grow: 1;
+            overflow-y: auto;
         }
 
         .nav-menu li {
-            margin-bottom: 1rem;
+            margin: 0;
         }
 
-        .nav-menu a {
-            color: var(--text);
+        .nav-link {
+            color: var(--text-secondary);
             text-decoration: none;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            transition: color 0.3s ease;
+            gap: 1rem;
+            padding: 1rem 2rem;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
         }
 
-        .nav-menu a:hover {
+        .nav-link:hover {
             color: var(--accent);
+            background: rgba(59, 130, 246, 0.1);
+            border-left-color: var(--accent);
+        }
+
+        .nav-link i {
+            width: 20px;
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--accent);
+        }
+
+        .nav-footer {
+            padding: 1.5rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            background: linear-gradient(to right, transparent, rgba(59, 130, 246, 0.05));
+        }
+
+        /* RTL specific nav-menu styles */
+        [dir="rtl"] .nav-menu {
+            left: -300px; /* Changed from right to left */
+            border-right: 1px solid var(--border-color); /* Changed from border-left to border-right */
+        }
+
+        [dir="rtl"] .nav-menu.active {
+            left: 0; /* Changed from right to left */
+        }
+
+        [dir="rtl"] .nav-link {
+            border-right: 3px solid transparent; /* Changed from border-left to border-right */
+        }
+
+        [dir="rtl"] .nav-link:hover {
+            border-right-color: var(--accent); /* Changed from border-left-color to border-right-color */
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                top: 15px;
+                left: 15px;
+                width: 36px;
+                height: 36px;
+            }
+
+            .hamburger span {
+                width: 22px;
+                height: 2px;
+            }
+
+            .nav-menu {
+                width: 260px;
+                padding: 1.5rem 1rem;
+            }
+
+            .nav-menu a {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .hamburger {
+                top: 12px;
+                left: 12px;
+                width: 32px;
+                height: 32px;
+            }
+
+            .nav-menu {
+                width: 240px;
+                padding: 1.2rem 0.8rem;
+            }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -1068,7 +1185,7 @@
     <div class="bg-animation" id="bgAnimation"></div>
 
     <!-- Hamburger menu -->
-    <button class="hamburger" aria-label="Menu">
+    <button class="hamburger" aria-label="Menu" aria-expanded="false">
         <span></span>
         <span></span>
         <span></span>
@@ -1076,12 +1193,40 @@
 
     <div class="menu-overlay"></div>
     
-    <nav class="nav-menu">
+    <nav class="nav-menu" aria-label="Main navigation">
+        <div class="nav-header">
+            <img src="img/Logo.png" alt="Logo" class="nav-logo">
+            <h3>القائمة</h3>
+        </div>
         <ul>
-            <li><a href="https://bebonaiem.dpdns.org"><i class="fas fa-home"></i> <span class="translate" data-en="Home" data-ar="الرئيسية">Home</span></a></li>
-            <li><a href="unknown-caller.html"><i class="fas fa-phone"></i> <span class="translate" data-en="Unknown Caller" data-ar="المتصل المجهول">Unknown Caller</span></a></li>
-            <li><a href="about.html"><i class="fas fa-user"></i> <span class="translate" data-en="About" data-ar="عني">About</span></a></li>
+            <li>
+                <a href="index.html" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    <span class="translate" data-en="Home" data-ar="الرئيسية">Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="unknown-caller.html" class="nav-link">
+                    <i class="fas fa-phone"></i>
+                    <span class="translate" data-en="Unknown Caller" data-ar="المتصل المجهول">Unknown Caller</span>
+                </a>
+            </li>
+            <li>
+                <a href="all_exams/all.html" class="nav-link">
+                    <i class="fas fa-file-alt"></i>
+                    <span class="translate" data-en="All Exams" data-ar="جميع الامتحانات">All Exams</span>
+                </a>
+            </li>
+            <li>
+                <a href="about.html" class="nav-link">
+                    <i class="fas fa-user"></i>
+                    <span class="translate" data-en="About" data-ar="عني">About</span>
+                </a>
+            </li>
         </ul>
+        <div class="nav-footer">
+            © 2025 المتصل المجهول
+        </div>
     </nav>
 
     <!-- Header -->
@@ -1382,6 +1527,56 @@
             </div>
         </section>
 
+        <!-- Exams section -->
+        <section class="scenario-section fade-in">
+            <div class="scenario-content">
+                <h2 class="section-title">الامتحانات</h2>
+                
+                <h3>الامتحان النظري</h3>
+                <div class="dialogue" dir="rtl">
+                    <p><strong>التاريخ:</strong> 15 يناير 2025</p>
+                    <p><strong>الوقت:</strong> 10:00 صباحاً - 12:00 ظهراً</p>
+                    <p><strong>المكان:</strong> قاعة المحاضرات الرئيسية</p>
+                    <p><strong>المواد:</strong></p>
+                    <ul class="character-list" style="text-align: right; padding-right: 1rem;">
+                        <li>مقدمة في السيناريو</li>
+                        <li>كتابة الحوار</li>
+                        <li>تطوير الشخصيات</li>
+                        <li>بناء القصة</li>
+                    </ul>
+                </div>
+
+                <h3>الامتحان العملي</h3>
+                <div class="dialogue" dir="rtl">
+                    <p><strong>التاريخ:</strong> 20 يناير 2025</p>
+                    <p><strong>الوقت:</strong> 9:00 صباحاً - 1:00 ظهراً</p>
+                    <p><strong>المكان:</strong> استوديو الإنتاج</p>
+                    <p><strong>المتطلبات:</strong></p>
+                    <ul class="character-list" style="text-align: right; padding-right: 1rem;">
+                        <li>تقديم سيناريو قصير</li>
+                        <li>تصميم الشخصيات</li>
+                        <li>كتابة الحوار</li>
+                        <li>تسجيل صوتي</li>
+                    </ul>
+                </div>
+
+                <h3>ملاحظات هامة</h3>
+                <div class="dialogue" dir="rtl">
+                    <p><strong>متطلبات الحضور:</strong></p>
+                    <ul class="character-list" style="text-align: right; padding-right: 1rem;">
+                        <li>بطاقة الطالب</li>
+                        <li>أدوات الكتابة</li>
+                        <li>الملخصات المطلوبة</li>
+                    </ul>
+                    <p><strong>تعليمات:</strong></p>
+                    <ul class="character-list" style="text-align: right; padding-right: 1rem;">
+                        <li>الحضور قبل موعد الامتحان بـ 30 دقيقة</li>
+                        <li>عدم استخدام الهواتف المحمولة</li>
+                        <li>الالتزام بمواعيد التسليم</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
 
         <!-- Team section -->
         <section class="team-section fade-in">
@@ -1575,6 +1770,8 @@
         const menuOverlay = document.querySelector('.menu-overlay');
 
         function toggleMenu() {
+            const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
+            hamburger.setAttribute('aria-expanded', !isExpanded);
             hamburger.classList.toggle('active');
             navMenu.classList.toggle('active');
             menuOverlay.classList.toggle('active');
@@ -1589,6 +1786,13 @@
             link.addEventListener('click', () => {
                 toggleMenu();
             });
+        });
+
+        // Close menu on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+                toggleMenu();
+            }
         });
 
         // Initialize everything
