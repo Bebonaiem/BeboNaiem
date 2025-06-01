@@ -478,237 +478,237 @@
 </head>
 <body>
 
-    <div id="welcomeScreen" class="container">
-        <h1><i class="fas fa-atom"></i> اذاعة و تسجيلات صوتيه</h1>
-        <p>مرحباً بك! استعد لاختبار معلوماتك وتحديد مستواك في المادة.</p>
-        <p>نتمنى لك كل التوفيق!</p>
-        <div class="config-options">
-            <label for="numQuestionsSelect">عدد الأسئلة:</label>
-            <select id="numQuestionsSelect" aria-label="اختر عدد الأسئلة">
-                <option value="10">10 أسئلة (ممارسة سريعة)</option>
-                <option value="20">20 سؤالاً</option>
-                <option value="50">50 سؤالاً</option>
-                <option value="all">كل الأسئلة (اختبار كامل)</option>
-            </select>
-        </div>
-        <p><strong>مدة الاختبار: <span id="examDurationDisplay"></span>.</strong> <span id="durationNotice">(تعتمد على عدد الأسئلة)</span></p>
+        <div id="welcomeScreen" class="container">
+            <h1><i class="fas fa-atom"></i> اذاعة و تسجيلات صوتيه</h1>
+            <p>مرحباً بك! استعد لاختبار معلوماتك وتحديد مستواك في المادة.</p>
+            <p>نتمنى لك كل التوفيق!</p>
+            <div class="config-options">
+                <label for="numQuestionsSelect">عدد الأسئلة:</label>
+                <select id="numQuestionsSelect" aria-label="اختر عدد الأسئلة">
+                    <option value="10">10 أسئلة (ممارسة سريعة)</option>
+                    <option value="20">20 سؤالاً</option>
+                    <option value="50">50 سؤالاً</option>
+                    <option value="all">كل الأسئلة (اختبار كامل)</option>
+                </select>
+            </div>
+            <p><strong>مدة الاختبار: <span id="examDurationDisplay"></span>.</strong> <span id="durationNotice">(تعتمد على عدد الأسئلة)</span></p>
 
 
-        <div id="resumePrompt" style="display:none; margin-bottom:15px; padding:12px; background-color:rgba(255,215,0,0.05); border: 1px solid var(--warning-color); border-radius:10px;">
-            <p style="color: var(--warning-color); margin-bottom:8px; font-weight:bold;">لديك جلسة اختبار محفوظة. هل ترغب في استئنافها؟</p>
-            <button id="resumeButton" class="button" aria-label="استئناف الجلسة المحفوظة"><i class="fas fa-play-circle"></i> استئناف</button>
+            <div id="resumePrompt" style="display:none; margin-bottom:15px; padding:12px; background-color:rgba(255,215,0,0.05); border: 1px solid var(--warning-color); border-radius:10px;">
+                <p style="color: var(--warning-color); margin-bottom:8px; font-weight:bold;">لديك جلسة اختبار محفوظة. هل ترغب في استئنافها؟</p>
+                <button id="resumeButton" class="button" aria-label="استئناف الجلسة المحفوظة"><i class="fas fa-play-circle"></i> استئناف</button>
             <button id="discardButton" class="button button-secondary" aria-label="تجاهل الجلسة المحفوظة والبدء من جديد"><i class="fas fa-times-circle"></i> تجاهل والبدء من جديد</button>
-        </div>
-        <button id="startButton" class="button" aria-label="ابدأ اختبار جديد"><i class="fas fa-bolt"></i> ابدأ اختبار جديد</button>
-        <button id="startNoTimerButton" class="button button-secondary" aria-label="ابدأ اختبار جديد بدون مؤقت"><i class="fas fa-infinity"></i> ابدأ بدون مؤقت</button>
-        <button id="startRandomButton" class="button button-secondary" aria-label="ابدأ اختبار جديد بعدد أسئلة عشوائي"><i class="fas fa-dice"></i> أسئلة عشوائية</button>
-        <button id="lastExamButton" class="button button-secondary" style="display:none;" aria-label="عرض نتائج آخر اختبار"><i class="fas fa-eye"></i> عرض آخر اختبار</button>
-        <button id="clearStorageButton" class="button button-danger" style="display:none;" aria-label="مسح الجلسة المحفوظة"><i class="fas fa-trash-alt"></i> مسح الجلسة المحفوظة</button>
-        <div class="custom-credit-container">
-            <p class="custom-credit"><b>تم انشائه بواسطة :
+            </div>
+            <button id="startButton" class="button" aria-label="ابدأ اختبار جديد"><i class="fas fa-bolt"></i> ابدأ اختبار جديد</button>
+            <button id="startNoTimerButton" class="button button-secondary" aria-label="ابدأ اختبار جديد بدون مؤقت"><i class="fas fa-infinity"></i> ابدأ بدون مؤقت</button>
+            <button id="startRandomButton" class="button button-secondary" aria-label="ابدأ اختبار جديد بعدد أسئلة عشوائي"><i class="fas fa-dice"></i> أسئلة عشوائية</button>
+            <button id="lastExamButton" class="button button-secondary" style="display:none;" aria-label="عرض نتائج آخر اختبار"><i class="fas fa-eye"></i> عرض آخر اختبار</button>
+            <button id="clearStorageButton" class="button button-danger" style="display:none;" aria-label="مسح الجلسة المحفوظة"><i class="fas fa-trash-alt"></i> مسح الجلسة المحفوظة</button>
+            <div class="custom-credit-container">
+                <p class="custom-credit"><b>تم انشائه بواسطة :
+                    </b><br>
+                    ليدر / بولا نعيم</p>
+                <p class="custom-credit"><b>تحت اشراف :
                 </b><br>
-                ليدر / بولا نعيم</p>
-            <p class="custom-credit"><b>تحت اشراف :
-            </b><br>
-                ليدر / ابانوب جورج
-                <br>
-                ليدر / اسماء خالد
-            </p>
-        </div>
-    </div>
-
-    <div id="examScreen" class="container">
-        <div class="exam-header-controls">
-            <button id="pauseExamButton" aria-label="إيقاف مؤقت للاختبار"><i class="fas fa-pause-circle"></i> إيقاف مؤقت</button>
-            <button id="openQuestionNavButton" aria-label="تصفح الأسئلة"><i class="fas fa-list-ol"></i> تصفح الأسئلة</button>
-            <div id="timer" aria-live="polite">00:00</div>
-            <button id="reviewFlaggedButton" aria-label="مراجعة الأسئلة المعلمة" style="display:none;"><i class="fas fa-stream"></i> مراجعة المعلمة (<span id="flaggedCount">0</span>)</button>
-            <h2 id="questionNumberTitle">السؤال 1</h2>
-        </div>
-
-        <div class="progress-bar-container">
-            <div id="progressBar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-        </div>
-
-        <div id="pauseOverlay">
-            <h3><i class="fas fa-pause-circle"></i> الاختبار متوقف مؤقتًا</h3>
-            <p>اضغط على زر الاستئناف للمتابعة.</p>
-            <button id="resumeFromOverlayButton" class="button"><i class="fas fa-play-circle"></i> استئناف الاختبار</button>
-        </div>
-
-        <div id="questionArea" class="question-container">
-            <div class="question-top-bar">
-                <!-- Removed questionCategory span -->
-                <button id="flagQuestionButton" aria-label="تعليم السؤال للمراجعة" aria-pressed="false">
-                    <i class="far fa-flag"></i> <span>علم السؤال</span>
-                </button>
+                    ليدر / ابانوب جورج
+                    <br>
+                    ليدر / اسماء خالد
+                </p>
             </div>
-            <!-- Modified Font Size Controls Area -->
-            <div class="font-size-controls-group">
-                <h4><i class="fas fa-text-height"></i> حجم الخط:</h4>
-                <div class="font-size-controls">
-                    <button id="decreaseFontButton" aria-label="تصغير حجم الخط"><i class="fas fa-search-minus"></i> تصغير الخط</button>
-                    <button id="increaseFontButton" aria-label="تكبير حجم الخط"><i class="fas fa-search-plus"></i> تكبير الخط</button>
+        </div>
+
+        <div id="examScreen" class="container">
+            <div class="exam-header-controls">
+                <button id="pauseExamButton" aria-label="إيقاف مؤقت للاختبار"><i class="fas fa-pause-circle"></i> إيقاف مؤقت</button>
+                <button id="openQuestionNavButton" aria-label="تصفح الأسئلة"><i class="fas fa-list-ol"></i> تصفح الأسئلة</button>
+                <div id="timer" aria-live="polite">00:00</div>
+                <button id="reviewFlaggedButton" aria-label="مراجعة الأسئلة المعلمة" style="display:none;"><i class="fas fa-stream"></i> مراجعة المعلمة (<span id="flaggedCount">0</span>)</button>
+                <h2 id="questionNumberTitle">السؤال 1</h2>
+            </div>
+
+            <div class="progress-bar-container">
+                <div id="progressBar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+
+            <div id="pauseOverlay">
+                <h3><i class="fas fa-pause-circle"></i> الاختبار متوقف مؤقتًا</h3>
+                <p>اضغط على زر الاستئناف للمتابعة.</p>
+                <button id="resumeFromOverlayButton" class="button"><i class="fas fa-play-circle"></i> استئناف الاختبار</button>
+            </div>
+
+            <div id="questionArea" class="question-container">
+                <div class="question-top-bar">
+                    <!-- Removed questionCategory span -->
+                    <button id="flagQuestionButton" aria-label="تعليم السؤال للمراجعة" aria-pressed="false">
+                        <i class="far fa-flag"></i> <span>علم السؤال</span>
+                    </button>
                 </div>
-            </div>
-            <p id="questionText" class="question-text"></p>
-            <form id="optionsForm" role="radiogroup" aria-labelledby="questionText">
-                 <div id="optionsContainer" class="options-container"></div>
-            </form>
-        </div>
-        <button id="prevButton" class="button button-secondary" style="margin-left: 12px;" aria-label="السؤال السابق"><i class="fas fa-chevron-circle-right"></i> السؤال السابق</button>
-        <button id="nextButton" class="button" aria-label="السؤال التالي"><i class="fas fa-chevron-circle-left"></i> السؤال التالي</button>
-        <p id="progressText"></p>
-    </div>
-
-    <div id="resultsScreen" class="container">
-        <div class="printable-area"> <!-- Added wrapper for print content -->
-            <h2><i class="fas fa-award"></i> نتائج الاختبار النهائية</h2>
-            <div class="results-summary">
-                <p id="scoreText"></p>
-                <p id="feedbackText"></p>
-                <p id="timeTakenText"></p>
-            </div>
-
-            <!-- Removed category-performance div -->
-
-            <div class="review-area">
-                <h3><i class="fas fa-tasks-alt"></i> مراجعة تفصيلية للإجابات:</h3>
-                 <div id="reviewFilterContainer" class="review-filter">
-                    <!-- Removed categoryFilter div -->
-                    <div>
-                        <label for="statusFilter">تصفية حسب الحالة:</label>
-                        <select id="statusFilter" aria-label="اختر حالة لتصفية مراجعة الأسئلة">
-                            <option value="all">الكل</option>
-                            <option value="correct">صحيحة</option>
-                            <option value="incorrect">خاطئة</option>
-                            <option value="unanswered">لم تتم الإجابة</option>
-                            <option value="flagged">معلمة</option>
-                        </select>
+                <!-- Modified Font Size Controls Area -->
+                <div class="font-size-controls-group">
+                    <h4><i class="fas fa-text-height"></i> حجم الخط:</h4>
+                    <div class="font-size-controls">
+                        <button id="decreaseFontButton" aria-label="تصغير حجم الخط"><i class="fas fa-search-minus"></i> تصغير الخط</button>
+                        <button id="increaseFontButton" aria-label="تكبير حجم الخط"><i class="fas fa-search-plus"></i> تكبير الخط</button>
                     </div>
                 </div>
-                <div id="reviewContainer"></div>
+                <p id="questionText" class="question-text"></p>
+                <form id="optionsForm" role="radiogroup" aria-labelledby="questionText">
+                     <div id="optionsContainer" class="options-container"></div>
+                </form>
             </div>
-        </div> <!-- End of printable-area -->
-        <button id="restartButton" class="button" aria-label="إعادة الاختبار"><i class="fas fa-history"></i> إعادة الاختبار</button>
-        <button id="retryIncorrectButton" class="button button-secondary" style="display:none;" aria-label="إعادة الأسئلة الخاطئة"><i class="fas fa-redo"></i> إعادة الأسئلة الخاطئة</button>
-        <button id="printResultsButton" class="button button-secondary" aria-label="طباعة النتائج"><i class="fas fa-print"></i> طباعة النتائج</button>
-    </div>
+            <button id="prevButton" class="button button-secondary" style="margin-left: 12px;" aria-label="السؤال السابق"><i class="fas fa-chevron-circle-right"></i> السؤال السابق</button>
+            <button id="nextButton" class="button" aria-label="السؤال التالي"><i class="fas fa-chevron-circle-left"></i> السؤال التالي</button>
+            <p id="progressText"></p>
+        </div>
 
-    <!-- Custom Modal -->
-    <div id="customModalOverlay" class="modal-overlay">
-        <div id="customModal" class="modal-content" role="dialog" aria-labelledby="modalTitle" aria-describedby="modalMessage">
-            <span id="modalCloseButton" class="modal-close-button" role="button" tabindex="0" aria-label="إغلاق النافذة">×</span>
-            <h3 id="modalTitle">عنوان النافذة</h3>
-            <p id="modalMessage">رسالة النافذة هنا.</p>
-            <div id="modalActions" class="modal-actions">
-                <button id="modalConfirmButton" class="button">موافق</button>
-                <button id="modalCancelButton" class="button button-secondary">إلغاء</button>
+        <div id="resultsScreen" class="container">
+            <div class="printable-area"> <!-- Added wrapper for print content -->
+                <h2><i class="fas fa-award"></i> نتائج الاختبار النهائية</h2>
+                <div class="results-summary">
+                    <p id="scoreText"></p>
+                    <p id="feedbackText"></p>
+                    <p id="timeTakenText"></p>
+                </div>
+
+                <!-- Removed category-performance div -->
+
+                <div class="review-area">
+                    <h3><i class="fas fa-tasks-alt"></i> مراجعة تفصيلية للإجابات:</h3>
+                     <div id="reviewFilterContainer" class="review-filter">
+                        <!-- Removed categoryFilter div -->
+                        <div>
+                            <label for="statusFilter">تصفية حسب الحالة:</label>
+                            <select id="statusFilter" aria-label="اختر حالة لتصفية مراجعة الأسئلة">
+                                <option value="all">الكل</option>
+                                <option value="correct">صحيحة</option>
+                                <option value="incorrect">خاطئة</option>
+                                <option value="unanswered">لم تتم الإجابة</option>
+                                <option value="flagged">معلمة</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="reviewContainer"></div>
+                </div>
+            </div> <!-- End of printable-area -->
+            <button id="restartButton" class="button" aria-label="إعادة الاختبار"><i class="fas fa-history"></i> إعادة الاختبار</button>
+            <button id="retryIncorrectButton" class="button button-secondary" style="display:none;" aria-label="إعادة الأسئلة الخاطئة"><i class="fas fa-redo"></i> إعادة الأسئلة الخاطئة</button>
+            <button id="printResultsButton" class="button button-secondary" aria-label="طباعة النتائج"><i class="fas fa-print"></i> طباعة النتائج</button>
+        </div>
+
+        <!-- Custom Modal -->
+        <div id="customModalOverlay" class="modal-overlay">
+            <div id="customModal" class="modal-content" role="dialog" aria-labelledby="modalTitle" aria-describedby="modalMessage">
+                <span id="modalCloseButton" class="modal-close-button" role="button" tabindex="0" aria-label="إغلاق النافذة">×</span>
+                <h3 id="modalTitle">عنوان النافذة</h3>
+                <p id="modalMessage">رسالة النافذة هنا.</p>
+                <div id="modalActions" class="modal-actions">
+                    <button id="modalConfirmButton" class="button">موافق</button>
+                    <button id="modalCancelButton" class="button button-secondary">إلغاء</button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Flagged Questions Review Modal -->
-    <div id="flaggedReviewModalOverlay" class="modal-overlay">
-        <div id="flaggedReviewModal" class="modal-content" style="max-width: 700px;" role="dialog" aria-labelledby="flaggedReviewTitle">
-            <span id="flaggedReviewModalCloseButton" class="modal-close-button" role="button" tabindex="0" aria-label="إغلاق نافذة الأسئلة المعلمة">×</span>
-            <h3 id="flaggedReviewTitle"><i class="fas fa-flag"></i> الأسئلة المعلمة للمراجعة</h3>
-            <div id="flaggedQuestionsList" style="max-height: 400px; overflow-y: auto; text-align: right; padding: 10px;">
-                <!-- Flagged questions will be listed here -->
-            </div>
-            <div class="modal-actions">
-                 <button class="button button-secondary" id="closeFlaggedReviewModalBtn">إغلاق</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Question Navigation Modal -->
-    <div id="questionNavModalOverlay" class="modal-overlay">
-        <div id="questionNavModal" class="modal-content" style="max-width: 800px;" role="dialog" aria-labelledby="questionNavTitle">
-            <span id="questionNavModalCloseButton" class="modal-close-button" role="button" tabindex="0" aria-label="إغلاق نافذة تصفح الأسئلة">×</span>
-            <h3 id="questionNavTitle"><i class="fas fa-list-ol"></i> تصفح أسئلة الاختبار</h3>
-            <p>انقر على رقم السؤال للانتقال إليه مباشرة.</p>
-            <div id="questionNavList" style="max-height: 450px; overflow-y: auto; text-align: center; padding: 10px; display: flex; flex-wrap: wrap; justify-content: center; gap: 5px;">
-                <!-- Question navigation items will be listed here -->
-            </div>
-            <div class="modal-actions">
-                 <button class="button button-secondary" id="closeQuestionNavModalBtn">إغلاق</button>
+        <!-- Flagged Questions Review Modal -->
+        <div id="flaggedReviewModalOverlay" class="modal-overlay">
+            <div id="flaggedReviewModal" class="modal-content" style="max-width: 700px;" role="dialog" aria-labelledby="flaggedReviewTitle">
+                <span id="flaggedReviewModalCloseButton" class="modal-close-button" role="button" tabindex="0" aria-label="إغلاق نافذة الأسئلة المعلمة">×</span>
+                <h3 id="flaggedReviewTitle"><i class="fas fa-flag"></i> الأسئلة المعلمة للمراجعة</h3>
+                <div id="flaggedQuestionsList" style="max-height: 400px; overflow-y: auto; text-align: right; padding: 10px;">
+                    <!-- Flagged questions will be listed here -->
+                </div>
+                <div class="modal-actions">
+                     <button class="button button-secondary" id="closeFlaggedReviewModalBtn">إغلاق</button>
+                </div>
             </div>
         </div>
-    </div>
+
+        <!-- Question Navigation Modal -->
+        <div id="questionNavModalOverlay" class="modal-overlay">
+            <div id="questionNavModal" class="modal-content" style="max-width: 800px;" role="dialog" aria-labelledby="questionNavTitle">
+                <span id="questionNavModalCloseButton" class="modal-close-button" role="button" tabindex="0" aria-label="إغلاق نافذة تصفح الأسئلة">×</span>
+                <h3 id="questionNavTitle"><i class="fas fa-list-ol"></i> تصفح أسئلة الاختبار</h3>
+                <p>انقر على رقم السؤال للانتقال إليه مباشرة.</p>
+                <div id="questionNavList" style="max-height: 450px; overflow-y: auto; text-align: center; padding: 10px; display: flex; flex-wrap: wrap; justify-content: center; gap: 5px;">
+                    <!-- Question navigation items will be listed here -->
+                </div>
+                <div class="modal-actions">
+                     <button class="button button-secondary" id="closeQuestionNavModalBtn">إغلاق</button>
+                </div>
+            </div>
+        </div>
 
 
-    <script>
-        "use strict";
-        // --- CONFIGURATION ---
-        let DYNAMIC_EXAM_DURATION_MINUTES = 30;
-        const BASE_TIME_PER_QUESTION_SECONDS = 30;
-        const EXAM_STORAGE_KEY = 'eliteExamPlatform_v3.5'; 
-        const LAST_EXAM_RESULTS_KEY = 'eliteExamPlatform_lastResults_v1.3'; 
-        const ATTEMPT_COUNTER_KEY = 'eliteExamAttemptCounter_v1'; 
+        <script>
+            "use strict";
+            // --- CONFIGURATION ---
+            let DYNAMIC_EXAM_DURATION_MINUTES = 30;
+            const BASE_TIME_PER_QUESTION_SECONDS = 30;
+            const EXAM_STORAGE_KEY = 'eliteExamPlatform_v3.5'; 
+            const LAST_EXAM_RESULTS_KEY = 'eliteExamPlatform_lastResults_v1.3'; 
+            const ATTEMPT_COUNTER_KEY = 'eliteExamAttemptCounter_v1'; 
 
 
-        // --- NEW CONFIGURATION FOR FEATURES ---
-        const MIN_FONT_MULTIPLIER = 0.8;
-        const MAX_FONT_MULTIPLIER = 1.5;
-        const FONT_STEP = 0.1;
+            // --- NEW CONFIGURATION FOR FEATURES ---
+            const MIN_FONT_MULTIPLIER = 0.8;
+            const MAX_FONT_MULTIPLIER = 1.5;
+            const FONT_STEP = 0.1;
 
-        // --- END CONFIGURATION ---
+            // --- END CONFIGURATION ---
 
-        const questions = [
-            { id: 1, type: 'tf', text: 'تكنولوجيا التعليم تقتصر على الوسائل التكنولوجية المستخدمة داخل الفصل الدراسي.', correctAnswer: 'خطأ', category: 'مفاهيم تكنولوجيا التعليم', explanation: '' },
-            { id: 2, type: 'tf', text: 'تهدف الوسائل التعليمية إلى تقليل اعتماد الطالب على التفكير الذاتي.', correctAnswer: 'خطأ', category: 'أهداف الوسائل التعليمية', explanation: '' },
-            { id: 3, type: 'tf', text: 'التسجيلات الصوتية تُعتبر من الوسائل التي تخاطب أكثر من حاسة في نفس الوقت.', correctAnswer: 'خطأ', category: 'الوسائل السمعية', explanation: '' },
-            { id: 4, type: 'tf', text: 'من مميزات الإذاعة التعليمية أنها تتيح التفاعل المباشر بين المعلم والطلاب بشكل دائم.', correctAnswer: 'خطأ', category: 'الإذاعة التعليمية', explanation: '' },
-            { id: 5, type: 'tf', text: 'يشترط في الوسيلة التعليمية أن تكون متعددة الاستخدامات في جميع المواد الدراسية.', correctAnswer: 'خطأ', category: 'خصائص الوسائل التعليمية', explanation: '' },
-            { id: 6, type: 'tf', text: 'الوسائل التعليمية تُسهم في تقوية العلاقة بين المعلم والمتعلم.', correctAnswer: 'صح', category: 'دور الوسائل التعليمية', explanation: '' },
-            { id: 7, type: 'tf', text: 'يشمل الاتصال السمعي استخدام الإشارات المرئية لتوضيح المعاني.', correctAnswer: 'خطأ', category: 'الاتصال السمعي', explanation: '' },
-            { id: 8, type: 'tf', text: 'الإذاعة التعليمية لا يمكن أن تُستخدم كمصدر مستقل للتعلم الذاتي.', correctAnswer: 'خطأ', category: 'الإذاعة التعليمية', explanation: '' },
-            { id: 9, type: 'tf', text: 'الوسائل التعليمية الجيدة يجب أن تُنتج دائمًا في معامل متخصصة.', correctAnswer: 'خطأ', category: 'إنتاج الوسائل التعليمية', explanation: '' },
-            { id: 10, type: 'tf', text: 'من خصائص الوسيلة الفعالة أن تكون قادرة على جذب انتباه المتعلم.', correctAnswer: 'صح', category: 'خصائص الوسائل التعليمية', explanation: '' },
-            { id: 11, type: 'tf', text: 'تكنولوجيا التعليم تهتم بتوصيل المعلومات دون تقويم المتعلم.', correctAnswer: 'خطأ', category: 'مفاهيم تكنولوجيا التعليم', explanation: '' },
-            { id: 12, type: 'tf', text: 'تعتبر التسجيلات الصوتية وسيلة جيدة لتعزيز مهارات القراءة الجهرية.', correctAnswer: 'خطأ', category: 'الوسائل السمعية', explanation: 'التسجيلات الصوتية تعزز مهارات الاستماع والفهم المسموع، بينما القراءة الجهرية مهارة إنتاجية.' },
-            { id: 13, type: 'tf', text: 'يفضل أن تكون الوسائل التعليمية معقدة تقنيًا لتثير اهتمام الطالب.', correctAnswer: 'خطأ', category: 'تصميم الوسائل التعليمية', explanation: '' },
-            { id: 14, type: 'tf', text: 'من معايير اختيار الوسيلة التعليمية أن تكون قابلة للتكرار والاستخدام لأكثر من مرة.', correctAnswer: 'صح', category: 'معايير اختيار الوسائل', explanation: '' },
-            { id: 15, type: 'tf', text: 'من وظائف تكنولوجيا التعليم تحليل المشكلات التعليمية وتقديم حلول مناسبة.', correctAnswer: 'صح', category: 'وظائف تكنولوجيا التعليم', explanation: '' },
-            { id: 16, type: 'tf', text: 'من شروط الوسيلة التعليمية أن تكون موجهة لحاسة واحدة فقط.', correctAnswer: 'خطأ', category: 'خصائص الوسائل التعليمية', explanation: '' },
-            { id: 17, type: 'tf', text: 'الوسائل التعليمية لا تُستخدم إلا داخل الصف الدراسي.', correctAnswer: 'خطأ', category: 'استخدام الوسائل التعليمية', explanation: '' },
-            { id: 18, type: 'tf', text: 'تعتبر الإذاعة التعليمية من الوسائل السمعية الجماهيرية.', correctAnswer: 'صح', category: 'الإذاعة التعليمية', explanation: '' },
-            { id: 19, type: 'tf', text: 'لا يوجد فرق بين تكنولوجيا التعليم والوسائل التعليمية.', correctAnswer: 'خطأ', category: 'مفاهيم أساسية', explanation: '' },
-            { id: 20, type: 'tf', text: 'من فوائد الوسائل التعليمية المساعدة على تقليل الملل في العملية التعليمية.', correctAnswer: 'صح', category: 'فوائد الوسائل التعليمية', explanation: '' },
-            { id: 21, type: 'tf', text: 'الوسائل التعليمية الجيدة يجب أن تكون مكلفة وتحتاج لتقنيات عالية.', correctAnswer: 'خطأ', category: 'إنتاج الوسائل التعليمية', explanation: '' },
-            { id: 22, type: 'tf', text: 'الاتصال التعليمي يكون فعالاً عندما يُحقق التغذية الراجعة بين المرسل والمستقبل.', correctAnswer: 'صح', category: 'الاتصال التعليمي', explanation: '' },
-            { id: 23, type: 'tf', text: 'لا يمكن استخدام التسجيلات الصوتية في تعليم المهارات اللغوية.', correctAnswer: 'خطأ', category: 'الوسائل السمعية', explanation: '' },
-            { id: 24, type: 'tf', text: 'يجب أن تكون الوسيلة التعليمية مرتبطة بالأهداف التربوية للموقف التعليمي.', correctAnswer: 'صح', category: 'معايير اختيار الوسائل', explanation: '' },
-            { id: 25, type: 'tf', text: 'من أهداف الوسائل التعليمية أنها تُغني المتعلم عن الكتاب المدرسي.', correctAnswer: 'خطأ', category: 'أهداف الوسائل التعليمية', explanation: '' },
-            { id: 26, type: 'tf', text: 'الوسائل التعليمية تساهم في تطوير مهارات المتعلم الحسية والعقلية.', correctAnswer: 'صح', category: 'فوائد الوسائل التعليمية', explanation: '' },
-            { id: 27, type: 'tf', text: 'الوسيلة الجيدة يجب أن تعتمد على الشرح الصوتي دون محتوى بصري.', correctAnswer: 'خطأ', category: 'تصميم الوسائل التعليمية', explanation: '' },
-            { id: 28, type: 'tf', text: 'الوسائل التعليمية تساهم في تقوية دافعية التعلم لدى المتعلم.', correctAnswer: 'صح', category: 'فوائد الوسائل التعليمية', explanation: '' },
-            { id: 29, type: 'tf', text: 'الإذاعة التعليمية لا تصلح لتدريس المواد العلمية مثل الفيزياء أو الكيمياء.', correctAnswer: 'خطأ', category: 'الإذاعة التعليمية', explanation: '' },
-            { id: 30, type: 'tf', text: 'من خصائص الوسيلة التعليمية الفعالة أن تكون مرنة في الاستخدام.', correctAnswer: 'صح', category: 'خصائص الوسائل التعليمية', explanation: '' },
-            { id: 31, type: 'tf', text: 'استخدام الوسائل التعليمية يؤدي دائمًا إلى تحسين مستوى تحصيل جميع الطلاب.', correctAnswer: 'خطأ', category: 'تأثير الوسائل التعليمية', explanation: '' },
-            { id: 32, type: 'tf', text: 'الوسائل التعليمية لا تتطلب من المعلم أي تخطيط مسبق.', correctAnswer: 'خطأ', category: 'استخدام الوسائل التعليمية', explanation: '' },
-            { id: 33, type: 'tf', text: 'من وظائف تكنولوجيا التعليم استخدام أدوات لتقويم العملية التعليمية.', correctAnswer: 'صح', category: 'وظائف تكنولوجيا التعليم', explanation: '' },
-            { id: 34, type: 'tf', text: 'تعتمد الوسائل السمعية على التفاعل بين الصوت والصورة لتحقيق أهدافها.', correctAnswer: 'خطأ', category: 'الوسائل السمعية', explanation: '' },
-            { id: 35, type: 'tf', text: 'الوسائل التعليمية تتيح فرصا أفضل لتنوع أساليب الشرح والتوضيح.', correctAnswer: 'صح', category: 'فوائد الوسائل التعليمية', explanation: '' },
-            { id: 36, type: 'tf', text: 'من نماذج الاتصال التعليمي نموذج SMCR.', correctAnswer: 'صح', category: 'نماذج الاتصال', explanation: '' },
-            { id: 37, type: 'tf', text: 'الوسائل التعليمية الفعالة يجب أن تكون مناسبة للمحتوى ولخصائص المتعلمين.', correctAnswer: 'صح', category: 'معايير اختيار الوسائل', explanation: '' },
-            { id: 38, type: 'tf', text: 'كل الوسائل التعليمية الحديثة تكون دائمًا أفضل من الوسائل التقليدية.', correctAnswer: 'خطأ', category: 'الوسائل الحديثة والتقليدية', explanation: '' },
-            { id: 39, type: 'tf', text: 'التسجيلات الصوتية تُمكن الطالب من إعادة الاستماع للمحتوى في الوقت الذي يناسبه.', correctAnswer: 'صح', category: 'الوسائل السمعية', explanation: '' },
-            { id: 40, type: 'tf', text: 'تُعتبر الإذاعة التعليمية وسيلة اتصال من طرفين.', correctAnswer: 'خطأ', category: 'الإذاعة التعليمية', explanation: '' },
-            { id: 41, type: 'tf', text: 'الوسائل التعليمية تركز على تقديم المعلومة فقط دون الاهتمام بالجانب المهاري.', correctAnswer: 'خطأ', category: 'دور الوسائل التعليمية', explanation: '' },
-            { id: 42, type: 'tf', text: 'تعتمد فعالية الوسيلة التعليمية على تحقيقها للأهداف التربوية المحددة.', correctAnswer: 'صح', category: 'فعالية الوسائل التعليمية', explanation: '' },
-            { id: 43, type: 'tf', text: 'الوسيلة الجيدة يجب أن تتوفر فيها عناصر الجاذبية والإثارة.', correctAnswer: 'صح', category: 'خصائص الوسائل التعليمية', explanation: '' },
-            { id: 44, type: 'tf', text: 'يمكن استخدام التسجيلات الصوتية لتقويم النطق والاستماع لدى الطلاب.', correctAnswer: 'صح', category: 'الوسائل السمعية', explanation: '' },
-            { id: 45, type: 'tf', text: 'من الشروط الأساسية لاستخدام الوسائل التعليمية هو توفر الأجهزة الحديثة.', correctAnswer: 'خطأ', category: 'استخدام الوسائل التعليمية', explanation: '' },
-            { id: 46, type: 'tf', text: 'تبدأ الإذاعة المدرسية بإثراء الأخبار العاملة وتلحقها الأخبار المدرسية.', correctAnswer: 'خطأ', category: 'الإذاعة المدرسية', explanation: '' },
-            { id: 47, type: 'tf', text: 'تسهم الإذاعة التعليمية في التكوين المعرفي والاجتماعي للتلاميذ وذلك يرجع الي التنوع في برامجها والصوت و المؤثرات الصوتية المستخدمة.', correctAnswer: 'صح', category: 'الإذاعة التعليمية', explanation: '' },
-            { id: 48, type: 'tf', text: 'تؤثر جودة تقنيات البث الصوتي على فهم المستمعين للرسالة المنقولة.', correctAnswer: 'صح', category: 'الإذاعة التعليمية', explanation: '' },
-            { id: 49, type: 'tf', text: 'يمكن الاكتفاء بتقييم برامج الإذاعة التعليمية من خلال تقديم استطلاعات رأي متكررة.', correctAnswer: 'خطأ', category: 'تقويم الإذاعة التعليمية', explanation: '' },
-            { id: 50, type: 'tf', text: 'تتميز أجهزة الاستقبال الإذاعي الحديثة الضبط التلقائي لترددها.', correctAnswer: 'صح', category: 'تقنيات إذاعية', explanation: '' },
-            { id: 51, type: 'tf', text: 'البنية المونتاجية للبرامج الإذاعية هي التي تعمل توظيف عناصر الصوت.', correctAnswer: 'خطأ', category: 'الإنتاج الإذاعي', explanation: 'البنية المونتاجية تشمل أكثر من مجرد توظيف عناصر الصوت، فهي تشمل الترتيب والدمج والتأثيرات.' },
-            { id: 52, type: 'tf', text: 'يعمل الراديو على تحويل الأصوات والإشارات إلى موجات الراديو.', correctAnswer: 'صح', category: 'تقنيات إذاعية', explanation: '' },
-            { id: 53, type: 'tf', text: 'يقتصر الراديو على استخدام بطاريات خارجية.', correctAnswer: 'خطأ', category: 'تقنيات إذاعية', explanation: '' },
+            const questions = [
+                { id: 1, type: 'tf', text: 'تكنولوجيا التعليم تقتصر على الوسائل التكنولوجية المستخدمة داخل الفصل الدراسي.', correctAnswer: 'خطأ', category: 'مفاهيم تكنولوجيا التعليم', explanation: '' },
+                { id: 2, type: 'tf', text: 'تهدف الوسائل التعليمية إلى تقليل اعتماد الطالب على التفكير الذاتي.', correctAnswer: 'خطأ', category: 'أهداف الوسائل التعليمية', explanation: '' },
+                { id: 3, type: 'tf', text: 'التسجيلات الصوتية تُعتبر من الوسائل التي تخاطب أكثر من حاسة في نفس الوقت.', correctAnswer: 'خطأ', category: 'الوسائل السمعية', explanation: '' },
+                { id: 4, type: 'tf', text: 'من مميزات الإذاعة التعليمية أنها تتيح التفاعل المباشر بين المعلم والطلاب بشكل دائم.', correctAnswer: 'خطأ', category: 'الإذاعة التعليمية', explanation: '' },
+                { id: 5, type: 'tf', text: 'يشترط في الوسيلة التعليمية أن تكون متعددة الاستخدامات في جميع المواد الدراسية.', correctAnswer: 'خطأ', category: 'خصائص الوسائل التعليمية', explanation: '' },
+                { id: 6, type: 'tf', text: 'الوسائل التعليمية تُسهم في تقوية العلاقة بين المعلم والمتعلم.', correctAnswer: 'صح', category: 'دور الوسائل التعليمية', explanation: '' },
+                { id: 7, type: 'tf', text: 'يشمل الاتصال السمعي استخدام الإشارات المرئية لتوضيح المعاني.', correctAnswer: 'خطأ', category: 'الاتصال السمعي', explanation: '' },
+                { id: 8, type: 'tf', text: 'الإذاعة التعليمية لا يمكن أن تُستخدم كمصدر مستقل للتعلم الذاتي.', correctAnswer: 'خطأ', category: 'الإذاعة التعليمية', explanation: '' },
+                { id: 9, type: 'tf', text: 'الوسائل التعليمية الجيدة يجب أن تُنتج دائمًا في معامل متخصصة.', correctAnswer: 'خطأ', category: 'إنتاج الوسائل التعليمية', explanation: '' },
+                { id: 10, type: 'tf', text: 'من خصائص الوسيلة الفعالة أن تكون قادرة على جذب انتباه المتعلم.', correctAnswer: 'صح', category: 'خصائص الوسائل التعليمية', explanation: '' },
+                { id: 11, type: 'tf', text: 'تكنولوجيا التعليم تهتم بتوصيل المعلومات دون تقويم المتعلم.', correctAnswer: 'خطأ', category: 'مفاهيم تكنولوجيا التعليم', explanation: '' },
+                { id: 12, type: 'tf', text: 'تعتبر التسجيلات الصوتية وسيلة جيدة لتعزيز مهارات القراءة الجهرية.', correctAnswer: 'خطأ', category: 'الوسائل السمعية', explanation: 'التسجيلات الصوتية تعزز مهارات الاستماع والفهم المسموع، بينما القراءة الجهرية مهارة إنتاجية.' },
+                { id: 13, type: 'tf', text: 'يفضل أن تكون الوسائل التعليمية معقدة تقنيًا لتثير اهتمام الطالب.', correctAnswer: 'خطأ', category: 'تصميم الوسائل التعليمية', explanation: '' },
+                { id: 14, type: 'tf', text: 'من معايير اختيار الوسيلة التعليمية أن تكون قابلة للتكرار والاستخدام لأكثر من مرة.', correctAnswer: 'صح', category: 'معايير اختيار الوسائل', explanation: '' },
+                { id: 15, type: 'tf', text: 'من وظائف تكنولوجيا التعليم تحليل المشكلات التعليمية وتقديم حلول مناسبة.', correctAnswer: 'صح', category: 'وظائف تكنولوجيا التعليم', explanation: '' },
+                { id: 16, type: 'tf', text: 'من شروط الوسيلة التعليمية أن تكون موجهة لحاسة واحدة فقط.', correctAnswer: 'خطأ', category: 'خصائص الوسائل التعليمية', explanation: '' },
+                { id: 17, type: 'tf', text: 'الوسائل التعليمية لا تُستخدم إلا داخل الصف الدراسي.', correctAnswer: 'خطأ', category: 'استخدام الوسائل التعليمية', explanation: '' },
+                { id: 18, type: 'tf', text: 'تعتبر الإذاعة التعليمية من الوسائل السمعية الجماهيرية.', correctAnswer: 'صح', category: 'الإذاعة التعليمية', explanation: '' },
+                { id: 19, type: 'tf', text: 'لا يوجد فرق بين تكنولوجيا التعليم والوسائل التعليمية.', correctAnswer: 'خطأ', category: 'مفاهيم أساسية', explanation: '' },
+                { id: 20, type: 'tf', text: 'من فوائد الوسائل التعليمية المساعدة على تقليل الملل في العملية التعليمية.', correctAnswer: 'صح', category: 'فوائد الوسائل التعليمية', explanation: '' },
+                { id: 21, type: 'tf', text: 'الوسائل التعليمية الجيدة يجب أن تكون مكلفة وتحتاج لتقنيات عالية.', correctAnswer: 'خطأ', category: 'إنتاج الوسائل التعليمية', explanation: '' },
+                { id: 22, type: 'tf', text: 'الاتصال التعليمي يكون فعالاً عندما يُحقق التغذية الراجعة بين المرسل والمستقبل.', correctAnswer: 'صح', category: 'الاتصال التعليمي', explanation: '' },
+                { id: 23, type: 'tf', text: 'لا يمكن استخدام التسجيلات الصوتية في تعليم المهارات اللغوية.', correctAnswer: 'خطأ', category: 'الوسائل السمعية', explanation: '' },
+                { id: 24, type: 'tf', text: 'يجب أن تكون الوسيلة التعليمية مرتبطة بالأهداف التربوية للموقف التعليمي.', correctAnswer: 'صح', category: 'معايير اختيار الوسائل', explanation: '' },
+                { id: 25, type: 'tf', text: 'من أهداف الوسائل التعليمية أنها تُغني المتعلم عن الكتاب المدرسي.', correctAnswer: 'خطأ', category: 'أهداف الوسائل التعليمية', explanation: '' },
+                { id: 26, type: 'tf', text: 'الوسائل التعليمية تساهم في تطوير مهارات المتعلم الحسية والعقلية.', correctAnswer: 'صح', category: 'فوائد الوسائل التعليمية', explanation: '' },
+                { id: 27, type: 'tf', text: 'الوسيلة الجيدة يجب أن تعتمد على الشرح الصوتي دون محتوى بصري.', correctAnswer: 'خطأ', category: 'تصميم الوسائل التعليمية', explanation: '' },
+                { id: 28, type: 'tf', text: 'الوسائل التعليمية تساهم في تقوية دافعية التعلم لدى المتعلم.', correctAnswer: 'صح', category: 'فوائد الوسائل التعليمية', explanation: '' },
+                { id: 29, type: 'tf', text: 'الإذاعة التعليمية لا تصلح لتدريس المواد العلمية مثل الفيزياء أو الكيمياء.', correctAnswer: 'خطأ', category: 'الإذاعة التعليمية', explanation: '' },
+                { id: 30, type: 'tf', text: 'من خصائص الوسيلة التعليمية الفعالة أن تكون مرنة في الاستخدام.', correctAnswer: 'صح', category: 'خصائص الوسائل التعليمية', explanation: '' },
+                { id: 31, type: 'tf', text: 'استخدام الوسائل التعليمية يؤدي دائمًا إلى تحسين مستوى تحصيل جميع الطلاب.', correctAnswer: 'خطأ', category: 'تأثير الوسائل التعليمية', explanation: '' },
+                { id: 32, type: 'tf', text: 'الوسائل التعليمية لا تتطلب من المعلم أي تخطيط مسبق.', correctAnswer: 'خطأ', category: 'استخدام الوسائل التعليمية', explanation: '' },
+                { id: 33, type: 'tf', text: 'من وظائف تكنولوجيا التعليم استخدام أدوات لتقويم العملية التعليمية.', correctAnswer: 'صح', category: 'وظائف تكنولوجيا التعليم', explanation: '' },
+                { id: 34, type: 'tf', text: 'تعتمد الوسائل السمعية على التفاعل بين الصوت والصورة لتحقيق أهدافها.', correctAnswer: 'خطأ', category: 'الوسائل السمعية', explanation: '' },
+                { id: 35, type: 'tf', text: 'الوسائل التعليمية تتيح فرصا أفضل لتنوع أساليب الشرح والتوضيح.', correctAnswer: 'صح', category: 'فوائد الوسائل التعليمية', explanation: '' },
+                { id: 36, type: 'tf', text: 'من نماذج الاتصال التعليمي نموذج SMCR.', correctAnswer: 'صح', category: 'نماذج الاتصال', explanation: '' },
+                { id: 37, type: 'tf', text: 'الوسائل التعليمية الفعالة يجب أن تكون مناسبة للمحتوى ولخصائص المتعلمين.', correctAnswer: 'صح', category: 'معايير اختيار الوسائل', explanation: '' },
+                { id: 38, type: 'tf', text: 'كل الوسائل التعليمية الحديثة تكون دائمًا أفضل من الوسائل التقليدية.', correctAnswer: 'خطأ', category: 'الوسائل الحديثة والتقليدية', explanation: '' },
+                { id: 39, type: 'tf', text: 'التسجيلات الصوتية تُمكن الطالب من إعادة الاستماع للمحتوى في الوقت الذي يناسبه.', correctAnswer: 'صح', category: 'الوسائل السمعية', explanation: '' },
+                { id: 40, type: 'tf', text: 'تُعتبر الإذاعة التعليمية وسيلة اتصال من طرفين.', correctAnswer: 'خطأ', category: 'الإذاعة التعليمية', explanation: '' },
+                { id: 41, type: 'tf', text: 'الوسائل التعليمية تركز على تقديم المعلومة فقط دون الاهتمام بالجانب المهاري.', correctAnswer: 'خطأ', category: 'دور الوسائل التعليمية', explanation: '' },
+                { id: 42, type: 'tf', text: 'تعتمد فعالية الوسيلة التعليمية على تحقيقها للأهداف التربوية المحددة.', correctAnswer: 'صح', category: 'فعالية الوسائل التعليمية', explanation: '' },
+                { id: 43, type: 'tf', text: 'الوسيلة الجيدة يجب أن تتوفر فيها عناصر الجاذبية والإثارة.', correctAnswer: 'صح', category: 'خصائص الوسائل التعليمية', explanation: '' },
+                { id: 44, type: 'tf', text: 'يمكن استخدام التسجيلات الصوتية لتقويم النطق والاستماع لدى الطلاب.', correctAnswer: 'صح', category: 'الوسائل السمعية', explanation: '' },
+                { id: 45, type: 'tf', text: 'من الشروط الأساسية لاستخدام الوسائل التعليمية هو توفر الأجهزة الحديثة.', correctAnswer: 'خطأ', category: 'استخدام الوسائل التعليمية', explanation: '' },
+                { id: 46, type: 'tf', text: 'تبدأ الإذاعة المدرسية بإثراء الأخبار العاملة وتلحقها الأخبار المدرسية.', correctAnswer: 'خطأ', category: 'الإذاعة المدرسية', explanation: '' },
+                { id: 47, type: 'tf', text: 'تسهم الإذاعة التعليمية في التكوين المعرفي والاجتماعي للتلاميذ وذلك يرجع الي التنوع في برامجها والصوت و المؤثرات الصوتية المستخدمة.', correctAnswer: 'صح', category: 'الإذاعة التعليمية', explanation: '' },
+                { id: 48, type: 'tf', text: 'تؤثر جودة تقنيات البث الصوتي على فهم المستمعين للرسالة المنقولة.', correctAnswer: 'صح', category: 'الإذاعة التعليمية', explanation: '' },
+                { id: 49, type: 'tf', text: 'يمكن الاكتفاء بتقييم برامج الإذاعة التعليمية من خلال تقديم استطلاعات رأي متكررة.', correctAnswer: 'خطأ', category: 'تقويم الإذاعة التعليمية', explanation: '' },
+                { id: 50, type: 'tf', text: 'تتميز أجهزة الاستقبال الإذاعي الحديثة الضبط التلقائي لترددها.', correctAnswer: 'صح', category: 'تقنيات إذاعية', explanation: '' },
+                { id: 51, type: 'tf', text: 'البنية المونتاجية للبرامج الإذاعية هي التي تعمل توظيف عناصر الصوت.', correctAnswer: 'خطأ', category: 'الإنتاج الإذاعي', explanation: 'البنية المونتاجية تشمل أكثر من مجرد توظيف عناصر الصوت، فهي تشمل الترتيب والدمج والتأثيرات.' },
+                { id: 52, type: 'tf', text: 'يعمل الراديو على تحويل الأصوات والإشارات إلى موجات الراديو.', correctAnswer: 'صح', category: 'تقنيات إذاعية', explanation: '' },
+                { id: 53, type: 'tf', text: 'يقتصر الراديو على استخدام بطاريات خارجية.', correctAnswer: 'خطأ', category: 'تقنيات إذاعية', explanation: '' },
             { id: 54, type: 'tf', text: 'الإذاعة هي ظاهرة فنية جديدة وهي تطوير للراديو.', correctAnswer: 'خطأ', category: 'تاريخ الإذاعة', explanation: 'الإذاعة ليست جديدة وهي التي تستخدم الراديو كوسيلة بث.' },
             { id: 55, type: 'tf', text: 'يعد التعريف بموعد بث البرنامج الخطوة الثالثة لعملية الاستماع الفردي.', correctAnswer: 'خطأ', category: 'مهارات الاستماع', explanation: '' },
             { id: 56, type: 'tf', text: 'في عملية الاستماع الفردي لا يوجد مانع من وقف التسجيل لمناقشة نقطة مهمة او تفسيرها.', correctAnswer: 'خطأ', category: 'مهارات الاستماع', explanation: 'الاستماع الفردي عادة لا يتضمن مناقشة مباشرة أثناء عملية الاستماع نفسها، بل قد تكون لاحقاً.' },
@@ -769,7 +769,7 @@
             { id: 111, type: 'tf', text: 'للإذاعة التعليمية عدة أشكال منها: الإذاعة المدرسية، التسجيلات البصرية، محطات الإذاعة التعليمية.', correctAnswer: 'خطأ', category: 'أشكال الإذاعة التعليمية', explanation: 'التسجيلات البصرية ليست شكلاً من أشكال الإذاعة.' },
             { id: 112, type: 'tf', text: 'تزيد سرعة الصوت بارتفاع درجة الحرارة بمعدل ٠.٩ م لكل درجة مئوية واحدة.', correctAnswer: 'خطأ', category: 'خصائص الصوت', explanation: 'المعدل التقريبي هو حوالي 0.6 متر/ثانية لكل درجة مئوية.' },
             { id: 113, type: 'tf', text: 'استوديوهات التسجيل تشمل على ثلاثة أنواع رئيسية وهي أستوديو الدراما، أستوديو الموسيقى والأغاني، أستوديو البث الانتقائي.', correctAnswer: 'خطأ', category: 'أنواع الاستوديوهات', explanation: 'التصنيف غير دقيق، "أستوديو البث الانتقائي" ليس تصنيفاً شائعاً بهذا الاسم.' },
-            { id: 114, type: 'tf', text: 'تصنف المعامل السمعية تبعا للبساطة والتعقيد لنوعين: معامل سمعية للاستماع والتكرار فقط، معامل للاستماع والتسجيل.', correctAnswer: 'صح', category: 'المعامل السمعية', explanation: '' },
+            { id: 114, type: 'tf', text: 'تصنف المعامل السمعية تبعا للبساطة والتعقيد لنوعين: معامل سمعية للاستماع والتكرار فقط، معامل للاستماع والتسجيل.', correctAnswer: 'خطأ', category: 'المعامل السمعية', explanation: '' },
             { id: 115, type: 'tf', text: 'نتيجة للمشكلات التي تصاحب نظام الإشارات التناظرية البصرية ظهر نظام الإشارة الرقمي Digital Signal System.', correctAnswer: 'خطأ', category: 'تقنيات الإشارة', explanation: 'ظهر نظام الإشارة الرقمي كبديل وتطوير للأنظمة التناظرية بشكل عام (سمعية وبصرية)، وليس فقط بسبب مشكلات "البصرية".' },
             { id: 116, type: 'tf', text: 'يصنف الحوار الاذاعي من حيث طبيعة الحوار إلى: حوار حي أي يتم تقديمه بصورة حية غير مسجلة فيأخذ صفة الفورية أو الحالية أو غير المباشرة، حوار مسجل.', correctAnswer: 'خطأ', category: 'الإنتاج الإذاعي', explanation: 'الحوار الحي "غير مباشر" متناقض. الحوار الحي فوري ومباشر.' },
             { id: 117, type: 'tf', text: 'يحول الراديو الأصوات والإشارات إلى موجات كهرومغناطيسية (موجات الراديو) وهي تنتقل عبر الهواء والفضاء، كما تنتشر عبر بعض الأجسام الصلبة كجدران المباني، وتنتقل موجات الراديو بسرعة الضوء، أي ٢٩٩,٧٩٢ مم/ث، ويحول جهاز الاستقبال هذه الموجات إلى الصوت الأصلي.', correctAnswer: 'خطأ', category: 'تقنيات إذاعية', explanation: 'الراديو يحول الإشارات الكهربائية إلى موجات كهرومغناطيسية. سرعة الضوء هي ٢٩٩,٧٩٢ كيلومتر/ثانية أو حوالي ٣٠٠,٠٠٠,٠٠٠ متر/ثانية، وليس مم/ث.' },
