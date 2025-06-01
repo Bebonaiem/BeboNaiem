@@ -123,6 +123,7 @@
             background-color: rgba(255, 215, 0, 0.05);
             padding: 10px 18px; border-radius: 10px;
             text-shadow: 0 0 8px rgba(255,215,0,0.5);
+            cursor: pointer; /* For Easter Egg */
         }
         #timer.untimed { /* Style for untimed display */
             color: var(--primary-accent);
@@ -1000,9 +1001,6 @@
         const numQuestionsSelect = document.getElementById('numQuestionsSelect');
         const examDurationDisplayEl = document.getElementById('examDurationDisplay');
         const durationNoticeEl = document.getElementById('durationNotice');
-        // Removed: const questionCategoryEl = document.getElementById('questionCategory');
-        // Removed: const categoryPerformanceContainer = document.getElementById('categoryPerformanceContainer');
-        // Removed: const categoryFilterSelect = document.getElementById('categoryFilter');
         const statusFilterSelect = document.getElementById('statusFilter');
         const flagQuestionButton = document.getElementById('flagQuestionButton');
         const reviewFlaggedButton = document.getElementById('reviewFlaggedButton');
@@ -1040,7 +1038,6 @@
                 allQuestionsOption.textContent = `كل الأسئلة (${allQuestionsData.length} سؤالاً - اختبار كامل)`;
             }
 
-            // Removed: populateCategoryFilter();
             updateDurationDisplay();
             if(numQuestionsSelect) numQuestionsSelect.addEventListener('change', updateDurationDisplay);
             checkLocalStorage();
@@ -1066,38 +1063,39 @@
             }
 
             // --- EASTER EGG SETUP ---
-            const easterEggTriggerEl = document.getElementById('easterEggTrigger');
+            const easterEggTriggerEl = timerEl; // Trigger is the timer element
+
             if (easterEggTriggerEl) {
                 easterEggTriggerEl.addEventListener('click', () => {
+                    // Only allow activation if the exam screen is visible
+                    if (examScreen.style.display !== 'block') {
+                        // console.log("Easter egg attempted outside exam screen. Ignoring."); // Optional debug
+                        return; 
+                    }
+
                     easterEggClickCount++;
-                    // console.log(`Easter egg clicks: ${easterEggClickCount}`); // For debugging
+                    // console.log(`Easter egg clicks on timer: ${easterEggClickCount}`); // For debugging
 
                     if (easterEggClickCount >= EASTER_EGG_TARGET_CLICKS) {
-                        console.log("Easter Egg Activated!");
+                        console.log("Easter Egg Activated via Timer!");
                         easterEggClickCount = 0; // Reset for next time
 
-                        // Stop any ongoing exam processes (like timer)
-                        if (examScreen.style.display === 'block' && !isUntimedExam) {
+                        if (!isUntimedExam) { 
                             clearInterval(timerInterval);
                             if(timerEl) timerEl.classList.remove('timer-warning');
                         }
 
-                        // Ensure allQuestionsData is populated
                         if (!allQuestionsData || allQuestionsData.length === 0) {
                             console.error("Cannot activate Easter Egg: No questions loaded.");
                             showModal("خطأ", "لا يمكن تفعيل الميزة: لم يتم تحميل الأسئلة.", "حسنًا", "", ()=>hideModal(), null, false);
                             return;
                         }
-
-                        // The Easter egg always operates on the full set of questions
+                        
                         activeQuestions = [...allQuestionsData]; 
-
-                        // Setup for the Easter egg exam session (effectively a new, perfect session)
-                        isUntimedExam = true; // Simplifies time taken display in results
+                        isUntimedExam = true; 
                         timeLeft = Infinity;
                         examStartTime = null; 
                         
-                        // Manage attempt counter. This will count as a new attempt.
                         try {
                             let attemptCount = parseInt(localStorage.getItem(ATTEMPT_COUNTER_KEY)) || 0;
                             attemptCount++;
@@ -1105,14 +1103,12 @@
                             localStorage.setItem(ATTEMPT_COUNTER_KEY, attemptCount.toString());
                         } catch (e) {
                             console.error("Error with attempt counter for Easter Egg:", e);
-                            currentAttemptNumber = (parseInt(localStorage.getItem(ATTEMPT_COUNTER_KEY)) || 0) + 1; // Fallback
+                            currentAttemptNumber = (parseInt(localStorage.getItem(ATTEMPT_COUNTER_KEY)) || 0) + 1;
                         }
                         
-                        isExamPaused = false; // Ensure not paused 
+                        isExamPaused = false; 
                         if(pauseOverlay) pauseOverlay.style.display = 'none';
 
-
-                        // Mark all questions in the full bank as correct
                         userAnswers = activeQuestions.map(q => ({
                             qId: q.id,
                             userAnswer: q.correctAnswer, 
@@ -1120,19 +1116,19 @@
                             isFlagged: false 
                         }));
 
-                        score = activeQuestions.length; // Full score for all questions
+                        score = activeQuestions.length; 
 
-                        // Transition UI
                         if(welcomeScreen) welcomeScreen.style.display = 'none';
                         if(examScreen) examScreen.style.display = 'none'; 
                         if(resultsScreen) resultsScreen.style.display = 'block';
 
-                        // showResults will use the globally set activeQuestions, userAnswers, score, etc.
-                        showResults(false); // autoSubmitted = false
+                        showResults(false); 
                     }
                 });
             } else {
-                console.warn("Easter egg trigger element ('easterEggTrigger') not found in the footer.");
+                // This might be normal if timerEl is not yet in the DOM when onload runs,
+                // but timerEl is defined globally so it should be fine.
+                console.warn("Easter egg trigger element (timer) not found during onload.");
             }
             // --- END EASTER EGG SETUP ---
         };
@@ -1288,7 +1284,6 @@
             examDurationDisplayEl.textContent = `${DYNAMIC_EXAM_DURATION_MINUTES} دقيقة`;
         }
 
-        // Removed populateCategoryFilter function
 
         let confirmCallback = null;
         let cancelCallback = null;
@@ -1358,7 +1353,6 @@
                 if (numberOfQuestionsOverride !== null && numberOfQuestionsOverride > 0) { // For random start
                     let numToSelect = Math.min(numberOfQuestionsOverride, allQuestionsData.length);
                     activeQuestions = shuffleArray(allQuestionsData).slice(0, numToSelect);
-                    // DYNAMIC_EXAM_DURATION_MINUTES is pre-set by handleStartRandomExam
                 } else { // Standard start from dropdown
                     const selectedNumValue = numQuestionsSelect.value;
                     if (selectedNumValue === 'all') {
@@ -1368,7 +1362,6 @@
                         numToSelect = Math.min(numToSelect, allQuestionsData.length);
                         activeQuestions = shuffleArray(allQuestionsData).slice(0, numToSelect);
                     }
-                    // DYNAMIC_EXAM_DURATION_MINUTES is set by updateDurationDisplay() if timed and not untimed
                 }
                 
                 if (activeQuestions.length === 0 && allQuestionsData.length > 0) {
@@ -1387,8 +1380,6 @@
                     timerEl.classList.add('untimed');
                     timerEl.classList.remove('timer-warning');
                 } else { 
-                    // DYNAMIC_EXAM_DURATION_MINUTES should be correctly set by the calling context
-                    // (updateDurationDisplay for standard, handleStartRandomExam for random, handleRetryIncorrect for retry)
                     timeLeft = DYNAMIC_EXAM_DURATION_MINUTES * 60;
                     examStartTime = new Date().getTime();
                     timerEl.classList.remove('untimed');
@@ -1398,13 +1389,11 @@
                 currentQuestionIndex = 0;
                 score = 0;
                 userAnswers = activeQuestions.map(q => ({ qId: q.id, userAnswer: null, isCorrect: false, isFlagged: false }));
-                // activeQuestions and DYNAMIC_EXAM_DURATION_MINUTES are pre-set by handleRetryIncorrect
-                isUntimedExam = false; // Retries are always timed
+                isUntimedExam = false; 
                 timeLeft = DYNAMIC_EXAM_DURATION_MINUTES * 60;
                 examStartTime = new Date().getTime();
                 timerEl.classList.remove('untimed');
             } else if (resuming) {
-                // activeQuestions, timeLeft, examStartTime, currentAttemptNumber, isUntimedExam are loaded from state in resumeExam()
                 if (isUntimedExam) {
                     timeLeft = Infinity;
                     examStartTime = null;
@@ -1412,7 +1401,6 @@
                     timerEl.classList.add('untimed');
                     timerEl.classList.remove('timer-warning');
                 } else {
-                    // timeLeft, examStartTime are loaded from state
                     timerEl.classList.remove('untimed');
                 }
             }
@@ -1447,7 +1435,7 @@
                 return;
             }
 
-            isUntimedExam = false; // Random exams are timed by default
+            isUntimedExam = false; 
 
             const absoluteMinQuestions = 5; 
             const minPossibleQuestions = Math.max(absoluteMinQuestions, Math.min(10, allQuestionsData.length));
@@ -1455,14 +1443,14 @@
 
             let numRandomQuestions;
 
-            if (allQuestionsData.length <= absoluteMinQuestions) { // If total questions is very small (e.g., <=5), use all
+            if (allQuestionsData.length <= absoluteMinQuestions) { 
                 numRandomQuestions = allQuestionsData.length;
-            } else if (minPossibleQuestions >= maxPossibleQuestions) { // If calculated min ends up >= max (e.g. total questions 6-9 for min 10)
-                numRandomQuestions = allQuestionsData.length; // Use all questions in this specific scenario too
+            } else if (minPossibleQuestions >= maxPossibleQuestions) { 
+                numRandomQuestions = allQuestionsData.length; 
             } else {
                 numRandomQuestions = Math.floor(Math.random() * (maxPossibleQuestions - minPossibleQuestions + 1)) + minPossibleQuestions;
             }
-            numRandomQuestions = Math.max(1, numRandomQuestions); // Ensure at least 1 question is selected
+            numRandomQuestions = Math.max(1, numRandomQuestions); 
 
             DYNAMIC_EXAM_DURATION_MINUTES = Math.max(1, Math.ceil((numRandomQuestions * BASE_TIME_PER_QUESTION_SECONDS) / 60));
             
@@ -1492,7 +1480,6 @@
                 const currentQuestion = activeQuestions[currentQuestionIndex];
                 const userAnswerData = userAnswers.find(ua => ua.qId === currentQuestion.id);
 
-                // Removed: questionCategoryEl.innerHTML = ...
                 questionNumberTitleEl.textContent = `السؤال ${currentQuestionIndex + 1}`;
                 questionTextEl.textContent = currentQuestion.text;
                 optionsContainer.innerHTML = '';
@@ -1673,7 +1660,7 @@
                 clearInterval(timerInterval);
                 if(timerEl) timerEl.classList.remove('timer-warning');
             }
-            calculateScore(); // Will use the globally set userAnswers and score
+            calculateScore(); 
             isExamPaused = false;
             if(pauseExamButton) pauseExamButton.disabled = true;
 
@@ -1783,15 +1770,12 @@
             }
         }
 
-        // Removed renderCategoryPerformance function
 
         function renderReview(answersToReview) {
             reviewContainer.innerHTML = '';
             let filteredAnswers = [...answersToReview];
-            // Removed: const selectedCategory = categoryFilterSelect.value;
             const selectedStatus = statusFilterSelect.value;
 
-            // Removed category-based filtering block
 
             if (selectedStatus !== 'all') {
                 switch (selectedStatus) {
@@ -1856,7 +1840,6 @@
                     <p style="margin-bottom: 15px;">
                         <strong>السؤال (ID: ${originalQuestion.id}):</strong> ${originalQuestion.text}
                        ${answerData.isFlagged ? '<span class="flagged-indicator"><i class="fas fa-flag"></i> مُعلَّم</span>' : ''}
-                       <!-- Removed category display line -->
                     </p>
                     <p><strong>إجابتك:</strong>
                         <i class="answer-icon ${iconClass}" style="color: ${answerData.userAnswer === null ? 'var(--text-muted)' : (answerData.isCorrect ? 'var(--correct-color)' : 'var(--incorrect-color)')};"></i>
@@ -1996,16 +1979,16 @@
                             clearExamStateFromStorage();
                             isUntimedExam = false; 
                             updateDurationDisplay();
-                            initExam(false, false, null); // Pass null for numberOfQuestionsOverride
+                            initExam(false, false, null); 
                             hideModal();
                         },
                         null, false);
                     return;
                 }
-                initExam(true, false, null); // Pass null for numberOfQuestionsOverride
+                initExam(true, false, null); 
             } else {
                 isUntimedExam = false; 
-                initExam(false, false, null); // Pass null for numberOfQuestionsOverride
+                initExam(false, false, null); 
             }
         }
 
@@ -2053,7 +2036,7 @@
 
         if(startButton) startButton.addEventListener('click', () => {
             isUntimedExam = false; 
-            updateDurationDisplay(); // This will set DYNAMIC_EXAM_DURATION_MINUTES
+            updateDurationDisplay(); 
             showModal( "بدء الاختبار", `سيستمر الاختبار لمدة ${DYNAMIC_EXAM_DURATION_MINUTES} دقيقة.<br>هل أنت مستعد للبدء؟`, "ابدأ الآن", "لاحقاً",
                 () => { clearExamStateFromStorage(); initExam(false, false, null); hideModal(); },
                 () => { updateDurationDisplay(); hideModal(); } 
@@ -2159,7 +2142,6 @@
         }
         flagQuestionButton.addEventListener('click', toggleFlagQuestion);
 
-        // --- NEW FEATURE FUNCTIONS ---
         function showQuestionNavModal() {
             if (isExamPaused) return;
             questionNavListEl.innerHTML = '';
@@ -2246,7 +2228,7 @@
                 return;
             }
 
-            activeQuestions = shuffleArray(incorrectQuestions); // This sets activeQuestions for retry
+            activeQuestions = shuffleArray(incorrectQuestions); 
             DYNAMIC_EXAM_DURATION_MINUTES = Math.max(1, Math.ceil((activeQuestions.length * BASE_TIME_PER_QUESTION_SECONDS) / 60));
             isUntimedExam = false; 
 
@@ -2255,7 +2237,7 @@
                 `ستبدأ اختبارًا جديدًا بـ ${activeQuestions.length} من الأسئلة التي أخطأت بها. مدة هذا الاختبار ${DYNAMIC_EXAM_DURATION_MINUTES} دقيقة.`,
                 "ابدأ الإعادة", "إلغاء",
                 () => {
-                    initExam(false, true, null); // Pass null for override, as retry logic handles activeQuestions itself
+                    initExam(false, true, null); 
                     hideModal();
                 },
                 () => hideModal()
@@ -2266,7 +2248,7 @@
     <footer style="width:100vw;max-width:100vw;background:linear-gradient(90deg,rgba(0,191,255,0.08),rgba(0,123,255,0.08));border-top:1px solid var(--border-color);margin-top:40px;padding:18px 0 10px 0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-family:'Tajawal',sans-serif;color:var(--text-secondary);font-size:1.05em;opacity:0.93;letter-spacing:0.5px;box-shadow:0 -2px 12px rgba(0,191,255,0.07);">
         <div style="font-size:1.2em;display:flex;align-items:center;gap:7px;">
             <i class='fas fa-crown' style='color:var(--primary-accent);font-size:1.1em;'></i>
-            <span>Made by <b id="easterEggTrigger" style="cursor:pointer;">Bebo Naiem</b></span>
+            <span>Made by <b>Bebo Naiem</b></span>
         </div>
         <div style="font-size:0.98em;opacity:0.8;">تم انشائه بواسطة <b>بولا نعيم</b></div>
     </footer>   
