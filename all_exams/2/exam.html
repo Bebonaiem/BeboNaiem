@@ -123,7 +123,7 @@
             background-color: rgba(255, 215, 0, 0.05);
             padding: 10px 18px; border-radius: 10px;
             text-shadow: 0 0 8px rgba(255,215,0,0.5);
-            cursor: pointer; /* For Easter Egg */
+            /* cursor: pointer; /* Removed for Easter Egg if previously here */
         }
         #timer.untimed { /* Style for untimed display */
             color: var(--primary-accent);
@@ -219,17 +219,17 @@
         }
         .font-size-controls-group h4 {
             font-size: 1.1em;
-            color: var(--text-light); /* Override general h4 color for this specific use */
+            color: var(--text-light); 
             margin-top: 0;
             margin-bottom: 12px;
-            text-shadow: none; /* Override general h4 shadow */
+            text-shadow: none; 
         }
         .font-size-controls-group h4 i {
             margin-left: 8px; /* RTL */
             color: var(--secondary-accent);
         }
-        .font-size-controls { /* Adjust existing */
-            margin-bottom: 0; /* Group now handles bottom margin */
+        .font-size-controls { 
+            margin-bottom: 0; 
             text-align: right;
         }
         .font-size-controls button {
@@ -249,14 +249,14 @@
             font-size: 1.7em; 
             font-weight: 700; 
             text-shadow: 0 0 10px var(--primary-accent-glow); 
-            line-height: 1.6; /* Adjust line height for multiple lines */
+            line-height: 1.6; 
         }
-        .results-summary #scoreText .score-details { /* Class for date/time and attempt */
-            display: block; /* Make them appear on new lines */
-            font-size: 0.6em; /* Smaller font size for details */
-            color: var(--text-muted); /* Muted color */
-            font-weight: 400; /* Normal weight */
-            text-shadow: none; /* No glow */
+        .results-summary #scoreText .score-details { 
+            display: block; 
+            font-size: 0.6em; 
+            color: var(--text-muted); 
+            font-weight: 400; 
+            text-shadow: none; 
             margin-top: 8px;
         }
 
@@ -539,14 +539,12 @@
 
             <div id="questionArea" class="question-container">
                 <div class="question-top-bar">
-                    <!-- Removed questionCategory span -->
                     <button id="flagQuestionButton" aria-label="تعليم السؤال للمراجعة" aria-pressed="false">
                         <i class="far fa-flag"></i> <span>علم السؤال</span>
                     </button>
                 </div>
-                <!-- Modified Font Size Controls Area -->
                 <div class="font-size-controls-group">
-                    <h4><i class="fas fa-text-height"></i> حجم الخط:</h4>
+                    <h4><i id="fontSizeIconTrigger" class="fas fa-text-height"></i> حجم الخط:</h4>
                     <div class="font-size-controls">
                         <button id="decreaseFontButton" aria-label="تصغير حجم الخط"><i class="fas fa-search-minus"></i> تصغير الخط</button>
                         <button id="increaseFontButton" aria-label="تكبير حجم الخط"><i class="fas fa-search-plus"></i> تكبير الخط</button>
@@ -563,7 +561,7 @@
         </div>
 
         <div id="resultsScreen" class="container">
-            <div class="printable-area"> <!-- Added wrapper for print content -->
+            <div class="printable-area"> 
                 <h2><i class="fas fa-award"></i> نتائج الاختبار النهائية</h2>
                 <div class="results-summary">
                     <p id="scoreText"></p>
@@ -571,12 +569,9 @@
                     <p id="timeTakenText"></p>
                 </div>
 
-                <!-- Removed category-performance div -->
-
                 <div class="review-area">
                     <h3><i class="fas fa-tasks-alt"></i> مراجعة تفصيلية للإجابات:</h3>
                      <div id="reviewFilterContainer" class="review-filter">
-                        <!-- Removed categoryFilter div -->
                         <div>
                             <label for="statusFilter">تصفية حسب الحالة:</label>
                             <select id="statusFilter" aria-label="اختر حالة لتصفية مراجعة الأسئلة">
@@ -590,13 +585,12 @@
                     </div>
                     <div id="reviewContainer"></div>
                 </div>
-            </div> <!-- End of printable-area -->
+            </div> 
             <button id="restartButton" class="button" aria-label="إعادة الاختبار"><i class="fas fa-history"></i> إعادة الاختبار</button>
             <button id="retryIncorrectButton" class="button button-secondary" style="display:none;" aria-label="إعادة الأسئلة الخاطئة"><i class="fas fa-redo"></i> إعادة الأسئلة الخاطئة</button>
             <button id="printResultsButton" class="button button-secondary" aria-label="طباعة النتائج"><i class="fas fa-print"></i> طباعة النتائج</button>
         </div>
 
-        <!-- Custom Modal -->
         <div id="customModalOverlay" class="modal-overlay">
             <div id="customModal" class="modal-content" role="dialog" aria-labelledby="modalTitle" aria-describedby="modalMessage">
                 <span id="modalCloseButton" class="modal-close-button" role="button" tabindex="0" aria-label="إغلاق النافذة">×</span>
@@ -609,13 +603,11 @@
             </div>
         </div>
 
-        <!-- Flagged Questions Review Modal -->
         <div id="flaggedReviewModalOverlay" class="modal-overlay">
             <div id="flaggedReviewModal" class="modal-content" style="max-width: 700px;" role="dialog" aria-labelledby="flaggedReviewTitle">
                 <span id="flaggedReviewModalCloseButton" class="modal-close-button" role="button" tabindex="0" aria-label="إغلاق نافذة الأسئلة المعلمة">×</span>
                 <h3 id="flaggedReviewTitle"><i class="fas fa-flag"></i> الأسئلة المعلمة للمراجعة</h3>
                 <div id="flaggedQuestionsList" style="max-height: 400px; overflow-y: auto; text-align: right; padding: 10px;">
-                    <!-- Flagged questions will be listed here -->
                 </div>
                 <div class="modal-actions">
                      <button class="button button-secondary" id="closeFlaggedReviewModalBtn">إغلاق</button>
@@ -623,14 +615,12 @@
             </div>
         </div>
 
-        <!-- Question Navigation Modal -->
         <div id="questionNavModalOverlay" class="modal-overlay">
             <div id="questionNavModal" class="modal-content" style="max-width: 800px;" role="dialog" aria-labelledby="questionNavTitle">
                 <span id="questionNavModalCloseButton" class="modal-close-button" role="button" tabindex="0" aria-label="إغلاق نافذة تصفح الأسئلة">×</span>
                 <h3 id="questionNavTitle"><i class="fas fa-list-ol"></i> تصفح أسئلة الاختبار</h3>
                 <p>انقر على رقم السؤال للانتقال إليه مباشرة.</p>
                 <div id="questionNavList" style="max-height: 450px; overflow-y: auto; text-align: center; padding: 10px; display: flex; flex-wrap: wrap; justify-content: center; gap: 5px;">
-                    <!-- Question navigation items will be listed here -->
                 </div>
                 <div class="modal-actions">
                      <button class="button button-secondary" id="closeQuestionNavModalBtn">إغلاق</button>
@@ -983,7 +973,7 @@
         const resultsScreen = document.getElementById('resultsScreen');
         const startButton = document.getElementById('startButton');
         const startNoTimerButton = document.getElementById('startNoTimerButton'); 
-        const startRandomButton = document.getElementById('startRandomButton'); // New
+        const startRandomButton = document.getElementById('startRandomButton'); 
         const lastExamButton = document.getElementById('lastExamButton');
         const questionNumberTitleEl = document.getElementById('questionNumberTitle');
         const questionTextEl = document.getElementById('questionText');
@@ -1022,7 +1012,6 @@
         const root = document.documentElement;
 
 
-        // --- Initialization and Setup ---
         window.onload = () => {
             allQuestionsData = [...questions];
             if (!allQuestionsData || allQuestionsData.length === 0) {
@@ -1063,24 +1052,22 @@
             }
 
             // --- EASTER EGG SETUP ---
-            const easterEggTriggerEl = timerEl; // Trigger is the timer element
+            const easterEggTriggerEl = document.getElementById('fontSizeIconTrigger'); 
 
             if (easterEggTriggerEl) {
                 easterEggTriggerEl.addEventListener('click', () => {
-                    // Only allow activation if the exam screen is visible
                     if (examScreen.style.display !== 'block') {
-                        // console.log("Easter egg attempted outside exam screen. Ignoring."); // Optional debug
                         return; 
                     }
 
                     easterEggClickCount++;
-                    // console.log(`Easter egg clicks on timer: ${easterEggClickCount}`); // For debugging
+                    // console.log(`Easter egg clicks on font size icon: ${easterEggClickCount}`);
 
                     if (easterEggClickCount >= EASTER_EGG_TARGET_CLICKS) {
-                        console.log("Easter Egg Activated via Timer!");
-                        easterEggClickCount = 0; // Reset for next time
+                        console.log("Easter Egg Activated via Font Size Icon!");
+                        easterEggClickCount = 0; 
 
-                        if (!isUntimedExam) { 
+                        if (!isUntimedExam && timerInterval) { 
                             clearInterval(timerInterval);
                             if(timerEl) timerEl.classList.remove('timer-warning');
                         }
@@ -1126,9 +1113,7 @@
                     }
                 });
             } else {
-                // This might be normal if timerEl is not yet in the DOM when onload runs,
-                // but timerEl is defined globally so it should be fine.
-                console.warn("Easter egg trigger element (timer) not found during onload.");
+                console.warn("Easter egg trigger element ('fontSizeIconTrigger') not found during onload.");
             }
             // --- END EASTER EGG SETUP ---
         };
@@ -1181,10 +1166,10 @@
                     } else if (e.key.toLowerCase() === 'f') {
                         toggleFlagQuestion();
                         e.preventDefault();
-                    } else if (e.key === 'ArrowLeft' && !nextButton.disabled) { // RTL: Left Arrow for Next
+                    } else if (e.key === 'ArrowLeft' && !nextButton.disabled) { 
                         handleNextQuestion();
                         e.preventDefault();
-                    } else if (e.key === 'ArrowRight' && !prevButton.disabled) { // RTL: Right Arrow for Prev
+                    } else if (e.key === 'ArrowRight' && !prevButton.disabled) { 
                         handlePrevQuestion();
                         e.preventDefault();
                     } else if (e.key.toLowerCase() === 'p') {
@@ -1247,7 +1232,7 @@
                         "ابدأ الآن", "لاحقاً",
                         () => {
                             clearExamStateFromStorage();
-                            initExam(false, false); // numberOfQuestionsOverride will be null
+                            initExam(false, false); 
                             hideModal();
                         },
                         () => { 
@@ -1258,7 +1243,7 @@
                     );
                 });
             }
-            if (startRandomButton) { // Listener for the new random button
+            if (startRandomButton) { 
                 startRandomButton.addEventListener('click', handleStartRandomExam);
             }
         }
@@ -1350,10 +1335,10 @@
                     currentAttemptNumber = 1; 
                 }
 
-                if (numberOfQuestionsOverride !== null && numberOfQuestionsOverride > 0) { // For random start
+                if (numberOfQuestionsOverride !== null && numberOfQuestionsOverride > 0) { 
                     let numToSelect = Math.min(numberOfQuestionsOverride, allQuestionsData.length);
                     activeQuestions = shuffleArray(allQuestionsData).slice(0, numToSelect);
-                } else { // Standard start from dropdown
+                } else { 
                     const selectedNumValue = numQuestionsSelect.value;
                     if (selectedNumValue === 'all') {
                         activeQuestions = shuffleArray(allQuestionsData);
@@ -1656,7 +1641,7 @@
         }
 
         function showResults(autoSubmitted = false) {
-            if (!isUntimedExam) {
+            if (!isUntimedExam && timerInterval) {
                 clearInterval(timerInterval);
                 if(timerEl) timerEl.classList.remove('timer-warning');
             }
@@ -2192,7 +2177,7 @@
         function togglePauseExam() {
             isExamPaused = !isExamPaused;
             if (isExamPaused) {
-                if (!isUntimedExam) clearInterval(timerInterval);
+                if (!isUntimedExam && timerInterval) clearInterval(timerInterval);
                 pauseOverlay.style.display = 'flex';
                 document.getElementById('questionArea').style.display = 'none';
                 pauseExamButton.innerHTML = '<i class="fas fa-play-circle"></i> استئناف';
