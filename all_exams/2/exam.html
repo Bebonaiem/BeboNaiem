@@ -259,47 +259,6 @@
             margin-top: 8px;
         }
 
-
-        .category-performance { margin-top: 20px; margin-bottom: 30px; }
-        .category-performance h4 { color: var(--secondary-accent); margin-bottom: 10px; }
-        .category-performance h4 i { margin-left: 8px; } /* Align icon */
-
-        /* Results Screen: Category Performance Visual Bar */
-        .category-perf-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px; /* Increased spacing */
-            padding: 12px 15px; /* Increased padding */
-            background-color: rgba(0,0,0,0.2); /* Slightly darker for more contrast */
-            border-radius: 8px; /* Consistent border-radius */
-            border-left: 4px solid var(--secondary-accent); /* Accent border */
-        }
-        .category-perf-item span {
-            flex-basis: 60%;
-            color: var(--text-light);
-        }
-        .category-perf-item span strong {
-            color: var(--secondary-accent); /* Match heading color */
-        }
-        .category-perf-bar-container {
-            flex-basis: 35%;
-            height: 14px; /* Slightly thicker bar */
-            background-color: var(--border-color);
-            border-radius: 7px;
-            overflow: hidden;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.4);
-        }
-        .category-perf-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary-accent) 0%, var(--secondary-accent) 100%);
-            border-radius: 7px;
-            transition: width 0.6s cubic-bezier(0.25, 0.1, 0.25, 1); /* Smoother transition */
-        }
-
-        .category-performance strong { color: var(--text-light); }
-
-
         .review-area { margin-top: 40px; text-align: right; }
         .review-filter { margin-bottom: 20px; display: flex; flex-wrap: wrap; gap: 15px; align-items: center; }
         .review-filter label { margin-right: 0; margin-left:5px; color: var(--text-muted); } /* RTL */
@@ -443,22 +402,6 @@
             color: var(--text-light);
         }
 
-        /* Question Category Styling */
-        #questionCategory {
-            font-size: 0.95em;
-            color: var(--primary-accent);
-            background-color: rgba(0, 229, 255, 0.05);
-            padding: 8px 15px;
-            border-radius: 8px;
-            border: 1px solid var(--primary-accent);
-            text-shadow: 0 0 5px var(--primary-accent-glow);
-            display: inline-flex;
-            align-items: center;
-        }
-        #questionCategory i.fa-tag { /* Ensure icon has margin if you add one */
-            margin-left: 8px; /* RTL */
-        }
-
         /* Custom Scrollbar for Webkit (Chrome, Safari, Edge) and Firefox */
         /* Webkit Scrollbar */
         ::-webkit-scrollbar {
@@ -504,30 +447,6 @@
             .results-summary #scoreText .score-details { font-size: 0.7em !important; color: #333 !important; }
             #feedbackText { color: black !important; font-style: italic; }
             
-            .category-performance div { border: 1px solid #ccc; padding: 5px; margin-bottom: 5px; background-color: #f9f9f9 !important; }
-            .category-perf-item {
-                display: block !important;
-                border: 1px solid #ccc !important;
-                padding: 5px !important;
-                margin-bottom: 5px !important;
-                border-left: 3px solid #666 !important;
-            }
-            .category-perf-item span { color: black !important; background-color: white !important; }
-            .category-perf-item span strong { color: black !important; }
-            .category-perf-bar-container, .category-perf-bar {
-                display: none !important; /* Hide visual bars in print, text info is enough */
-            }
-            #questionCategory {
-                border: 1px solid #aaa !important;
-                padding: 3px 5px !important;
-                font-size: 9pt !important;
-                background-color: #f0f0f0 !important;
-                color: black !important;
-                text-shadow: none !important;
-            }
-            #questionCategory i { display: none !important; }
-
-
             .review-item {
                 page-break-inside: avoid;
                 border: 1px solid #ccc !important;
@@ -619,7 +538,7 @@
 
         <div id="questionArea" class="question-container">
             <div class="question-top-bar">
-                 <span id="questionCategory"></span> <!-- Content set by JS -->
+                <!-- Removed questionCategory span -->
                 <button id="flagQuestionButton" aria-label="تعليم السؤال للمراجعة" aria-pressed="false">
                     <i class="far fa-flag"></i> <span>علم السؤال</span>
                 </button>
@@ -651,23 +570,12 @@
                 <p id="timeTakenText"></p>
             </div>
 
-            <div class="category-performance">
-                <h4><i class="fas fa-chart-pie"></i> أداؤك حسب الفئة:</h4>
-                <div id="categoryPerformanceContainer">
-                    <!-- Performance by category will be injected here -->
-                </div>
-            </div>
+            <!-- Removed category-performance div -->
 
             <div class="review-area">
                 <h3><i class="fas fa-tasks-alt"></i> مراجعة تفصيلية للإجابات:</h3>
                  <div id="reviewFilterContainer" class="review-filter">
-                    <div>
-                        <label for="categoryFilter">تصفية حسب الفئة:</label>
-                        <select id="categoryFilter" aria-label="اختر فئة لتصفية مراجعة الأسئلة">
-                            <option value="all">كل الفئات</option>
-                            <!-- Categories will be populated here -->
-                        </select>
-                    </div>
+                    <!-- Removed categoryFilter div -->
                     <div>
                         <label for="statusFilter">تصفية حسب الحالة:</label>
                         <select id="statusFilter" aria-label="اختر حالة لتصفية مراجعة الأسئلة">
@@ -1087,9 +995,9 @@
         const numQuestionsSelect = document.getElementById('numQuestionsSelect');
         const examDurationDisplayEl = document.getElementById('examDurationDisplay');
         const durationNoticeEl = document.getElementById('durationNotice');
-        const questionCategoryEl = document.getElementById('questionCategory');
-        const categoryPerformanceContainer = document.getElementById('categoryPerformanceContainer');
-        const categoryFilterSelect = document.getElementById('categoryFilter');
+        // Removed: const questionCategoryEl = document.getElementById('questionCategory');
+        // Removed: const categoryPerformanceContainer = document.getElementById('categoryPerformanceContainer');
+        // Removed: const categoryFilterSelect = document.getElementById('categoryFilter');
         const statusFilterSelect = document.getElementById('statusFilter');
         const flagQuestionButton = document.getElementById('flagQuestionButton');
         const reviewFlaggedButton = document.getElementById('reviewFlaggedButton');
@@ -1127,7 +1035,7 @@
                 allQuestionsOption.textContent = `كل الأسئلة (${allQuestionsData.length} سؤالاً - اختبار كامل)`;
             }
 
-            populateCategoryFilter();
+            // Removed: populateCategoryFilter();
             updateDurationDisplay();
             if(numQuestionsSelect) numQuestionsSelect.addEventListener('change', updateDurationDisplay);
             checkLocalStorage();
@@ -1304,29 +1212,7 @@
             examDurationDisplayEl.textContent = `${DYNAMIC_EXAM_DURATION_MINUTES} دقيقة`;
         }
 
-        function populateCategoryFilter() {
-            const categories = [...new Set(allQuestionsData.map(q => q.category || "غير مصنف"))].sort();
-            categoryFilterSelect.innerHTML = '<option value="all">كل الفئات</option>';
-            categories.forEach(cat => {
-                const option = document.createElement('option');
-                option.value = cat;
-                option.textContent = cat;
-                categoryFilterSelect.appendChild(option);
-            });
-            categoryFilterSelect.addEventListener('change', () => {
-                if (resultsScreen.style.display === 'block' && !examScreen.style.display === 'block') {
-                    try {
-                        const savedResultsString = localStorage.getItem(LAST_EXAM_RESULTS_KEY);
-                        if (savedResultsString) {
-                            const savedResults = JSON.parse(savedResultsString);
-                            renderReview(savedResults.userAnswersForReview || []);
-                        }
-                    } catch (e) { console.error("Error rendering review from saved results on filter change:", e); }
-                } else {
-                    renderReview(userAnswers);
-                }
-            });
-        }
+        // Removed populateCategoryFilter function
 
         let confirmCallback = null;
         let cancelCallback = null;
@@ -1416,7 +1302,7 @@
                     return;
                 } else if (allQuestionsData.length === 0) { return; }
 
-                userAnswers = activeQuestions.map(q => ({ qId: q.id, userAnswer: null, isCorrect: false, isFlagged: false, category: q.category }));
+                userAnswers = activeQuestions.map(q => ({ qId: q.id, userAnswer: null, isCorrect: false, isFlagged: false }));
 
                 if (isUntimedExam) { 
                     timeLeft = Infinity;
@@ -1435,7 +1321,7 @@
             } else if (isRetry) {
                 currentQuestionIndex = 0;
                 score = 0;
-                userAnswers = activeQuestions.map(q => ({ qId: q.id, userAnswer: null, isCorrect: false, isFlagged: false, category: q.category }));
+                userAnswers = activeQuestions.map(q => ({ qId: q.id, userAnswer: null, isCorrect: false, isFlagged: false }));
                 // activeQuestions and DYNAMIC_EXAM_DURATION_MINUTES are pre-set by handleRetryIncorrect
                 isUntimedExam = false; // Retries are always timed
                 timeLeft = DYNAMIC_EXAM_DURATION_MINUTES * 60;
@@ -1530,7 +1416,7 @@
                 const currentQuestion = activeQuestions[currentQuestionIndex];
                 const userAnswerData = userAnswers.find(ua => ua.qId === currentQuestion.id);
 
-                questionCategoryEl.innerHTML = `<i class="fas fa-tag"></i> الفئة: ${currentQuestion.category || 'غير مصنف'}`;
+                // Removed: questionCategoryEl.innerHTML = ...
                 questionNumberTitleEl.textContent = `السؤال ${currentQuestionIndex + 1}`;
                 questionTextEl.textContent = currentQuestion.text;
                 optionsContainer.innerHTML = '';
@@ -1679,7 +1565,6 @@
                     listItem.setAttribute('tabindex', '0');
                     listItem.innerHTML = `
                         <strong>السؤال ${answerData.originalIndex + 1} (ID: ${originalQ.id}):</strong> ${originalQ.text.substring(0, 70)}...
-                        <br><em>الفئة: ${originalQ.category || 'غير مصنف'}</em>
                         ${answerData.userAnswer ? `<br><span style="color:var(--primary-accent)">إجابتك المختارة: ${getDisplayableAnswer(originalQ, answerData.userAnswer)}</span>` : '<br><span style="color:var(--text-muted)">لم تجب بعد</span>'}
                     `;
                     listItem.addEventListener('click', () => {
@@ -1791,7 +1676,7 @@
             feedbackTextEl.textContent = feedbackString;
             feedbackTextEl.style.color = feedbackColor;
 
-            const categoryPerformanceData = renderCategoryPerformance(true);
+            // Removed: const categoryPerformanceData = renderCategoryPerformance(true);
             renderReview(userAnswers);
 
             if (!isRetrySession) { 
@@ -1801,7 +1686,7 @@
                     feedbackString,
                     feedbackColor,
                     timeTakenString: timeTakenTextEl.textContent,
-                    categoryPerformanceData,
+                    // Removed: categoryPerformanceData,
                     userAnswersForReview: userAnswers.map(ua => ({...ua})),
                     activeQuestionsForReview: activeQuestions.map(q => q.id),
                     isUntimed: isUntimedExam,
@@ -1820,70 +1705,15 @@
             }
         }
 
-        function renderCategoryPerformance(returnData = false) {
-            categoryPerformanceContainer.innerHTML = '';
-            let currentAnswers, currentActiveQIds;
-
-            if (resultsScreen.style.display === 'block' && !examScreen.style.display === 'block' && !isRetrySession) {
-                const savedResultsString = localStorage.getItem(LAST_EXAM_RESULTS_KEY);
-                const savedResults = savedResultsString ? JSON.parse(savedResultsString) : {};
-                currentAnswers = savedResults.userAnswersForReview || userAnswers;
-                currentActiveQIds = savedResults.activeQuestionsForReview || activeQuestions.map(q => q.id);
-            } else {
-                currentAnswers = userAnswers;
-                currentActiveQIds = activeQuestions.map(q => q.id);
-            }
-
-
-            const categories = [...new Set(currentAnswers.map(ua => ua.category || "غير مصنف"))].sort();
-            let performanceData = [];
-
-            if (categories.length === 0 && currentActiveQIds.length > 0) {
-                 categoryPerformanceContainer.innerHTML = "<p>لم يتم الإجابة على أية أسئلة لعرض أداء الفئات.</p>";
-                 if (returnData) return [];
-                 return;
-            } else if (categories.length === 0){
-                 categoryPerformanceContainer.innerHTML = "<p>لا توجد فئات لعرضها.</p>";
-                 if (returnData) return [];
-                 return;
-            }
-
-            categories.forEach(cat => {
-                const categoryAnswers = currentAnswers.filter(ua => (ua.category || "غير مصنف") === cat);
-                const correctInCategory = categoryAnswers.filter(ua => ua.isCorrect).length;
-                const totalInCategory = categoryAnswers.length;
-                const percentage = totalInCategory > 0 ? Math.round((correctInCategory / totalInCategory) * 100) : 0;
-                const itemData = {
-                    category: cat,
-                    correct: correctInCategory,
-                    total: totalInCategory,
-                    percentage
-                };
-                performanceData.push(itemData);
-
-                const perfDiv = document.createElement('div');
-                perfDiv.className = 'category-perf-item'; 
-                perfDiv.innerHTML = `
-                    <span><strong>${cat}:</strong> ${correctInCategory} / ${totalInCategory} (${percentage}%)</span>
-                    <div class="category-perf-bar-container">
-                        <div class="category-perf-bar" style="width: ${percentage}%;"></div>
-                    </div>
-                `;
-                categoryPerformanceContainer.appendChild(perfDiv);
-            });
-            if (returnData && !isRetrySession && examScreen.style.display !== 'block') return performanceData;
-        }
-
+        // Removed renderCategoryPerformance function
 
         function renderReview(answersToReview) {
             reviewContainer.innerHTML = '';
             let filteredAnswers = [...answersToReview];
-            const selectedCategory = categoryFilterSelect.value;
+            // Removed: const selectedCategory = categoryFilterSelect.value;
             const selectedStatus = statusFilterSelect.value;
 
-            if (selectedCategory !== 'all') {
-                filteredAnswers = filteredAnswers.filter(ua => (ua.category || "غير مصنف") === selectedCategory);
-            }
+            // Removed category-based filtering block
 
             if (selectedStatus !== 'all') {
                 switch (selectedStatus) {
@@ -1948,7 +1778,7 @@
                     <p style="margin-bottom: 15px;">
                         <strong>السؤال (ID: ${originalQuestion.id}):</strong> ${originalQuestion.text}
                        ${answerData.isFlagged ? '<span class="flagged-indicator"><i class="fas fa-flag"></i> مُعلَّم</span>' : ''}
-                       <br><small style="color: var(--text-muted); font-size:0.9em;">الفئة: ${originalQuestion.category || 'غير مصنف'}</small>
+                       <!-- Removed category display line -->
                     </p>
                     <p><strong>إجابتك:</strong>
                         <i class="answer-icon ${iconClass}" style="color: ${answerData.userAnswer === null ? 'var(--text-muted)' : (answerData.isCorrect ? 'var(--correct-color)' : 'var(--incorrect-color)')};"></i>
@@ -2016,22 +1846,9 @@
                     timeTakenTextEl.textContent = savedResults.timeTakenString;
                 }
 
-                categoryPerformanceContainer.innerHTML = '';
-                if (savedResults.categoryPerformanceData && savedResults.categoryPerformanceData.length > 0) {
-                    savedResults.categoryPerformanceData.forEach(item => {
-                        const perfDiv = document.createElement('div');
-                        perfDiv.className = 'category-perf-item';
-                        perfDiv.innerHTML = `
-                            <span><strong>${item.category}:</strong> ${item.correct} / ${item.total} (${item.percentage}%)</span>
-                            <div class="category-perf-bar-container">
-                                <div class="category-perf-bar" style="width: ${item.percentage}%;"></div>
-                            </div>
-                        `;
-                        categoryPerformanceContainer.appendChild(perfDiv);
-                    });
-                } else {
-                    categoryPerformanceContainer.innerHTML = "<p>لا توجد بيانات أداء للفئات لهذا الاختبار.</p>";
-                }
+                // Removed category performance display logic
+                // const categoryPerformanceContainer = document.getElementById('categoryPerformanceContainer');
+                // if (categoryPerformanceContainer) categoryPerformanceContainer.innerHTML = ''; // Ensure it's cleared if somehow still exists
 
                 userAnswers = savedResults.userAnswersForReview || [];
                 activeQuestions = (savedResults.activeQuestionsForReview || [])
