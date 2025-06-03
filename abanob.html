@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سؤال لأبانوب</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #6f42c1;
+            --secondary-color: #007bff;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+            --font-family-sans-serif: 'Cairo', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-family-sans-serif);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark-color);
+            text-align: center;
+            overflow: hidden;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .card {
+            background-color: white;
+            padding: 40px 50px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
+            width: 90%;
+            max-width: 500px;
+            animation: fadeIn 0.8s ease-out;
+            position: relative;
+            z-index: 10;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-title {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            padding: 15px 35px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            border-radius: 50px;
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn:active {
+            transform: translateY(2px) scale(0.98);
+            box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+        }
+        .btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        #yesButton {
+            background-color: var(--success-color);
+        }
+        #yesButton:hover:not(:disabled) {
+            background-color: #218838;
+            transform: translateY(-3px);
+            box-shadow: 0 7px 10px rgba(0,0,0,0.15);
+        }
+        #yesButton::before { content: "👍"; margin-left: 8px; }
+        html[dir="rtl"] #yesButton::before { margin-left: 0; margin-right: 8px; }
+
+
+        #noButton {
+            background-color: var(--danger-color);
+            position: absolute;
+            /* تعديل هنا لجعل الحركة أبطأ بشكل ملحوظ */
+            transition: top 2s cubic-bezier(0.3, 0.7, 0.4, 1), /*  أبطأ */
+                        left 2s cubic-bezier(0.3, 0.7, 0.4, 1), /*  أبطأ */
+                        transform 0.1s ease,
+                        background-color 0.3s ease;
+            z-index: 20;
+        }
+        #noButton::before { content: "🏃"; margin-left: 8px; }
+        html[dir="rtl"] #noButton::before { margin-left: 0; margin-right: 8px; }
+
+        .result-message {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-top: 35px;
+            padding: 20px;
+            background-color: #e7f3ff;
+            border-radius: 12px;
+            border: 2px solid var(--secondary-color);
+            display: none;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .result-message.show {
+            display: block;
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .escape-message {
+            position: fixed;
+            background-color: var(--warning-color);
+            color: var(--dark-color);
+            padding: 10px 20px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            font-size: 16px;
+            font-weight: bold;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+            transform: translateY(20px);
+            pointer-events: none;
+            display: none;
+        }
+        .escape-message.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .emoji {
+            font-size: 1.5em;
+            vertical-align: middle;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1 class="question-title">انت غلطان ولا لأ يا أبانوب؟ 🤔</h1>
+        <div class="buttons-container">
+            <button id="yesButton" class="btn">ايوة</button>
+        </div>
+        <p id="resultMessage" class="result-message"></p>
+    </div>
+
+    <button id="noButton" class="btn">لأ</button>
+
+    <div id="escapeMessage" class="escape-message"></div>
+
+    <script>
+        const yesButton = document.getElementById('yesButton');
+        const noButton = document.getElementById('noButton');
+        const resultMessage = document.getElementById('resultMessage');
+        const escapeMessageDiv = document.getElementById('escapeMessage');
+        const card = document.querySelector('.card');
+
+        let escapeMessageTimeout;
+
+        function setInitialNoButtonPosition() {
+            if (noButton.disabled) return;
+
+            const yesButtonRect = yesButton.getBoundingClientRect();
+            
+            let initialLeft = yesButtonRect.left - noButton.offsetWidth - 20;
+            let initialTop = yesButtonRect.top;
+
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+
+            if (initialLeft < 10) initialLeft = 10;
+            if (initialLeft + noButton.offsetWidth > viewportWidth - 10) {
+                initialLeft = viewportWidth - noButton.offsetWidth - 10;
+            }
+            if (initialTop < 10) initialTop = 10;
+            if (initialTop + noButton.offsetHeight > viewportHeight - 10) {
+                initialTop = viewportHeight - noButton.offsetHeight - 10;
+            }
+            
+            noButton.style.left = initialLeft + 'px';
+            noButton.style.top = initialTop + 'px';
+        }
+        
+        window.addEventListener('DOMContentLoaded', setInitialNoButtonPosition);
+        window.addEventListener('resize', setInitialNoButtonPosition);
+
+
+        yesButton.addEventListener('click', function() {
+            resultMessage.innerHTML = 'طول عمري صح و انت غلط <span class="emoji">😎</span>';
+            resultMessage.classList.add('show');
+            yesButton.disabled = true;
+            noButton.disabled = true;
+            noButton.style.display = 'none';
+            if (escapeMessageDiv.classList.contains('show')) {
+                escapeMessageDiv.classList.remove('show');
+                // Ensure it's fully hidden after transition
+                setTimeout(() => {
+                    if (!escapeMessageDiv.classList.contains('show')) {
+                         escapeMessageDiv.style.display = 'none';
+                    }
+                }, 300);
+            }
+        });
+
+        function moveNoButton() {
+            if (noButton.disabled) return;
+
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+            const buttonWidth = noButton.offsetWidth;
+            const buttonHeight = noButton.offsetHeight;
+
+            let newLeft = Math.random() * (viewportWidth - buttonWidth - 20) + 10;
+            let newTop = Math.random() * (viewportHeight - buttonHeight - 20) + 10;
+
+            noButton.style.left = newLeft + 'px';
+            noButton.style.top = newTop + 'px';
+        }
+
+        function showEscapeMessage() {
+            if (noButton.disabled) return;
+
+            escapeMessageDiv.textContent = "بطل هربان يا أبانوب! 😜";
+            
+            const noButtonRect = noButton.getBoundingClientRect();
+            
+            escapeMessageDiv.style.display = 'block'; 
+            escapeMessageDiv.style.opacity = '0'; 
+            const currentMessageWidth = escapeMessageDiv.offsetWidth;
+            
+            let msgLeft = noButtonRect.left + (noButtonRect.width / 2) - (currentMessageWidth / 2);
+            let msgTop = noButtonRect.bottom + 10;
+
+            const viewportWidth = window.innerWidth;
+            if (msgLeft < 5) msgLeft = 5;
+            if (msgLeft + currentMessageWidth > viewportWidth - 5) {
+                msgLeft = viewportWidth - currentMessageWidth - 5;
+            }
+
+            escapeMessageDiv.style.left = msgLeft + 'px';
+            escapeMessageDiv.style.top = msgTop + 'px';
+            
+            // Force reflow for the transition to apply correctly after display:block
+            void escapeMessageDiv.offsetWidth; 
+
+            escapeMessageDiv.classList.add('show');
+
+            clearTimeout(escapeMessageTimeout);
+            escapeMessageTimeout = setTimeout(() => {
+                escapeMessageDiv.classList.remove('show');
+                setTimeout(() => {
+                    if (!escapeMessageDiv.classList.contains('show')) {
+                         escapeMessageDiv.style.display = 'none';
+                    }
+                }, 300); 
+            }, 2500);
+        }
+
+        noButton.addEventListener('mouseover', moveNoButton);
+
+        noButton.addEventListener('click', function(event) {
+            event.preventDefault();
+            if (noButton.disabled) return;
+
+            showEscapeMessage();
+            moveNoButton();
+        });
+
+    </script>
+</body>
+</html>
