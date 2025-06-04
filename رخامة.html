@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رسالة إلى جميلة</title>
+    <style>
+        body {
+            font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f8ff; /* أزرق سماوي فاتح */
+            color: #333;
+            text-align: center;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 95vh;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            max-width: 600px;
+            width: 90%;
+            box-sizing: border-box;
+        }
+        h1 {
+            color: #ff69b4; /* وردي فاقع */
+        }
+        h2 {
+            color: #555;
+        }
+        p {
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+        .button-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px; /* مسافة بين الأزرار */
+            flex-wrap: wrap; /* للسماح بانتقال الأزرار لسطر جديد عند ضيق الشاشة */
+        }
+        button {
+            background-color: #ff69b4; /* وردي فاقع */
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1em;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        button:hover {
+            background-color: #ff85c1; /* وردي أفتح عند المرور */
+            transform: translateY(-2px);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        .hidden {
+            display: none;
+        }
+        img {
+            max-width: 150px; /* يمكنك تعديل الحجم حسب رغبتك */
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+        .final-message {
+            font-weight: bold;
+            color: #28a745; /* أخضر للرسالة الإيجابية */
+        }
+        .slightly-guilty-message {
+            font-weight: bold;
+            color: #dc3545; /* أحمر خفيف للإحساس بالذنب */
+        }
+        #passwordInput {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 80%;
+            max-width: 300px;
+            font-size: 1em;
+            box-sizing: border-box;
+            direction: rtl; /* Ensure text input is also RTL */
+        }
+        #passwordError {
+            color: red;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="passwordSection" class="container">
+        <h1>ادخلي كلمة المرور يا حلوة</h1>
+        <input type="password" id="passwordInput" placeholder="كلمة المرور هنا...">
+        <p id="passwordError" class="hidden"></p>
+        <div class="button-container">
+            <button onclick="checkPassword()">دخول</button>
+        </div>
+    </div>
+
+    <div id="mainGameContainer" class="container" style="display: none;">
+        <div id="screen1">
+            <h1>يا أحلى جميلة في الدنيا!</h1>
+            <p>سمعت إنك زعلانة مني 😟<br>تعالي نلعب لعبة صغيرة ونشوف مين الغلطان 😉</p>
+            <div class="button-container">
+                <button onclick="showScreen('screen2')">يلا بينا!</button>
+            </div>
+        </div>
+
+        <div id="screen2" class="hidden">
+            <h2>السؤال الأول: بجد زعلانة؟</h2>
+            <p>هل أنا فعلاً عملت حاجة تزعلك أوي كده؟</p>
+            <div class="button-container">
+                <button onclick="showScreen('screen3_yes_mad')">آه، زعلانة جداً 😠</button>
+                <button onclick="showScreen('screen3_not_so_mad')">مممم... ممكن شوية 🤏</button>
+            </div>
+        </div>
+
+        <div id="screen3_yes_mad" class="hidden">
+            <h2>يا ساتر!</h2>
+            <p>متأكدة 100% إن أنا السبب؟ طيب مش يمكن يكون سوء تفاهم بسيط؟ كلنا ممكن نغلط أو نفهم غلط يا جميله.</p>
+            <p class="slightly-guilty-message">يعني يمكن سوء تفاهم؟ أو أنا مقصدتش؟</p>
+            <div class="button-container">
+                <button onclick="showScreen('screen4_apology')">يمكن... 😒</button>
+                <button onclick="showScreen('screen4_still_my_fault')">لأ، إنتِ غلطانة!</button>
+            </div>
+        </div>
+
+        <div id="screen3_not_so_mad" class="hidden">
+            <h2>الحمد لله!</h2>
+            <p>طالما "شوية" يبقى الموضوع بسيط. <br>أكيد سوء تفاهم بسيط بينا، صح؟</p>
+            <p class="slightly-guilty-message">يعني أنا مش وحش أوي كده؟ 😉</p>
+            <div class="button-container">
+                <button onclick="showScreen('screen4_apology')">صح، سوء تفاهم</button>
+            </div>
+        </div>
+        
+        <div id="screen4_still_my_fault" class="hidden">
+            <h2>طيب خلاص!</h2>
+            <p>انا مش بغلط يبقي انتي اللي غلطانة 😝</p>
+            <div class="button-container">
+                <button onclick="showScreen('screen_final_forgive_me')">خلاص مسامحاك عشان شكلك صعبان عليا 🙄</button>
+            </div>
+        </div>
+
+        <div id="screen4_apology" class="hidden">
+            <h2>أنا آسف بجد!</h2>
+            <p>لو كنت عملت أي حاجة ضايقتك، فحقك عليا..<br>صافي يا لبن؟ 🥛 حليب يا قشطة؟</p>
+            <p>بس برضو... مش يمكن إنتي فهمتيني غلط شوية؟ أو كبرتي الموضوع سيكة؟ 😉</p>
+            <div class="button-container">
+                <button onclick="showScreen('screen_final_ok')">ماشي، صافي يا لبن 😊</button>
+                <button onclick="showScreen('screen_final_still_thinking')">لسه بفكر (بتتقلي يعني؟)</button>
+            </div>
+        </div>
+
+        <div id="screen_final_ok" class="hidden">
+            <h2>أيووووه بقى!</h2>
+            <p class="final-message">شفتي بقى إنك إنتي اللي كنتي مكبرة الموضوع شوية؟ 😉</p>
+            <p>يلا ننسى اللي فات ونرجع زي الأول وأحسن!</p>
+            <div class="button-container">
+                <button onclick="resetGame()">نلعب تاني؟ (لو لسه زعلانة)</button>
+            </div>
+        </div>
+        
+        <div id="screen_final_forgive_me" class="hidden">
+            <h2>قلبي الصغير لا يتحمل!</h2>
+            <p class="final-message">يعني اعترفتي إنك اللي غلطانة 😉<br>عموماً المهم إننا نتصالح.</p>
+            <p>طول عمري صح و انتي غلط 😈</p>
+            <div class="button-container">
+                <button onclick="resetGame()">نلعب تاني؟ (لو لسه في حاجة)</button>
+            </div>
+        </div>
+
+        <div id="screen_final_still_thinking" class="hidden">
+            <h2>بتتقلي عليا يا جميل؟</h2>
+            <p>ماشي يا ستي، فكري براحتك. بس وأنا بفكر معاكي كده... مش يمكن برضه إنتي اللي مكبرة الموضوع شوية؟ 🤔
+            <p class="slightly-guilty-message">خدي وقتك، بس متطوليش! وفي الآخر هتلاقي إن سوء تفاهم بسيط وإنتي اللي كنتي غلطانة بس أنا هسامحك! 😉</p>
+            <div class="button-container">
+                <button onclick="showScreen('screen_final_ok')">خلاص خلاص، اقتنعت! اتصالحنا</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const passwordSection = document.getElementById('passwordSection');
+        const mainGameContainer = document.getElementById('mainGameContainer');
+        const allGameScreens = document.querySelectorAll('#mainGameContainer > div');
+        const passwordInput = document.getElementById('passwordInput');
+        const passwordError = document.getElementById('passwordError');
+
+        // Allow submitting password with Enter key
+        passwordInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevent default form submission if it were in a form
+                checkPassword();
+            }
+        });
+
+        function checkPassword() {
+            const correctPassword = "جميله غلطانة"; // The password
+
+            if (passwordInput.value === correctPassword) {
+                passwordSection.style.display = 'none';
+                mainGameContainer.style.display = 'block'; // Show the main game container
+                showScreen('screen1'); // Show the first game screen
+                passwordError.classList.add('hidden');
+                passwordInput.value = ''; // Clear password field
+            } else {
+                passwordError.textContent = 'كلمة المرور غلط يا قمر! حاولي تاني يمكن تفتكري مين اللي غلطان 😉';
+                passwordError.classList.remove('hidden');
+                passwordInput.value = ''; // Clear password field
+                passwordInput.focus();
+            }
+        }
+
+        function showScreen(screenId) {
+            allGameScreens.forEach(screen => {
+                screen.classList.add('hidden');
+            });
+            const targetScreen = document.getElementById(screenId);
+            if (targetScreen) {
+                targetScreen.classList.remove('hidden');
+            }
+            window.scrollTo(0, 0); // للرجوع لأعلى الصفحة عند تغيير الشاشة
+        }
+
+        function resetGame() {
+            showScreen('screen1');
+        }
+
+        // Ensure the main game container starts hidden (already done with inline style, but good practice)
+        if (mainGameContainer) {
+            mainGameContainer.style.display = 'none';
+        }
+        // Ensure password section is visible initially (already default, but explicit)
+        if (passwordSection) {
+           passwordSection.style.display = 'block'; // Or 'flex' if it needs flex properties, but body handles centering
+        }
+         // Focus on password input on page load
+        passwordInput.focus();
+
+    </script>
+</body>
+</html>
