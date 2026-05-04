@@ -455,8 +455,6 @@
             .custom-credit-container, .custom-credit { display: none !important; }
              #welcomeScreen { display: none !important; }
         }
-
-
     </style>
 
 </head>
@@ -478,7 +476,6 @@
             </div>
             <p><strong>مدة الاختبار: <span id="examDurationDisplay"></span>.</strong> <span id="durationNotice">(تعتمد على عدد الأسئلة)</span></p>
 
-
             <div id="resumePrompt" style="display:none; margin-bottom:15px; padding:12px; background-color:rgba(255,215,0,0.05); border: 1px solid var(--warning-color); border-radius:10px;">
                 <p style="color: var(--warning-color); margin-bottom:8px; font-weight:bold;">لديك جلسة اختبار محفوظة. هل ترغب في استئنافها؟</p>
                 <button id="resumeButton" class="button" aria-label="استئناف الجلسة المحفوظة"><i class="fas fa-play-circle"></i> استئناف</button>
@@ -492,13 +489,7 @@
             <div class="custom-credit-container">
                 <p class="custom-credit"><b>تم انشائه بواسطة :
                     </b><br>
-                    ليدر / بولا نعيم</p>
-                <p class="custom-credit"><b>تحت اشراف :
-                </b><br>
-                    ليدر / ابانوب جورج
-                    <br>
-                    ليدر / اسماء خالد
-                </p>
+                    بولا نعيم</p>
             </div>
         </div>
 
@@ -612,10 +603,10 @@
             </div>
         </div>
 
-
         <script>
             "use strict";
-            const DYNAMIC_EXAM_DURATION_MINUTES = 60;
+            // تم تغييرها من const إلى let لكي يمكن تحديث قيمتها لاحقاً داخل البرنامج
+            let DYNAMIC_EXAM_DURATION_MINUTES = 60;
             const BASE_TIME_PER_QUESTION_SECONDS = 60;
             const EXAM_STORAGE_KEY = 'powerpoint_exam_5_5_2026';
             const LAST_EXAM_RESULTS_KEY = 'powerpoint_exam_results_5_5_2026';
@@ -1187,7 +1178,6 @@
                     `;
                 }
 
-
                 if (isUntimedExam) {
                      if(timeTakenTextEl) timeTakenTextEl.textContent = "الوقت المستغرق: غير محدد (اختبار بدون مؤقت)";
                 } else {
@@ -1680,6 +1670,11 @@
                 }
                 return array;
             }
+
+            // منع عمل تحديث للصفحة عند ضغط زر Enter على الخيارات
+            optionsForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+            });
 
             // --- EVENT LISTENERS ---
             nextButton.addEventListener('click', handleNextQuestion);
