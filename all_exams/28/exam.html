@@ -638,13 +638,7 @@
         }
 
     </style>
-    <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "rs9464bxnv");
-</script>
+    
 </head>
 <body>
     <div class="container">
@@ -1201,7 +1195,7 @@ sؤال 118: شاشة التعريف في الحقيبة التعليمية هي
                 let correctAnswer;
 
                 const arabicOptionLetters = ['أ', 'ب', 'ج', 'د', 'هـ']; 
-                const optionPattern = new RegExp(`^(${arabicOptionLetters.join('|')})\\.\\s*(.*?)(?=\\n(${arabicOptionLetters.join('|')})\\.\\s|\\n*$|\\r\\n(${arabicOptionLetters.join('|')})\\.\\s|\\r\\n*$)`, 'gm');
+                const optionPattern = new RegExp(`^(${arabicOptionLetters.join('|')})\\.\\s*(.*?)(?=\n(${arabicOptionLetters.join('|')})\\.\\s|\n*$|\\r\n(${arabicOptionLetters.join('|')})\\.\\s|\\r\n*$)`, 'gm');
 
                 let optionMatches = [];
                 // Clean rawQuestionAndOptions from markdown before matching options and extracting questionText

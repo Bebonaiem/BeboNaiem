@@ -1,0 +1,1721 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>امتحان البوربوينت</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <link rel="icon" href="logo.png" type="image/x-icon">
+    <style>
+        :root {
+            --bg-deep-dark: #0D0D0D;
+            --bg-dark-contrast: #1A1A1A;
+            --primary-accent: #00E5FF;
+            --primary-accent-glow: rgba(0, 229, 255, 0.5);
+            --secondary-accent: #FF00E5;
+            --secondary-accent-glow: rgba(255, 0, 229, 0.4);
+            --text-light: #EAEAEA;
+            --text-muted: #A0A0A0;
+            --border-color: #333333;
+            --correct-color: #00FF7F;
+            --incorrect-color: #FF4747;
+            --warning-color: #FFD700;
+            --flagged-color: var(--warning-color);
+            --timer-untimed-bg: rgba(0, 229, 255, 0.08);
+            --current-font-size-multiplier: 1;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--bg-deep-dark);
+            color: var(--text-light);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            line-height: 1.9;
+        }
+
+        .container {
+            background-color: var(--bg-dark-contrast);
+            padding: 35px 40px;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0, 229, 255, 0.1), 0 0 0 2px var(--border-color);
+            width: 90%;
+            max-width: 950px;
+            text-align: center;
+            border-top: 7px solid var(--primary-accent);
+            position: relative;
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-accent);
+            margin-bottom: 25px;
+            text-shadow: 0 0 10px var(--primary-accent-glow);
+        }
+        h1 { font-size: 2.3em; font-weight: 700; }
+        h2 { font-size: 1.9em; font-weight: 500; }
+        h3 { font-size: 1.6em; color: var(--secondary-accent); text-shadow: 0 0 8px var(--secondary-accent-glow); margin-top: 35px;}
+
+        p { margin-bottom: 20px; font-size: calc(1.15em * var(--current-font-size-multiplier)); color: var(--text-muted); }
+        .container > p { color: var(--text-light); }
+
+        .button {
+            background: linear-gradient(135deg, var(--primary-accent) 0%, var(--secondary-accent) 100%);
+            color: var(--bg-deep-dark);
+            font-weight: 700; border: none; padding: 15px 35px;
+            text-align: center; text-decoration: none; display: inline-flex; align-items: center; justify-content: center;
+            font-size: 1.1em; border-radius: 12px; cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(0, 229, 255, 0.2), 0 0 15px var(--secondary-accent-glow);
+            margin-top: 25px; margin-right: 12px;
+        }
+        .button:hover {
+            box-shadow: 0 10px 25px rgba(0, 229, 255, 0.3), 0 0 25px var(--secondary-accent-glow);
+            transform: translateY(-4px) scale(1.02);
+        }
+        .button:active {
+            transform: translateY(0px) scale(0.98);
+            box-shadow: 0 4px 15px rgba(0, 229, 255, 0.15);
+        }
+        .button:disabled {
+            background: var(--border-color); cursor: not-allowed;
+            box-shadow: none; transform: none; color: #777;
+        }
+        .button i { margin-right: 12px; font-size: 1.1em; }
+        html[dir="rtl"] .button i { margin-right: 0; margin-left: 12px; }
+
+
+        .button-secondary {
+            background: var(--border-color); color: var(--text-light);
+            box-shadow: 0 6px 20px rgba(51,51,51, 0.4);
+        }
+        .button-secondary:hover {
+            background: #444;
+             box-shadow: 0 8px 25px rgba(51,51,51, 0.5);
+        }
+        .button-danger {
+            background: var(--incorrect-color); color: white;
+            box-shadow: 0 6px 20px rgba(255, 71, 71, 0.25);
+        }
+        .button-danger:hover {
+            background: #E03030;
+            box-shadow: 0 8px 25px rgba(255, 71, 71, 0.35);
+        }
+
+        #examScreen, #resultsScreen { display: none; }
+
+        .question-container { margin-bottom: 35px; text-align: right; }
+
+        .exam-header-controls {
+            display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
+            margin-bottom: 25px; border-bottom: 2px solid var(--border-color); padding-bottom: 20px;
+            gap: 10px;
+        }
+        .exam-header-controls > * { margin-bottom: 5px; }
+
+        #timer {
+            font-size: 1.4em; font-weight: 700; color: var(--warning-color);
+            background-color: rgba(255, 215, 0, 0.05);
+            padding: 10px 18px; border-radius: 10px;
+            text-shadow: 0 0 8px rgba(255,215,0,0.5);
+        }
+        #timer.untimed {
+            color: var(--primary-accent);
+            background-color: var(--timer-untimed-bg);
+            text-shadow: 0 0 8px var(--primary-accent-glow);
+            border: 1px solid var(--primary-accent);
+        }
+
+
+        .progress-bar-container {
+            width: 100%; background-color: var(--border-color);
+            border-radius: 10px; margin-bottom: 30px; overflow: hidden; height: 22px;
+        }
+        .progress-bar {
+            width: 0%; height: 100%;
+            background: linear-gradient(90deg, var(--primary-accent) 0%, var(--secondary-accent) 100%);
+            transition: width 0.5s ease-in-out; border-radius: 10px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+        }
+
+        .question-top-bar {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 15px; flex-wrap: wrap;
+        }
+         .question-top-bar > * { margin-bottom: 5px; }
+
+        #flagQuestionButton, #reviewFlaggedButton, #openQuestionNavButton, #pauseExamButton {
+            background: none; border: 2px solid var(--text-muted); color: var(--text-muted);
+            padding: 8px 15px; border-radius: 8px; cursor: pointer; font-size: 0.95em;
+            transition: all 0.3s ease; display: inline-flex; align-items: center;
+        }
+        #flagQuestionButton:hover, #reviewFlaggedButton:hover, #openQuestionNavButton:hover, #pauseExamButton:hover {
+            border-color: var(--warning-color); color: var(--warning-color);
+            box-shadow: 0 0 10px rgba(255,215,0,0.3);
+        }
+        #flagQuestionButton.flagged {
+            background-color: var(--warning-color); color: var(--bg-deep-dark); border-color: var(--warning-color);
+            font-weight: bold; box-shadow: 0 0 10px rgba(255,215,0,0.5);
+        }
+        #flagQuestionButton i, #reviewFlaggedButton i, #openQuestionNavButton i, #pauseExamButton i { margin-right: 0; margin-left: 8px; }
+
+
+        #reviewFlaggedButton { border-color: var(--secondary-accent); color: var(--secondary-accent); }
+        #reviewFlaggedButton:hover { box-shadow: 0 0 10px var(--secondary-accent-glow); }
+        #openQuestionNavButton { border-color: var(--primary-accent); color: var(--primary-accent); }
+        #openQuestionNavButton:hover { box-shadow: 0 0 10px var(--primary-accent-glow); }
+        #pauseExamButton.paused { border-color: var(--correct-color); color: var(--correct-color); }
+
+
+        .question-text { font-size: calc(1.5em * var(--current-font-size-multiplier)); font-weight: 500; margin-bottom: 30px; color: var(--text-light); }
+
+        .options-container label {
+            display: block; background-color: rgba(255,255,255,0.02);
+            padding: calc(16px * var(--current-font-size-multiplier)) calc(22px * var(--current-font-size-multiplier));
+            margin-bottom: calc(15px * var(--current-font-size-multiplier));
+            border-radius: 12px;
+            cursor: pointer; transition: all 0.2s ease-out;
+            border: 2px solid var(--border-color); text-align: right;
+            position: relative; overflow: hidden;
+            font-size: calc(1em * var(--current-font-size-multiplier));
+        }
+        .options-container label::before {
+            content: ''; position: absolute; top:0; left:0; width:100%; height:100%;
+            background: radial-gradient(circle, var(--primary-accent-glow) 0%, transparent 70%);
+            opacity: 0; transition: opacity 0.3s; z-index: 0;
+        }
+        .options-container label:hover::before, .options-container label.selected-option::before { opacity: 0.3; }
+        .options-container label:hover { border-color: var(--primary-accent); }
+        .options-container input[type="radio"] {
+            margin-left: calc(18px * var(--current-font-size-multiplier));
+            transform: scale(calc(1.5 * var(--current-font-size-multiplier)));
+            accent-color: var(--primary-accent); vertical-align: middle;
+            position: relative; z-index: 1;
+        }
+        .options-container input[type="radio"] + span { position: relative; z-index: 1; }
+        .options-container input[type="radio"]:checked + span {
+            color: var(--primary-accent); font-weight: 700;
+            text-shadow: 0 0 5px var(--primary-accent-glow);
+        }
+        .options-container label.selected-option {
+            border-color: var(--primary-accent);
+            box-shadow: 0 0 15px var(--primary-accent-glow);
+        }
+        
+        .font-size-controls-group {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: rgba(255,255,255,0.01);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            text-align: right;
+        }
+        .font-size-controls-group h4 {
+            font-size: 1.1em;
+            color: var(--text-light); 
+            margin-top: 0;
+            margin-bottom: 12px;
+            text-shadow: none; 
+        }
+        .font-size-controls-group h4 i {
+            margin-left: 8px;
+            color: var(--secondary-accent);
+        }
+        .font-size-controls { 
+            margin-bottom: 0; 
+            text-align: right;
+        }
+        .font-size-controls button {
+            background: var(--border-color); color: var(--text-light);
+            border: none; padding: 6px 12px; margin-right: 8px; border-radius: 6px; cursor: pointer;
+            font-size: 0.9em;
+        }
+        .font-size-controls button:hover { background: #444; }
+        .font-size-controls button i { margin-left: 5px; }
+
+
+        #progressText { margin-top: 30px; font-size: 1.05em; color: var(--text-muted); }
+        
+        .results-summary p { font-size: 1.35em; font-weight: 500; margin-bottom: 12px; }
+        .results-summary #scoreText { 
+            color: var(--primary-accent); 
+            font-size: 1.7em; 
+            font-weight: 700; 
+            text-shadow: 0 0 10px var(--primary-accent-glow); 
+            line-height: 1.6; 
+        }
+        .results-summary #scoreText .score-details { 
+            display: block; 
+            font-size: 0.6em; 
+            color: var(--text-muted); 
+            font-weight: 400; 
+            text-shadow: none; 
+            margin-top: 8px;
+        }
+
+        .review-area { margin-top: 40px; text-align: right; }
+        .review-filter { margin-bottom: 20px; display: flex; flex-wrap: wrap; gap: 15px; align-items: center; }
+        .review-filter label { margin-right: 0; margin-left:5px; color: var(--text-muted); }
+        .review-filter select {
+            background-color: var(--border-color); color: var(--text-light);
+            padding: 8px 12px; border-radius: 8px; border: 1px solid #555;
+            font-family: 'Tajawal', sans-serif; font-size: 1em;
+        }
+
+        .review-item {
+            background-color: var(--bg-deep-dark); padding: 22px; margin-bottom: 18px;
+            border-radius: 15px; border-right: 7px solid var(--correct-color);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .review-item:hover { transform: translateY(-4px); box-shadow: 0 8px 25px rgba(0,0,0,0.25); }
+        .review-item.incorrect { border-right-color: var(--incorrect-color); }
+        .review-item.unanswered { border-right-color: var(--text-muted); }
+        .review-item.flagged-review { border-left: 7px solid var(--flagged-color); }
+
+        .review-item p { margin: 10px 0; font-size: 1.05em; color: var(--text-muted); }
+        .review-item p strong { color: var(--text-light); }
+        .review-item .user-answer-text.correct-text { color: var(--correct-color); text-shadow: 0 0 3px rgba(0, 255, 127, 0.5); }
+        .review-item .user-answer-text.incorrect-text { color: var(--incorrect-color); text-shadow: 0 0 3px rgba(255, 71, 71, 0.5); }
+        .review-item .correct-answer-text { color: var(--correct-color); text-shadow: 0 0 3px rgba(0, 255, 127, 0.5); }
+        .review-item .explanation-text { font-size: 0.95em; color: var(--text-muted); margin-top:10px; padding-top:10px; border-top: 1px dashed var(--border-color); }
+        .review-item .explanation-text strong { color: var(--primary-accent); }
+        .review-item .answer-icon { margin-right: 0; margin-left: 10px; font-size: 1.3em; }
+        .review-item .flagged-indicator { color: var(--flagged-color); margin-left: 12px; font-size: 0.95em; text-shadow: 0 0 5px var(--flagged-color);}
+
+
+        #timeTakenText { font-size: 1.15em; color: var(--text-muted); margin-top: 18px; }
+
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.85); display: none;
+            align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            background-color: var(--bg-dark-contrast); color: var(--text-light);
+            padding: 35px 45px; border-radius: 18px;
+            box-shadow: 0 0 40px rgba(0, 229, 255, 0.2);
+            width: 90%; max-width: 550px; text-align: center;
+            border-top: 6px solid var(--primary-accent);
+            position: relative; animation: modalOpen 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes modalOpen {
+            from { opacity: 0; transform: scale(0.8) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .modal-close-button {
+            position: absolute; top: 18px; left: 22px;
+            font-size: 2em; color: var(--text-muted); cursor: pointer;
+            transition: color 0.2s, transform 0.2s;
+        }
+        .modal-close-button:hover { color: var(--primary-accent); transform: rotate(90deg); }
+        .modal-content h3 { margin-top: 0; color: var(--primary-accent); text-shadow: 0 0 10px var(--primary-accent-glow); }
+        .modal-content p { color: var(--text-light); font-size: 1.15em; }
+        .modal-actions { margin-top: 30px; }
+        .modal-actions .button { margin: 0 10px; }
+
+        .config-options { margin-bottom: 20px; }
+        .config-options label { margin-right: 0; margin-left: 15px; color: var(--text-muted); font-size: 1em; }
+        .config-options select {
+            background-color: var(--border-color); color: var(--text-light);
+            padding: 10px 15px; border-radius: 8px; border: 1px solid #555;
+            font-family: 'Tajawal', sans-serif; font-size: 1em;
+            min-width: 150px;
+        }
+
+        @keyframes blinkWarningNeon {
+            0%, 100% { opacity: 1; text-shadow: 0 0 8px var(--warning-color); }
+            50% { opacity: 0.7; text-shadow: 0 0 15px var(--warning-color), 0 0 25px var(--warning-color); }
+        }
+        .timer-warning { animation: blinkWarningNeon 1s linear infinite; }
+
+        #flaggedQuestionsList .flagged-q-item, #questionNavList .q-nav-item {
+            padding: 10px; margin-bottom: 8px;
+            border-radius: 8px; background-color: var(--bg-deep-dark);
+            border-right: 4px solid var(--warning-color);
+            cursor: pointer; transition: background-color 0.2s, transform 0.2s;
+        }
+        #flaggedQuestionsList .flagged-q-item:hover, #questionNavList .q-nav-item:hover {
+            background-color: #2a2a2a;
+            transform: translateX(5px) scale(1.02);
+        }
+        #flaggedQuestionsList .flagged-q-item strong, #questionNavList .q-nav-item strong { color: var(--primary-accent); }
+        #flaggedQuestionsList .flagged-q-item em, #questionNavList .q-nav-item em { color: var(--text-muted); font-size: 0.9em; }
+
+        #questionNavList .q-nav-item {
+            border: 2px solid var(--border-color);
+            display: inline-flex; align-items: center; justify-content: center;
+            min-width: 45px; height: 45px; margin: 5px;
+            font-weight: 500;
+        }
+        #questionNavList .q-nav-item.answered {
+            background-color: rgba(0, 255, 127, 0.1);
+            border-color: rgba(0, 255, 127, 0.3);
+        }
+        #questionNavList .q-nav-item.flagged {
+            box-shadow: 0 0 0 2px var(--flagged-color) inset;
+        }
+        #questionNavList .q-nav-item.current {
+            border-color: var(--primary-accent);
+            color: var(--primary-accent);
+            font-weight: 700;
+            transform: scale(1.1);
+        }
+
+        #pauseOverlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(13, 13, 13, 0.97);
+            display: none;
+            flex-direction: column; align-items: center; justify-content: center;
+            z-index: 10; border-radius: 20px;
+            text-align: center;
+        }
+        #pauseOverlay h3 { color: var(--primary-accent); font-size: 2.2em; margin-bottom: 15px; }
+        #pauseOverlay p { color: var(--text-light); font-size: 1.2em; margin-bottom: 30px; }
+
+        .printable-area {
+        }
+        
+        .custom-credit-container {
+            margin-top: 40px;
+            padding-top: 25px;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.9em;
+        }
+        .custom-credit-container p {
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+        .custom-credit-container p b {
+            color: var(--text-light);
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-deep-dark);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 10px;
+            border: 2px solid var(--bg-deep-dark);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-accent);
+        }
+
+        * {
+          scrollbar-width: thin;
+          scrollbar-color: var(--border-color) var(--bg-deep-dark);
+        }
+
+
+        @media print {
+            body { background-color: white !important; color: black !important; }
+            body * { visibility: hidden; }
+            .printable-area, .printable-area * { visibility: visible; color: black !important; background-color: white !important; text-shadow: none !important; }
+            .printable-area { position: absolute; left: 0; top: 0; width: 100%; padding: 20px; font-size: 12pt; }
+
+            .container { box-shadow: none !important; border: none !important; border-top: none !important; padding: 0 !important; }
+            .button, .exam-header-controls, .progress-bar-container, #reviewFilterContainer, .review-filter, .modal-overlay, footer, #lastExamButton, #clearStorageButton, .config-options, #restartButton, #printResultsButton, #retryIncorrectButton, #startNoTimerButton, #startRandomButton {
+                display: none !important;
+            }
+
+            h1, h2, h3, h4, h5, h6 { color: black !important; text-shadow: none !important; margin-top: 10px; margin-bottom: 5px; }
+            p { color: black !important; margin-bottom: 8px; font-size: 11pt !important; line-height: 1.5 !important; }
+            strong { color: black !important; }
+
+            .results-summary #scoreText { color: black !important; font-size: 1.5em !important; }
+            .results-summary #scoreText .score-details { font-size: 0.7em !important; color: #333 !important; }
+            #feedbackText { color: black !important; font-style: italic; }
+            
+            .review-item {
+                page-break-inside: avoid;
+                border: 1px solid #ccc !important;
+                margin-bottom: 15px !important; padding: 10px !important;
+                border-right: 5px solid #ccc !important;
+            }
+            .review-item.incorrect { border-right-color: #555 !important; }
+            .review-item.flagged-review { border-left: 5px solid #999 !important; }
+            .review-item .user-answer-text.correct-text, .review-item .correct-answer-text  { color: #006400 !important; }
+            .review-item .user-answer-text.incorrect-text { color: #8B0000 !important; }
+            .review-item .explanation-text { border-top: 1px dashed #aaa !important; }
+            .review-item .answer-icon { display: none; }
+            .review-item .flagged-indicator { font-style: italic; }
+
+            #timeTakenText { font-size: 1em !important; }
+            .custom-credit-container, .custom-credit { display: none !important; }
+             #welcomeScreen { display: none !important; }
+        }
+
+
+    </style>
+
+</head>
+<body>
+
+        <div id="welcomeScreen" class="container">
+            <h1><i class="fas fa-file-powerpoint"></i> امتحان البوربوينت</h1>
+            <p>مرحباً بك! استعد لاختبار معلوماتك في برنامج Microsoft PowerPoint.</p>
+            <p>الاختبار يحتوي على 60 سؤالاً (30 صح/خطأ + 30 اختيار من متعدد).</p>
+            <p>نتمنى لك كل التوفيق!</p>
+            <div class="config-options">
+                <label for="numQuestionsSelect">عدد الأسئلة:</label>
+                <select id="numQuestionsSelect" aria-label="اختر عدد الأسئلة">
+                    <option value="10">10 أسئلة (ممارسة سريعة)</option>
+                    <option value="20">20 سؤالاً</option>
+                    <option value="30">30 سؤالاً</option>
+                    <option value="60" selected>كل الأسئلة (60 سؤال - اختبار كامل)</option>
+                </select>
+            </div>
+            <p><strong>مدة الاختبار: <span id="examDurationDisplay"></span>.</strong> <span id="durationNotice">(تعتمد على عدد الأسئلة)</span></p>
+
+
+            <div id="resumePrompt" style="display:none; margin-bottom:15px; padding:12px; background-color:rgba(255,215,0,0.05); border: 1px solid var(--warning-color); border-radius:10px;">
+                <p style="color: var(--warning-color); margin-bottom:8px; font-weight:bold;">لديك جلسة اختبار محفوظة. هل ترغب في استئنافها؟</p>
+                <button id="resumeButton" class="button" aria-label="استئناف الجلسة المحفوظة"><i class="fas fa-play-circle"></i> استئناف</button>
+            <button id="discardButton" class="button button-secondary" aria-label="تجاهل الجلسة المحفوظة والبدء من جديد"><i class="fas fa-times-circle"></i> تجاهل والبدء من جديد</button>
+            </div>
+            <button id="startButton" class="button" aria-label="ابدأ اختبار جديد"><i class="fas fa-bolt"></i> ابدأ اختبار جديد</button>
+            <button id="startNoTimerButton" class="button button-secondary" aria-label="ابدأ اختبار جديد بدون مؤقت"><i class="fas fa-infinity"></i> ابدأ بدون مؤقت</button>
+            <button id="startRandomButton" class="button button-secondary" aria-label="ابدأ اختبار جديد بعدد أسئلة عشوائي"><i class="fas fa-dice"></i> أسئلة عشوائية</button>
+            <button id="lastExamButton" class="button button-secondary" style="display:none;" aria-label="عرض نتائج آخر اختبار"><i class="fas fa-eye"></i> عرض آخر اختبار</button>
+            <button id="clearStorageButton" class="button button-danger" style="display:none;" aria-label="مسح الجلسة المحفوظة"><i class="fas fa-trash-alt"></i> مسح الجلسة المحفوظة</button>
+            <div class="custom-credit-container">
+                <p class="custom-credit"><b>تم انشائه بواسطة :
+                    </b><br>
+                    ليدر / بولا نعيم</p>
+                <p class="custom-credit"><b>تحت اشراف :
+                </b><br>
+                    ليدر / ابانوب جورج
+                    <br>
+                    ليدر / اسماء خالد
+                </p>
+            </div>
+        </div>
+
+        <div id="examScreen" class="container">
+            <div class="exam-header-controls">
+                <button id="pauseExamButton" aria-label="إيقاف مؤقت للاختبار"><i class="fas fa-pause-circle"></i> إيقاف مؤقت</button>
+                <button id="openQuestionNavButton" aria-label="تصفح الأسئلة"><i class="fas fa-list-ol"></i> تصفح الأسئلة</button>
+                <div id="timer" aria-live="polite">00:00</div>
+                <button id="reviewFlaggedButton" aria-label="مراجعة الأسئلة المعلمة" style="display:none;"><i class="fas fa-stream"></i> مراجعة المعلمة (<span id="flaggedCount">0</span>)</button>
+                <h2 id="questionNumberTitle">السؤال 1</h2>
+            </div>
+
+            <div class="progress-bar-container">
+                <div id="progressBar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+
+            <div id="pauseOverlay">
+                <h3><i class="fas fa-pause-circle"></i> الاختبار متوقف مؤقتًا</h3>
+                <p>اضغط على زر الاستئناف للمتابعة.</p>
+                <button id="resumeFromOverlayButton" class="button"><i class="fas fa-play-circle"></i> استئناف الاختبار</button>
+            </div>
+
+            <div id="questionArea" class="question-container">
+                <div class="question-top-bar">
+                    <button id="flagQuestionButton" aria-label="تعليم السؤال للمراجعة" aria-pressed="false">
+                        <i class="far fa-flag"></i> <span>علم السؤال</span>
+                    </button>
+                </div>
+                <div class="font-size-controls-group">
+                    <h4><i id="fontSizeIconTrigger" class="fas fa-text-height"></i> حجم الخط:</h4>
+                    <div class="font-size-controls">
+                        <button id="decreaseFontButton" aria-label="تصغير حجم الخط"><i class="fas fa-search-minus"></i> تصغير الخط</button>
+                        <button id="increaseFontButton" aria-label="تكبير حجم الخط"><i class="fas fa-search-plus"></i> تكبير الخط</button>
+                    </div>
+                </div>
+                <p id="questionText" class="question-text"></p>
+                <form id="optionsForm" role="radiogroup" aria-labelledby="questionText">
+                     <div id="optionsContainer" class="options-container"></div>
+                </form>
+            </div>
+            <button id="prevButton" class="button button-secondary" style="margin-left: 12px;" aria-label="السؤال السابق"><i class="fas fa-chevron-circle-right"></i> السؤال السابق</button>
+            <button id="nextButton" class="button" aria-label="السؤال التالي"><i class="fas fa-chevron-circle-left"></i> السؤال التالي</button>
+            <p id="progressText"></p>
+        </div>
+
+        <div id="resultsScreen" class="container">
+            <div class="printable-area"> 
+                <h2><i class="fas fa-award"></i> نتائج الاختبار النهائية</h2>
+                <div class="results-summary">
+                    <p id="scoreText"></p>
+                    <p id="feedbackText"></p>
+                    <p id="timeTakenText"></p>
+                </div>
+
+                <div class="review-area">
+                    <h3><i class="fas fa-tasks-alt"></i> مراجعة تفصيلية للإجابات:</h3>
+                     <div id="reviewFilterContainer" class="review-filter">
+                        <div>
+                            <label for="statusFilter">تصفية حسب الحالة:</label>
+                            <select id="statusFilter" aria-label="اختر حالة لتصفية مراجعة الأسئلة">
+                                <option value="all">الكل</option>
+                                <option value="correct">صحيحة</option>
+                                <option value="incorrect">خاطئة</option>
+                                <option value="unanswered">لم تتم الإجابة</option>
+                                <option value="flagged">معلمة</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="reviewContainer"></div>
+                </div>
+            </div> 
+            <button id="restartButton" class="button" aria-label="إعادة الاختبار"><i class="fas fa-history"></i> إعادة الاختبار</button>
+            <button id="retryIncorrectButton" class="button button-secondary" style="display:none;" aria-label="إعادة الأسئلة الخاطئة"><i class="fas fa-redo"></i> إعادة الأسئلة الخاطئة</button>
+            <button id="printResultsButton" class="button button-secondary" aria-label="طباعة النتائج"><i class="fas fa-print"></i> طباعة النتائج</button>
+        </div>
+
+        <div id="customModalOverlay" class="modal-overlay">
+            <div id="customModal" class="modal-content" role="dialog" aria-labelledby="modalTitle" aria-describedby="modalMessage">
+                <span id="modalCloseButton" class="modal-close-button" role="button" tabindex="0" aria-label="إغلاق النافذة">×</span>
+                <h3 id="modalTitle">عنوان النافذة</h3>
+                <p id="modalMessage">رسالة النافذة هنا.</p>
+                <div id="modalActions" class="modal-actions">
+                    <button id="modalConfirmButton" class="button">موافق</button>
+                    <button id="modalCancelButton" class="button button-secondary">إلغاء</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="flaggedReviewModalOverlay" class="modal-overlay">
+            <div id="flaggedReviewModal" class="modal-content" style="max-width: 700px;" role="dialog" aria-labelledby="flaggedReviewTitle">
+                <span id="flaggedReviewModalCloseButton" class="modal-close-button" role="button" tabindex="0" aria-label="إغلاق نافذة الأسئلة المعلمة">×</span>
+                <h3 id="flaggedReviewTitle"><i class="fas fa-flag"></i> الأسئلة المعلمة للمراجعة</h3>
+                <div id="flaggedQuestionsList" style="max-height: 400px; overflow-y: auto; text-align: right; padding: 10px;">
+                </div>
+                <div class="modal-actions">
+                     <button class="button button-secondary" id="closeFlaggedReviewModalBtn">إغلاق</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="questionNavModalOverlay" class="modal-overlay">
+            <div id="questionNavModal" class="modal-content" style="max-width: 800px;" role="dialog" aria-labelledby="questionNavTitle">
+                <span id="questionNavModalCloseButton" class="modal-close-button" role="button" tabindex="0" aria-label="إغلاق نافذة تصفح الأسئلة">×</span>
+                <h3 id="questionNavTitle"><i class="fas fa-list-ol"></i> تصفح أسئلة الاختبار</h3>
+                <p>انقر على رقم السؤال للانتقال إليه مباشرة.</p>
+                <div id="questionNavList" style="max-height: 450px; overflow-y: auto; text-align: center; padding: 10px; display: flex; flex-wrap: wrap; justify-content: center; gap: 5px;">
+                </div>
+                <div class="modal-actions">
+                     <button class="button button-secondary" id="closeQuestionNavModalBtn">إغلاق</button>
+                </div>
+            </div>
+        </div>
+
+
+        <script>
+            "use strict";
+            const DYNAMIC_EXAM_DURATION_MINUTES = 60;
+            const BASE_TIME_PER_QUESTION_SECONDS = 60;
+            const EXAM_STORAGE_KEY = 'powerpoint_exam_5_5_2026';
+            const LAST_EXAM_RESULTS_KEY = 'powerpoint_exam_results_5_5_2026';
+            const ATTEMPT_COUNTER_KEY = 'powerpoint_exam_attempt_5_5_2026';
+            const MIN_FONT_MULTIPLIER = 0.8;
+            const MAX_FONT_MULTIPLIER = 1.5;
+            const FONT_STEP = 0.1;
+
+            // QUESTIONS DATA - PowerPoint Exam
+            const questions = [
+                // ===== TRUE/FALSE QUESTIONS (30 questions) =====
+                { id: 1, type: 'tf', text: 'الوضع الافتراضي لبرنامج الباوربوينت عند فتحه هو قائمة Insert.', correctAnswer: 'خطأ', category: 'واجهة البرنامج', explanation: 'الوضع الافتراضي هو قائمة Home وليس Insert.' },
+                { id: 2, type: 'tf', text: 'شريط العنوان يحتوي على اسم البرنامج وأزرار الإغلاق والتصغير والتكبير.', correctAnswer: 'صح', category: 'واجهة البرنامج', explanation: '' },
+                { id: 3, type: 'tf', text: 'أمر Close في قائمة File يُستخدم لإغلاق البرنامج نهائياً والخروج منه.', correctAnswer: 'خطأ', category: 'الملفات', explanation: 'أمر Close يغلق الملف الحالي فقط، أما Exit فيغلق البرنامج.' },
+                { id: 4, type: 'tf', text: 'يمكن حفظ ملف بنفس الاسم وفي نفس المكان دون حدوث أي مشاكل.', correctAnswer: 'خطأ', category: 'الملفات', explanation: 'لا يمكن حفظ ملفين بنفس الاسم في نفس المكان.' },
+                { id: 5, type: 'tf', text: 'يُفضل دائماً حفظ المشروع على بارتشن الـ C أو الديسك توب لسهولة الوصول إليه.', correctAnswer: 'خطأ', category: 'الملفات', explanation: 'يحذر من حفظ الملفات على بارتشن C لأنها قد تُحذف عند سقوط Windows.' },
+                { id: 6, type: 'tf', text: 'الامتداد الخاص بملفات الباوربوينت هو (.pptx) أو (.ppt).', correctAnswer: 'صح', category: 'الملفات', explanation: '' },
+                { id: 7, type: 'tf', text: 'أمر Print في قائمة File يحتوي على إعدادات لطباعة وتحويل الملف إلى صيغة PDF.', correctAnswer: 'صح', category: 'الملفات', explanation: '' },
+                { id: 8, type: 'tf', text: 'الشريحة الفاضية تماماً تُسمى "Blank".', correctAnswer: 'صح', category: 'الشرائح', explanation: '' },
+                { id: 9, type: 'tf', text: 'لا يمكن تقسيم العرض التقديمي إلى أقسام (Sections)، بل يجب أن يكون كتلة واحدة.', correctAnswer: 'خطأ', category: 'الشرائح', explanation: 'يمكن تقسيم العرض إلى أقسام (Sections) لتنظيم الشرائح.' },
+                { id: 10, type: 'tf', text: 'Duplicate Slide تُستخدم لإضافة شريحة فارغة جديدة.', correctAnswer: 'خطأ', category: 'الشرائح', explanation: 'Duplicate Slide تنسخ الشريحة الحالية وليس لإضافة شريحة فارغة.' },
+                { id: 11, type: 'tf', text: 'لتنسيق أي نص وتغيير لونه أو حجمه، يجب تحديده (تظليله) أولاً.', correctAnswer: 'صح', category: 'تنسيق النص', explanation: '' },
+                { id: 12, type: 'tf', text: 'اختصار "القص" (Cut) من الكيبورد هو Ctrl + C.', correctAnswer: 'خطأ', category: 'اختصارات', explanation: 'اختصار القص (Cut) هو Ctrl + X، أما Ctrl + C فهو للنسخ (Copy).' },
+                { id: 13, type: 'tf', text: 'الزر (Aa) يُستخدم لتغيير الحروف الإنجليزية بين كبيرة وصغيرة (Small/Capital).', correctAnswer: 'صح', category: 'تنسيق النص', explanation: '' },
+                { id: 14, type: 'tf', text: 'يمكن إضافة شكل (Shape) والكتابة بداخله وتغيير خصائصه ولونه.', correctAnswer: 'صح', category: 'الأشكال', explanation: '' },
+                { id: 15, type: 'tf', text: 'أداة الممحاة في تصميم الجدول تُستخدم لمسح أي خط (إطار) داخل الجدول.', correctAnswer: 'صح', category: 'الجداول', explanation: '' },
+                { id: 16, type: 'tf', text: 'لا يمكن إزالة خلفية الصورة من داخل برنامج الباوربوينت ويجب استخدام برنامج آخر.', correctAnswer: 'خطأ', category: 'الصور', explanation: 'يمكن إزالة خلفية الصورة من داخل PowerPoint باستخدام أداة Remove Background.' },
+                { id: 17, type: 'tf', text: 'أداة Screen Shot تُستخدم لأخذ لقطة شاشة لموقع على الإنترنت وإدراجها إذا لم تستطع حفظ الصورة.', correctAnswer: 'صح', category: 'الصور', explanation: '' },
+                { id: 18, type: 'tf', text: 'الـ SmartArt يُستخدم لعمل إحصائيات ومقارنات بيانية (مخطط).', correctAnswer: 'خطأ', category: 'الرسومات', explanation: 'الـ SmartArt للأشكال والمعادلات، أما Chart فهو للإحصائيات.' },
+                { id: 19, type: 'tf', text: 'إذا قمت بربط التاريخ في الرأس والتذييل بالوقت، فإنه سيتغير تلقائياً إذا تغير في جهازك.', correctAnswer: 'صح', category: 'الرأس والتذييل', explanation: '' },
+                { id: 20, type: 'tf', text: 'لعمل ارتباط تشعبي بين الشرائح، نختار Action Buttons من قائمة Design.', correctAnswer: 'خطأ', category: 'الارتباطات', explanation: 'Action Buttons موجودة في قائمة Insert وليس Design.' },
+                { id: 21, type: 'tf', text: 'عند عمل زر ارتباط تشعبي لشريحة داخل نفس الملف، نختار "Place in this Document".', correctAnswer: 'صح', category: 'الارتباطات', explanation: '' },
+                { id: 22, type: 'tf', text: 'يُنصح بكتابة النص أولاً في الشرائح ثم اختيار التصميم (Design) لاحقاً.', correctAnswer: 'خطأ', category: 'التصميم', explanation: 'يُنصح باختيار التصميم أولاً ثم كتابة النص.' },
+                { id: 23, type: 'tf', text: 'يمكن تغيير خصائص خلفية الشريحة من خلال أمر Format Background.', correctAnswer: 'صح', category: 'التصميم', explanation: '' },
+                { id: 24, type: 'tf', text: 'قائمة Transitions تُستخدم لعمل حركات للأشكال والصور داخل الشريحة نفسها.', correctAnswer: 'خطأ', category: 'الانتقالات والحركات', explanation: 'Transitions للانتقال بين الشرائح، أما Animations فهي للحركات داخل الشريحة.' },
+                { id: 25, type: 'tf', text: 'لاختيار عدم وجود أي انتقال للشريحة نختار None من قائمة Transitions.', correctAnswer: 'صح', category: 'الانتقالات والحركات', explanation: '' },
+                { id: 26, type: 'tf', text: 'عند إضافة حركات (Animations) لعناصر الشريحة، يقوم البرنامج بترقيم هذه الحركات.', correctAnswer: 'صح', category: 'الانتقالات والحركات', explanation: '' },
+                { id: 27, type: 'tf', text: 'اختصار عرض الشريحة (Show) من لوحة المفاتيح هو F5.', correctAnswer: 'صح', category: 'عرض الشرائح', explanation: '' },
+                { id: 28, type: 'tf', text: 'للتحكم في مستوى صوت الفيديو (عالي، منخفض، ميوت) نستخدم قائمة Video Format.', correctAnswer: 'خطأ', category: 'الفيديو', explanation: 'التحكم في الصوت يكون من قائمة Play Back وليس Video Format.' },
+                { id: 29, type: 'tf', text: 'عند إدراج فيديو، يمكن ضبطه ليعمل أوتوماتيكياً بمجرد عرض الشريحة.', correctAnswer: 'صح', category: 'الفيديو', explanation: '' },
+                { id: 30, type: 'tf', text: 'تنصح الدكتورة بتسجيل الصوت عبر الموبايل وإضافته للجهاز بدلاً من تسجيله مباشرة من البرنامج.', correctAnswer: 'صح', category: 'الصوت', explanation: '' },
+
+                // ===== MULTIPLE CHOICE QUESTIONS (30 questions) =====
+                { id: 31, type: 'mcq', text: 'لفتح ملفات تم العمل عليها مسبقاً (مؤخراً) لسهولة الرجوع إليها، نختار من قائمة File:', options: [{ label: 'أ', text: 'Info' }, { label: 'ب', text: 'Recent' }, { label: 'ج', text: 'New' }, { label: 'د', text: 'Open' }], correctAnswer: 'ب', category: 'الملفات', explanation: '' },
+                { id: 32, type: 'mcq', text: 'لحفظ المشروع لأول مرة، نستخدم أمر:', options: [{ label: 'أ', text: 'Save As' }, { label: 'ب', text: 'Save' }, { label: 'ج', text: 'Export' }, { label: 'د', text: 'Send' }], correctAnswer: 'ب', category: 'الملفات', explanation: '' },
+                { id: 33, type: 'mcq', text: 'إذا أردت إرسال المشروع عبر مواقع الإنترنت، تختار من قائمة File:', options: [{ label: 'أ', text: 'Print' }, { label: 'ب', text: 'Save and Send' }, { label: 'ج', text: 'Info' }, { label: 'د', text: 'Exit' }], correctAnswer: 'ب', category: 'الملفات', explanation: '' },
+                { id: 34, type: 'mcq', text: 'أي من الاختصارات التالية يمثل أمر "لصق" (Paste)؟', options: [{ label: 'أ', text: 'Ctrl + C' }, { label: 'ب', text: 'Ctrl + X' }, { label: 'ج', text: 'Ctrl + V' }, { label: 'د', text: 'Ctrl + S' }], correctAnswer: 'ج', category: 'اختصارات', explanation: '' },
+                { id: 35, type: 'mcq', text: 'لتغيير نوع الخط المستخدم في النص، نذهب إلى:', options: [{ label: 'أ', text: 'Font Size' }, { label: 'ب', text: 'Font Style' }, { label: 'ج', text: 'Font Color' }, { label: 'د', text: 'Bold' }], correctAnswer: 'ب', category: 'تنسيق النص', explanation: '' },
+                { id: 36, type: 'mcq', text: 'إذا كان لديك كلمة متكررة في العرض وتريد البحث عنها أو استبدالها بكلمة أخرى بسهولة، تستخدم أمر:', options: [{ label: 'أ', text: 'Find or Replace' }, { label: 'ب', text: 'Shapes' }, { label: 'ج', text: 'Copy and Paste' }, { label: 'د', text: 'Underline' }], correctAnswer: 'أ', category: 'تنسيق النص', explanation: '' },
+                { id: 37, type: 'mcq', text: 'لإدراج جدول (Table)، نفتح قائمة:', options: [{ label: 'أ', text: 'Home' }, { label: 'ب', text: 'Design' }, { label: 'ج', text: 'Insert' }, { label: 'د', text: 'View' }], correctAnswer: 'ج', category: 'الجداول', explanation: '' },
+                { id: 38, type: 'mcq', text: 'من خلال أدوات الجدول (Table Tools)، للتحكم في شكل وتصميم الجدول نختار:', options: [{ label: 'أ', text: 'Layout' }, { label: 'ب', text: 'Design' }, { label: 'ج', text: 'No Border' }, { label: 'د', text: 'Eraser' }], correctAnswer: 'ب', category: 'الجداول', explanation: '' },
+                { id: 39, type: 'mcq', text: 'لجعل الجدول بدون حدود (بدون إطار)، نختار:', options: [{ label: 'أ', text: 'No Border' }, { label: 'ب', text: 'Add Section' }, { label: 'ج', text: 'Format Background' }, { label: 'د', text: 'None' }], correctAnswer: 'أ', category: 'الجداول', explanation: '' },
+                { id: 40, type: 'mcq', text: 'لعمل ألبوم خاص بكل صور المشروع الخاص بك بضغطة واحدة، تستخدم أداة:', options: [{ label: 'أ', text: 'ClipArt' }, { label: 'ب', text: 'SmartArt' }, { label: 'ج', text: 'Photo Album' }, { label: 'د', text: 'Screen Shot' }], correctAnswer: 'ج', category: 'الصور', explanation: '' },
+                { id: 41, type: 'mcq', text: 'لعمل "قصاصات داخل البرنامج" تبحث عنها وتنزلها، تستخدم:', options: [{ label: 'أ', text: 'Chart' }, { label: 'ب', text: 'ClipArt' }, { label: 'ج', text: 'Picture' }, { label: 'د', text: 'Action Buttons' }], correctAnswer: 'ب', category: 'الصور', explanation: '' },
+                { id: 42, type: 'mcq', text: 'الأداة المناسبة لعمل المقارنات والمعادلات والأشكال الثابتة هي:', options: [{ label: 'أ', text: 'Chart' }, { label: 'ب', text: 'SmartArt' }, { label: 'ج', text: 'Header and Footer' }, { label: 'د', text: 'Table' }], correctAnswer: 'ب', category: 'الرسومات', explanation: '' },
+                { id: 43, type: 'mcq', text: 'لكتابة عنوان رئيسي وعنوان تذييلي في الشرائح، نستخدم:', options: [{ label: 'أ', text: 'SmartArt' }, { label: 'ب', text: 'WordArt' }, { label: 'ج', text: 'Header and Footer' }, { label: 'د', text: 'Text Box' }], correctAnswer: 'ج', category: 'الرأس والتذييل', explanation: '' },
+                { id: 44, type: 'mcq', text: 'إذا أردت أن يقوم زر بنقلك إلى الشريحة رقم 2، فهذا يسمى:', options: [{ label: 'أ', text: 'Transition (انتقال)' }, { label: 'ب', text: 'Animation (حركة)' }, { label: 'ج', text: 'Hyperlink (ارتباط تشعبي)' }, { label: 'د', text: 'Duplicate (تكرار)' }], correctAnswer: 'ج', category: 'الارتباطات', explanation: '' },
+                { id: 45, type: 'mcq', text: 'تنصح الملزمة بوضع زر (Button) في كل شريحة لغرض:', options: [{ label: 'أ', text: 'إغلاق البرنامج' }, { label: 'ب', text: 'الرجوع للشريحة الرئيسية بسهولة' }, { label: 'ج', text: 'مسح الشريحة' }, { label: 'د', text: 'تشغيل الموسيقى' }], correctAnswer: 'ب', category: 'الارتباطات', explanation: '' },
+                { id: 46, type: 'mcq', text: 'قائمة Design تُستخدم لـ:', options: [{ label: 'أ', text: 'إضافة أشكال هندسية' }, { label: 'ب', text: 'عمل تصميم جاهز للشرائح يطبق على الكل' }, { label: 'ج', text: 'إدراج فيديوهات' }, { label: 'د', text: 'تحويل الملف لـ PDF' }], correctAnswer: 'ب', category: 'التصميم', explanation: '' },
+                { id: 47, type: 'mcq', text: 'للتحكم في حجم الشريحة نفسها من قائمة Design، نختار:', options: [{ label: 'أ', text: 'Slide Size' }, { label: 'ب', text: 'Format Background' }, { label: 'ج', text: 'Font Size' }, { label: 'د', text: 'Duplicate Slide' }], correctAnswer: 'أ', category: 'التصميم', explanation: '' },
+                { id: 48, type: 'mcq', text: 'قائمة Transitions مسؤولة عن:', options: [{ label: 'أ', text: 'الحركات داخل الصورة' }, { label: 'ب', text: 'انتقالات الشريحة نفسها' }, { label: 'ج', text: 'إدراج الجداول' }, { label: 'د', text: 'تنسيق الخطوط' }], correctAnswer: 'ب', category: 'الانتقالات والحركات', explanation: '' },
+                { id: 49, type: 'mcq', text: 'قائمة Animation مسؤولة عن:', options: [{ label: 'أ', text: 'الانتقال من شريحة لأخرى' }, { label: 'ب', text: 'حركات الأشكال والصور داخل الشريحة' }, { label: 'ج', text: 'طباعة الملف' }, { label: 'د', text: 'تغيير خلفية البرنامج' }], correctAnswer: 'ب', category: 'الانتقالات والحركات', explanation: '' },
+                { id: 50, type: 'mcq', text: 'متى يبدأ ظهور حركة الشريحة لتتمكن من رؤيتها؟', options: [{ label: 'أ', text: 'من خلال Review' }, { label: 'ب', text: 'من خلال Print' }, { label: 'ج', text: 'من خلال Save' }, { label: 'د', text: 'من خلال Insert' }], correctAnswer: 'أ', category: 'الانتقالات والحركات', explanation: '' },
+                { id: 51, type: 'mcq', text: 'عند إدراج فيديو من جهازك، تختار من (Insert -> Video) أمر:', options: [{ label: 'أ', text: 'Online Video' }, { label: 'ب', text: 'This Device' }, { label: 'ج', text: 'ClipArt' }, { label: 'د', text: 'Audio on my PC' }], correctAnswer: 'ب', category: 'الفيديو', explanation: '' },
+                { id: 52, type: 'mcq', text: 'نافذة (Video Format) تظهر عند إدراج فيديو وتُستخدم في:', options: [{ label: 'أ', text: 'تشغيل الفيديو أوتوماتيكياً' }, { label: 'ب', text: 'التحكم في مستوى الصوت' }, { label: 'ج', text: 'تنسيق الفيديو (تغيير لونه، الإطار، التأثيرات، القص)' }, { label: 'د', text: 'ربط الفيديو بشريحة أخرى' }], correctAnswer: 'ج', category: 'الفيديو', explanation: '' },
+                { id: 53, type: 'mcq', text: 'لتشغيل الفيديو "عند الضغط عليه" نختار من إعدادات Play Back:', options: [{ label: 'أ', text: 'Auto' }, { label: 'ب', text: 'On Click' }, { label: 'ج', text: 'Mute' }, { label: 'د', text: 'Low' }], correctAnswer: 'ب', category: 'الفيديو', explanation: '' },
+                { id: 54, type: 'mcq', text: 'لتسجيل صوتك مباشرة داخل برنامج الباوربوينت، تختار:', options: [{ label: 'أ', text: 'Audio on my PC' }, { label: 'ب', text: 'Record Audio' }, { label: 'ج', text: 'Online Video' }, { label: 'د', text: 'SmartArt' }], correctAnswer: 'ب', category: 'الصوت', explanation: '' },
+                { id: 55, type: 'mcq', text: 'ما هو التحذير الذي ذكرته الدكتورة حول حفظ الملف في الديسك توب؟', options: [{ label: 'أ', text: 'أنه سيبطئ الجهاز' }, { label: 'ب', text: 'أن البرنامج لا يستطيع قراءته' }, { label: 'ج', text: 'أن نسخة الويندوز لو سقطت سيتم مسح كل شيء' }, { label: 'د', text: 'أن الملف سيفقد الارتباطات التشعبية' }], correctAnswer: 'ج', category: 'الملفات', explanation: '' },
+                { id: 56, type: 'mcq', text: 'لإضافة "قسم" جديد لتنظيم الشرائح، نضغط على:', options: [{ label: 'أ', text: 'Slide -> Delete' }, { label: 'ب', text: 'Section -> Add Section' }, { label: 'ج', text: 'Duplicate Slide' }, { label: 'د', text: 'New Slide -> Blank' }], correctAnswer: 'ب', category: 'الشرائح', explanation: '' },
+                { id: 57, type: 'mcq', text: 'لحذف شريحة بالكامل، نضغط عليها كليك يمين ثم نختار:', options: [{ label: 'أ', text: 'Remove Section' }, { label: 'ب', text: 'Delete Slide' }, { label: 'ج', text: 'Hide Slide' }, { label: 'د', text: 'Format Background' }], correctAnswer: 'ب', category: 'الشرائح', explanation: '' },
+                { id: 58, type: 'mcq', text: 'اختصار خط مائل في تنسيق الخطوط هو:', options: [{ label: 'أ', text: 'Bold' }, { label: 'ب', text: 'Underline' }, { label: 'ج', text: 'Italic' }, { label: 'د', text: 'Size' }], correctAnswer: 'ج', category: 'تنسيق النص', explanation: '' },
+                { id: 59, type: 'mcq', text: 'الأداة المسؤولة عن إضافة أشكال مثل الدائرة واستخدامها كأزرار وظائف هي:', options: [{ label: 'أ', text: 'Shapes / Action Buttons' }, { label: 'ب', text: 'ClipArt' }, { label: 'ج', text: 'Chart' }, { label: 'د', text: 'Eraser' }], correctAnswer: 'أ', category: 'الأشكال', explanation: '' },
+                { id: 60, type: 'mcq', text: 'ما هو الزر الذي يجب تحديده في نافذة Hyperlink لربط زر بشريحة داخل نفس العرض التقديمي؟', options: [{ label: 'أ', text: 'Existing File' }, { label: 'ب', text: 'Create New Document' }, { label: 'ج', text: 'Email Address' }, { label: 'د', text: 'Place in this Document' }], correctAnswer: 'د', category: 'الارتباطات', explanation: '' }
+            ];
+
+            // --- DOM ELEMENTS ---
+            const welcomeScreen = document.getElementById('welcomeScreen');
+            const examScreen = document.getElementById('examScreen');
+            const resultsScreen = document.getElementById('resultsScreen');
+            const startButton = document.getElementById('startButton');
+            const startNoTimerButton = document.getElementById('startNoTimerButton');
+            const startRandomButton = document.getElementById('startRandomButton');
+            const restartButton = document.getElementById('restartButton');
+            const nextButton = document.getElementById('nextButton');
+            const prevButton = document.getElementById('prevButton');
+            const questionTextEl = document.getElementById('questionText');
+            const optionsContainer = document.getElementById('optionsContainer');
+            const optionsForm = document.getElementById('optionsForm');
+            const questionNumberTitleEl = document.getElementById('questionNumberTitle');
+            const progressBarEl = document.getElementById('progressBar');
+            const progressTextEl = document.getElementById('progressText');
+            const scoreTextEl = document.getElementById('scoreText');
+            const feedbackTextEl = document.getElementById('feedbackText');
+            const timeTakenTextEl = document.getElementById('timeTakenText');
+            const timerEl = document.getElementById('timer');
+            const numQuestionsSelect = document.getElementById('numQuestionsSelect');
+            const examDurationDisplayEl = document.getElementById('examDurationDisplay');
+            const durationNoticeEl = document.getElementById('durationNotice');
+            const resumePrompt = document.getElementById('resumePrompt');
+            const resumeButton = document.getElementById('resumeButton');
+            const discardButton = document.getElementById('discardButton');
+            const lastExamButton = document.getElementById('lastExamButton');
+            const clearStorageButton = document.getElementById('clearStorageButton');
+            const reviewContainer = document.getElementById('reviewContainer');
+            const statusFilterSelect = document.getElementById('statusFilter');
+            const flagQuestionButton = document.getElementById('flagQuestionButton');
+            const reviewFlaggedButton = document.getElementById('reviewFlaggedButton');
+            const flaggedCountSpan = document.getElementById('flaggedCount');
+            const retryIncorrectButton = document.getElementById('retryIncorrectButton');
+            const printResultsButton = document.getElementById('printResultsButton');
+            const pauseExamButton = document.getElementById('pauseExamButton');
+            const pauseOverlay = document.getElementById('pauseOverlay');
+            const resumeFromOverlayButton = document.getElementById('resumeFromOverlayButton');
+            const openQuestionNavButton = document.getElementById('openQuestionNavButton');
+            const increaseFontButton = document.getElementById('increaseFontButton');
+            const decreaseFontButton = document.getElementById('decreaseFontButton');
+
+            const customModalOverlay = document.getElementById('customModalOverlay');
+            const customModal = document.getElementById('customModal');
+            const modalTitleEl = document.getElementById('modalTitle');
+            const modalMessageEl = document.getElementById('modalMessage');
+            const modalConfirmButton = document.getElementById('modalConfirmButton');
+            const modalCancelButton = document.getElementById('modalCancelButton');
+            const modalCloseButton = document.getElementById('modalCloseButton');
+            const flaggedReviewModalOverlay = document.getElementById('flaggedReviewModalOverlay');
+            const flaggedQuestionsListEl = document.getElementById('flaggedQuestionsList');
+            const closeFlaggedReviewModalBtn = document.getElementById('closeFlaggedReviewModalBtn');
+            const flaggedReviewModalCloseButton = document.getElementById('flaggedReviewModalCloseButton');
+            const questionNavModalOverlay = document.getElementById('questionNavModalOverlay');
+            const questionNavListEl = document.getElementById('questionNavList');
+            const closeQuestionNavModalBtn = document.getElementById('closeQuestionNavModalBtn');
+            const questionNavModalCloseButton = document.getElementById('questionNavModalCloseButton');
+
+            // --- STATE VARIABLES ---
+            let currentQuestionIndex = 0;
+            let score = 0;
+            let userAnswers = [];
+            let timerInterval;
+            let timeLeft;
+            let examStartTime;
+            let isExamPaused = false;
+            let activeQuestions = [];
+            let allQuestionsData = [...questions];
+            let isRetrySession = false;
+            let isUntimedExam = false;
+            let currentAttemptNumber = 1;
+            let currentFontSizeMultiplier = 1;
+
+            // --- INITIALIZATION ---
+            document.addEventListener('DOMContentLoaded', () => {
+                updateExamDurationDisplay();
+                checkLastExamResults();
+                const loadedState = loadExamState();
+
+                if (loadedState && !loadedState.isRetrySession) {
+                    resumePrompt.style.display = 'block';
+                    startButton.style.display = 'none';
+                    startNoTimerButton.style.display = 'none';
+                    startRandomButton.style.display = 'none';
+                } else {
+                    resumePrompt.style.display = 'none';
+                }
+
+                if (lastExamButton) lastExamButton.style.display = localStorage.getItem(LAST_EXAM_RESULTS_KEY) ? 'inline-flex' : 'none';
+                if (clearStorageButton) clearStorageButton.style.display = loadedState ? 'inline-flex' : 'none';
+            });
+
+            numQuestionsSelect.addEventListener('change', updateExamDurationDisplay);
+
+            function updateExamDurationDisplay() {
+                const selectedValue = numQuestionsSelect.value;
+                let numQuestions;
+                if (selectedValue === 'all') {
+                    numQuestions = allQuestionsData.length;
+                } else {
+                    numQuestions = parseInt(selectedValue);
+                }
+                const calculatedDuration = Math.ceil((numQuestions * BASE_TIME_PER_QUESTION_SECONDS) / 60);
+                examDurationDisplayEl.textContent = `${calculatedDuration} دقيقة`;
+            }
+
+            // --- EXAM CONTROL FUNCTIONS ---
+            startButton.addEventListener('click', () => initExam(false, false));
+            startNoTimerButton.addEventListener('click', () => initExam(false, false, null, true));
+            startRandomButton.addEventListener('click', handleStartRandomExam);
+            restartButton.addEventListener('click', () => {
+                showModal("إعادة الاختبار", "هل أنت متأكد أنك تريد إعادة الاختبار من البداية؟", "نعم", "لا",
+                    () => {
+                        clearExamStateFromStorage();
+                        hideModal();
+                        resetToWelcomeScreen();
+                    },
+                    () => hideModal()
+                );
+            });
+            resumeButton.addEventListener('click', () => {
+                resumeExam();
+                resumePrompt.style.display = 'none';
+                startButton.style.display = 'inline-flex';
+                startNoTimerButton.style.display = 'inline-flex';
+                startRandomButton.style.display = 'inline-flex';
+            });
+            discardButton.addEventListener('click', () => {
+                showModal("تجاهل الجلسة", "هل أنت متأكد؟ سيتم حذف تقدمك السابق.", "نعم، تجاهل", "لا",
+                    () => {
+                        clearExamStateFromStorage();
+                        hideModal();
+                        resumePrompt.style.display = 'none';
+                        startButton.style.display = 'inline-flex';
+                        startNoTimerButton.style.display = 'inline-flex';
+                        startRandomButton.style.display = 'inline-flex';
+                        if(clearStorageButton) clearStorageButton.style.display = 'none';
+                    },
+                    () => hideModal()
+                );
+            });
+            lastExamButton.addEventListener('click', displayLastExamResults);
+            clearStorageButton.addEventListener('click', () => {
+                showModal("مسح الجلسة المحفوظة", "هل أنت متأكد أنك تريد مسح الجلسة المحفوظة؟", "نعم", "لا",
+                    () => {
+                        clearExamStateFromStorage();
+                        hideModal();
+                        if(clearStorageButton) clearStorageButton.style.display = 'none';
+                    },
+                    () => hideModal()
+                );
+            });
+
+            function initExam(isRetry = false, resuming = false, forcedNumQuestions = null, isUntimed = false) {
+                isRetrySession = isRetry;
+                isUntimedExam = isUntimed;
+
+                if (!isRetry && !resuming) {
+                    let numQuestions;
+                    if (forcedNumQuestions !== null) {
+                        numQuestions = forcedNumQuestions;
+                    } else {
+                        const selectedValue = numQuestionsSelect.value;
+                        numQuestions = (selectedValue === 'all') ? allQuestionsData.length : parseInt(selectedValue);
+                    }
+
+                    if (numQuestions > allQuestionsData.length) {
+                        showModal("خطأ", `الحد الأقصى للأسئلة المتاحة هو ${allQuestionsData.length}.`, "حسنًا", "", () => hideModal(), null, false);
+                        return;
+                    }
+
+                    let attemptCount = parseInt(localStorage.getItem(ATTEMPT_COUNTER_KEY)) || 0;
+                    currentAttemptNumber = ++attemptCount;
+                    localStorage.setItem(ATTEMPT_COUNTER_KEY, currentAttemptNumber.toString());
+
+                    activeQuestions = shuffleArray([...allQuestionsData]).slice(0, numQuestions);
+                    currentQuestionIndex = 0;
+                    score = 0;
+                    userAnswers = activeQuestions.map(q => ({ qId: q.id, userAnswer: null, isCorrect: false, isFlagged: false }));
+
+                    if (isUntimedExam) {
+                        timeLeft = Infinity;
+                        examStartTime = null;
+                        timerEl.textContent = "غير محدود";
+                        timerEl.classList.add('untimed');
+                        timerEl.classList.remove('timer-warning');
+                    } else {
+                        DYNAMIC_EXAM_DURATION_MINUTES = Math.max(1, Math.ceil((activeQuestions.length * BASE_TIME_PER_QUESTION_SECONDS) / 60));
+                        timeLeft = DYNAMIC_EXAM_DURATION_MINUTES * 60;
+                        examStartTime = new Date().getTime();
+                        timerEl.classList.remove('untimed');
+                    }
+
+                } else if (isRetry) {
+                    currentQuestionIndex = 0;
+                    score = 0;
+                    userAnswers = activeQuestions.map(q => ({ qId: q.id, userAnswer: null, isCorrect: false, isFlagged: false }));
+                    isUntimedExam = false;
+                    timeLeft = DYNAMIC_EXAM_DURATION_MINUTES * 60;
+                    examStartTime = new Date().getTime();
+                    timerEl.classList.remove('untimed');
+                } else if (resuming) {
+                    // handled in resumeExam
+                }
+
+                isExamPaused = false;
+                pauseOverlay.style.display = 'none';
+                document.getElementById('questionArea').style.display = 'block';
+                pauseExamButton.innerHTML = '<i class="fas fa-pause-circle"></i> إيقاف مؤقت';
+                pauseExamButton.classList.remove('paused');
+                pauseExamButton.disabled = false;
+
+                updateFlaggedCount();
+                reviewFlaggedButton.style.display = 'inline-flex';
+                openQuestionNavButton.style.display = 'inline-flex';
+                pauseExamButton.style.display = 'inline-flex';
+                welcomeScreen.style.display = 'none';
+                examScreen.style.display = 'block';
+                resultsScreen.style.display = 'none';
+                retryIncorrectButton.style.display = 'none';
+                reviewContainer.innerHTML = '';
+
+                if (!isUntimedExam) {
+                    startTimer();
+                }
+                loadQuestion();
+                if (!isRetrySession) saveExamState();
+            }
+
+            function handleStartRandomExam() {
+                if (allQuestionsData.length === 0) {
+                    showModal("خطأ", "لا توجد أسئلة متاحة لبدء اختبار عشوائي.", "حسنًا", "", () => hideModal(), null, false);
+                    return;
+                }
+
+                isUntimedExam = false;
+
+                const absoluteMinQuestions = 5;
+                const minPossibleQuestions = Math.max(absoluteMinQuestions, Math.min(10, allQuestionsData.length));
+                const maxPossibleQuestions = Math.min(Math.floor(allQuestionsData.length * 0.8), allQuestionsData.length);
+
+                let numRandomQuestions;
+
+                if (allQuestionsData.length <= absoluteMinQuestions) {
+                    numRandomQuestions = allQuestionsData.length;
+                } else if (minPossibleQuestions >= maxPossibleQuestions) {
+                    numRandomQuestions = allQuestionsData.length;
+                } else {
+                    numRandomQuestions = Math.floor(Math.random() * (maxPossibleQuestions - minPossibleQuestions + 1)) + minPossibleQuestions;
+                }
+                numRandomQuestions = Math.max(1, numRandomQuestions);
+
+                DYNAMIC_EXAM_DURATION_MINUTES = Math.max(1, Math.ceil((numRandomQuestions * BASE_TIME_PER_QUESTION_SECONDS) / 60));
+
+                showModal(
+                    "اختبار بأسئلة عشوائية",
+                    `سيتم اختيار ${numRandomQuestions} سؤالاً بشكل عشوائي.<br>مدة الاختبار: ${DYNAMIC_EXAM_DURATION_MINUTES} دقيقة.<br>هل أنت مستعد للبدء؟`,
+                    "ابدأ الآن", "لاحقاً",
+                    () => {
+                        clearExamStateFromStorage();
+                        initExam(false, false, numRandomQuestions);
+                        hideModal();
+                    },
+                    () => hideModal()
+                );
+            }
+
+            function loadQuestion() {
+                if (isExamPaused) return;
+
+                optionsForm.reset();
+                document.querySelectorAll('#optionsContainer label').forEach(label => {
+                    label.classList.remove('selected-option');
+                });
+
+                if (currentQuestionIndex < activeQuestions.length) {
+                    const currentQuestion = activeQuestions[currentQuestionIndex];
+                    const userAnswerData = userAnswers.find(ua => ua.qId === currentQuestion.id);
+
+                    questionNumberTitleEl.textContent = `السؤال ${currentQuestionIndex + 1}`;
+                    questionTextEl.textContent = currentQuestion.text;
+                    optionsContainer.innerHTML = '';
+
+                    if (userAnswerData && userAnswerData.isFlagged) {
+                        flagQuestionButton.classList.add('flagged');
+                        flagQuestionButton.innerHTML = '<i class="fas fa-flag"></i> <span>إلغاء التعليم</span>';
+                        flagQuestionButton.setAttribute('aria-pressed', 'true');
+                    } else {
+                        flagQuestionButton.classList.remove('flagged');
+                        flagQuestionButton.innerHTML = '<i class="far fa-flag"></i> <span>علم السؤال</span>';
+                        flagQuestionButton.setAttribute('aria-pressed', 'false');
+                    }
+
+                     if (currentQuestion.type === 'tf') {
+                        const options = ['صح', 'خطأ'];
+                        options.forEach((option, index) => createOptionElement(option, option, `option_tf_${index}`, currentQuestion.type, userAnswerData));
+                    } else if (currentQuestion.type === 'mcq') {
+                        currentQuestion.options.forEach((option) => createOptionElement(`${option.label}) ${option.text}`, option.label, `option_mcq_${option.label}`, currentQuestion.type, userAnswerData));
+                    }
+
+                    updateProgressBar();
+                    progressTextEl.textContent = `السؤال ${currentQuestionIndex + 1} من ${activeQuestions.length}`;
+
+                    nextButton.innerHTML = (currentQuestionIndex === activeQuestions.length - 1) ?
+                        '<i class="fas fa-flag-checkered"></i> إنهاء وتقديم' :
+                        '<i class="fas fa-chevron-circle-left"></i> السؤال التالي';
+                     nextButton.setAttribute('aria-label', (currentQuestionIndex === activeQuestions.length - 1) ? 'إنهاء وتقديم الاختبار' : 'السؤال التالي');
+
+                    if (prevButton) prevButton.disabled = (currentQuestionIndex === 0);
+
+                } else {
+                    if (activeQuestions.length > 0) showResults();
+                    else {
+                        welcomeScreen.style.display = 'block';
+                        examScreen.style.display = 'none';
+                    }
+                }
+                 applyCurrentFontSize();
+            }
+
+            function createOptionElement(displayText, value, id, type, userAnswerData) {
+                const label = document.createElement('label');
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = 'option';
+                radio.value = value;
+                radio.id = id;
+
+                if (type === 'mcq') {
+                     const currentQuestion = activeQuestions[currentQuestionIndex];
+                     const optionObj = currentQuestion.options.find(o => o.label === value);
+                     if(optionObj) radio.setAttribute('aria-label', `الخيار ${optionObj.label}: ${optionObj.text}`);
+                } else {
+                     radio.setAttribute('aria-label', `الخيار: ${value}`);
+                }
+
+                const span = document.createElement('span');
+                span.textContent = displayText;
+
+                label.appendChild(radio);
+                label.appendChild(span);
+                optionsContainer.appendChild(label);
+
+                if (userAnswerData && userAnswerData.userAnswer === value) {
+                    radio.checked = true;
+                    label.classList.add('selected-option');
+                }
+            }
+
+            function updateProgressBar() {
+                if (activeQuestions.length === 0) {
+                    progressBarEl.style.width = '0%';
+                    progressBarEl.setAttribute('aria-valuenow', 0);
+                    return;
+                }
+                const progressPercentage = ((currentQuestionIndex + 1) / activeQuestions.length) * 100;
+                progressBarEl.style.width = `${progressPercentage}%`;
+                progressBarEl.setAttribute('aria-valuenow', progressPercentage);
+            }
+
+            function startTimer() {
+                if (isExamPaused || isUntimedExam) return;
+                clearInterval(timerInterval);
+                timerInterval = setInterval(() => {
+                    if (isExamPaused) return;
+                    timeLeft--;
+                    const minutes = Math.floor(timeLeft / 60);
+                    const seconds = timeLeft % 60;
+                    timerEl.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+                    if (timeLeft <= 0) {
+                        clearInterval(timerInterval);
+                        timerEl.classList.remove('timer-warning');
+                        showModal("انتهى الوقت!", "لقد انتهى الوقت المخصص للاختبار. سيتم تقديم إجاباتك الآن.", "حسنًا", "",
+                            () => { showResults(true); hideModal();},
+                            null, false);
+                    } else if (timeLeft <= 60 && !timerEl.classList.contains('timer-warning')) {
+                        timerEl.classList.add('timer-warning');
+                    } else if (timeLeft > 60 && timerEl.classList.contains('timer-warning')) {
+                        timerEl.classList.remove('timer-warning');
+                    }
+                }, 1000);
+            }
+
+            function toggleFlagQuestion() {
+                if (isExamPaused || currentQuestionIndex >= activeQuestions.length) return;
+                const currentQuestion = activeQuestions[currentQuestionIndex];
+                const userAnswerData = userAnswers.find(ua => ua.qId === currentQuestion.id);
+                if (userAnswerData) {
+                    userAnswerData.isFlagged = !userAnswerData.isFlagged;
+                    flagQuestionButton.classList.toggle('flagged', userAnswerData.isFlagged);
+                    flagQuestionButton.innerHTML = userAnswerData.isFlagged ? '<i class="fas fa-flag"></i> <span>إلغاء التعليم</span>' : '<i class="far fa-flag"></i> <span>علم السؤال</span>';
+                    flagQuestionButton.setAttribute('aria-pressed', userAnswerData.isFlagged.toString());
+                    updateFlaggedCount();
+                    if (!isRetrySession) saveExamState();
+                }
+            }
+
+            function updateFlaggedCount() {
+                const count = userAnswers.filter(ua => ua.isFlagged).length;
+                flaggedCountSpan.textContent = count;
+            }
+
+            reviewFlaggedButton.addEventListener('click', showFlaggedQuestionsReviewModal);
+
+            function closeFlaggedReviewModal(){
+                flaggedReviewModalOverlay.style.display='none';
+            }
+
+            function showFlaggedQuestionsReviewModal() {
+                if (isExamPaused) return;
+                flaggedQuestionsListEl.innerHTML = '';
+                const flagged = userAnswers.map((ua, index) => ({...ua, originalIndex: index})).filter(ua => ua.isFlagged);
+
+                if (flagged.length === 0) {
+                    flaggedQuestionsListEl.innerHTML = '<p style="color: var(--text-muted); padding: 10px;">لم تقم بتعليم أي أسئلة.</p>';
+                } else {
+                    flagged.forEach((answerData) => {
+                        const originalQ = allQuestionsData.find(q => q.id === answerData.qId);
+                        if (!originalQ) return;
+
+                        const listItem = document.createElement('div');
+                        listItem.className = 'flagged-q-item';
+                        listItem.setAttribute('role', 'button');
+                        listItem.setAttribute('tabindex', '0');
+                        listItem.innerHTML = `
+                            <strong>السؤال ${answerData.originalIndex + 1} (ID: ${originalQ.id}):</strong> ${originalQ.text.substring(0, 70)}...
+                            ${answerData.userAnswer ? `<br><span style="color:var(--primary-accent)">إجابتك المختارة: ${getDisplayableAnswer(originalQ, answerData.userAnswer)}</span>` : '<br><span style="color:var(--text-muted)">لم تجب بعد</span>'}
+                        `;
+                        listItem.addEventListener('click', () => {
+                            currentQuestionIndex = answerData.originalIndex;
+                            loadQuestion();
+                            closeFlaggedReviewModal();
+                        });
+                        listItem.addEventListener('keydown', (e) => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                                listItem.click();
+                                e.preventDefault();
+                            }
+                        });
+                        flaggedQuestionsListEl.appendChild(listItem);
+                    });
+                }
+                flaggedReviewModalOverlay.style.display = 'flex';
+            }
+
+            function getDisplayableAnswer(question, answerValue) {
+                if (question.type === 'mcq') {
+                    const option = question.options.find(opt => opt.label === answerValue);
+                    return option ? `${option.label}) ${option.text}` : answerValue;
+                }
+                return answerValue;
+            }
+
+            function showResults(autoSubmitted = false) {
+                if (!isUntimedExam && timerInterval) {
+                    clearInterval(timerInterval);
+                    if(timerEl) timerEl.classList.remove('timer-warning');
+                }
+                calculateScore();
+                isExamPaused = false;
+                if(pauseExamButton) pauseExamButton.disabled = true;
+
+                if(examScreen) examScreen.style.display = 'none';
+                if(resultsScreen) resultsScreen.style.display = 'block';
+                if(reviewFlaggedButton) reviewFlaggedButton.style.display = 'none';
+                if(openQuestionNavButton) openQuestionNavButton.style.display = 'none';
+                if(pauseExamButton) pauseExamButton.style.display = 'none';
+
+                const now = new Date();
+                const dateTimeString = `تاريخ ووقت الإكمال: ${now.toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' })} - ${now.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', hour12: true })}`;
+                let attemptString = "";
+                if (currentAttemptNumber && !isRetrySession) {
+                    attemptString = `محاولة رقم: ${currentAttemptNumber}`;
+                } else if (isRetrySession) {
+                    attemptString = `محاولة الأسئلة الخاطئة (لا تُحتسب كمحاولة كاملة)`;
+                } else {
+                    const storedAttemptCount = parseInt(localStorage.getItem(ATTEMPT_COUNTER_KEY)) || 0;
+                    if (storedAttemptCount > 0) {
+                         attemptString = `محاولة رقم: ${storedAttemptCount} (العدّاد العام)`;
+                    } else {
+                         attemptString = `رقم المحاولة: غير محدد لهذه الجلسة`;
+                    }
+                }
+
+                const totalQuestionsInExam = activeQuestions.length;
+                const mainScoreString = `نتيجتك: ${score} من ${totalQuestionsInExam}`;
+
+                if(scoreTextEl) {
+                    scoreTextEl.innerHTML = `
+                        ${mainScoreString}
+                        <span class="score-details">${dateTimeString}</span>
+                        <span class="score-details">${attemptString}</span>
+                    `;
+                }
+
+
+                if (isUntimedExam) {
+                     if(timeTakenTextEl) timeTakenTextEl.textContent = "الوقت المستغرق: غير محدد (اختبار بدون مؤقت)";
+                } else {
+                    const examEndTime = new Date().getTime();
+                    let timeDiffSeconds;
+                    if (examStartTime) {
+                         timeDiffSeconds = Math.round((examEndTime - examStartTime) / 1000);
+                    } else {
+                         timeDiffSeconds = DYNAMIC_EXAM_DURATION_MINUTES * 60 - Math.max(0, timeLeft);
+                    }
+                    const minutesTaken = Math.floor(timeDiffSeconds / 60);
+                    const secondsTaken = timeDiffSeconds % 60;
+                    const timeTakenString = `الوقت المستغرق: ${minutesTaken} دقيقة و ${secondsTaken} ثانية.`;
+                    if(timeTakenTextEl) timeTakenTextEl.textContent = timeTakenString;
+                }
+
+                let feedbackString = "";
+                let feedbackColor = "";
+                let percentage = totalQuestionsInExam > 0 ? (score / totalQuestionsInExam) * 100 : 0;
+
+                if (!isUntimedExam && autoSubmitted && timeLeft <=0) {
+                    feedbackString = "انتهى الوقت! هذه هي نتيجتك.";
+                    feedbackColor = "var(--warning-color)";
+                } else if (percentage >= 80) {
+                    feedbackString = "أداء استثنائي! مبروك.";
+                    feedbackColor = "var(--correct-color)";
+                } else if (percentage >= 60) {
+                    feedbackString = "جيد جداً. استمر في التقدم.";
+                    feedbackColor = "var(--primary-accent)";
+                } else if (percentage >= 50) {
+                    feedbackString = "مقبول. بعض المراجعة ستكون مفيدة.";
+                    feedbackColor = "var(--warning-color)";
+                } else {
+                    feedbackString = "تحتاج إلى بذل المزيد من الجهد. لا تيأس!";
+                    feedbackColor = "var(--incorrect-color)";
+                }
+
+                if (isRetrySession) {
+                    feedbackString = `نتائج محاولة الأسئلة الخاطئة: ${feedbackString}`;
+                }
+                if(feedbackTextEl) {
+                    feedbackTextEl.textContent = feedbackString;
+                    feedbackTextEl.style.color = feedbackColor;
+                }
+
+                renderReview(userAnswers);
+
+                if (!isRetrySession) {
+                    clearExamStateFromStorage();
+                    const resultsToSave = {
+                        score: mainScoreString,
+                        feedbackString,
+                        feedbackColor,
+                        timeTakenString: timeTakenTextEl ? timeTakenTextEl.textContent : "غير متوفر",
+                        userAnswersForReview: userAnswers.map(ua => ({...ua})),
+                        activeQuestionsForReview: activeQuestions.map(q => q.id),
+                        isUntimed: isUntimedExam,
+                        dateTimeCompleted: dateTimeString,
+                        attemptNumberDisplay: attemptString
+                    };
+                    saveLastExamResults(resultsToSave);
+                    if(lastExamButton) lastExamButton.style.display = 'inline-flex';
+                }
+
+                const incorrectAnswers = userAnswers.filter(ua => !ua.isCorrect && ua.userAnswer !== null).length;
+                if (incorrectAnswers > 0 && !isRetrySession && retryIncorrectButton) {
+                    retryIncorrectButton.style.display = 'inline-flex';
+                } else if (retryIncorrectButton) {
+                    retryIncorrectButton.style.display = 'none';
+                }
+            }
+
+
+            function renderReview(answersToReview) {
+                reviewContainer.innerHTML = '';
+                let filteredAnswers = [...answersToReview];
+                const selectedStatus = statusFilterSelect.value;
+
+
+                if (selectedStatus !== 'all') {
+                    switch (selectedStatus) {
+                        case 'correct':
+                            filteredAnswers = filteredAnswers.filter(ua => ua.isCorrect);
+                            break;
+                        case 'incorrect':
+                            filteredAnswers = filteredAnswers.filter(ua => !ua.isCorrect && ua.userAnswer !== null);
+                            break;
+                        case 'unanswered':
+                            filteredAnswers = filteredAnswers.filter(ua => ua.userAnswer === null);
+                            break;
+                        case 'flagged':
+                            filteredAnswers = filteredAnswers.filter(ua => ua.isFlagged);
+                            break;
+                    }
+                }
+
+                if(filteredAnswers.length === 0){
+                    reviewContainer.innerHTML = "<p style='color:var(--text-muted);'>لا توجد إجابات لعرضها لهذه التصفية.</p>";
+                    return;
+                }
+
+                filteredAnswers.forEach((answerData) => {
+                    const originalQuestion = allQuestionsData.find(q => q.id === answerData.qId);
+                    if (!originalQuestion) {
+                        console.warn(`Question with ID ${answerData.qId} not found in allQuestionsData for review.`);
+                        return;
+                    }
+
+                    const reviewItem = document.createElement('div');
+                    reviewItem.classList.add('review-item');
+                    if(answerData.isFlagged) reviewItem.classList.add('flagged-review');
+
+                    let userAnswerDisplay = answerData.userAnswer;
+                    let correctAnswerDisplay = originalQuestion.correctAnswer;
+                    let iconClass = '';
+                    let answerTextClass = '';
+
+                    if (answerData.userAnswer === null) {
+                        userAnswerDisplay = "لم تتم الإجابة";
+                        iconClass = 'fas fa-minus-circle';
+                        answerTextClass = 'incorrect-text';
+                        reviewItem.classList.add('unanswered');
+                    } else if (answerData.isCorrect) {
+                        iconClass = 'fas fa-check-circle';
+                        answerTextClass = 'correct-text';
+                    } else {
+                        iconClass = 'fas fa-times-circle';
+                        answerTextClass = 'incorrect-text';
+                        reviewItem.classList.add('incorrect');
+                    }
+
+                    if (originalQuestion.type === 'mcq') {
+                        if (answerData.userAnswer) {
+                            userAnswerDisplay = getDisplayableAnswer(originalQuestion, answerData.userAnswer);
+                        }
+                        correctAnswerDisplay = getDisplayableAnswer(originalQuestion, originalQuestion.correctAnswer);
+                    }
+
+                    reviewItem.innerHTML = `
+                        <p style="margin-bottom: 15px;">
+                            <strong>السؤال (ID: ${originalQuestion.id}):</strong> ${originalQuestion.text}
+                           ${answerData.isFlagged ? '<span class="flagged-indicator"><i class="fas fa-flag"></i> مُعلَّم</span>' : ''}
+                        </p>
+                        <p><strong>إجابتك:</strong>
+                            <i class="answer-icon ${iconClass}" style="color: ${answerData.userAnswer === null ? 'var(--text-muted)' : (answerData.isCorrect ? 'var(--correct-color)' : 'var(--incorrect-color)')};"></i>
+                            <span class="user-answer-text ${answerTextClass}">${userAnswerDisplay}</span>
+                        </p>
+                        ${(answerData.userAnswer === null || !answerData.isCorrect) ? `<p><strong>الإجابة الصحيحة:</strong> <span class="correct-answer-text">${correctAnswerDisplay}</span></p>` : ''}
+                        ${originalQuestion.explanation ? `<p class="explanation-text"><strong>الشرح:</strong> ${originalQuestion.explanation}</p>` : ''}
+                    `;
+                    reviewContainer.appendChild(reviewItem);
+                });
+            }
+
+            function checkLastExamResults() {
+                try {
+                    const savedResults = localStorage.getItem(LAST_EXAM_RESULTS_KEY);
+                    if (savedResults && lastExamButton) {
+                        lastExamButton.style.display = 'inline-flex';
+                    } else if (lastExamButton) {
+                        lastExamButton.style.display = 'none';
+                    }
+                } catch (e) {
+                    console.error("Error checking last exam results:", e);
+                    if (lastExamButton) lastExamButton.style.display = 'none';
+                }
+            }
+
+            function saveLastExamResults(resultsData) {
+                 if (isRetrySession) return;
+                try {
+                    localStorage.setItem(LAST_EXAM_RESULTS_KEY, JSON.stringify(resultsData));
+                } catch (e) {
+                    console.error("Failed to save last exam results:", e);
+                }
+            }
+
+            function displayLastExamResults() {
+                try {
+                    const savedResultsString = localStorage.getItem(LAST_EXAM_RESULTS_KEY);
+                    if (!savedResultsString) {
+                        showModal("لا توجد نتائج", "لم يتم العثور على نتائج اختبار محفوظ.", "حسنًا", "", ()=>hideModal(), null, false);
+                        return;
+                    }
+                    const savedResults = JSON.parse(savedResultsString);
+
+                    welcomeScreen.style.display = 'none';
+                    examScreen.style.display = 'none';
+                    resultsScreen.style.display = 'block';
+                    reviewFlaggedButton.style.display = 'none';
+                    openQuestionNavButton.style.display = 'none';
+                    pauseExamButton.style.display = 'none';
+                    retryIncorrectButton.style.display = 'none';
+
+                    scoreTextEl.innerHTML = `
+                        ${savedResults.score || "النتيجة: غير متوفرة"}
+                        <span class="score-details">${savedResults.dateTimeCompleted || "تاريخ ووقت الإكمال: غير متوفر"}</span>
+                        <span class="score-details">${savedResults.attemptNumberDisplay || "رقم المحاولة: غير متوفر"}</span>
+                    `;
+
+                    feedbackTextEl.textContent = savedResults.feedbackString;
+                    feedbackTextEl.style.color = savedResults.feedbackColor;
+
+                    if (savedResults.isUntimed) {
+                        timeTakenTextEl.textContent = "الوقت المستغرق: غير محدد (اختبار بدون مؤقت)";
+                    } else {
+                        timeTakenTextEl.textContent = savedResults.timeTakenString;
+                    }
+
+                    userAnswers = savedResults.userAnswersForReview || [];
+                    activeQuestions = (savedResults.activeQuestionsForReview || [])
+                                        .map(id => allQuestionsData.find(q => q.id === id))
+                                        .filter(q => q);
+                    renderReview(userAnswers);
+                    isUntimedExam = savedResults.isUntimed || false;
+
+                } catch (e) {
+                    console.error("Error displaying last exam results:", e);
+                    showModal("خطأ", "حدث خطأ أثناء عرض نتائج آخر اختبار.", "حسنًا", "", ()=>hideModal(), null, false);
+                    resultsScreen.style.display = 'none';
+                    welcomeScreen.style.display = 'block';
+                }
+            }
+
+
+            function saveExamState() {
+                if (isRetrySession || isExamPaused) return;
+                const stateToSave = {
+                    currentQuestionIndex,
+                    userAnswers,
+                    activeQuestionsOriginalIds: activeQuestions.map(q => q.id),
+                    timeLeft: isUntimedExam ? null : timeLeft,
+                    examStartTime: isUntimedExam ? null : examStartTime,
+                    selectedNumQuestions: numQuestionsSelect.value,
+                    isUntimedExam,
+                    currentAttemptNumber
+                };
+                try {
+                    localStorage.setItem(EXAM_STORAGE_KEY, JSON.stringify(stateToSave));
+                } catch (e) {
+                    console.error("Failed to save exam state:", e);
+                }
+            }
+
+            function resumeExam() {
+                const loadedState = loadExamState();
+                if (loadedState) {
+                    currentQuestionIndex = loadedState.currentQuestionIndex;
+                    userAnswers = loadedState.userAnswers;
+                    isUntimedExam = loadedState.isUntimedExam || false;
+                    currentAttemptNumber = loadedState.currentAttemptNumber || (parseInt(localStorage.getItem(ATTEMPT_COUNTER_KEY)) || 1);
+
+                    activeQuestions = loadedState.activeQuestionsOriginalIds
+                                        .map(id => allQuestionsData.find(q => q.id === id))
+                                        .filter(q => q);
+
+                    if (activeQuestions.length !== loadedState.activeQuestionsOriginalIds.length && activeQuestions.length > 0) {
+                         showModal("تحذير بشأن الاستئناف", "تم تغيير بعض الأسئلة منذ آخر جلسة لك. قد لا تكون جميع الأسئلة المحفوظة متاحة. سنستكمل بما هو متاح.", "حسنًا", "", ()=>hideModal(), null, false);
+                    }
+
+                    if (isUntimedExam) {
+                        timeLeft = Infinity;
+                        examStartTime = null;
+                        examDurationDisplayEl.textContent = "غير محدود (مستأنف)";
+                        durationNoticeEl.textContent = "";
+                    } else {
+                        timeLeft = loadedState.timeLeft;
+                        examStartTime = loadedState.examStartTime;
+                        if (loadedState.selectedNumQuestions) {
+                            numQuestionsSelect.value = loadedState.selectedNumQuestions;
+                        }
+                    }
+
+                    initExam(false, true);
+                } else {
+                    showModal("خطأ", "لم يتم العثور على جلسة محفوظة للاستئناف.", "حسنًا", "", () => hideModal(), null, false);
+                }
+            }
+
+            function loadExamState() {
+                try {
+                    const savedState = localStorage.getItem(EXAM_STORAGE_KEY);
+                    if (savedState) {
+                        return JSON.parse(savedState);
+                    }
+                } catch (e) {
+                    console.error("Failed to parse exam state:", e);
+                }
+                return null;
+            }
+
+            function clearExamStateFromStorage() {
+                try {
+                    localStorage.removeItem(EXAM_STORAGE_KEY);
+                } catch (e) {
+                    console.error("Failed to clear exam state:", e);
+                }
+            }
+
+            function resetToWelcomeScreen() {
+                currentQuestionIndex = 0;
+                score = 0;
+                clearInterval(timerInterval);
+                welcomeScreen.style.display = 'block';
+                examScreen.style.display = 'none';
+                resultsScreen.style.display = 'none';
+                retryIncorrectButton.style.display = 'none';
+            }
+
+            function calculateScore() { score = userAnswers.reduce((acc, curr) => acc + (curr.isCorrect ? 1 : 0), 0); }
+
+            function handlePrevQuestion() {
+                if (isExamPaused) return;
+                if (currentQuestionIndex > 0) {
+                    saveCurrentAnswer();
+                    currentQuestionIndex--;
+                    loadQuestion();
+                    if (!isRetrySession && !isUntimedExam) saveExamState();
+                }
+            }
+
+            function handleNextQuestion() {
+                if (isExamPaused) return;
+                const selectedOption = optionsForm.querySelector('input[name="option"]:checked');
+                const userAnswerData = userAnswers.find(ua => ua.qId === activeQuestions[currentQuestionIndex].id);
+
+                if (selectedOption && userAnswerData && userAnswerData.userAnswer !== selectedOption.value) {
+                     userAnswerData.userAnswer = selectedOption.value;
+                     userAnswerData.isCorrect = (userAnswerData.userAnswer === activeQuestions[currentQuestionIndex].correctAnswer);
+                }
+
+                if (!selectedOption) {
+                    showModal(
+                        "تأكيد",
+                        "لم تقم باختيار إجابة. هل تريد الانتقال للسؤال التالي بدون إجابة؟",
+                        "نعم، انتقل",
+                        "لا، أبقني هنا",
+                        () => {
+                            if (userAnswerData) {
+                                userAnswerData.userAnswer = null;
+                                userAnswerData.isCorrect = false;
+                            }
+                            currentQuestionIndex++;
+                            if (!isRetrySession) saveExamState();
+                            hideModal();
+                            if (currentQuestionIndex < activeQuestions.length) {
+                                loadQuestion();
+                            } else {
+                                showResults();
+                            }
+                        },
+                        () => hideModal()
+                    );
+                    return;
+                }
+
+                currentQuestionIndex++;
+                if (!isRetrySession && !isUntimedExam) saveExamState();
+
+                if (currentQuestionIndex < activeQuestions.length) {
+                    loadQuestion();
+                } else {
+                    showResults();
+                }
+            }
+
+            function saveCurrentAnswer() {
+                if (isExamPaused) return;
+                const selectedOption = optionsForm.querySelector('input[name="option"]:checked');
+                const userAnswerData = userAnswers.find(ua => ua.qId === activeQuestions[currentQuestionIndex].id);
+                if (userAnswerData && selectedOption) {
+                    userAnswerData.userAnswer = selectedOption.value;
+                    userAnswerData.isCorrect = (userAnswerData.userAnswer === activeQuestions[currentQuestionIndex].correctAnswer);
+                }
+            }
+
+            function handleRetryIncorrect() {
+                const incorrectQuestions = userAnswers
+                    .filter(ua => !ua.isCorrect && ua.userAnswer !== null)
+                    .map(ua => allQuestionsData.find(q => q.id === ua.qId))
+                    .filter(q => q);
+
+                if (incorrectQuestions.length === 0) {
+                    showModal("لا توجد أسئلة خاطئة", "جميع إجاباتك صحيحة! لا توجد أسئلة لإعادة محاولتها.", "حسنًا", "", () => hideModal(), null, false);
+                    return;
+                }
+
+                showModal(
+                    "إعادة الأسئلة الخاطئة",
+                    `هناك ${incorrectQuestions.length} سؤالاً خاطئاً (أو أكثر). هل تريد إعادة محاولة هذه الأسئلة فقط؟`,
+                    "نعم، أعد المحاولة",
+                    "لا",
+                    () => {
+                        isRetrySession = true;
+                        activeQuestions = incorrectQuestions;
+                        initExam(true, false);
+                        hideModal();
+                    },
+                    () => hideModal()
+                );
+            }
+
+            function togglePauseExam() {
+                if (isUntimedExam) return;
+                isExamPaused = !isExamPaused;
+                if (isExamPaused) {
+                    clearInterval(timerInterval);
+                    pauseOverlay.style.display = 'flex';
+                    document.getElementById('questionArea').style.display = 'none';
+                    pauseExamButton.innerHTML = '<i class="fas fa-play-circle"></i> استئناف';
+                    pauseExamButton.classList.add('paused');
+                } else {
+                    pauseOverlay.style.display = 'none';
+                    document.getElementById('questionArea').style.display = 'block';
+                    pauseExamButton.innerHTML = '<i class="fas fa-pause-circle"></i> إيقاف مؤقت';
+                    pauseExamButton.classList.remove('paused');
+                    startTimer();
+                }
+            }
+
+            function resumeFromOverlay() {
+                if (isUntimedExam) return;
+                isExamPaused = false;
+                pauseOverlay.style.display = 'none';
+                document.getElementById('questionArea').style.display = 'block';
+                pauseExamButton.innerHTML = '<i class="fas fa-pause-circle"></i> إيقاف مؤقت';
+                pauseExamButton.classList.remove('paused');
+                startTimer();
+            }
+
+            function openQuestionNavModal() {
+                if (isExamPaused) return;
+                questionNavListEl.innerHTML = '';
+                activeQuestions.forEach((q, index) => {
+                    const answerData = userAnswers.find(ua => ua.qId === q.id);
+                    const navItem = document.createElement('div');
+                    navItem.className = 'q-nav-item';
+                    if (answerData && answerData.userAnswer !== null) navItem.classList.add('answered');
+                    if (answerData && answerData.isFlagged) navItem.classList.add('flagged');
+                    if (index === currentQuestionIndex) navItem.classList.add('current');
+                    navItem.textContent = index + 1;
+                    navItem.addEventListener('click', () => {
+                        saveCurrentAnswer();
+                        currentQuestionIndex = index;
+                        loadQuestion();
+                        closeQuestionNavModal();
+                    });
+                    questionNavListEl.appendChild(navItem);
+                });
+                questionNavModalOverlay.style.display = 'flex';
+            }
+
+            function closeQuestionNavModal() {
+                questionNavModalOverlay.style.display = 'none';
+            }
+
+            function handleFontSizeChange(increase) {
+                if (increase) {
+                    currentFontSizeMultiplier = Math.min(MAX_FONT_MULTIPLIER, currentFontSizeMultiplier + FONT_STEP);
+                } else {
+                    currentFontSizeMultiplier = Math.max(MIN_FONT_MULTIPLIER, currentFontSizeMultiplier - FONT_STEP);
+                }
+                document.documentElement.style.setProperty('--current-font-size-multiplier', currentFontSizeMultiplier);
+            }
+
+            function applyCurrentFontSize() {
+                document.documentElement.style.setProperty('--current-font-size-multiplier', currentFontSizeMultiplier);
+            }
+
+            // --- MODAL FUNCTIONS ---
+            function showModal(title, message, confirmText, cancelText, onConfirm, onCancel, showCancel = true) {
+                modalTitleEl.textContent = title;
+                modalMessageEl.innerHTML = message;
+                modalConfirmButton.textContent = confirmText;
+                modalCancelButton.textContent = cancelText;
+                modalConfirmButton.onclick = () => { if (onConfirm) onConfirm(); };
+                modalCancelButton.onclick = () => { if (onCancel) onCancel(); };
+                modalCancelButton.style.display = showCancel ? 'inline-block' : 'none';
+                customModalOverlay.style.display = 'flex';
+            }
+
+            function hideModal() {
+                customModalOverlay.style.display = 'none';
+            }
+
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            }
+
+            // --- EVENT LISTENERS ---
+            nextButton.addEventListener('click', handleNextQuestion);
+            prevButton.addEventListener('click', handlePrevQuestion);
+            flagQuestionButton.addEventListener('click', toggleFlagQuestion);
+            retryIncorrectButton.addEventListener('click', handleRetryIncorrect);
+            printResultsButton.addEventListener('click', () => window.print());
+            pauseExamButton.addEventListener('click', togglePauseExam);
+            resumeFromOverlayButton.addEventListener('click', resumeFromOverlay);
+            openQuestionNavButton.addEventListener('click', openQuestionNavModal);
+            closeQuestionNavModalBtn.addEventListener('click', closeQuestionNavModal);
+            questionNavModalCloseButton.addEventListener('click', closeQuestionNavModal);
+            closeFlaggedReviewModalBtn.addEventListener('click', closeFlaggedReviewModal);
+            flaggedReviewModalCloseButton.addEventListener('click', closeFlaggedReviewModal);
+            modalCloseButton.addEventListener('click', hideModal);
+            modalCancelButton.addEventListener('click', hideModal);
+            modalConfirmButton.addEventListener('click', hideModal);
+            increaseFontButton.addEventListener('click', () => handleFontSizeChange(true));
+            decreaseFontButton.addEventListener('click', () => handleFontSizeChange(false));
+            statusFilterSelect.addEventListener('change', () => renderReview(userAnswers));
+
+            optionsForm.addEventListener('change', (event) => {
+                if (event.target.name === 'option') {
+                    document.querySelectorAll('#optionsContainer label').forEach(label => label.classList.remove('selected-option'));
+                    if (event.target.checked) {
+                        event.target.parentElement.classList.add('selected-option');
+                    }
+                    const currentQuestion = activeQuestions[currentQuestionIndex];
+                    const userAnswerData = userAnswers.find(ua => ua.qId === currentQuestion.id);
+                    if (userAnswerData) {
+                        userAnswerData.userAnswer = event.target.value;
+                        userAnswerData.isCorrect = (userAnswerData.userAnswer === currentQuestion.correctAnswer);
+                    }
+                }
+            });
+
+        </script>
+</body>
+</html>
