@@ -1004,7 +1004,7 @@
 
         function updateNavButtons() {
             prevButton.disabled = currentQuestionIndex === 0;
-            nextButton.disabled = currentQuestionIndex === activeQuestions.length - 1;
+            nextButton.disabled = false; // التعديل هنا: نجعل الزر مفعلاً دائماً ليتمكن من إنهاء الاختبار
             
             if (currentQuestionIndex === activeQuestions.length - 1) {
                 nextButton.innerHTML = '<i class="fas fa-check-circle"></i> إنهاء الاختبار';
