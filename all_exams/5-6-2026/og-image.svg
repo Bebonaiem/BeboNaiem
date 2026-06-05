@@ -36,11 +36,11 @@
   
   <!-- Info badges -->
   <rect x="320" y="490" width="160" height="40" rx="20" fill="rgba(108,92,231,0.2)"/>
-  <text x="400" y="516" text-anchor="middle" fill="#a29bfe" font-family="Arial, sans-serif" font-size="20">60 صح/خطأ</text>
+  <text x="400" y="516" text-anchor="middle" fill="#a29bfe" font-family="Arial, sans-serif" font-size="20">70 صح/خطأ</text>
   
   <rect x="520" y="490" width="160" height="40" rx="20" fill="rgba(0,184,148,0.2)"/>
-  <text x="600" y="516" text-anchor="middle" fill="#00b894" font-family="Arial, sans-serif" font-size="20">20 اختيار</text>
+  <text x="600" y="516" text-anchor="middle" fill="#00b894" font-family="Arial, sans-serif" font-size="20">35 اختيار</text>
   
   <rect x="720" y="490" width="160" height="40" rx="20" fill="rgba(255,192,72,0.2)"/>
-  <text x="800" y="516" text-anchor="middle" fill="#ffc048" font-family="Arial, sans-serif" font-size="20">80 سؤال</text>
+  <text x="800" y="516" text-anchor="middle" fill="#ffc048" font-family="Arial, sans-serif" font-size="20">105 أسئلة</text>
 </svg>
