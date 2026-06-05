@@ -16,7 +16,8 @@ let state = {
     answers: {},
     isRandom: false,
     attemptNumber: 1,
-    startTime: null
+    startTime: null,
+    lastResults: null
 };
 
 // ===== إدارة الصفحات =====
@@ -56,9 +57,10 @@ function startQuiz(random = false) {
     
     // حفظ معلومات المحاولة الحالية
     localStorage.setItem('currentQuiz', JSON.stringify({
-        questions: state.currentQuestions,
+        questionIds: state.currentQuestions.map(q => q.id),
         attemptNumber: state.attemptNumber,
-        startTime: state.startTime
+        startTime: state.startTime,
+        isRandom: state.isRandom
     }));
     
     showPage('quiz');
@@ -78,8 +80,8 @@ function renderQuestion() {
     const progress = ((state.currentIndex + 1) / total) * 100;
     document.getElementById('progress-fill').style.width = `${progress}%`;
     
-    // عرض السؤال
-    document.getElementById('question-text').textContent = question.question;
+    // عرض السؤال مع الترقيم
+    document.getElementById('question-text').textContent = `${state.currentIndex + 1}. ${question.question}`;
     
     // عرض الخيارات
     const optionsContainer = document.getElementById('options-container');
@@ -133,16 +135,8 @@ function createOptionButton(text, value, questionId) {
     }
     
     // تحديد إذا كان محدداً مسبقاً
-    if (state.answers[questionId] !== undefined) {
-        if (question.type === 'tf') {
-            if (state.answers[questionId] === value) {
-                btn.classList.add('selected');
-            }
-        } else {
-            if (state.answers[questionId] === value) {
-                btn.classList.add('selected');
-            }
-        }
+    if (state.answers[questionId] === value) {
+        btn.classList.add('selected');
     }
     
     btn.addEventListener('click', () => selectAnswer(questionId, value));
@@ -177,12 +171,7 @@ function updateNavButtons() {
     const nextBtn = document.getElementById('btn-next');
     
     prevBtn.disabled = state.currentIndex === 0;
-    
-    if (state.currentIndex === state.currentQuestions.length - 1) {
-        nextBtn.textContent = 'إنهاء';
-    } else {
-        nextBtn.textContent = 'التالي';
-    }
+    nextBtn.disabled = state.currentIndex === state.currentQuestions.length - 1;
 }
 
 // ===== الانتقال للسؤال السابق =====
@@ -193,29 +182,54 @@ function prevQuestion() {
     }
 }
 
-// ===== الانتقال للسؤال التالي / إنهاء الاختبار =====
+// ===== الانتقال للسؤال التالي =====
 function nextQuestion() {
     if (state.currentIndex < state.currentQuestions.length - 1) {
         state.currentIndex++;
         renderQuestion();
-    } else {
-        endQuiz();
     }
 }
 
 // ===== إنهاء الاختبار =====
 function endQuiz() {
-    // حساب النتيجة
-    const results = calculateResults();
+    // حساب عدد الأسئلة التي تم الإجابة عليها
+    const answered = state.currentQuestions.filter(q => state.answers[q.id] !== undefined).length;
+    const total = state.currentQuestions.length;
+    const unanswered = total - answered;
     
-    // حفظ المحاولة
-    saveAttempt(results);
+    // رسالة تأكيد
+    let message = 'هل أنت متأكد من إنهاء الاختبار؟';
+    if (unanswered > 0) {
+        message = `لديك ${unanswered} سؤال لم تتم الإجابة عليه بعد.\nهل أنت متأكد من إنهاء الاختبار؟`;
+    }
     
-    // مسح التقدم الحالي
-    localStorage.removeItem('currentQuiz');
-    
-    // عرض صفحة النتائج
-    showResults(results);
+    showConfirmModal(message, () => {
+        // حساب النتيجة
+        const results = calculateResults();
+        
+        // حفظ المحاولة
+        saveAttempt(results);
+        
+        // مسح التقدم الحالي
+        localStorage.removeItem('currentQuiz');
+        
+        // عرض صفحة النتائج
+        showResults(results);
+    });
+}
+
+// ===== مودال التأكيد =====
+let confirmCallback = null;
+
+function showConfirmModal(message, onConfirm) {
+    document.getElementById('confirm-message').textContent = message;
+    document.getElementById('confirm-modal').classList.add('active');
+    confirmCallback = onConfirm;
+}
+
+function hideConfirmModal() {
+    document.getElementById('confirm-modal').classList.remove('active');
+    confirmCallback = null;
 }
 
 // ===== حساب النتائج =====
@@ -308,6 +322,24 @@ function showResults(results) {
     });
     
     document.getElementById('result-details').innerHTML = detailsHtml;
+    
+    // حفظ النتائج للمشاركة
+    state.lastResults = results;
+}
+
+// ===== مشاركة النتيجة =====
+function shareWhatsApp() {
+    const r = state.lastResults;
+    if (!r) return;
+    
+    const text = encodeURIComponent(
+        `اختبار علم نفس تعليمي - سكشن 3\n` +
+        `النتيجة: ${r.correct} صحيح / ${r.wrong} خطأ\n` +
+        `النسبة: ${r.percentage}%\n` +
+        `عدد الأسئلة: ${r.total}\n\n` +
+        `جرب الاختبار بنفسك!`
+    );
+    window.open(`https://wa.me/?text=${text}`, '_blank');
 }
 
 // ===== حفظ المحاولة =====
@@ -396,7 +428,8 @@ function showAttemptDetail(attemptNumber) {
     let detailsHtml = '';
     attempt.questions.forEach((qId, index) => {
         const question = questions.find(q => q.id === qId);
-        const userAnswer = attempt.answers[qId];
+        // تحويل المفتاح من string إلى number للتوافق
+        const userAnswer = attempt.answers[qId] !== undefined ? attempt.answers[qId] : attempt.answers[String(qId)];
         
         let isCorrect = false;
         if (question.type === 'tf') {
@@ -434,28 +467,61 @@ function showAttemptDetail(attemptNumber) {
 
 // ===== حفظ التقدم =====
 function saveProgress() {
+    // حفظ فقط IDs الأسئلة بدل الكائنات الكاملة
+    const questionIds = state.currentQuestions.map(q => q.id);
     localStorage.setItem('currentQuiz', JSON.stringify({
-        questions: state.currentQuestions,
+        questionIds: questionIds,
         currentIndex: state.currentIndex,
         answers: state.answers,
         attemptNumber: state.attemptNumber,
-        startTime: state.startTime
+        startTime: state.startTime,
+        isRandom: state.isRandom
     }));
 }
 
 // ===== استعادة التقدم =====
 function restoreProgress() {
     const data = localStorage.getItem('currentQuiz');
-    if (data) {
+    if (!data) return false;
+    
+    try {
         const saved = JSON.parse(data);
-        state.currentQuestions = saved.questions;
+        
+        // التحقق من صحة البيانات
+        if (!saved.questionIds || !Array.isArray(saved.questionIds)) return false;
+        
+        // استعادة الأسئلة من المصفوفة الأصلية باستخدام IDs
+        state.currentQuestions = saved.questionIds
+            .map(id => questions.find(q => q.id === id))
+            .filter(q => q !== undefined);
+        
+        // إذا لم يتم استعادة أي أسئلة، اعتبر التقدم غير صالح
+        if (state.currentQuestions.length === 0) return false;
+        
         state.currentIndex = saved.currentIndex || 0;
-        state.answers = saved.answers || {};
-        state.attemptNumber = saved.attemptNumber;
-        state.startTime = saved.startTime;
+        
+        // تحويل مفاتيح الإجابات من string إلى number
+        state.answers = {};
+        if (saved.answers && typeof saved.answers === 'object') {
+            Object.keys(saved.answers).forEach(key => {
+                state.answers[Number(key)] = saved.answers[key];
+            });
+        }
+        
+        state.attemptNumber = saved.attemptNumber || 1;
+        state.startTime = saved.startTime || Date.now();
+        state.isRandom = saved.isRandom || false;
+        
+        // التأكد من أن currentIndex لا يتجاوز عدد الأسئلة
+        if (state.currentIndex >= state.currentQuestions.length) {
+            state.currentIndex = state.currentQuestions.length - 1;
+        }
+        
         return true;
+    } catch (e) {
+        console.error('Error restoring progress:', e);
+        return false;
     }
-    return false;
 }
 
 // ===== تهيئة التطبيق =====
@@ -474,26 +540,27 @@ function init() {
     document.getElementById('btn-back-home').addEventListener('click', () => showPage('home'));
     document.getElementById('btn-back-home2').addEventListener('click', () => showPage('home'));
     document.getElementById('btn-back-home3').addEventListener('click', () => showPage('home'));
+    document.getElementById('btn-back-home4').addEventListener('click', () => showPage('home'));
+    document.getElementById('btn-back-home5').addEventListener('click', () => showPage('home'));
     document.getElementById('btn-back-attempts').addEventListener('click', showAttempts);
+    document.getElementById('btn-back-attempts2').addEventListener('click', showAttempts);
+    
+    // أزرار المشاركة
+    document.getElementById('btn-share-whatsapp').addEventListener('click', shareWhatsApp);
+    document.getElementById('btn-share-whatsapp2').addEventListener('click', shareWhatsApp);
+    
+    // أزرار المودال
+    document.getElementById('confirm-ok').addEventListener('click', () => {
+        if (confirmCallback) confirmCallback();
+        hideConfirmModal();
+    });
+    document.getElementById('confirm-cancel').addEventListener('click', hideConfirmModal);
     
     // التحقق من وجود تقدم محفوظ
     if (restoreProgress()) {
-        // عرض زرار للاستمرار
-        showPage('home');
-        const homeCard = document.querySelector('.home-card');
-        const continueBtn = document.createElement('button');
-        continueBtn.className = 'btn btn-primary';
-        continueBtn.id = 'btn-continue';
-        continueBtn.textContent = 'استمرار في الاختبار';
-        continueBtn.style.background = 'linear-gradient(135deg, #28a745, #218838)';
-        continueBtn.addEventListener('click', () => {
-            showPage('quiz');
-            renderQuestion();
-        });
-        
-        // إضافة الزرار بعد الأزرار الموجودة
-        const buttonsDiv = homeCard.querySelector('.buttons');
-        buttonsDiv.insertBefore(continueBtn, buttonsDiv.firstChild);
+        // العودة مباشرة للاختبار
+        showPage('quiz');
+        renderQuestion();
     }
 }
 

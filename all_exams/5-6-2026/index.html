@@ -18,12 +18,6 @@
     <meta property="og:url" content="https://bebonaiem.dpdns.org/all_exams/5-6-2026/">
     <meta property="og:site_name" content="اختبار علم نفس تعليمي">
     
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="اختبار علم نفس تعليمي - سكشن 3 | 105 أسئلة تفاعلية مع نتائج فورية">
-    <meta name="twitter:description" content="اختبار شامل في علم نفس تعليمي - سكشن 3 يحتوي على 105 أسئلة (70 صح وخطأ + 35 اختيار من متعدد) مع نتائج فورية وحفظ المحاولات">
-    <meta name="twitter:image" content="https://bebonaiem.dpdns.org/all_exams/5-6-2026/og-image.png">
-    
     <!-- General -->
     <meta name="description" content="اختبار شامل في علم نفس تعليمي - سكشن 3 يحتوي على 105 أسئلة (70 صح وخطأ + 35 اختيار من متعدد) مع نتائج فورية وحفظ المحاولات">
     <meta name="theme-color" content="#0a0a0f">
@@ -59,7 +53,7 @@
     <div class="container">
         <div class="quiz-header">
             <div class="quiz-info">
-                <span id="question-counter">السؤال 1 من 80</span>
+                <span id="question-counter">السؤال 1 من 105</span>
                 <span id="attempt-label">المحاولة 1</span>
             </div>
             <div class="progress-bar">
@@ -85,11 +79,20 @@
     <div class="container">
         <div class="result-header">
             <h1>📊 نتائج الاختبار</h1>
+            <div class="result-actions result-actions-top">
+                <div class="share-buttons">
+                    <button id="btn-share-whatsapp" class="btn btn-share btn-whatsapp">واتساب</button>
+                </div>
+                <button id="btn-back-home" class="btn btn-primary">العودة للرئيسية</button>
+            </div>
             <div id="result-summary" class="result-summary"></div>
         </div>
         <div id="result-details" class="result-details"></div>
-        <div class="result-actions">
-            <button id="btn-back-home" class="btn btn-primary">العودة للرئيسية</button>
+        <div class="result-actions result-actions-bottom">
+            <div class="share-buttons">
+                <button id="btn-share-whatsapp2" class="btn btn-share btn-whatsapp">واتساب</button>
+            </div>
+            <button id="btn-back-home4" class="btn btn-primary">العودة للرئيسية</button>
         </div>
     </div>
 </div>
@@ -112,10 +115,14 @@
     <div class="container">
         <div class="result-header">
             <h1 id="attempt-detail-title">تفاصيل المحاولة</h1>
+            <div class="result-actions result-actions-top">
+                <button id="btn-back-attempts2" class="btn btn-primary">العودة للمحاولات</button>
+                <button id="btn-back-home5" class="btn btn-outline">العودة للرئيسية</button>
+            </div>
             <div id="attempt-detail-summary" class="result-summary"></div>
         </div>
         <div id="attempt-detail-details" class="result-details"></div>
-        <div class="result-actions">
+        <div class="result-actions result-actions-bottom">
             <button id="btn-back-attempts" class="btn btn-primary">العودة للمحاولات</button>
             <button id="btn-back-home3" class="btn btn-outline">العودة للرئيسية</button>
         </div>
@@ -125,6 +132,17 @@
 <footer>
     <p>مادة علم نفس تعليمي — سكشن 3</p>
 </footer>
+
+<!-- مودال التأكيد -->
+<div id="confirm-modal" class="modal-overlay">
+    <div class="modal-box">
+        <p id="confirm-message" class="modal-message"></p>
+        <div class="modal-buttons">
+            <button id="confirm-ok" class="btn btn-danger btn-modal">إنهاء</button>
+            <button id="confirm-cancel" class="btn btn-secondary btn-modal">متابعة</button>
+        </div>
+    </div>
+</div>
 
 <script src="questions.js"></script>
 <script src="app.js"></script>
