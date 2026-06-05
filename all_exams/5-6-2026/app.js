@@ -302,6 +302,7 @@ function showResults(results) {
                 <div class="q-text">${item.question.question}</div>
                 <div class="q-answer user-answer">إجابتك: ${userAnswerText}</div>
                 ${!item.isCorrect ? `<div class="q-answer correct-answer">الإجابة الصحيحة: ${correctAnswer}</div>` : ''}
+                ${!item.isCorrect && item.question.correction ? `<div class="q-correction">التصحيح: ${item.question.correction}</div>` : ''}
             </div>
         `;
     });
@@ -423,6 +424,7 @@ function showAttemptDetail(attemptNumber) {
                 <div class="q-text">${question.question}</div>
                 <div class="q-answer user-answer">إجابتك: ${userAnswerText}</div>
                 ${!isCorrect ? `<div class="q-answer correct-answer">الإجابة الصحيحة: ${correctAnswer}</div>` : ''}
+                ${!isCorrect && question.correction ? `<div class="q-correction">التصحيح: ${question.correction}</div>` : ''}
             </div>
         `;
     });

@@ -574,6 +574,20 @@ body::before {
     border-color: rgba(0, 184, 148, 0.2);
 }
 
+.result-item .q-correction {
+    font-size: 0.8em;
+    padding: 10px 12px;
+    background: rgba(108, 92, 231, 0.08);
+    border-radius: 8px;
+    display: block;
+    margin-top: 8px;
+    border: 1px solid rgba(108, 92, 231, 0.2);
+    color: var(--accent-light);
+    line-height: 1.7;
+    font-weight: 500;
+    word-break: break-word;
+}
+
 .result-actions {
     text-align: center;
     margin-top: 25px;
