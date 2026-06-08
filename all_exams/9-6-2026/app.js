@@ -63,7 +63,7 @@ function startQuiz(random = false) {
     state.attemptNumber = attempts.length + 1;
     
     // حفظ معلومات المحاولة الحالية
-    localStorage.setItem('currentQuiz', JSON.stringify({
+    localStorage.setItem(PROGRESS_KEY, JSON.stringify({
         questionIds: state.currentQuestions.map(q => q.id),
         attemptNumber: state.attemptNumber,
         startTime: state.startTime,
@@ -218,7 +218,7 @@ function endQuiz() {
         saveAttempt(results);
         
         // مسح التقدم الحالي
-        localStorage.removeItem('currentQuiz');
+        localStorage.removeItem(PROGRESS_KEY);
         
         // عرض صفحة النتائج
         showResults(results);
@@ -349,6 +349,10 @@ function shareWhatsApp() {
     window.open(`https://wa.me/?text=${text}`, '_blank');
 }
 
+// ===== مفتاح التخزين لهذا الامتحان =====
+const STORAGE_KEY = 'quizAttempts_edu_presentation';
+const PROGRESS_KEY = 'currentQuiz_edu_presentation';
+
 // ===== حفظ المحاولة =====
 function saveAttempt(results) {
     const attempts = getAttempts();
@@ -363,12 +367,12 @@ function saveAttempt(results) {
         questions: state.currentQuestions.map(q => q.id),
         answers: { ...state.answers }
     });
-    localStorage.setItem('quizAttempts', JSON.stringify(attempts));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(attempts));
 }
 
 // ===== جلب المحاولات =====
 function getAttempts() {
-    const data = localStorage.getItem('quizAttempts');
+    const data = localStorage.getItem(STORAGE_KEY);
     return data ? JSON.parse(data) : [];
 }
 
@@ -476,7 +480,7 @@ function showAttemptDetail(attemptNumber) {
 function saveProgress() {
     // حفظ فقط IDs الأسئلة بدل الكائنات الكاملة
     const questionIds = state.currentQuestions.map(q => q.id);
-    localStorage.setItem('currentQuiz', JSON.stringify({
+    localStorage.setItem(PROGRESS_KEY, JSON.stringify({
         questionIds: questionIds,
         currentIndex: state.currentIndex,
         answers: state.answers,
@@ -488,7 +492,7 @@ function saveProgress() {
 
 // ===== استعادة التقدم =====
 function restoreProgress() {
-    const data = localStorage.getItem('currentQuiz');
+    const data = localStorage.getItem(PROGRESS_KEY);
     if (!data) return false;
     
     try {
@@ -531,8 +535,16 @@ function restoreProgress() {
     }
 }
 
+// ===== مسح البيانات القديمة من الموقع السابق =====
+function clearOldData() {
+    localStorage.removeItem('quizAttempts');
+    localStorage.removeItem('currentQuiz');
+}
+
 // ===== تهيئة التطبيق =====
 function init() {
+    // مسح البيانات القديمة
+    clearOldData();
     // أزرار الصفحة الرئيسية
     document.getElementById('btn-start').addEventListener('click', () => startQuiz(false));
     document.getElementById('btn-random').addEventListener('click', () => startQuiz(true));
