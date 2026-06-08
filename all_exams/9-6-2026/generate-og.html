@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Generate OG Image PNG</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #222; font-family: Arial; padding: 30px; color: #fff; }
+        h1 { margin-bottom: 10px; }
+        p { margin-bottom: 15px; color: #aaa; }
+        canvas { border: 2px solid #444; display: block; margin: 20px 0; max-width: 100%; }
+        button { padding: 15px 30px; font-size: 18px; cursor: pointer; background: #6366f1; color: #fff; border: none; border-radius: 10px; }
+        button:hover { background: #4f46e5; }
+        .step { background: #333; padding: 15px; border-radius: 10px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>Generate OG Image (1200x630)</h1>
+    <div class="step">1. اضغط "Generate PNG" في الأسفل</div>
+    <div class="step">2. اضغط كليك يمين على الصورة</div>
+    <div class="step">3. اختر "Save image as PNG"</div>
+    <div class="step">4. ارفع الملف <strong>og-image.png</strong> على السيرفر</div>
+    
+    <button onclick="generate()">Generate PNG</button>
+    <br><br>
+    <canvas id="canvas" width="1200" height="630"></canvas>
+    
+    <script>
+        function generate() {
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Background gradient
+            const bgGrad = ctx.createLinearGradient(0, 0, 1200, 630);
+            bgGrad.addColorStop(0, '#0f0f1a');
+            bgGrad.addColorStop(1, '#1a1a2e');
+            ctx.fillStyle = bgGrad;
+            ctx.fillRect(0, 0, 1200, 630);
+            
+            // Card
+            ctx.fillStyle = '#16213e';
+            roundRect(ctx, 60, 60, 1080, 510, 24);
+            
+            // Accent line
+            const accentGrad = ctx.createLinearGradient(60, 0, 1140, 0);
+            accentGrad.addColorStop(0, '#6366f1');
+            accentGrad.addColorStop(1, '#a78bfa');
+            ctx.fillStyle = accentGrad;
+            roundRect(ctx, 60, 60, 1080, 4, 2);
+            
+            // Presentation icon (simplified)
+            ctx.fillStyle = '#6366f1';
+            ctx.font = 'bold 100px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('📊', 600, 200);
+            
+            // Checkmark circle
+            ctx.beginPath();
+            ctx.arc(600, 280, 28, 0, Math.PI * 2);
+            ctx.fillStyle = '#10b981';
+            ctx.fill();
+            
+            // Checkmark
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 4;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.beginPath();
+            ctx.moveTo(588, 280);
+            ctx.lineTo(596, 288);
+            ctx.lineTo(612, 272);
+            ctx.stroke();
+            
+            // Title
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 48px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('اختبار تطبيقات العروض التعليمية', 600, 380);
+            
+            // Subtitle
+            ctx.fillStyle = '#a78bfa';
+            ctx.font = '32px Arial';
+            ctx.fillText('اختبار شامل ومتكامل', 600, 430);
+            
+            // Info badges
+            drawBadge(ctx, 300, 470, '60 صح/خطأ', '#a78bfa', 'rgba(99,102,241,0.2)');
+            drawBadge(ctx, 520, 470, '20 اختيار', '#10b981', 'rgba(16,185,129,0.2)');
+            drawBadge(ctx, 740, 470, '80 سؤال', '#f59e0b', 'rgba(245,158,11,0.2)');
+        }
+        
+        function drawBadge(ctx, x, y, text, textColor, bgColor) {
+            ctx.fillStyle = bgColor;
+            roundRect(ctx, x, y, 160, 40, 20);
+            ctx.fillStyle = textColor;
+            ctx.font = '20px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText(text, x + 80, y + 27);
+        }
+        
+        function roundRect(ctx, x, y, w, h, r) {
+            ctx.beginPath();
+            ctx.moveTo(x + r, y);
+            ctx.lineTo(x + w - r, y);
+            ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+            ctx.lineTo(x + w, y + h - r);
+            ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+            ctx.lineTo(x + r, y + h);
+            ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+            ctx.lineTo(x, y + r);
+            ctx.quadraticCurveTo(x, y, x + r, y);
+            ctx.closePath();
+            ctx.fill();
+        }
+    </script>
+</body>
+</html>
